@@ -1,0 +1,6 @@
+{
+  "DEMOMOD-JERA.title": "丰收符文",
+  "DEMOMOD-JERA.description": "每场战斗开始时，额外抽[blue]{Draws}[/blue]张牌。\n第二回合开始时，额外获得{energyPrefix:energyIcons(1)}。",
+  "DEMOMOD-JERA.flavor": "不能复制掉落物。",
+  "DEMOMOD-JERA.selectionScreenPrompt": "选择任意张牌(每回合首张以外的牌需要花费一点额外费用)。"
+}

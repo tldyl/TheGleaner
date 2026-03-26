@@ -1,0 +1,11 @@
+{
+  "DEMOMOD-STRIKE_GLEANER.title": "打击",
+  "DEMOMOD-STRIKE_GLEANER.description": "造成{Damage:diff()}点伤害。",
+  "DEMOMOD-DEFEND_GLEANER.title": "防御",
+  "DEMOMOD-DEFEND_GLEANER.description": "获得{Block:diff()}点[gold]格挡[/gold]。",
+  "DEMOMOD-SCORE_ENTRY_CARD.title": "乐谱",
+  "DEMOMOD-SCORE_ENTRY_CARD.description": "打开乐谱。\n(乐谱牌数上限为{CalculatedDamage:diff()})",
+  "DEMOMOD-WINDS_MUSE.title": "采风",
+  "DEMOMOD-WINDS_MUSE.description": "[gold]拾录[/gold]{Amount}张牌。",
+  "DEMOMOD-WINDS_MUSE.selectionScreenPrompt": "选择至多{Amount}张牌。"
+}

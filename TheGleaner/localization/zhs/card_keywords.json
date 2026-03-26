@@ -1,0 +1,10 @@
+{
+  "DEMOMOD-RESONANCE.title": "共鸣",
+  "DEMOMOD-RESONANCE.description": "当你打出此牌时，使手牌中所有与该牌类型不同的牌的费用在本场战斗减少[blue]1[/blue](最低降至[blue]1[/blue])。\n受此效果影响的卡牌也会被添加[gold]共鸣[/gold]。",
+  "DEMOMOD-CONCERTO.title": "协奏",
+  "DEMOMOD-CONCERTO.description": "当这张牌受[gold]共鸣[/gold]影响时，不再减少费用，而是触发特定的效果。",
+  "DEMOMOD-DISSONANCE.title": "不和谐音",
+  "DEMOMOD-DISSONANCE.description": "[gold]不和谐音[/gold]是一系列作为代价生成的负面卡牌，在进入[gold]乐谱[/gold]时会变化为对应的正面卡牌。",
+  "DEMOMOD-PICKUP.title": "拾录",
+  "DEMOMOD-PICKUP.description": "从手牌或抽牌堆顶将一定数量的牌放入[gold]乐谱[/gold]。"
+}

@@ -1,0 +1,7 @@
+/.idea
+/.godot
+*.uid
+*.pck
+*.xlsx
+*.docx
+*.sln.DotSettings.user

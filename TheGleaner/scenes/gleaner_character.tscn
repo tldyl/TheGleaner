@@ -1,0 +1,30 @@
+[gd_scene load_steps=2 format=3 uid="uid://cc0nntvd1av7y"]
+
+[ext_resource type="Texture2D" uid="uid://cnbidlpe4ebht" path="res://TheGleaner/scenes/character.png" id="1_s82b4"]
+
+[node name="GleanerCharacter" type="Node2D"]
+
+[node name="Visuals" type="Node2D" parent="."]
+unique_name_in_owner = true
+
+[node name="Sprite2D" type="Sprite2D" parent="Visuals"]
+position = Vector2(0, -128)
+texture = ExtResource("1_s82b4")
+region_enabled = true
+region_rect = Rect2(183.35538, 258.1937, 155.853, 253.33685)
+
+[node name="Bounds" type="Control" parent="."]
+unique_name_in_owner = true
+layout_mode = 3
+anchors_preset = 0
+offset_left = -80.0
+offset_top = -256.0
+offset_right = 80.0
+
+[node name="IntentPos" type="Marker2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(0, -320)
+
+[node name="CenterPos" type="Marker2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(0, -128)
