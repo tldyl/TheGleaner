@@ -10,28 +10,30 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
-using MegaCrit.Sts2.Core.Models.Powers;
 
 namespace DemoMod.TheGleaner.Cards.GleanerCard;
 
 [Pool(typeof(CardPool))]
-public class NoLeaveToWither : CustomCardModel {
+public class JeraForm : CustomCardModel {
     public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
-    public override bool GainsBlock => true;
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new IntVar("Amount", 1)];
-    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromKeyword(CustomEnums.Dissonance), HoverTipFactory.FromPower<DoomPower>()];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [
+        new IntVar("ScoreAmount", 1),
+        new IntVar("DissonanceAmount", 2)
+    ];
 
-    public NoLeaveToWither() : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.Self) {
-        
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Ethereal];
+    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromKeyword(CardKeyword.Ethereal), HoverTipFactory.FromKeyword(CustomEnums.Dissonance)];
+
+    public JeraForm() : base(3, CardType.Power, CardRarity.Rare, TargetType.Self) {
     }
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
-        await PowerCmd.Apply<NoLeaveToWitherPower>(Owner.Creature, 1, Owner.Creature, this);
-        List<CardModel> cards = RandomDissonanceCard.getRandomDissonanceCards(DynamicVars["Amount"].IntValue, Owner.RunState.Rng.CombatCardGeneration);
+        await PowerCmd.Apply<JeraFormPower>(Owner.Creature, DynamicVars["ScoreAmount"].BaseValue, Owner.Creature, this);
+        List<CardModel> cards = RandomDissonanceCard.getRandomDissonanceCards(DynamicVars["DissonanceAmount"].IntValue, Owner.RunState.Rng.CombatCardGeneration);
         foreach (CardModel card in cards) {
             CardCmd.PreviewCardPileAdd(await CardPileCmd.AddGeneratedCardToCombat(CombatState.CreateCard(card, Owner), PileType.Discard, true));
         }
     }
-
-    protected override void OnUpgrade() => EnergyCost.UpgradeBy(-1);
+    
+    protected override void OnUpgrade() => RemoveKeyword(CardKeyword.Ethereal);
 }

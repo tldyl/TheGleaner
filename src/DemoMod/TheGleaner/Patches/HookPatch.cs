@@ -33,4 +33,13 @@ public class HookPatch {
             }
         }
     }
+
+    [HarmonyPatch(typeof(Hook), "AfterCardEnteredCombat")]
+    public static class PatchAfterCardEnteredCombat {
+        public static void Prefix(ref CombatState combatState, CardModel card) {
+            if (combatState == null) {
+                combatState = card.Owner.Creature.CombatState;
+            }
+        }
+    }
 }

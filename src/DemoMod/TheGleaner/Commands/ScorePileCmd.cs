@@ -29,6 +29,9 @@ public static class ScorePileCmd {
     }
 
     public static async Task AddCards(PlayerCombatState combatState, Player player, params CardModel[] cards) {
+        if (!CustomPiles.CustomPileProviders.ContainsKey(CustomEnums.ScorePile)) {
+            CustomPiles.CustomPileProviders[CustomEnums.ScorePile] = () => new ScorePile();
+        }
         CardPile pile = CustomPiles.GetCustomPile(combatState, CustomEnums.ScorePile);
         if (pile == null) {
             Dictionary<PileType, CustomPile> dictionary = CustomPiles.Piles.Get(combatState);

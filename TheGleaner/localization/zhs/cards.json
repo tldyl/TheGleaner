@@ -31,5 +31,22 @@
   "DEMOMOD-CLUSTER_STRING_WEAVE.title": "集束弦织",
   "DEMOMOD-CLUSTER_STRING_WEAVE.description": "[gold]消耗[/gold]手牌和[gold]乐谱[/gold]中的所有打击和箭簇牌，将这些牌合并为一张[gold]集束打击{IfUpgraded:show:+|}[/gold]并放入你的手牌。\n箭簇的效果将会继承至[gold]集束打击{IfUpgraded:show:+|}[/gold]中。",
   "DEMOMOD-CLUSTER_STRIKE.title": "集束打击",
-  "DEMOMOD-CLUSTER_STRIKE.description": "每有一张打击或箭簇牌被合并，就造成{Damage:diff()}点伤害一次(集束打击的攻击段数会被合并)。{InCombat:\n(造成{Damage:diff()}点伤害{HitCount}次，伤害已增幅{Amount}%)|}"
+  "DEMOMOD-CLUSTER_STRIKE.description": "每有一张打击或箭簇牌被合并，就造成{Damage:diff()}点伤害一次(集束打击的攻击段数会被合并)。{InCombat:\n(造成{Damage:diff()}点伤害{HitCount}次，伤害已增幅{Amount}%)|}",
+  "DEMOMOD-JERA_FORM.title": "丰收形态",
+  "DEMOMOD-JERA_FORM.description": "在你的回合开始时，从乐谱中选择{ScoreAmount}张牌，将其打出后放回乐谱。\n将{DissonanceAmount}张[gold]不和谐音[/gold]放入弃牌堆。",
+  "DEMOMOD-SIGHT_REAPING.title": "弑奏",
+  "DEMOMOD-SIGHT_REAPING.description": "造成{Damage:diff()}点伤害。\n[gold]斩杀[/gold]时，在战斗结束后可选择牌组中的一张牌变化。",
+  "DEMOMOD-SIGHT_REAPING.rewardDescription": "变化一张牌",
+  "DEMOMOD-HOWL_OF_WRATH.title": "暴怒的戾鸣",
+  "DEMOMOD-HOWL_OF_WRATH.description": "当这张牌被[gold]消耗[/gold]时，房间内所有单位获得{StrVal}点[gold]力量[/gold]。",
+  "DEMOMOD-FORGING_AT_DAWN.title": "破晓的熔铸",
+  "DEMOMOD-FORGING_AT_DAWN.description": "获得{StrVal}点[gold]力量[/gold]。\n获得{DexVal}点[gold]敏捷[/gold]。",
+  "DEMOMOD-SHRIEK_OF_DREAD.title": "惊悸的尖叫",
+  "DEMOMOD-SHRIEK_OF_DREAD.description": "当这张牌被[gold]消耗[/gold]时，给予房间内所有单位{VulVal}层[gold]易伤[/gold]。",
+  "DEMOMOD-NIGHTINGALE_AT_THE_ABYSS.title": "临渊的夜莺",
+  "DEMOMOD-NIGHTINGALE_AT_THE_ABYSS.description": "给予所有敌人{VulVal}层[gold]易伤[/gold]、{WeakVal}层[gold]虚弱[/gold]。",
+  "DEMOMOD-DIRGE_OF_FAREWELL.title": "离别的恸哭",
+  "DEMOMOD-DIRGE_OF_FAREWELL.description": "当这张牌被[gold]消耗[/gold]时，对所有人造成{Damage}点伤害。",
+  "DEMOMOD-PULSATION_OF_THE_TIDES.title": "律动的潮汐",
+  "DEMOMOD-PULSATION_OF_THE_TIDES.description": "对所有敌人造成{Damage:diff()}点伤害。\n打出此牌后，如果只有一名敌人存活，再对所有敌人造成{Damage:diff()}点伤害一次。\n[gold]力量[/gold]在这张牌上发挥{StrMul}倍效果。"
 }

@@ -38,15 +38,15 @@ public class CardCmdPatch {
     //     }
     // }
 
-    [HarmonyPatch(typeof(CardCmd), "Transform", typeof(IEnumerable<CardTransformation>), typeof(Rng), typeof(CardPreviewStyle))]
-    public static class PatchTransform {
-        public static bool Prefix(ref Task<IEnumerable<CardPileAddResult>> __result, ref IEnumerable<CardTransformation> transformations,
-            Rng? rng,
-            CardPreviewStyle style) {
-            List<CardTransformation> transformationList = [];
-            transformationList.AddRange(transformations.Where(cardTransformation => cardTransformation.Original is not ScoreEntryCard));
-            transformations = transformationList;
-            return false;
-        }
-    }
+    // [HarmonyPatch(typeof(CardCmd), "Transform", typeof(IEnumerable<CardTransformation>), typeof(Rng), typeof(CardPreviewStyle))]
+    // public static class PatchTransform {
+    //     public static bool Prefix(ref Task<IEnumerable<CardPileAddResult>> __result, ref IEnumerable<CardTransformation> transformations,
+    //         Rng? rng,
+    //         CardPreviewStyle style) {
+    //         List<CardTransformation> transformationList = [];
+    //         transformationList.AddRange(transformations.Where(cardTransformation => cardTransformation.Original is not ScoreEntryCard));
+    //         transformations = transformationList;
+    //         return false;
+    //     }
+    // }
 }
