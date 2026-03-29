@@ -6,6 +6,7 @@ using MegaCrit.Sts2.Core.Context;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.Helpers;
 using MegaCrit.Sts2.Core.Hooks;
 using MegaCrit.Sts2.Core.Models;
 
@@ -21,7 +22,7 @@ public class HookPatch {
                 cardsToReduceCost.AddRange(player.PlayerCombatState.Hand.Cards.Where(cardModel => cardModel != card && cardModel.Type != card.Type && cardModel.EnergyCost.GetResolved() > 1));
                 cardsToReduceCost.ForEach(model => {
                     if (model is IConcertoCard concertoCard) {
-                        concertoCard.OnConcerto(combatState, choiceContext, cardPlay);
+                        TaskHelper.RunSafely(concertoCard.OnConcerto(combatState, choiceContext, cardPlay));
                     } else {
                         model.EnergyCost.SetThisCombat(model.EnergyCost.GetResolved() - 1);
                     }

@@ -14,6 +14,7 @@ public class DefendGleaner : CustomCardModel {
     protected override IEnumerable<DynamicVar> CanonicalVars => [new BlockVar(5, ValueProp.Move)];
     public override bool GainsBlock => true;
     public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
+    protected override HashSet<CardTag> CanonicalTags => [CardTag.Defend];
     
     public DefendGleaner() : base(1, CardType.Skill, CardRarity.Basic, TargetType.Self) {
     }

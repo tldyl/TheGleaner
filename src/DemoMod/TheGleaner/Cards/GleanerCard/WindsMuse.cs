@@ -18,7 +18,7 @@ namespace DemoMod.TheGleaner.Cards.GleanerCard;
 public class WindsMuse : CustomCardModel {
     public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
     protected override IEnumerable<DynamicVar> CanonicalVars => [new IntVar("Amount", 3)];
-    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromKeyword(CustomEnums.PickUp)];
+    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromKeyword(CustomEnums.Glean)];
 
     public WindsMuse() : base(1, CardType.Skill, CardRarity.Common, TargetType.Self) {
     }

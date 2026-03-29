@@ -7,6 +7,9 @@ public class CustomEnums {
     [CustomEnum]
     public static PileType ScorePile;
 
+    [CustomEnum]
+    public static CardTag Arrow;
+
     [CustomEnum, KeywordProperties(AutoKeywordPosition.Before)]
     public static CardKeyword Resonance;
 
@@ -17,5 +20,5 @@ public class CustomEnums {
     public static CardKeyword Dissonance;
 
     [CustomEnum, KeywordProperties(AutoKeywordPosition.Before)]
-    public static CardKeyword PickUp;
+    public static CardKeyword Glean;
 }

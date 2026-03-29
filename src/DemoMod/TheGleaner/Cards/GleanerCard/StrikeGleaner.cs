@@ -13,6 +13,7 @@ namespace DemoMod.TheGleaner.Cards.GleanerCard;
 public class StrikeGleaner : CustomCardModel {
     protected override IEnumerable<DynamicVar> CanonicalVars => [new DamageVar(6, ValueProp.Move)];
     public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
+    protected override HashSet<CardTag> CanonicalTags => [CardTag.Strike];
     
     public StrikeGleaner() : base(1, CardType.Attack, CardRarity.Basic, TargetType.AnyEnemy) {
     }

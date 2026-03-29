@@ -1,0 +1,15 @@
+using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.Entities.Creatures;
+using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.Localization;
+using MegaCrit.Sts2.Core.Models;
+
+namespace DemoMod.TheGleaner.Cards.GleanerCard;
+
+public interface IArrowCard {
+    public LocString getArrowName();
+
+    public LocString getArrowDescription();
+
+    public Task arrowEffect(PlayerChoiceContext choiceContext, CardPlay cardPlay, IEnumerable<DamageResult> damageResults, CardModel clusterCard);
+}

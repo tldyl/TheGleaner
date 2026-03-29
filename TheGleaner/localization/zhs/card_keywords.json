@@ -5,6 +5,6 @@
   "DEMOMOD-CONCERTO.description": "当这张牌受[gold]共鸣[/gold]影响时，不再减少费用，而是触发特定的效果。",
   "DEMOMOD-DISSONANCE.title": "不和谐音",
   "DEMOMOD-DISSONANCE.description": "[gold]不和谐音[/gold]是一系列作为代价生成的负面卡牌，在进入[gold]乐谱[/gold]时会变化为对应的正面卡牌。",
-  "DEMOMOD-PICKUP.title": "拾录",
-  "DEMOMOD-PICKUP.description": "从手牌或抽牌堆顶将一定数量的牌放入[gold]乐谱[/gold]。"
+  "DEMOMOD-GLEAN.title": "拾录",
+  "DEMOMOD-GLEAN.description": "从手牌或抽牌堆顶将一定数量的牌放入[gold]乐谱[/gold]。"
 }

@@ -4,8 +4,11 @@ using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.Nodes.CommonUi;
 using MegaCrit.Sts2.Core.Random;
+using System.Reflection;
+using System.Runtime.CompilerServices;
 
 namespace DemoMod.TheGleaner.Patches.ScoreEntryCardPatch;
 
@@ -24,16 +27,16 @@ public class CardCmdPatch {
         }
     }
 
-    [HarmonyPatch(typeof(CardCmd), "Exhaust")]
-    public static class PatchExhaust {
-        public static bool Prefix(ref Task __result, PlayerChoiceContext choiceContext,
-            CardModel card,
-            bool causedByEthereal,
-            bool skipVisuals) {
-            __result = Task.CompletedTask;
-            return card is ScoreEntryCard;
-        }
-    }
+    // [HarmonyPatch(typeof(CardCmd), "Exhaust")]
+    // public static class PatchExhaust {
+    //     public static bool Prefix(ref Task __result, PlayerChoiceContext choiceContext,
+    //         CardModel card,
+    //         bool causedByEthereal,
+    //         bool skipVisuals) {
+    //         __result = Task.CompletedTask;
+    //         return card is ScoreEntryCard;
+    //     }
+    // }
 
     [HarmonyPatch(typeof(CardCmd), "Transform", typeof(IEnumerable<CardTransformation>), typeof(Rng), typeof(CardPreviewStyle))]
     public static class PatchTransform {
