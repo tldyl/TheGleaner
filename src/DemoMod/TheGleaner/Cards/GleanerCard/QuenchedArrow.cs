@@ -20,8 +20,14 @@ namespace DemoMod.TheGleaner.Cards.GleanerCard;
 public class QuenchedArrow : CustomCardModel, IArrowCard {
     public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new IntVar("Amount", 50),
-        new DamageVar(16, ValueProp.Move)
+        new IntVar("Amount", 0),
+        new IntVar("Grow", 50),
+        new CalculationBaseVar(0),
+        new ExtraDamageVar(16),
+        new CalculatedDamageVar(ValueProp.Unpowered).WithMultiplier((Func<CardModel, Creature, Decimal>) ((card, _) => {
+                return card.DynamicVars["Amount"].BaseValue / 100M + 1M;
+            })
+        )
     ];
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<StrengthPower>()];
     protected override HashSet<CardTag> CanonicalTags => [CustomEnums.Arrow];
@@ -30,11 +36,11 @@ public class QuenchedArrow : CustomCardModel, IArrowCard {
     }
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
-        AttackCommand attackCommand = await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
+        AttackCommand attackCommand = await DamageCmd.Attack(DynamicVars.CalculatedDamage)
             .FromCard(this)
             .Targeting(cardPlay.Target)
             .Execute(choiceContext);
-        DynamicVars.Damage.UpgradeValueBy(DynamicVars.Damage.BaseValue * DynamicVars["Amount"].BaseValue / 100M);
+        DynamicVars["Amount"].UpgradeValueBy(DynamicVars["Grow"].BaseValue);
     }
 
     protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(4);
@@ -48,6 +54,10 @@ public class QuenchedArrow : CustomCardModel, IArrowCard {
     }
 
     public async Task arrowEffect(PlayerChoiceContext choiceContext, CardPlay cardPlay, IEnumerable<DamageResult> damageResults, CardModel clusterCard) {
-        clusterCard.DynamicVars.Damage.UpgradeValueBy(clusterCard.DynamicVars.Damage.BaseValue * DynamicVars["Amount"].BaseValue / 100M);
+        clusterCard.DynamicVars["Amount"].UpgradeValueBy(clusterCard.DynamicVars["Grow"].BaseValue);
+    }
+
+    public void onMerge(CardModel clusterCard) {
+        clusterCard.DynamicVars["Amount"].UpgradeValueBy(DynamicVars["Amount"].BaseValue);
     }
 }

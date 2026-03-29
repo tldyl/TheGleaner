@@ -4,6 +4,7 @@ using DemoMod.TheGleaner.Pools;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Commands.Builders;
 using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
@@ -26,7 +27,14 @@ public class ClusterStrike : CustomCardModel, IAppendDescriptionCard {
     }
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new IntVar("Amount", 0),
-        new DamageVar(6, ValueProp.Move)
+        new IntVar("HitCount", 0),
+        new IntVar("Grow", 50),
+        new DamageVar(6, ValueProp.Move),
+        new CalculationBaseVar(0),
+        new ExtraDamageVar(6),
+        new CalculatedDamageVar(ValueProp.Unpowered).WithMultiplier((Func<CardModel, Creature, Decimal>) ((card, _) => {
+            return card.DynamicVars["Amount"].BaseValue / 100M + 1M;
+        }))
     ];
     private List<CardModel> cards = [];
 
@@ -34,14 +42,28 @@ public class ClusterStrike : CustomCardModel, IAppendDescriptionCard {
     }
 
     public void setCards(List<CardModel> cards) {
-        this.cards.AddRange(cards);
-        DynamicVars["Amount"].UpgradeValueBy(cards.Count);
+        int hitCount = 0;
+        foreach (CardModel card in cards) {
+            if (!this.cards.Any(c => c.Id.Equals(card.Id))) {
+                this.cards.Add(card);
+            }
+            if (card is IArrowCard arrowCard) {
+                arrowCard.onMerge(this);
+            }
+            if (card is ClusterStrike) {
+                hitCount += card.DynamicVars["HitCount"].IntValue;
+            } else {
+                hitCount++;
+            }
+        }
+
+        DynamicVars["HitCount"].UpgradeValueBy(hitCount);
     }
     
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
-        AttackCommand attackCommand = await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
+        AttackCommand attackCommand = await DamageCmd.Attack(DynamicVars.CalculatedDamage)
             .FromCard(this)
-            .WithHitCount(DynamicVars["Amount"].IntValue)
+            .WithHitCount(DynamicVars["HitCount"].IntValue)
             .Targeting(cardPlay.Target)
             .Execute(choiceContext);
         foreach (CardModel card in cards) {
@@ -51,7 +73,10 @@ public class ClusterStrike : CustomCardModel, IAppendDescriptionCard {
         }
     }
 
-    protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(3);
+    protected override void OnUpgrade() {
+        DynamicVars.Damage.UpgradeValueBy(3);
+        DynamicVars.ExtraDamage.UpgradeValueBy(3);
+    }
 
     public string AppendDescription() {
         List<string> descriptions = [];

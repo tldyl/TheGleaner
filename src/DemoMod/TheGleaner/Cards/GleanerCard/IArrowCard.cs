@@ -12,4 +12,8 @@ public interface IArrowCard {
     public LocString getArrowDescription();
 
     public Task arrowEffect(PlayerChoiceContext choiceContext, CardPlay cardPlay, IEnumerable<DamageResult> damageResults, CardModel clusterCard);
+
+    public void onMerge(CardModel clusterCard) {
+        
+    }
 }
