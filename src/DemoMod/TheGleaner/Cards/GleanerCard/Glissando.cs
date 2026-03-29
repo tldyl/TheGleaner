@@ -26,6 +26,7 @@ public class Glissando : CustomCardModel {
     }
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
+        await CreatureCmd.TriggerAnim(Owner.Creature, "Attack", 0.5f);
         IEnumerable<DamageResult> damageResults = await CreatureCmd.Damage(choiceContext, CombatState.HittableEnemies, DynamicVars.Damage, Owner.Creature,
             this);
         int count = damageResults.Count(result => result.WasTargetKilled);

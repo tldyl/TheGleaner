@@ -1,0 +1,14 @@
+[remap]
+
+importer="spine.skel"
+type="SpineSkeletonFileResource"
+uid="uid://beau0o74hinxt"
+path="res://.godot/imported/Q.skel-95c41cce60c928a1877406e0a04dc2a7.spskel"
+
+[deps]
+
+source_file="res://TheGleaner/scenes/char/TheGleaner/Q/combat/Q.skel"
+dest_files=["res://.godot/imported/Q.skel-95c41cce60c928a1877406e0a04dc2a7.spskel"]
+
+[params]
+

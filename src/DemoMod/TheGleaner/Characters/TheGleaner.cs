@@ -5,10 +5,14 @@ using MegaCrit.Sts2.Core.Entities.Characters;
 using MegaCrit.Sts2.Core.Models;
 using DemoMod.TheGleaner.Pools;
 using DemoMod.TheGleaner.Relics;
+using MegaCrit.Sts2.Core.Animation;
+using MegaCrit.Sts2.Core.Bindings.MegaSpine;
 
 namespace DemoMod.TheGleaner.Characters;
 
 public class TheGleaner : PlaceholderCharacterModel {
+    public override float AttackAnimDelay => 0.5f;
+    public override float CastAnimDelay => 0.5f;
     public override Color NameColor => new Color(0.5f, 0.5f, 1f);
     public override CharacterGender Gender => CharacterGender.Feminine;
     public override int StartingHp => 74;
@@ -84,4 +88,25 @@ public class TheGleaner : PlaceholderCharacterModel {
         "vfx/vfx_bloody_impact",
         "vfx/vfx_rock_shatter"
     ];
+
+    public override CreatureAnimator GenerateAnimator(MegaSprite controller) {
+        AnimState animState = new AnimState("idle", true);
+        AnimState state1 = new AnimState("zhouyin"); //cast
+        AnimState state2 = new AnimState("shuntan"); //attack
+        AnimState state3 = new AnimState("zhouyin"); //hurt
+        AnimState state4 = new AnimState("idle"); //die
+        AnimState state5 = new AnimState("idle", true); //relaxed_loop
+        state1.NextState = animState;
+        state2.NextState = animState;
+        state3.NextState = animState;
+        state5.AddBranch("Idle", animState);
+        CreatureAnimator animator = new CreatureAnimator(animState, controller);
+        animator.AddAnyState("Idle", animState);
+        animator.AddAnyState("Dead", state4);
+        animator.AddAnyState("Hit", state3);
+        animator.AddAnyState("Attack", state2);
+        animator.AddAnyState("Cast", state1);
+        animator.AddAnyState("Relaxed", state5);
+        return animator;
+    }
 }

@@ -35,6 +35,7 @@ public class ClusterStringWeave : CustomCardModel {
             foreach (CardModel card in toRemove) {
                 pile.RemoveInternal(card);
                 await CardCmd.Exhaust(choiceContext, card);
+                PileType.Exhaust.GetPile(Owner).InvokeCardAddFinished();
                 exhaustedCards.Add(card);
             }
             if (pile.Cards.Count == 0 && PileType.Hand.GetPile(Owner).Cards.Any(c => c is ScoreEntryCard)) {
