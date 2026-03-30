@@ -1,17 +1,17 @@
 using BaseLib.Abstracts;
 using BaseLib.Utils;
-using DemoMod.TheGleaner.Pools;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
+using MegaCrit.Sts2.Core.Models.CardPools;
 using MegaCrit.Sts2.Core.Models.Powers;
 
 namespace DemoMod.TheGleaner.Cards.GleanerCard;
 
-[Pool(typeof(CardPool))]
+[Pool(typeof(TokenCardPool))]
 public class NightingaleAtTheAbyss : CustomCardModel {
     public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
 
@@ -24,7 +24,7 @@ public class NightingaleAtTheAbyss : CustomCardModel {
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<VulnerablePower>(), HoverTipFactory.FromPower<WeakPower>()];
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
 
-    public NightingaleAtTheAbyss() : base(1, CardType.Skill, CardRarity.Event, TargetType.AllEnemies) {
+    public NightingaleAtTheAbyss() : base(1, CardType.Skill, CardRarity.Token, TargetType.AllEnemies) {
     }
     
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {

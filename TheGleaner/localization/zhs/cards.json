@@ -9,7 +9,7 @@
   "DEMOMOD-WINDS_MUSE.description": "[gold]拾录[/gold]{Amount}张牌。",
   "DEMOMOD-WINDS_MUSE.selectionScreenPrompt": "选择至多{Amount}张牌。",
   "DEMOMOD-GLISSANDO.title": "划奏",
-  "DEMOMOD-GLISSANDO.description": "对所有敌人造成{Damage:diff()}点伤害。\n打出此牌后，如果只有一名敌人存活，则给予{Amount}层[gold]虚弱[/gold]。",
+  "DEMOMOD-GLISSANDO.description": "对所有敌人造成{Damage:diff()}点伤害。\n如果只有一名敌人存活，则给予{Amount}层[gold]虚弱[/gold]。",
   "DEMOMOD-STAFF_SURGING.title": "谱面跃动",
   "DEMOMOD-STAFF_SURGING.description": "给予{IfUpgraded:show:所有敌人|}{Amount}层[gold]易伤[/gold]。\n回合结束时，如果这张牌还在手牌中，则进入[gold]乐谱[/gold]。",
   "DEMOMOD-STRING_AND_PILLAR.title": "弦柱之间",
@@ -48,5 +48,9 @@
   "DEMOMOD-DIRGE_OF_FAREWELL.title": "离别的恸哭",
   "DEMOMOD-DIRGE_OF_FAREWELL.description": "当这张牌被[gold]消耗[/gold]时，对所有人造成{Damage}点伤害。",
   "DEMOMOD-PULSATION_OF_THE_TIDES.title": "律动的潮汐",
-  "DEMOMOD-PULSATION_OF_THE_TIDES.description": "对所有敌人造成{Damage:diff()}点伤害。\n打出此牌后，如果只有一名敌人存活，再对所有敌人造成{Damage:diff()}点伤害一次。\n[gold]力量[/gold]在这张牌上发挥{StrMul}倍效果。"
+  "DEMOMOD-PULSATION_OF_THE_TIDES.description": "对所有敌人造成{Damage:diff()}点伤害。\n打出此牌后，如果只有一名敌人存活，再对所有敌人造成{Damage:diff()}点伤害一次。\n[gold]力量[/gold]在这张牌上发挥{StrMul}倍效果。",
+  "DEMOMOD-STANDOFF.title": "对位",
+  "DEMOMOD-STANDOFF.description": "对所有意图是攻击的敌人造成{Damage:diff()}点伤害。",
+  "DEMOMOD-PHANTOM_HARP.title": "幻琴",
+  "DEMOMOD-STANDOFF.description": "造成{Damage:diff()}点伤害{AttackTimes}次。\n回合结束时，如果这张牌还在手牌中，则进入[gold]乐谱[/gold]；\n如果已在乐谱中，这张牌的费用在下次打出前减少{Energy}。"
 }

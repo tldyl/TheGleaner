@@ -1,16 +1,16 @@
 using BaseLib.Abstracts;
 using BaseLib.Utils;
-using DemoMod.TheGleaner.Pools;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
+using MegaCrit.Sts2.Core.Models.CardPools;
 using MegaCrit.Sts2.Core.Models.Powers;
 
 namespace DemoMod.TheGleaner.Cards.GleanerCard;
 
-[Pool(typeof(CardPool))]
+[Pool(typeof(TokenCardPool))]
 public class ForgingAtDawn : CustomCardModel {
     public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
 

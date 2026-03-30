@@ -1,6 +1,5 @@
 using BaseLib.Abstracts;
 using BaseLib.Utils;
-using DemoMod.TheGleaner.Pools;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Commands.Builders;
 using MegaCrit.Sts2.Core.Entities.Cards;
@@ -9,11 +8,12 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Models.CardPools;
 using MegaCrit.Sts2.Core.ValueProps;
 
 namespace DemoMod.TheGleaner.Cards.GleanerCard;
 
-[Pool(typeof(CardPool))]
+[Pool(typeof(TokenCardPool))]
 public class ClusterStrike : CustomCardModel, IAppendDescriptionCard {
     public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
     protected override HashSet<CardTag> CanonicalTags => [CardTag.Strike];
@@ -38,7 +38,7 @@ public class ClusterStrike : CustomCardModel, IAppendDescriptionCard {
     ];
     private List<CardModel> cards = [];
 
-    public ClusterStrike() : base(1, CardType.Attack, CardRarity.Basic, TargetType.AnyEnemy) {
+    public ClusterStrike() : base(1, CardType.Attack, CardRarity.Token, TargetType.AnyEnemy) {
     }
 
     public void setCards(List<CardModel> cards) {

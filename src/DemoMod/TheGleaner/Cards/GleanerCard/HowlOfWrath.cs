@@ -1,7 +1,6 @@
 using BaseLib.Abstracts;
 using BaseLib.Utils;
 using DemoMod.TheGleaner.Enums;
-using DemoMod.TheGleaner.Pools;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
@@ -11,11 +10,12 @@ using MegaCrit.Sts2.Core.Helpers;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Models.CardPools;
 using MegaCrit.Sts2.Core.Models.Powers;
 
 namespace DemoMod.TheGleaner.Cards.GleanerCard;
 
-[Pool(typeof(CardPool))]
+[Pool(typeof(StatusCardPool))]
 public class HowlOfWrath : CustomCardModel, IDissonanceCard {
     public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
 
