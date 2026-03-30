@@ -1,7 +1,10 @@
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using BaseLib.Abstracts;
 using BaseLib.Patches.Content;
 using DemoMod.TheGleaner.CardPiles;
 using DemoMod.TheGleaner.Cards.GleanerCard;
+using System.Linq;
 using MegaCrit.Sts2.Core.CardSelection;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
@@ -16,6 +19,40 @@ namespace DemoMod.TheGleaner.Commands;
 
 public static class ScorePileCmd {
     public static bool openingScorePile;
+    private static readonly Dictionary<PlayerCombatState, int> CombatStartDeckCounts = new();
+
+    public static int GetCapacity(Player player) {
+        if (player?.PlayerCombatState == null) {
+            return 0;
+        }
+
+        PlayerCombatState combatState = player.PlayerCombatState;
+        ScorePile scorePile = CustomPiles.GetCustomPile(combatState, CustomEnums.ScorePile) as ScorePile;
+        int combatStartDeckCount = player.Deck.Cards.Count;
+
+        if (scorePile != null && scorePile.combatStartDeckCount > 0) {
+            combatStartDeckCount = scorePile.combatStartDeckCount;
+        } else if (CombatStartDeckCounts.TryGetValue(combatState, out int snapshotDeckCount) && snapshotDeckCount > 0) {
+            combatStartDeckCount = snapshotDeckCount;
+        }
+
+        return combatStartDeckCount / 3;
+    }
+
+    public static void InitializeCapacityFromCurrentDeck(Player player) {
+        if (player?.PlayerCombatState == null) {
+            return;
+        }
+
+        PlayerCombatState combatState = player.PlayerCombatState;
+        int deckCount = player.Deck.Cards.Count;
+        CombatStartDeckCounts[combatState] = deckCount;
+
+        ScorePile scorePile = CustomPiles.GetCustomPile(combatState, CustomEnums.ScorePile) as ScorePile;
+        if (scorePile != null) {
+            scorePile.combatStartDeckCount = deckCount;
+        }
+    }
     
     public static async Task<IEnumerable<CardModel>> ShowScorePileScreen(PlayerCombatState combatState,
         PlayerChoiceContext context,
@@ -29,20 +66,16 @@ public static class ScorePileCmd {
     }
 
     public static async Task AddCards(PlayerCombatState combatState, Player player, params CardModel[] cards) {
-        if (!CustomPiles.CustomPileProviders.ContainsKey(CustomEnums.ScorePile)) {
-            CustomPiles.CustomPileProviders[CustomEnums.ScorePile] = () => new ScorePile();
-        }
-        CardPile pile = CustomPiles.GetCustomPile(combatState, CustomEnums.ScorePile);
-        if (pile == null) {
-            Dictionary<PileType, CustomPile> dictionary = CustomPiles.Piles.Get(combatState);
-            if (dictionary == null) {
-                dictionary = new Dictionary<PileType, CustomPile>();
-                CustomPiles.Piles.Set(combatState, dictionary);
+        ScorePile pile = GetOrCreateScorePile(combatState);
+        if (pile.combatStartDeckCount <= 0) {
+            if (CombatStartDeckCounts.TryGetValue(combatState, out int snapshotDeckCount) && snapshotDeckCount > 0) {
+                pile.combatStartDeckCount = snapshotDeckCount;
+            } else {
+                pile.combatStartDeckCount = player.Deck.Cards.Count;
             }
-            pile = new ScorePile();
-            dictionary.Add(CustomEnums.ScorePile, (CustomPile) pile);
         }
-        int capacity = player.Deck.Cards.Count / 3;
+
+        int capacity = GetCapacity(player);
         foreach (CardModel card in cards) {
             card.RemoveFromCurrentPile();
             if (NRun.Instance.CombatRoom.Ui.Hand.GetCardHolder(card) != null) {
@@ -66,5 +99,26 @@ public static class ScorePileCmd {
             player.Creature.CombatState.AddCard(scoreEntryCard, player);
             await CardPileCmd.AddGeneratedCardToCombat(scoreEntryCard, PileType.Hand, true);
         }
+    }
+
+    private static ScorePile GetOrCreateScorePile(PlayerCombatState combatState) {
+        if (!CustomPiles.CustomPileProviders.ContainsKey(CustomEnums.ScorePile)) {
+            CustomPiles.CustomPileProviders[CustomEnums.ScorePile] = () => new ScorePile();
+        }
+
+        ScorePile pile = CustomPiles.GetCustomPile(combatState, CustomEnums.ScorePile) as ScorePile;
+        if (pile != null) {
+            return pile;
+        }
+
+        Dictionary<PileType, CustomPile> dictionary = CustomPiles.Piles.Get(combatState);
+        if (dictionary == null) {
+            dictionary = new Dictionary<PileType, CustomPile>();
+            CustomPiles.Piles.Set(combatState, dictionary);
+        }
+
+        pile = new ScorePile();
+        dictionary[CustomEnums.ScorePile] = pile;
+        return pile;
     }
 }
