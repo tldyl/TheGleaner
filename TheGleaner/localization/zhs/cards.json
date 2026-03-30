@@ -52,8 +52,13 @@
   "DEMOMOD-STANDOFF.title": "对位",
   "DEMOMOD-STANDOFF.description": "对所有意图是攻击的敌人造成{Damage:diff()}点伤害。",
   "DEMOMOD-PHANTOM_HARP.title": "幻琴",
-  "DEMOMOD-STANDOFF.description": "造成{Damage:diff()}点伤害{AttackTimes}次。\n回合结束时，如果这张牌还在手牌中，则进入[gold]乐谱[/gold]；\n如果已在乐谱中，这张牌的费用在下次打出前减少{Energy}。",
-  "DEMOMOD-PULSATION_OF_THE_TIDES.description": "对所有敌人造成{Damage:diff()}点伤害。\n打出此牌后，如果只有一名敌人存活，再对所有敌人造成{Damage:diff()}点伤害一次。\n[gold]力量[/gold]在这张牌上发挥{StrMul}倍效果。",
+  "DEMOMOD-PHANTOM_HARP.description": "造成{Damage:diff()}点伤害{AttackTimes}次。\n回合结束时，如果这张牌还在手牌中，则进入[gold]乐谱[/gold]；\n如果已在乐谱中，这张牌的费用在下次打出前减少{Energy}。",
+  "DEMOMOD-TREMOR_CHORD.title": "荡弦",
+  "DEMOMOD-TREMOR_CHORD.description": "随机对敌人造成{Damage:diff()}点伤害{Repeat:diff()}次。\n在你的回合开始时，从[gold]乐谱[/gold]将此牌打出。",
+  "DEMOMOD-CRITICAL_TUNING.title": "临界调息",
+  "DEMOMOD-CRITICAL_TUNING.description": "抽{Draw}张牌。\n使抽到的牌的费用在下次打出前增加1{energyPrefix:energyIcons(1)}。",
+  
+  
   "DEMOMOD-CASCADING_STRINGS.title": "流弦",
   "DEMOMOD-CASCADING_STRINGS.description": "造成{Damage:diff()}点伤害。\n在本回合获得{Amount}点[gold]敏捷[/gold]",
   "DEMOMOD-HARMONIC_PILLAR.title": "衡柱",

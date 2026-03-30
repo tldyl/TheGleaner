@@ -28,7 +28,7 @@ public class PhantomHarp : CustomCardModel {
     }
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
-        AttackCommand _ = await DamageCmd.Attack(DynamicVars.CalculatedDamage)
+        AttackCommand _ = await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
             .FromCard(this)
             .WithHitCount(DynamicVars["AttackTimes"].IntValue)
             .Targeting(cardPlay.Target)
@@ -36,6 +36,9 @@ public class PhantomHarp : CustomCardModel {
     }
     
     public override async Task BeforeTurnEnd(PlayerChoiceContext choiceContext, CombatSide side) {
+        if (side != CombatSide.Player) {
+            return;
+        }
         CardPile scorePile = CustomPiles.GetCustomPile(Owner.PlayerCombatState, CustomEnums.ScorePile);
         if (scorePile != null && scorePile.Cards.Contains(this)) {
             EnergyCost.AddUntilPlayed(-1);
