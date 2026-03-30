@@ -10,7 +10,7 @@ using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Rooms;
 
 namespace DemoMod.TheGleaner.Relics;
-[Pool(typeof(RelicPool))]
+[Pool(typeof(JeraRelicPool))]
 public class Jera : CustomRelicModel {
     public override RelicRarity Rarity => RelicRarity.Starter;
     public override string PackedIconPath => "res://TheGleaner/images/relics/Jera.png";

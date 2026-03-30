@@ -10,7 +10,7 @@ using MegaCrit.Sts2.Core.Models.Powers;
 
 namespace DemoMod.TheGleaner.Cards.GleanerCard;
 
-[Pool(typeof(TokenCardPool))]
+[Pool(typeof(ColorlessCardPool))]
 public class ForgingAtDawn : CustomCardModel {
     public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
 
@@ -22,7 +22,7 @@ public class ForgingAtDawn : CustomCardModel {
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<StrengthPower>(), HoverTipFactory.FromPower<DexterityPower>()];
 
-    public ForgingAtDawn() : base(1, CardType.Power, CardRarity.Event, TargetType.Self) {
+    public ForgingAtDawn() : base(1, CardType.Power, CardRarity.Common, TargetType.Self) {
         
     }
 

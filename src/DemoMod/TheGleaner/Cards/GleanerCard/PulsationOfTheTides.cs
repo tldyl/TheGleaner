@@ -13,7 +13,7 @@ using MegaCrit.Sts2.Core.ValueProps;
 
 namespace DemoMod.TheGleaner.Cards.GleanerCard;
 
-[Pool(typeof(TokenCardPool))]
+[Pool(typeof(ColorlessCardPool))]
 public class PulsationOfTheTides : CustomCardModel {
     public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
     protected override IEnumerable<DynamicVar> CanonicalVars => [
@@ -24,7 +24,7 @@ public class PulsationOfTheTides : CustomCardModel {
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<StrengthPower>()];
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
 
-    public PulsationOfTheTides() : base(1, CardType.Attack, CardRarity.Token, TargetType.AllEnemies) {
+    public PulsationOfTheTides() : base(1, CardType.Attack, CardRarity.Common, TargetType.AllEnemies) {
         
     }
 

@@ -7,9 +7,6 @@ using DemoMod.TheGleaner.Pools;
 using DemoMod.TheGleaner.Relics;
 using MegaCrit.Sts2.Core.Animation;
 using MegaCrit.Sts2.Core.Bindings.MegaSpine;
-using MegaCrit.Sts2.Core.Entities.Creatures;
-using MegaCrit.Sts2.Core.GameActions.Multiplayer;
-using MegaCrit.Sts2.Core.ValueProps;
 
 namespace DemoMod.TheGleaner.Characters;
 
@@ -65,7 +62,7 @@ public class TheGleaner : PlaceholderCharacterModel {
     public override string CharacterTransitionSfx => "event:/sfx/ui/wipe_ironclad";
     
     public override CardPoolModel CardPool => ModelDb.CardPool<CardPool>();
-    public override RelicPoolModel RelicPool => ModelDb.RelicPool<RelicPool>();
+    public override RelicPoolModel RelicPool => ModelDb.RelicPool<JeraRelicPool>();
     public override PotionPoolModel PotionPool => ModelDb.PotionPool<PotionPool>();
     public override IEnumerable<CardModel> StartingDeck => [
         ModelDb.Card<StrikeGleaner>(),
@@ -91,16 +88,6 @@ public class TheGleaner : PlaceholderCharacterModel {
         "vfx/vfx_bloody_impact",
         "vfx/vfx_rock_shatter"
     ];
-
-    public override async Task BeforeDamageReceived(
-        PlayerChoiceContext choiceContext,
-        Creature target,
-        Decimal amount,
-        ValueProp props,
-        Creature? dealer,
-        CardModel? cardSource) {
-        //TODO 格挡动画
-    }
 
     public override CreatureAnimator GenerateAnimator(MegaSprite controller) {
         AnimState animState = new AnimState("idle", true);
