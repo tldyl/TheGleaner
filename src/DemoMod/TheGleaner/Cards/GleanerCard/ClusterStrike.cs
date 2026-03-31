@@ -1,6 +1,5 @@
 using BaseLib.Abstracts;
 using BaseLib.Utils;
-using DemoMod.TheGleaner.Pools;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Commands.Builders;
 using MegaCrit.Sts2.Core.Entities.Cards;
@@ -9,11 +8,12 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Models.CardPools;
 using MegaCrit.Sts2.Core.ValueProps;
 
 namespace DemoMod.TheGleaner.Cards.GleanerCard;
 
-[Pool(typeof(CardPool))]
+[Pool(typeof(TokenCardPool))]
 public class ClusterStrike : CustomCardModel, IAppendDescriptionCard {
     public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
     protected override HashSet<CardTag> CanonicalTags => [CardTag.Strike];
@@ -29,16 +29,11 @@ public class ClusterStrike : CustomCardModel, IAppendDescriptionCard {
         new IntVar("Amount", 0),
         new IntVar("HitCount", 0),
         new IntVar("Grow", 50),
-        new DamageVar(6, ValueProp.Move),
-        new CalculationBaseVar(0),
-        new ExtraDamageVar(6),
-        new CalculatedDamageVar(ValueProp.Unpowered).WithMultiplier((Func<CardModel, Creature, Decimal>) ((card, _) => {
-            return card.DynamicVars["Amount"].BaseValue / 100M + 1M;
-        }))
+        new DamageVar(6, ValueProp.Move)
     ];
     private List<CardModel> cards = [];
 
-    public ClusterStrike() : base(1, CardType.Attack, CardRarity.Basic, TargetType.AnyEnemy) {
+    public ClusterStrike() : base(1, CardType.Attack, CardRarity.Token, TargetType.AnyEnemy) {
     }
 
     public void setCards(List<CardModel> cards) {
@@ -61,7 +56,7 @@ public class ClusterStrike : CustomCardModel, IAppendDescriptionCard {
     }
     
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
-        AttackCommand attackCommand = await DamageCmd.Attack(DynamicVars.CalculatedDamage)
+        AttackCommand attackCommand = await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
             .FromCard(this)
             .WithHitCount(DynamicVars["HitCount"].IntValue)
             .Targeting(cardPlay.Target)
@@ -73,9 +68,21 @@ public class ClusterStrike : CustomCardModel, IAppendDescriptionCard {
         }
     }
 
+    public override Decimal ModifyDamageAdditive(
+        Creature? target,
+        Decimal amount,
+        ValueProp props,
+        Creature? dealer,
+        CardModel? cardSource) {
+        if (cardSource == this && !props.HasFlag(ValueProp.Unpowered)) {
+            decimal baseDamage = DynamicVars.Damage.BaseValue;
+            return baseDamage * DynamicVars["Amount"].BaseValue / 100M;
+        }
+        return 0M;
+    }
+    
     protected override void OnUpgrade() {
         DynamicVars.Damage.UpgradeValueBy(3);
-        DynamicVars.ExtraDamage.UpgradeValueBy(3);
     }
 
     public string AppendDescription() {

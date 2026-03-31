@@ -7,6 +7,7 @@ using MegaCrit.Sts2.Core.Commands.Builders;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Rooms;
 using MegaCrit.Sts2.Core.ValueProps;
@@ -20,7 +21,7 @@ public class SightReaping : CustomCardModel {
         new DamageVar(14, ValueProp.Move)
     ];
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
-
+    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.Static(StaticHoverTip.Fatal)];
     public SightReaping() : base(2, CardType.Attack, CardRarity.Rare, TargetType.AnyEnemy) {
         
     }

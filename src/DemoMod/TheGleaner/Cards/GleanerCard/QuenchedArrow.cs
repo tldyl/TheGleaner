@@ -20,12 +20,7 @@ public class QuenchedArrow : CustomCardModel, IArrowCard {
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new IntVar("Amount", 0),
         new IntVar("Grow", 50),
-        new CalculationBaseVar(0),
-        new ExtraDamageVar(16),
-        new CalculatedDamageVar(ValueProp.Unpowered).WithMultiplier((Func<CardModel, Creature, Decimal>) ((card, _) => {
-                return card.DynamicVars["Amount"].BaseValue / 100M + 1M;
-            })
-        )
+        new DamageVar(16, ValueProp.Move)
     ];
     protected override HashSet<CardTag> CanonicalTags => [CustomEnums.Arrow];
 
@@ -33,14 +28,27 @@ public class QuenchedArrow : CustomCardModel, IArrowCard {
     }
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
-        AttackCommand attackCommand = await DamageCmd.Attack(DynamicVars.CalculatedDamage)
+        AttackCommand _ = await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
             .FromCard(this)
             .Targeting(cardPlay.Target)
             .Execute(choiceContext);
         DynamicVars["Amount"].UpgradeValueBy(DynamicVars["Grow"].BaseValue);
     }
 
-    protected override void OnUpgrade() => DynamicVars.ExtraDamage.UpgradeValueBy(4);
+    public override Decimal ModifyDamageAdditive(
+        Creature? target,
+        Decimal amount,
+        ValueProp props,
+        Creature? dealer,
+        CardModel? cardSource) {
+        if (cardSource == this && !props.HasFlag(ValueProp.Unpowered)) {
+            decimal baseDamage = DynamicVars.Damage.BaseValue;
+            return baseDamage * DynamicVars["Amount"].BaseValue / 100M;
+        }
+        return 0M;
+    }
+
+    protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(4);
     
     public LocString getArrowName() {
         return new LocString("cards", "DEMOMOD-QUENCHED_ARROW.arrowName");
