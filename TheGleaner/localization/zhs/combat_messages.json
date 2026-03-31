@@ -1,0 +1,11 @@
+{
+  "JERA_NO_LIVING_ALLIES": "哎…？\\n诘拉的队友呢？",
+  "JERA_NOT_ENOUGH_ENERGY": "诘拉没[red]能量[/red]了。",
+  "JERA_NOT_ENOUGH_STARS": "诘拉没[red]辉星[/red]了。",
+  "JERA_UNPLAYABLE": "诘拉打不出这张牌。",
+  "JERA_BLOCKED_BY_HOOK": "诘拉被[red]{BlockingHook}[/red]\\n所阻挡。",
+  "JERA_NO_DRAW": "诘拉没牌可抽。",
+  "JERA_HAND_FULL": "诘拉拿不下\\n这么多牌……",
+  "JERA_OPEN_EMPTY_DRAW": "诘拉的抽牌堆是[red]空的[/red]。",
+  "JERA_OPEN_EMPTY_DISCARD": "诘拉的弃牌堆是[red]空的[/red]。"
+}
