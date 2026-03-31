@@ -57,6 +57,12 @@
   "DEMOMOD-TREMOR_CHORD.description": "随机对敌人造成{Damage:diff()}点伤害{Repeat:diff()}次。\n在你的回合开始时，从[gold]乐谱[/gold]将此牌打出。",
   "DEMOMOD-CRITICAL_TUNING.title": "临界调息",
   "DEMOMOD-CRITICAL_TUNING.description": "抽{Draw}张牌。\n使抽到的牌的费用在下次打出前增加1{energyPrefix:energyIcons(1)}。",
+  "DEMOMOD-BLAZING_HORN.title": "燃烧的圆号",
+  "DEMOMOD-BLAZING_HORN.description": "获得{energyPrefix:energyIcons({Energy})}。\n[gold]协奏[/gold]：下个回合开始时，获得{energyPrefix:energyIcons({Energy2})}。",
+  "DEMOMOD-BASICS.title": "基本功",
+  "DEMOMOD-BASICS.description": "[gold]拾录[/gold]{Amount}张牌。\n[gold]升级[/gold]乐谱中的所有牌。",
+  "DEMOMOD-FROSTED_FLUTE.title": "结霜的长笛",
+  "DEMOMOD-FROSTED_FLUTE.description": "造成{Damage:diff()}点伤害。\n直到下个回合开始时，\n目标敌人的[gold]力量[/gold]不会再增加。\n[gold]协奏[/gold]：所有敌人减少{Amount}点[gold]力量[/gold]一回合。",
   
   
   "DEMOMOD-CASCADING_STRINGS.title": "流弦",

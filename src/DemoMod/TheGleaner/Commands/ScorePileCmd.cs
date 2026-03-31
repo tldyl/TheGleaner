@@ -67,4 +67,26 @@ public static class ScorePileCmd {
             await CardPileCmd.AddGeneratedCardToCombat(scoreEntryCard, PileType.Hand, true);
         }
     }
+
+    public static async Task Glean(Player player, PlayerChoiceContext choiceContext, decimal baseValue, CardModel cardSource) {
+        CardSelectorPrefs prefs = new CardSelectorPrefs(new LocString("cards", "DEMOMOD-WINDS_MUSE.selectionScreenPrompt"), 0, (int) baseValue);
+        IEnumerable<CardModel> selectedCards = await CardSelectCmd.FromHand(choiceContext, player, prefs, _ => true, cardSource);
+        await AddCards(player.PlayerCombatState, player, selectedCards.ToArray());
+        if (selectedCards.Count() < baseValue) {
+            int amount = (int) baseValue - selectedCards.Count();
+            CardPile drawPile = PileType.Draw.GetPile(player);
+            List<CardModel> cards = [];
+            for (int i = 0; i < amount; i++) {
+                await CardPileCmd.ShuffleIfNecessary(choiceContext, player);
+                CardModel cardModel = drawPile.Cards.FirstOrDefault();
+                if (cardModel != null) {
+                    cardModel.RemoveFromCurrentPile();
+                    cards.Add(cardModel);
+                } else {
+                    break;
+                }
+            }
+            await AddCards(player.PlayerCombatState, player, cards.ToArray());
+        }
+    }
 }
