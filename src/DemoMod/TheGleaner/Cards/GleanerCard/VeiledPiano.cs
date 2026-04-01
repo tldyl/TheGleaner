@@ -31,7 +31,6 @@ public class VeiledPiano : CustomCardModel, IConcertoCard {
         await CreatureCmd.TriggerAnim(Owner.Creature, "Attack", 0.5f);
         IEnumerable<DamageResult> _ = await CreatureCmd.Damage(choiceContext, CombatState.HittableEnemies, DynamicVars.Damage, Owner.Creature,
             this);
-        CardCmd.PreviewCardPileAdd(await CardPileCmd.AddGeneratedCardToCombat(CreateClone(), PileType.Draw, true), 2.2f);
     }
     
     public override Decimal ModifyDamageAdditive(
@@ -46,8 +45,8 @@ public class VeiledPiano : CustomCardModel, IConcertoCard {
         return 0M;
     }
     
-    public Task OnConcerto(CombatState combatState, PlayerChoiceContext choiceContext, CardPlay cardPlay) {
-        throw new NotImplementedException();
+    public async Task OnConcerto(CombatState combatState, PlayerChoiceContext choiceContext, CardPlay cardPlay) {
+        CardCmd.PreviewCardPileAdd(await CardPileCmd.AddGeneratedCardToCombat(CreateClone(), PileType.Draw, true), 2.2f);
     }
     
     protected override void OnUpgrade() => DynamicVars.ExtraDamage.UpgradeValueBy(2);

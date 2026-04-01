@@ -79,6 +79,18 @@
   "DEMOMOD-BUSTER_ARROW.description": "造成{Damage:diff()}点伤害。\n对所有其他敌人造成等量的伤害。",
   "DEMOMOD-BUSTER_ARROW.arrowName": "穿裂",
   "DEMOMOD-BUSTER_ARROW.arrowDescription": "对所有其他敌人造成等量的伤害。",
+  "DEMOMOD-ECHOING_ARROW.title": "回声箭镞",
+  "DEMOMOD-ECHOING_ARROW.description": "造成{Damage:diff()}点伤害。\n将一张此牌的复制品加入你的弃牌堆。",
+  "DEMOMOD-ECHOING_ARROW.arrowName": "回声",
+  "DEMOMOD-ECHOING_ARROW.arrowDescription": "将一张此牌的复制品加入你的弃牌堆。",
+  "DEMOMOD-OUROBOROS_SHOT.title": "衔尾射击",
+  "DEMOMOD-OUROBOROS_SHOT.description": "造成{Damage:diff()}点伤害。\n选择：将弃牌堆放入抽牌堆；\n调换抽牌堆与弃牌堆；\n[gold]拾录[/gold]{Amount}张牌。\n将此牌放入[gold]乐谱[/gold]。",
+  "DEMOMOD-SHUFFLE.title": "洗牌",
+  "DEMOMOD-SHUFFLE.description": "将弃牌堆的牌放入抽牌堆后洗牌。",
+  "DEMOMOD-SWAP_PILES.title": "反复",
+  "DEMOMOD-SWAP_PILES.description": "调换抽牌堆和弃牌堆（不洗牌）。",
+  "DEMOMOD-GLEAN_CARD.title": "拾录",
+  "DEMOMOD-SWAP_PILES.description": "[gold]拾录[/gold]{Amount}张牌。",
   
 
   "DEMOMOD-CASCADING_STRINGS.title": "流弦",

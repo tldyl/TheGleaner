@@ -32,13 +32,13 @@ public class TheGleaner : PlaceholderCharacterModel {
     // 商店人物动画。
     // public override string CustomMerchantAnimPath => "res://scenes/merchant/characters/ironclad_merchant.tscn";
     // 多人模式-手指。
-    // public override string CustomArmPointingTexturePath => null;
+    public override string CustomArmPointingTexturePath => "res://TheGleaner/images/multiplayer/multiplayer_hand_gleaner_point.png";
     // 多人模式剪刀石头布-石头。
-    // public override string CustomArmRockTexturePath => null;
+    public override string CustomArmRockTexturePath => "res://TheGleaner/images/multiplayer/multiplayer_hand_gleaner_rock.png";
     // 多人模式剪刀石头布-布。
-    // public override string CustomArmPaperTexturePath => null;
+    public override string CustomArmPaperTexturePath => "res://TheGleaner/images/multiplayer/multiplayer_hand_gleaner_paper.png";
     // 多人模式剪刀石头布-剪刀。
-    // public override string CustomArmScissorsTexturePath => null;
+    public override string CustomArmScissorsTexturePath => "res://TheGleaner/images/multiplayer/multiplayer_hand_gleaner_scissors.png";
 
     // 人物选择背景。
     public override string CustomCharacterSelectBg => "res://TheGleaner/scenes/gleaner_bg.tscn";
