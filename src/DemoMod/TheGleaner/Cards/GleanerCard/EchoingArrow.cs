@@ -16,6 +16,7 @@ namespace DemoMod.TheGleaner.Cards.GleanerCard;
 
 [Pool(typeof(CardPool))]
 public class EchoingArrow : CustomCardModel, IArrowCard {
+    public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new DamageVar(13, ValueProp.Move)
     ];

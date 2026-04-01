@@ -8,6 +8,7 @@ using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.Hooks;
 using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Nodes;
@@ -92,6 +93,7 @@ public static class ScorePileCmd {
                 pile.RemoveInternal(bottomCard);
                 await CardPileCmd.Add(bottomCard, PileType.Discard);
                 PileType.Discard.GetPile(player).InvokeCardAddFinished();
+                await Hook.AfterCardChangedPiles(player.RunState, player.Creature.CombatState, bottomCard, CustomEnums.ScorePile, bottomCard);
             } else {
                 pile.AddInternal(card, 0);
             }

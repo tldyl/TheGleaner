@@ -10,7 +10,7 @@ public class TanxPatch {
     public static class PatchDefineDialogues {
         public static void Postfix(Tanx __instance, AncientDialogueSet __result) {
             __result.CharacterDialogues[ModelDb.Character<global::DemoMod.TheGleaner.Characters.TheGleaner>().Id.Entry] = [
-                new AncientDialogue(["event:/sfx/npcs/tanx/tanx_curiosity", "event:/sfx/npcs/tanx/tanx_laugh", "event:/sfx/npcs/tanx/tanx_roar"]) {
+                new AncientDialogue(["event:/sfx/npcs/tanx/tanx_curiosity", "", "event:/sfx/npcs/tanx/tanx_laugh", "", "event:/sfx/npcs/tanx/tanx_roar"]) {
                     VisitIndex = 0
                 }
             ];

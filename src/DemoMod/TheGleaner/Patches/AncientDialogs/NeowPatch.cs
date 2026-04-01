@@ -13,7 +13,7 @@ public class NeowPatch {
                 new AncientDialogue(["event:/sfx/npcs/neow/neow_welcome", "", "event:/sfx/npcs/neow/neow_sleepy"]) {
                     VisitIndex = 0
                 },
-                new AncientDialogue(["event:/sfx/npcs/neow/neow_welcome", ""]) {
+                new AncientDialogue(["event:/sfx/npcs/neow/neow_welcome", "", ""]) {
                     VisitIndex = 1
                 }
             ];

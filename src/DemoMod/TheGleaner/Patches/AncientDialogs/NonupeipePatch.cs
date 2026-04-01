@@ -10,7 +10,7 @@ public class NonupeipePatch {
     public static class PatchDefineDialogues {
         public static void Postfix(Nonupeipe __instance, AncientDialogueSet __result) {
             __result.CharacterDialogues[ModelDb.Character<global::DemoMod.TheGleaner.Characters.TheGleaner>().Id.Entry] = [
-                new AncientDialogue(["event:/sfx/npcs/nonupeipe/nonupeipe_eeked", "event:/sfx/npcs/nonupeipe/nonupeipe_giggle"]) {
+                new AncientDialogue(["event:/sfx/npcs/nonupeipe/nonupeipe_eeked", "", "event:/sfx/npcs/nonupeipe/nonupeipe_giggle", ""]) {
                     VisitIndex = 0
                 }
             ];

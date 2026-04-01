@@ -10,7 +10,7 @@ public class OrobasPatch {
     public static class PatchDefineDialogues {
         public static void Postfix(Orobas __instance, AncientDialogueSet __result) {
             __result.CharacterDialogues[ModelDb.Character<global::DemoMod.TheGleaner.Characters.TheGleaner>().Id.Entry] = [
-                new AncientDialogue(["", "", ""]) {
+                new AncientDialogue(["", "", "", "", ""]) {
                     VisitIndex = 0
                 }
             ];

@@ -36,7 +36,7 @@ public class ScoreEntryCard : CustomCardModel {
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
         List<CardModel> selectedCards = (await ScorePileCmd.ShowScorePileScreen(Owner.PlayerCombatState, choiceContext, Owner)).ToList();
-        ScorePile scorePile = (ScorePile)CustomPiles.GetCustomPile(Owner.PlayerCombatState, CustomEnums.ScorePile);
+        ScorePile scorePile = ScorePileCmd.GetOrCreateScorePile(Owner.PlayerCombatState);
         if (selectedCards.Count > 0) {
             int cost = Math.Max(0, selectedCards.Count - scorePile.freeTakeCount);
             scorePile.freeTakeCount -= Math.Min(scorePile.freeTakeCount, selectedCards.Count);

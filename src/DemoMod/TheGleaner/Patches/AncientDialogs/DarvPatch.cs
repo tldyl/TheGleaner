@@ -10,7 +10,7 @@ public class DarvPatch {
     public static class PatchDefineDialogues {
         public static void Postfix(Darv __instance, AncientDialogueSet __result) {
             __result.CharacterDialogues[ModelDb.Character<global::DemoMod.TheGleaner.Characters.TheGleaner>().Id.Entry] = [
-                new AncientDialogue(["event:/sfx/npcs/darv/darv_introduction", "event:/sfx/npcs/darv/darv_endeared"]) {
+                new AncientDialogue(["event:/sfx/npcs/darv/darv_introduction", "", "event:/sfx/npcs/darv/darv_endeared"]) {
                     VisitIndex = 0
                 }
             ];

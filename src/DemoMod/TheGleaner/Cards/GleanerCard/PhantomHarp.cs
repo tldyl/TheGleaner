@@ -23,7 +23,7 @@ public class PhantomHarp : CustomCardModel {
     protected override IEnumerable<DynamicVar> CanonicalVars =>
         new List<DynamicVar> {
             new DamageVar(7, ValueProp.Move),
-            new IntVar("AttackTimes", 3),
+            new RepeatVar(3),
             new EnergyVar(1)
         };
 
@@ -31,9 +31,9 @@ public class PhantomHarp : CustomCardModel {
     }
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
-        await DamageCmd.Attack(DynamicVars.CalculatedDamage)
+        await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
             .FromCard(this)
-            .WithHitCount(DynamicVars["AttackTimes"].IntValue)
+            .WithHitCount(DynamicVars.Repeat.IntValue)
             .Targeting(cardPlay.Target)
             .Execute(choiceContext);
     }
@@ -51,6 +51,6 @@ public class PhantomHarp : CustomCardModel {
     }
 
     protected override void OnUpgrade() {
-        DynamicVars["AttackTimes"].UpgradeValueBy(1);
+        DynamicVars.Repeat.UpgradeValueBy(1);
     }
 }
