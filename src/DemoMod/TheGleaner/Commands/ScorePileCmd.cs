@@ -16,7 +16,7 @@ using CustomEnums = DemoMod.TheGleaner.Enums.CustomEnums;
 namespace DemoMod.TheGleaner.Commands;
 
 public static class ScorePileCmd {
-    public static bool openingScorePile;
+    public static bool openingScorePileAndTakeCardsToHand;
     private static readonly Dictionary<PlayerCombatState, int> CombatStartDeckCounts = new();
 
     public static int GetCapacity(Player player) {
@@ -54,12 +54,19 @@ public static class ScorePileCmd {
     
     public static async Task<IEnumerable<CardModel>> ShowScorePileScreen(PlayerCombatState combatState,
         PlayerChoiceContext context,
-        Player player) {
+        Player player, bool freeToTake = false) {
         CardPile pile = CustomPiles.GetCustomPile(combatState, CustomEnums.ScorePile);
+        if (pile.Cards.Count == 0) {
+            return [];
+        }
         CardSelectorPrefs prefs = new CardSelectorPrefs(new LocString("relics", "DEMOMOD-JERA.selectionScreenPrompt"), 0, 2147483647);
-        openingScorePile = true;
+        if (!freeToTake) {
+            openingScorePileAndTakeCardsToHand = true;
+        }
         IEnumerable<CardModel> selectedCards = await CardSelectCmd.FromSimpleGrid(context, pile.Cards, player, prefs);
-        openingScorePile = false;
+        if (!freeToTake) {
+            openingScorePileAndTakeCardsToHand = false;
+        }
         return selectedCards;
     }
 
@@ -92,6 +99,9 @@ public static class ScorePileCmd {
                 dissonanceCard.OnEnterScorePile(combatState, player);
             }
         }
+        if (cards.Length > 0) {
+            pile.cardsAddedToScoreThisTurn = true;
+        }
         if (pile.Cards.Count > 0 && !combatState.Hand.Cards.Any(c => c is ScoreEntryCard)) {
             CardModel scoreEntryCard = ModelDb.Card<ScoreEntryCard>().ToMutable();
             player.Creature.CombatState.AddCard(scoreEntryCard, player);
@@ -99,6 +109,13 @@ public static class ScorePileCmd {
         }
     }
 
+    public static void RemoveCardsFromScoreOnly(PlayerCombatState combatState, Player player, IEnumerable<CardModel> cards) {
+        ScorePile pile = GetOrCreateScorePile(combatState);
+        foreach (CardModel card in cards) {
+            pile.RemoveInternal(card);
+        }
+    }
+    
     public static async Task Glean(Player player, PlayerChoiceContext choiceContext, decimal baseValue, CardModel cardSource) {
         CardSelectorPrefs prefs = new CardSelectorPrefs(new LocString("cards", "DEMOMOD-WINDS_MUSE.selectionScreenPrompt"), 0, (int) baseValue);
         IEnumerable<CardModel> selectedCards = await CardSelectCmd.FromHand(choiceContext, player, prefs, _ => true, cardSource);
@@ -121,7 +138,7 @@ public static class ScorePileCmd {
         }
     }
 
-    private static ScorePile GetOrCreateScorePile(PlayerCombatState combatState) {
+    public static ScorePile GetOrCreateScorePile(PlayerCombatState combatState) {
         if (!CustomPiles.CustomPileProviders.ContainsKey(CustomEnums.ScorePile)) {
             CustomPiles.CustomPileProviders[CustomEnums.ScorePile] = () => new ScorePile();
         }

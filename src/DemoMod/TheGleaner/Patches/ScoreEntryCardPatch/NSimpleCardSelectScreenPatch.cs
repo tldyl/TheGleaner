@@ -17,7 +17,7 @@ public class NSimpleCardSelectScreenPatch {
     [HarmonyPatch(typeof(NSimpleCardSelectScreen), "OnCardClicked")]
     public static class PatchOnCardClicked {
         public static bool Prefix(NSimpleCardSelectScreen __instance, CardModel card) {
-            if (!ScorePileCmd.openingScorePile) {
+            if (!ScorePileCmd.openingScorePileAndTakeCardsToHand) {
                 return true;
             }
             HashSet<CardModel> _selectedCards = (HashSet<CardModel>) AccessTools.Field(typeof(NSimpleCardSelectScreen), "_selectedCards").GetValue(__instance);

@@ -9,6 +9,7 @@ namespace DemoMod.TheGleaner.CardPiles;
 public class ScorePile : CustomPile {
     public int freeTakeCount = 1;
     public int combatStartDeckCount = -1;
+    public bool cardsAddedToScoreThisTurn = false;
     
     public ScorePile() : base(CustomEnums.ScorePile) {
     }

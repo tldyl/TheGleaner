@@ -9,6 +9,7 @@ using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.Hooks;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.ValueProps;
@@ -44,6 +45,9 @@ public class ScoreEntryCard : CustomCardModel {
             }
             selectedCards.ForEach(card => scorePile.RemoveInternal(card));
             await CardPileCmd.Add(selectedCards, PileType.Hand);
+            foreach (CardModel card in selectedCards) {
+                await Hook.AfterCardChangedPiles(Owner.RunState, Owner.Creature.CombatState, card, CustomEnums.ScorePile, this);
+            }
         }
         if (scorePile.Cards.Count == 0) {
             await CardPileCmd.RemoveFromCombat(this);
@@ -52,8 +56,9 @@ public class ScoreEntryCard : CustomCardModel {
 
     public override async Task BeforeSideTurnStart(PlayerChoiceContext choiceContext, CombatSide side, CombatState combatState) {
         if (side == CombatSide.Player) {
-            ScorePile scorePile = (ScorePile)CustomPiles.GetCustomPile(Owner.PlayerCombatState, CustomEnums.ScorePile);
+            ScorePile scorePile = ScorePileCmd.GetOrCreateScorePile(Owner.PlayerCombatState);
             scorePile.freeTakeCount = 1;
+            scorePile.cardsAddedToScoreThisTurn = false;
         }
     }
 

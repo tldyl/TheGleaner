@@ -56,14 +56,16 @@ public class ClusterStrike : CustomCardModel, IAppendDescriptionCard {
     }
     
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
+        AttackContext context = await AttackCommand.CreateContextAsync(CombatState, this);
         AttackCommand attackCommand = await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
             .FromCard(this)
             .WithHitCount(DynamicVars["HitCount"].IntValue)
             .Targeting(cardPlay.Target)
             .Execute(choiceContext);
+        context.AddHit(attackCommand.Results);
         foreach (CardModel card in cards) {
             if (card is IArrowCard arrowCard) {
-                await arrowCard.arrowEffect(choiceContext, cardPlay, attackCommand.Results, this);
+                await arrowCard.arrowEffect(choiceContext, cardPlay, attackCommand.Results, this, context);
             }
         }
     }
