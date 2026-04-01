@@ -22,9 +22,9 @@ public class TheGleaner : PlaceholderCharacterModel {
     // 卡牌拖尾路径。
     // public override string CustomTrailPath => "res://scenes/vfx/card_trail_ironclad.tscn";
     // 人物头像路径。
-    public override string CustomIconTexturePath => "res://icon.svg";
+    public override string CustomIconTexturePath => "res://TheGleaner/images/character_icon_gleaner.png";
     // 人物头像2号。
-    // public override string CustomIconPath => "res://scenes/ui/character_icons/ironclad_icon.tscn";
+    public override string CustomIconPath => "res://TheGleaner/scenes/gleaner_icon.tscn";
     // 能量表盘tscn路径。要自定义见下。
     public override string CustomEnergyCounterPath => "res://TheGleaner/scenes/gleaner_energy_counter.tscn";
     // 篝火休息动画。

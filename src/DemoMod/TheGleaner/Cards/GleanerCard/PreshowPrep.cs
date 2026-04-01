@@ -22,7 +22,7 @@ public class PreshowPrep : CustomCardModel {
         new IntVar("GleanAmount", 1),
         new EnergyVar("EnergyAmount", 1)
     ];
-    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromKeyword(CustomEnums.Glean)];
+    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromKeyword(CustomEnums.Glean), HoverTipFactory.ForEnergy(this)];
 
     public PreshowPrep() : base(2, CardType.Skill, CardRarity.Common, TargetType.Self) {
     }

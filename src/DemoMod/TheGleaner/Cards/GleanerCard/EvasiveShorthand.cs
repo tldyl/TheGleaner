@@ -21,7 +21,7 @@ public class EvasiveShorthand : CustomCardModel {
     }
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
-        await GleanCmd.Glean(choiceContext, Owner, this, DynamicVars["Amount"].IntValue);
+        await ScorePileCmd.Glean(Owner, choiceContext, DynamicVars["Amount"].BaseValue, this);
     }
 
     public override async Task BeforeTurnEnd(PlayerChoiceContext choiceContext, CombatSide side) {

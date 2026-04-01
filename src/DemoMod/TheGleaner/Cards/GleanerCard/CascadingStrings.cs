@@ -31,7 +31,6 @@ public class CascadingStrings : CustomCardModel {
             .Targeting(cardPlay.Target)
             .Execute(choiceContext);
 
-        await PowerCmd.Apply<DexterityPower>(Owner.Creature, DynamicVars["Amount"].BaseValue, Owner.Creature, this);
         await PowerCmd.Apply<SpeedPotionPower>(Owner.Creature, DynamicVars["Amount"].BaseValue, Owner.Creature, this);
     }
 

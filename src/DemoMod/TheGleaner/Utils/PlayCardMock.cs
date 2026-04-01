@@ -7,11 +7,15 @@ using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.Helpers;
 using MegaCrit.Sts2.Core.Hooks;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Nodes.Cards;
 using MegaCrit.Sts2.Core.Nodes.Combat;
 using MegaCrit.Sts2.Core.Nodes.Rooms;
+using MegaCrit.Sts2.Core.Nodes.Vfx.Cards;
+using MegaCrit.Sts2.Core.Saves;
+using MegaCrit.Sts2.Core.Settings;
 
 namespace DemoMod.TheGleaner.Utils;
 
@@ -23,6 +27,7 @@ public class PlayCardMock {
         AccessTools.PropertySetter(typeof(CardModel), "CurrentTarget").Invoke(cardModel, [target]);
         CardPile pile = cardModel.Pile;
         CardPileAddResult _ = await CardPileCmd.Add(cardModel, PileType.Play, skipVisuals: false);
+        NCard cardNode = NCard.FindOnTable(cardModel, PileType.Play);
         await Cmd.CustomScaledWait(0.25f, 0.35f);
         IEnumerable<AbstractModel> modifiers = [];
         PileType originalPileType = (PileType) AccessTools.Method(typeof(CardModel), "GetResultPileType", []).Invoke(cardModel, []);
@@ -75,12 +80,16 @@ public class PlayCardMock {
         await Cmd.CustomScaledWait(0.15f - num, 0.3f - num);
 
         if (pile is ScorePile) {
+            cardModel.RemoveFromCurrentPile();
             await ScorePileCmd.AddCards(cardModel.Owner.PlayerCombatState, cardModel.Owner, cardModel);
         } else {
             await CardPileCmd.Add(cardModel, pileType, position, skipVisuals: false);
         }
-        
         await CombatManager.Instance.CheckForEmptyHand(choiceContext, cardModel.Owner);
+        Tween tween = NCombatRoom.Instance.CreateTween().SetParallel();
+        tween.Chain().TweenCallback(Callable.From((Action) (() => NCombatRoom.Instance.Ui.AddChildSafely((Node) NExhaustVfx.Create(cardNode)))));
+        tween.Parallel().TweenProperty(cardNode, (NodePath) "modulate", StsColors.exhaustGray, SaveManager.Instance.PrefsSave.FastMode == FastModeType.Fast ? 0.2 : 0.3);
+        tween.Chain().TweenCallback(Callable.From(cardNode.QueueFreeSafely));
         Action played = AccessTools.Field(typeof(CardModel), "Played").GetValue(cardModel) as Action;
         played?.Invoke();
         choiceContext.PopModel(cardModel);

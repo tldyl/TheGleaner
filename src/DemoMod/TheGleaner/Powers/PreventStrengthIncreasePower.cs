@@ -1,4 +1,5 @@
 using BaseLib.Abstracts;
+using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Powers;
@@ -37,8 +38,8 @@ public class PreventStrengthIncreasePower : CustomPowerModel {
         return true;
     }
 
-    public override async Task AfterBlockCleared(Creature creature) {
-        if (creature != Owner) {
+    public override async Task AfterSideTurnStart(CombatSide side, CombatState combatState) {
+        if (side != Owner.Side) {
             return;
         }
         await PowerCmd.Remove(this);
