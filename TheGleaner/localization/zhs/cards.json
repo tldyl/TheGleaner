@@ -91,6 +91,16 @@
   "DEMOMOD-SWAP_PILES.description": "调换抽牌堆和弃牌堆（不洗牌）。",
   "DEMOMOD-GLEAN_CARD.title": "拾录",
   "DEMOMOD-GLEAN_CARD.description": "[gold]拾录[/gold]{Amount}张牌。",
+  "DEMOMOD-STAFF_BURNOUT.title": "谱线熔断",
+  "DEMOMOD-STAFF_BURNOUT.description": "你本回合无法再从[gold]乐谱[/gold]中取出卡牌。\n本回合从[gold]乐谱[/gold]中每丢弃一张牌，对所有敌人造成等同于[gold]乐谱[/gold]牌数上限的伤害。\n[gold]拾录[/gold]{Amount}张牌。",
+  "DEMOMOD-THRESHERS_AXE.title": "处刑的吉他",
+  "DEMOMOD-THRESHERS_AXE.description": "对随机一名敌人造成{Damage:diff()}点伤害。\n[gold]力量[/gold]在此牌上发挥{Amount}倍效果。\n[gold]协奏[/gold]：打出此牌，这张牌获得[gold]虚无[/gold]并返回手牌。",
+  "DEMOMOD-TUTTI.title": "全奏",
+  "DEMOMOD-TUTTI.description": "从最早加入[gold]乐谱[/gold]的牌开始，依次打出[gold]乐谱[/gold]中的所有牌。",
+  "DEMOMOD-TYRANT_BATON.title": "暴君的指挥棒",
+  "DEMOMOD-TYRANT_BATON.description": "打出你手牌中的所有[gold]协奏[/gold]牌。\n[gold]协奏[/gold]：触发手牌中的所有[gold]协奏[/gold]效果。",
+  "DEMOMOD-INSTRUMENTATION.title": "配器",
+  "DEMOMOD-INSTRUMENTATION.description": "从[gold]升级[/gold]的普通牌、[gold]协奏牌[/gold]和[gold]集束弦织[/gold]中，选择一张加入你的手牌。",
   
 
   "DEMOMOD-CASCADING_STRINGS.title": "流弦",

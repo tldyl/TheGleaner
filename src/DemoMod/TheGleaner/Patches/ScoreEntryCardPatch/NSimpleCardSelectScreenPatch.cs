@@ -1,6 +1,7 @@
 using BaseLib.Patches.Content;
 using DemoMod.TheGleaner.CardPiles;
 using DemoMod.TheGleaner.Commands;
+using DemoMod.TheGleaner.Powers;
 using Godot;
 using HarmonyLib;
 using MegaCrit.Sts2.Core.Context;
@@ -27,7 +28,7 @@ public class NSimpleCardSelectScreenPatch {
             RunState runState = (RunState) AccessTools.PropertyGetter(typeof(RunManager), "State").Invoke(RunManager.Instance, []);
             Player player = LocalContext.GetMe(runState.Players);
             int cost = calculateCost(player, _selectedCards.Count + 1);
-            if (cost > player.PlayerCombatState.Energy) {
+            if (cost > player.PlayerCombatState.Energy || player.Creature.HasPower<StaffBurnoutPower>()) {
                 NCardGrid grid = AccessTools.Field(typeof(NCardGridSelectionScreen), "_grid").GetValue(__instance) as NCardGrid;
                 NCard nCard = grid.GetCardNode(card);
                 WiggleAnimationWrapper animationWrapper = new WiggleAnimationWrapper {

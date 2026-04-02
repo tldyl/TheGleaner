@@ -3,6 +3,7 @@ using BaseLib.Utils;
 using DemoMod.TheGleaner.Enums;
 using DemoMod.TheGleaner.Pools;
 using DemoMod.TheGleaner.Powers;
+using DemoMod.TheGleaner.Utils;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
@@ -28,6 +29,7 @@ public class FrostedFlute : CustomCardModel, IConcertoCard {
     }
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
+        SoundManager.Instance.PlaySound(SoundKeys.GetSoundResourcePath("FLUTE_" + new Random().Next(1, 5)), 1.0f);
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
             .FromCard(this)
             .WithHitFx("vfx/vfx_attack_slash")
@@ -39,6 +41,7 @@ public class FrostedFlute : CustomCardModel, IConcertoCard {
     protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(4);
     
     public async Task OnConcerto(CombatState combatState, PlayerChoiceContext choiceContext, CardPlay cardPlay) {
+        SoundManager.Instance.PlaySound(SoundKeys.GetSoundResourcePath("FLUTE_" + new Random().Next(1, 5)), 1.0f);
         await PowerCmd.Apply<FrostedFlutePower>(combatState.HittableEnemies, DynamicVars["Amount"].BaseValue, Owner.Creature, this);
     }
 }

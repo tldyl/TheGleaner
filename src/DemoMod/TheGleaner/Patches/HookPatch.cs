@@ -25,9 +25,9 @@ public class HookPatch {
                         TaskHelper.RunSafely(concertoCard.OnConcerto(combatState, choiceContext, cardPlay));
                     } else {
                         model.EnergyCost.SetThisCombat(model.EnergyCost.GetResolved() - 1);
-                    }
-                    if (!model.Keywords.Contains(CustomEnums.Resonance)) {
-                        model.AddKeyword(CustomEnums.Resonance);
+                        if (!model.Keywords.Contains(CustomEnums.Resonance)) {
+                            model.AddKeyword(CustomEnums.Resonance);
+                        }
                     }
                 });
             }
