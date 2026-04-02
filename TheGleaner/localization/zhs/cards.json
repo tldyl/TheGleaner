@@ -145,6 +145,8 @@
   "DEMOMOD-BISBIGLIANDO.description": "获得{Amount}点[gold]活力[/gold]。\n将此牌放入[gold]乐谱[/gold]。\n本回合内此牌提供的活力下降1。",
   "DEMOMOD-EMERGENCY_EXPANSION.title": "应急展开",
   "DEMOMOD-EMERGENCY_EXPANSION.description": "获得{Block:diff()}点[gold]格挡[/gold]{Times}次。\n这张牌每被打出一次，它在本场战斗中就少获得一次格挡，最低降至1次。"
-  
+  ,
+  "DEMOMOD_PHANTASM.title": "罔象",
+"DEMOMOD_PHANTASM.description": "获得6点格挡三次。\n回合结束时，从手牌放入乐谱，若已在乐谱中，则直到进入弃牌堆前耗能降低1点。"
 
 }
