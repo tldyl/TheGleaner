@@ -13,18 +13,44 @@ namespace DemoMod.TheGleaner.Cards.GleanerCard;
 [Pool(typeof(CardPool))]
 public class Inspiration : CustomCardModel {
     public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new IntVar("Amount", 2)];
-    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<StrengthPower>(), HoverTipFactory.FromPower<DexterityPower>()];
+
+    protected override IEnumerable<DynamicVar> CanonicalVars => [
+        new IntVar("Amount", 2)
+    ];
+
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [
+        CardKeyword.Exhaust
+    ];
+
+    protected override IEnumerable<IHoverTip> ExtraHoverTips => [
+        HoverTipFactory.FromPower<StrengthPower>(),
+        HoverTipFactory.FromPower<DexterityPower>()
+    ];
 
     public Inspiration() : base(0, CardType.Skill, CardRarity.Uncommon, TargetType.Self) {
     }
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
-        await PowerCmd.Apply<StrengthPower>(Owner.Creature, DynamicVars["Amount"].BaseValue, Owner.Creature, this);
-        await PowerCmd.Apply<DexterityPower>(Owner.Creature, DynamicVars["Amount"].BaseValue, Owner.Creature, this);
-        await PowerCmd.Apply<FlexPotionPower>(Owner.Creature, DynamicVars["Amount"].BaseValue, Owner.Creature, this);
-        await PowerCmd.Apply<SpeedPotionPower>(Owner.Creature, DynamicVars["Amount"].BaseValue, Owner.Creature, this);
+
+        // ===== 力量（参考 HarmonicPillar）=====
+
+        await PowerCmd.Apply<FlexPotionPower>(
+            Owner.Creature,
+            DynamicVars["Amount"].BaseValue,
+            Owner.Creature,
+            this
+        );
+
+        // ===== 敏捷（参考 CascadingStrings）=====
+        await PowerCmd.Apply<SpeedPotionPower>(
+            Owner.Creature,
+            DynamicVars["Amount"].BaseValue,
+            Owner.Creature,
+            this
+        );
     }
 
-    protected override void OnUpgrade() => DynamicVars["Amount"].UpgradeValueBy(1);
+    protected override void OnUpgrade() {
+        DynamicVars["Amount"].UpgradeValueBy(1);
+    }
 }

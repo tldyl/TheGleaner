@@ -28,7 +28,6 @@ public class HarmonicPillar : CustomCardModel {
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
         await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, cardPlay);
-        await PowerCmd.Apply<StrengthPower>(Owner.Creature, DynamicVars["Amount"].BaseValue, Owner.Creature, this);
         await PowerCmd.Apply<FlexPotionPower>(Owner.Creature, DynamicVars["Amount"].BaseValue, Owner.Creature, this);
     }
 

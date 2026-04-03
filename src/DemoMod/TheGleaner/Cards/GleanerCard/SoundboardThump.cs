@@ -15,11 +15,15 @@ namespace DemoMod.TheGleaner.Cards.GleanerCard;
 [Pool(typeof(CardPool))]
 public class SoundboardThump : CustomCardModel {
     public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
+
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new IntVar("Amount", 1),
         new DamageVar(10, ValueProp.Move)
     ];
-    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromKeyword(CustomEnums.Glean)];
+
+    protected override IEnumerable<IHoverTip> ExtraHoverTips => [
+        HoverTipFactory.FromKeyword(CustomEnums.Glean)
+    ];
 
     public SoundboardThump() : base(1, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy) {
     }
@@ -30,7 +34,7 @@ public class SoundboardThump : CustomCardModel {
             .Targeting(cardPlay.Target)
             .Execute(choiceContext);
 
-        await GleanCmd.Glean(choiceContext, Owner, this, DynamicVars["Amount"].IntValue);
+        await ScorePileCmd.Glean(Owner, choiceContext, DynamicVars["Amount"].BaseValue, this);
     }
 
     protected override void OnUpgrade() {
@@ -38,4 +42,3 @@ public class SoundboardThump : CustomCardModel {
         DynamicVars["Amount"].UpgradeValueBy(1);
     }
 }
-
