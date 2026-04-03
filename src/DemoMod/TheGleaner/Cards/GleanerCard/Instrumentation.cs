@@ -34,15 +34,15 @@ public class Instrumentation : CustomCardModel {
             CardModel commonCard = commonCards[Owner.RunState.Rng.CombatCardGeneration.NextInt(commonCards.Count)].ToMutable();
             CardModel concertoCard = concertoCards[Owner.RunState.Rng.CombatCardGeneration.NextInt(concertoCards.Count)].ToMutable();
             CardModel clusterStringWeave = ModelDb.Card<ClusterStringWeave>().ToMutable();
-            commonCard.Owner = Owner;
             commonCard.UpgradeInternal();
             commonCard.FinalizeUpgradeInternal();
-            concertoCard.Owner = Owner;
+            CombatState.AddCard(commonCard, Owner);
             concertoCard.UpgradeInternal();
             concertoCard.FinalizeUpgradeInternal();
-            clusterStringWeave.Owner = Owner;
+            CombatState.AddCard(concertoCard, Owner);
             clusterStringWeave.UpgradeInternal();
             clusterStringWeave.FinalizeUpgradeInternal();
+            CombatState.AddCard(clusterStringWeave, Owner);
             ret.Add(commonCard);
             ret.Add(concertoCard);
             ret.Add(clusterStringWeave);

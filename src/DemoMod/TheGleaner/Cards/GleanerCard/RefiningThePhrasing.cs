@@ -29,12 +29,11 @@ public class RefiningThePhrasing : CustomCardModel {
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
         List<CardModel> selectedCards = (await ScorePileCmd.ShowScorePileScreen(Owner.PlayerCombatState, choiceContext, Owner, true)).ToList();
         if (selectedCards.Count > 0) {
-            int gleanAmount = selectedCards.Count + CurrentUpgradeLevel > 0 ? 1 : 0;
+            int gleanAmount = selectedCards.Count + (CurrentUpgradeLevel > 0 ? 1 : 0);
             await CardCmd.Discard(choiceContext, selectedCards);
             foreach (CardModel card in selectedCards) {
                 await Hook.AfterCardChangedPiles(Owner.RunState, Owner.Creature.CombatState, card, CustomEnums.ScorePile, this);
             }
-            ScorePileCmd.RemoveCardsFromScoreOnly(Owner.PlayerCombatState, Owner, selectedCards);
             await ScorePileCmd.Glean(Owner, choiceContext, gleanAmount, this);
         } else {
             await ScorePileCmd.Glean(Owner, choiceContext, DynamicVars["Amount"].BaseValue, this);
