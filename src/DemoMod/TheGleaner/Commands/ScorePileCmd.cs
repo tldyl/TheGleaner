@@ -2,7 +2,6 @@ using BaseLib.Abstracts;
 using BaseLib.Patches.Content;
 using DemoMod.TheGleaner.CardPiles;
 using DemoMod.TheGleaner.Cards.GleanerCard;
-using System.Linq;
 using MegaCrit.Sts2.Core.CardSelection;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
@@ -12,6 +11,7 @@ using MegaCrit.Sts2.Core.Hooks;
 using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Nodes;
+using MegaCrit.Sts2.Core.Nodes.Cards;
 using CustomEnums = DemoMod.TheGleaner.Enums.CustomEnums;
 
 namespace DemoMod.TheGleaner.Commands;
@@ -104,10 +104,11 @@ public static class ScorePileCmd {
         if (cards.Length > 0) {
             pile.cardsAddedToScoreThisTurn = true;
         }
-        if (pile.Cards.Count > 0 && !combatState.Hand.Cards.Any(c => c is ScoreEntryCard)) {
+        if (pile.Cards.Count > 0 && !NRun.Instance.CombatRoom.Ui.Hand.ActiveHolders.Any(holder => holder.CardModel is ScoreEntryCard)) {
             CardModel scoreEntryCard = ModelDb.Card<ScoreEntryCard>().ToMutable();
-            player.Creature.CombatState.AddCard(scoreEntryCard, player);
-            await CardPileCmd.AddGeneratedCardToCombat(scoreEntryCard, PileType.Hand, true);
+            scoreEntryCard.Owner = player;
+            NRun.Instance.CombatRoom.Ui.Hand.Add(NCard.Create(scoreEntryCard));
+            NetCombatCardDb.Instance.IdCardForTesting(scoreEntryCard);
         }
     }
 

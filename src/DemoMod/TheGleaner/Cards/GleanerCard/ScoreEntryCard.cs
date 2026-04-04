@@ -12,11 +12,11 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Hooks;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Nodes;
 using MegaCrit.Sts2.Core.ValueProps;
 using CustomEnums = DemoMod.TheGleaner.Enums.CustomEnums;
 
 namespace DemoMod.TheGleaner.Cards.GleanerCard;
-
 [Pool(typeof(CardPool))]
 public class ScoreEntryCard : CustomCardModel {
     public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
@@ -26,17 +26,18 @@ public class ScoreEntryCard : CustomCardModel {
         new CalculationBaseVar(0),
         new ExtraDamageVar(1),
         new CalculatedDamageVar(ValueProp.Unpowered).WithMultiplier((Func<CardModel, Creature, Decimal>) ((card, _) => {
-                return card.Owner.Deck.Cards.Count / 3;
+                return ScorePileCmd.GetCapacity(card.Owner);
             })
         )
     ];
-    
+
     public ScoreEntryCard() : base(0, CardType.Status, CardRarity.Event, TargetType.Self) {
     }
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
-        List<CardModel> selectedCards = (await ScorePileCmd.ShowScorePileScreen(Owner.PlayerCombatState, choiceContext, Owner)).ToList();
         ScorePile scorePile = ScorePileCmd.GetOrCreateScorePile(Owner.PlayerCombatState);
+        await Cmd.Wait(0.2f);
+        List<CardModel> selectedCards = (await ScorePileCmd.ShowScorePileScreen(Owner.PlayerCombatState, choiceContext, Owner)).ToList();
         if (selectedCards.Count > 0) {
             int cost = Math.Max(0, selectedCards.Count - scorePile.freeTakeCount);
             scorePile.freeTakeCount -= Math.Min(scorePile.freeTakeCount, selectedCards.Count);
@@ -50,7 +51,9 @@ public class ScoreEntryCard : CustomCardModel {
             }
         }
         if (scorePile.Cards.Count == 0) {
-            await CardPileCmd.RemoveFromCombat(this);
+            NRun.Instance.CombatRoom.Ui.Hand.Remove(this);
+        } else {
+            NRun.Instance.CombatRoom.Ui.Hand.ForceRefreshCardIndices();
         }
     }
 
