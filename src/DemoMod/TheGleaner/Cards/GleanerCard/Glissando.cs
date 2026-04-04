@@ -62,7 +62,6 @@ public class Glissando : CustomCardModel {
 
     protected override void OnUpgrade() {
         DynamicVars.Damage.UpgradeValueBy(3);
-        DynamicVars["Amount"].UpgradeValueBy(1);
         // （可选）如果你想升级也加 Vulnerable，可以再加一行：
         // DynamicVars.Vulnerable.UpgradeValueBy(1);
     }
