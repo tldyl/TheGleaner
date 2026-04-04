@@ -140,7 +140,7 @@
   "DEMOMOD-REVERBERATION.title": "余响",
   "DEMOMOD-REVERBERATION.description": "每回合结束时，获得等同于[gold]乐谱[/gold]牌数的[gold]格挡[/gold]。",
   "DEMOMOD-BOILING.title": "沸腾",
-  "DEMOMOD-BOILING.description": "获得{EnergyAmount:energyIcons()}。\n你的所有手牌直到下一次打出攻击牌前，耗能增加{Amount:energyIcons()}。",
+  "DEMOMOD-BOILING.description": "获得{EnergyAmount:energyIcons()}。\n你的所有手牌直到下一次打出前，耗能增加{Amount:energyIcons()}。",
   "DEMOMOD-BISBIGLIANDO.title": "呢喃奏",
   "DEMOMOD-BISBIGLIANDO.description": "获得{Amount}点[gold]活力[/gold]。\n将此牌放入[gold]乐谱[/gold]。\n本回合内此牌提供的活力下降1。",
   "DEMOMOD-EMERGENCY_EXPANSION.title": "应急展开",
