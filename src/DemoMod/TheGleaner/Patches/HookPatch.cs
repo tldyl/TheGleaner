@@ -1,4 +1,6 @@
+using DemoMod.TheGleaner.CardPiles;
 using DemoMod.TheGleaner.Cards.GleanerCard;
+using DemoMod.TheGleaner.Commands;
 using DemoMod.TheGleaner.Enums;
 using HarmonyLib;
 using MegaCrit.Sts2.Core.Combat;
@@ -12,6 +14,17 @@ using MegaCrit.Sts2.Core.Models;
 
 namespace DemoMod.TheGleaner.Patches;
 public class HookPatch {
+    [HarmonyPatch(typeof(Hook), "BeforeSideTurnStart")]
+    public static class PatchBeforeSideTurnStart {
+        public static void Prefix(CombatState combatState, CombatSide side) {
+            if (side == CombatSide.Player) {
+                ScorePile scorePile = ScorePileCmd.GetOrCreateScorePile(LocalContext.GetMe(combatState.Players).PlayerCombatState);
+                scorePile.freeTakeCount = 1;
+                scorePile.cardsAddedToScoreThisTurn = false;
+            }
+        }
+    }
+    
     [HarmonyPatch(typeof(Hook), "AfterCardPlayed")]
     public static class PatchAfterCardPlayed {
         public static void Prefix(CombatState combatState, PlayerChoiceContext choiceContext, CardPlay cardPlay) {

@@ -57,14 +57,6 @@ public class ScoreEntryCard : CustomCardModel {
         }
     }
 
-    public override async Task BeforeSideTurnStart(PlayerChoiceContext choiceContext, CombatSide side, CombatState combatState) {
-        if (side == CombatSide.Player) {
-            ScorePile scorePile = ScorePileCmd.GetOrCreateScorePile(Owner.PlayerCombatState);
-            scorePile.freeTakeCount = 1;
-            scorePile.cardsAddedToScoreThisTurn = false;
-        }
-    }
-
     protected override PileType GetResultPileType() {
         PileType resultPileType = base.GetResultPileType();
         return resultPileType != PileType.Discard ? resultPileType : decidePile();
