@@ -17,20 +17,33 @@ namespace DemoMod.TheGleaner.Cards.GleanerCard;
 public class PreshowPrep : CustomCardModel {
     public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
     public override bool GainsBlock => true;
+
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new BlockVar(9, ValueProp.Move),
         new IntVar("GleanAmount", 1),
         new EnergyVar("EnergyAmount", 1)
     ];
-    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromKeyword(CustomEnums.Glean), HoverTipFactory.ForEnergy(this)];
+
+    protected override IEnumerable<IHoverTip> ExtraHoverTips => [
+        HoverTipFactory.FromKeyword(CustomEnums.Glean),
+        HoverTipFactory.ForEnergy(this)
+    ];
 
     public PreshowPrep() : base(2, CardType.Skill, CardRarity.Common, TargetType.Self) {
     }
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
         await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, cardPlay);
-        await GleanCmd.Glean(choiceContext, Owner, this, DynamicVars["GleanAmount"].IntValue);
-        await PowerCmd.Apply<EnergyNextTurnPower>(Owner.Creature, DynamicVars["EnergyAmount"].BaseValue, Owner.Creature, this);
+
+        // ✅ 改这里
+        await ScorePileCmd.Glean(Owner, choiceContext, DynamicVars["GleanAmount"].BaseValue, this);
+
+        await PowerCmd.Apply<EnergyNextTurnPower>(
+            Owner.Creature,
+            DynamicVars["EnergyAmount"].BaseValue,
+            Owner.Creature,
+            this
+        );
     }
 
     protected override void OnUpgrade() {
@@ -38,4 +51,3 @@ public class PreshowPrep : CustomCardModel {
         DynamicVars["EnergyAmount"].UpgradeValueBy(1);
     }
 }
-

@@ -20,5 +20,17 @@
   "DEMOMOD-UNFURL_SHIELDSCORE_POWER.smartDescription": "你每从[gold]乐谱[/gold]中取出一张牌，就获得[blue]{Amount}[/blue]点[gold]格挡[/gold]。",
   "DEMOMOD-STAFF_BURNOUT_POWER.title": "谱线熔断",
   "DEMOMOD-STAFF_BURNOUT_POWER.description": "本回合无法再从[gold]乐谱[/gold]中取出卡牌。\n本回合从[gold]乐谱[/gold]中每丢弃一张牌，对所有敌人造成等同于[gold]乐谱[/gold]牌数上限的伤害。",
-  "DEMOMOD-STAFF_BURNOUT_POWER.smartDescription": "本回合无法再从[gold]乐谱[/gold]中取出卡牌。\n本回合从[gold]乐谱[/gold]中每丢弃一张牌，对所有敌人造成等同于[gold]乐谱[/gold]牌数上限[blue]{Amount}[/blue]倍的伤害。"
+  "DEMOMOD-STAFF_BURNOUT_POWER.smartDescription": "本回合无法再从[gold]乐谱[/gold]中取出卡牌。\n本回合从[gold]乐谱[/gold]中每丢弃一张牌，对所有敌人造成等同于[gold]乐谱[/gold]牌数上限[blue]{Amount}[/blue]倍的伤害。",
+  "DEMOMOD-UNFURL_STAFF_BURNOUT_POWER.title": "谱线熔断",
+  "DEMOMOD-UNFURL_STAFF_BURNOUT_POWER.description": "本回合无法再从[gold]乐谱[/gold]中取出卡牌。\n本回合从[gold]乐谱[/gold]中每丢弃一张牌，对所有敌人造成等同于[gold]乐谱[/gold]牌数上限的伤害。",
+  "DEMOMOD-UNFURL_STAFF_BURNOUT_POWER.smartDescription": "本回合无法再从[gold]乐谱[/gold]中取出卡牌。\n本回合从[gold]乐谱[/gold]中每丢弃一张牌，对所有敌人造成等同于[gold]乐谱[/gold]牌数上限[blue]{Amount}[/blue]倍的伤害。",
+  "DEMOMOD-REVERBERATION_POWER.title": "余响",
+  "DEMOMOD-REVERBERATION_POWER.description": "每回合结束时，获得等同于[gold]乐谱[/gold]中卡牌数量的[gold]格挡[/gold]。",
+  "DEMOMOD-SUPERPOSITION_PREP_POWER.title": "叠态预备",
+  "DEMOMOD-SUPERPOSITION_PREP_POWER.description": "在你的下个回合开始时，进入叠态。",
+  "DEMOMOD-SUPERPOSITION_READY_POWER.title": "叠态",
+  "DEMOMOD-SUPERPOSITION_READY_POWER.description": "本回合中，你打出的下一张牌额外触发一次。",
+  "DEMOMOD-FLOW_POWER.title": "心流",
+  "DEMOMOD-FLOW_POWER.description": "每当你抽到一张[gold]状态牌[/gold]时，获得[gold]能量[/gold]。",
+  "DEMOMOD-FLOW_POWER.smartDescription": "每当你抽到一张[gold]状态牌[/gold]时，获得{Amount:energyIcons()}。"
 }
