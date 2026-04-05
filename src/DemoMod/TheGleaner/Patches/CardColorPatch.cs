@@ -281,12 +281,10 @@ public static class CardColorPatch {
             }
 
             string cardId = model.Id?.Entry ?? "<null-id>";
-            DemoMod.TheGleaner.FileLogger.Log($"[CardColor] cardId = {cardId}");
             string type = model.Type.ToString();
 
             // 这些牌完全跳过，不受本 patch 影响
             if (IsExcluded(cardId)) {
-                DemoMod.TheGleaner.FileLogger.Log($"[CardColor] excluded card, skip patch: {cardId}");
                 return;
             }
 
