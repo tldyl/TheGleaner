@@ -1,10 +1,11 @@
 using System;
 using System.Linq;
-using System.Reflection;
+using System.Runtime.CompilerServices;
 using HarmonyLib;
+using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Localization.Formatters;
 using MegaCrit.Sts2.Core.Nodes.Cards;
-using DemoMod.TheGleaner;
+using SmartFormat.Core.Extensions;
 
 namespace DemoMod.TheGleaner.Patches;
 
@@ -16,15 +17,12 @@ public static class EnergyIconPatch
     private const string IconTag =
         "[img]res://TheGleaner/images/packed/sprite_fonts/gleaner_energy_icon.png[/img]";
 
-    private static bool IsGleanerCard(NCard card)
+    private static bool IsGleanerCard(NCard? card)
     {
-        string id = card?.Model?.Id?.Entry ?? "";
+        string id = card?.Model?.Id?.Entry ?? string.Empty;
         return id.StartsWith("DEMOMOD-", StringComparison.OrdinalIgnoreCase);
     }
 
-    // =============================
-    // 🔹 捕捉当前卡上下文
-    // =============================
     [HarmonyPatch(typeof(NCard), "UpdateVisuals")]
     public static class TrackCardPatch
     {
@@ -32,67 +30,105 @@ public static class EnergyIconPatch
         public static void Prefix(NCard __instance)
         {
             _isGleanerCard = IsGleanerCard(__instance);
+        }
 
-
+        [HarmonyPostfix]
+        public static void Postfix()
+        {
+            _isGleanerCard = false;
         }
     }
 
-    // =============================
-    // 🔹 替换 energy icon
-    // =============================
-    [HarmonyPatch(typeof(EnergyIconsFormatter), "TryEvaluateFormat")]
+    [HarmonyPatch(typeof(EnergyIconsFormatter), nameof(EnergyIconsFormatter.TryEvaluateFormat))]
     public static class FormatterPatch
     {
         [HarmonyPrefix]
-        public static bool Prefix(object __0, ref bool __result)
+        public static bool Prefix(EnergyIconsFormatter __instance, IFormattingInfo formattingInfo, ref bool __result)
         {
             try
             {
-   
-
                 if (!_isGleanerCard)
                 {
                     return true;
                 }
 
-                int amount = 1;
+                string? text = null;
+                object? currentValue = formattingInfo.CurrentValue;
+                int amount;
 
-                var type = __0.GetType();
+                EnergyVar? energyVar = currentValue as EnergyVar;
+                if (energyVar == null)
+                {
+                    CalculatedVar? calculatedVar = currentValue as CalculatedVar;
+                    if (calculatedVar == null)
+                    {
+                        if (currentValue is decimal dec)
+                        {
+                            amount = (int)dec;
+                        }
+                        else if (currentValue is int i)
+                        {
+                            amount = i;
+                        }
+                        else
+                        {
+                            string? str = currentValue as string;
+                            if (str == null)
+                            {
+                                DefaultInterpolatedStringHandler handler = new DefaultInterpolatedStringHandler(22, 2);
+                                handler.AppendLiteral("Unknown value='");
+                                handler.AppendFormatted<object?>(formattingInfo.CurrentValue);
+                                handler.AppendLiteral("' type=");
+                                object? currentValue2 = formattingInfo.CurrentValue;
+                                handler.AppendFormatted<Type?>(currentValue2 != null ? currentValue2.GetType() : null);
+                            }
 
-                object? value = type.GetProperty("CurrentValue")?.GetValue(__0);
+                            if (!int.TryParse(formattingInfo.FormatterOptions, out amount))
+                            {
+                                __result = false;
+                                return false;
+                            }
 
-                if (value is int i)
-                    amount = i;
-                else if (value is decimal d)
-                    amount = (int)d;
-
-                var opt = type.GetProperty("FormatterOptions")?.GetValue(__0) as string;
-                if (!string.IsNullOrEmpty(opt) && int.TryParse(opt, out int parsed))
-                    amount = parsed;
-
-
+                            text = str;
+                        }
+                    }
+                    else
+                    {
+                        amount = Convert.ToInt32(calculatedVar.Calculate(null));
+                    }
+                }
+                else
+                {
+                    amount = Convert.ToInt32(energyVar.PreviewValue);
+                    if (!string.IsNullOrEmpty(energyVar.ColorPrefix))
+                    {
+                        text = energyVar.ColorPrefix;
+                    }
+                }
 
                 if (amount <= 0)
+                {
                     amount = 1;
+                }
 
-                string result =
-                    amount < 4
-                        ? string.Concat(Enumerable.Repeat(IconTag, amount))
-                        : $"{amount}{IconTag}";
+                string finalText;
+                if (amount > 0 && amount < 4)
+                {
+                    finalText = string.Concat(Enumerable.Repeat(IconTag, amount));
+                }
+                else
+                {
+                    DefaultInterpolatedStringHandler handler = new DefaultInterpolatedStringHandler(0, 2);
+                    handler.AppendFormatted(amount);
+                    handler.AppendFormatted(IconTag);
+                    finalText = handler.ToStringAndClear();
+                }
 
-                // ❌ 原来
-// var write = type.GetMethod("Write");
-
-// ✅ 正确
-var write = type.GetMethod("Write", new Type[] { typeof(string) });
-
-write?.Invoke(__0, new object[] { result });
-                write?.Invoke(__0, new object[] { result });
-
+                formattingInfo.Write(finalText);
                 __result = true;
                 return false;
             }
-            catch (Exception e)
+            catch
             {
                 return true;
             }
