@@ -11,7 +11,7 @@ using MegaCrit.Sts2.Core.Models.Powers;
 
 namespace DemoMod.TheGleaner.Cards.GleanerCard;
 
-[Pool(typeof(ColorlessCardPool))]
+[Pool(typeof(TokenCardPool))]
 public class NightingaleAtTheAbyss : CustomCardModel {
     public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
 

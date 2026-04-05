@@ -13,7 +13,7 @@ using MegaCrit.Sts2.Core.ValueProps;
 
 namespace DemoMod.TheGleaner.Cards.GleanerCard;
 
-[Pool(typeof(ColorlessCardPool))]
+[Pool(typeof(TokenCardPool))]
 public class PulsationOfTheTides : CustomCardModel {
     public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
     protected override IEnumerable<DynamicVar> CanonicalVars => [
