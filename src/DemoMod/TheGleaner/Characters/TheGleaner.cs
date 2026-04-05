@@ -90,16 +90,18 @@ public class TheGleaner : PlaceholderCharacterModel {
     ];
 
     public override CreatureAnimator GenerateAnimator(MegaSprite controller) {
-        AnimState animState = new AnimState("idle", true);
+        AnimState animState = new AnimState("idle_loop", true);
         AnimState state1 = new AnimState("zhouyin"); //cast
-        AnimState state2 = new AnimState("shuntan"); //attack
+        AnimState state2 = new AnimState("shuaitan"); //attack
         AnimState state3 = new AnimState("zhouyin"); //hurt
-        AnimState state4 = new AnimState("idle"); //die
-        AnimState state5 = new AnimState("idle", true); //relaxed_loop
+        AnimState state4 = new AnimState("idle_loop"); //die
+        AnimState state5 = new AnimState("idle_loop", true); //relaxed_loop
+        AnimState state6 = new AnimState("attack"); //aoe attack
         state1.NextState = animState;
         state2.NextState = animState;
         state3.NextState = animState;
         state5.AddBranch("Idle", animState);
+        state6.NextState = animState;
         CreatureAnimator animator = new CreatureAnimator(animState, controller);
         animator.AddAnyState("Idle", animState);
         animator.AddAnyState("Dead", state4);
@@ -107,6 +109,7 @@ public class TheGleaner : PlaceholderCharacterModel {
         animator.AddAnyState("Attack", state2);
         animator.AddAnyState("Cast", state1);
         animator.AddAnyState("Relaxed", state5);
+        animator.AddAnyState("AoEAttack", state6);
         return animator;
     }
 }

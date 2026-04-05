@@ -7,7 +7,7 @@
 [node name="Visuals" type="SpineSprite" parent="."]
 skeleton_data_res = ExtResource("2_u67jw")
 preview_skin = "default"
-preview_animation = "idle"
+preview_animation = "idle_loop"
 preview_frame = false
 preview_time = 0.0
 unique_name_in_owner = true
