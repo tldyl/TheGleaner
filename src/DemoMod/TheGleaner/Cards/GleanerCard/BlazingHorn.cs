@@ -17,11 +17,11 @@ namespace DemoMod.TheGleaner.Cards.GleanerCard;
 public class BlazingHorn : CustomCardModel, IConcertoCard {
     public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new EnergyVar(3),
+        new EnergyVar(2),
         new EnergyVar("Energy2", 1)
     ];
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromKeyword(CustomEnums.Concerto)];
-    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
+
 
     public BlazingHorn() : base(2, CardType.Skill, CardRarity.Uncommon, TargetType.Self) {
         
@@ -37,5 +37,9 @@ public class BlazingHorn : CustomCardModel, IConcertoCard {
         await PowerCmd.Apply<EnergyNextTurnPower>(Owner.Creature, DynamicVars["Energy2"].BaseValue, Owner.Creature, this);
     }
 
-    protected override void OnUpgrade() => DynamicVars.Energy.UpgradeValueBy(1);
+    protected override void OnUpgrade()
+    {
+        DynamicVars.Energy.UpgradeValueBy(1);
+        base.AddKeyword(CardKeyword.Exhaust);
+        }
 }
