@@ -140,12 +140,10 @@
   "DEMOMOD-REVERBERATION.title": "余响",
   "DEMOMOD-REVERBERATION.description": "每回合结束时，获得等同于[gold]乐谱[/gold]牌数的[gold]格挡[/gold]。",
   "DEMOMOD-BOILING.title": "沸腾",
-  "DEMOMOD-BOILING.description": "获得{EnergyAmount:energyIcons()}。\n你的所有手牌直到下一次打出攻击牌前，耗能增加1。",
+  "DEMOMOD-BOILING.description": "获得{EnergyAmount:energyIcons()}。\n你的所有手牌直到下一次打出前，耗能增加{Amount:energyIcons()}。",
   "DEMOMOD-BISBIGLIANDO.title": "呢喃奏",
-  "DEMOMOD-BISBIGLIANDO.description": "获得{Amount}点[gold]活力[/gold]。\n将此牌放入[gold]乐谱[/gold]。\n本回合内此牌提供的活力下降1。",
+  "DEMOMOD-BISBIGLIANDO.description": "造成{CalculatedDamage:diff()}点伤害。\n将此牌放入[gold]乐谱[/gold]。\n本回合内此牌的伤害下降{ExtraDamage:inverseDiff()}点。",
   "DEMOMOD-EMERGENCY_EXPANSION.title": "应急展开",
   "DEMOMOD-EMERGENCY_EXPANSION.description": "获得{Block:diff()}点[gold]格挡[/gold]{Times}次。\n这张牌每被打出一次，它在本场战斗中就少获得一次格挡，最低降至1次。",
   "DEMOMOD-PHANTASM.title": "罔象",
-  "DEMOMOD-PHANTASM.description": "获得6点格挡三次。\n回合结束时，从手牌放入乐谱，若已在乐谱中，则直到进入弃牌堆前耗能降低1点。"
-
-}
+  "DEMOMOD-PHANTASM.description": "获得{Block:diff()}点[gold]格挡[/gold]{Times}次。\n回合结束时，从手牌放入[gold]乐谱[/gold]。若已在[gold]乐谱[/gold]中，则直到进入弃牌堆前耗能降低1点{Energy:energyIcons()}。"}

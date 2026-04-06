@@ -1,6 +1,7 @@
 using BaseLib.Abstracts;
 using BaseLib.Utils;
 using DemoMod.TheGleaner.Pools;
+using DemoMod.TheGleaner.Powers;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
@@ -14,27 +15,29 @@ namespace DemoMod.TheGleaner.Cards.GleanerCard;
 public class TheLakeMirror : CustomCardModel {
     public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
 
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new IntVar("Amount", 2)];
-    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<StrengthPower>(), HoverTipFactory.FromPower<DexterityPower>()];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [
+        new IntVar("Amount", 2)
+    ];
+
+    protected override IEnumerable<IHoverTip> ExtraHoverTips => [
+        HoverTipFactory.FromPower<StrengthPower>(),
+        HoverTipFactory.FromPower<DexterityPower>()
+    ];
 
     public TheLakeMirror() : base(2, CardType.Power, CardRarity.Uncommon, TargetType.Self) {
     }
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
-        await Task.CompletedTask;
+        await PowerCmd.Apply<TheLakeMirrorPower>(
+            Owner.Creature,
+            DynamicVars["Amount"].BaseValue, // 👉 这里传“2”
+            Owner.Creature,
+            this,
+            false
+        );
     }
 
-    public override async Task AfterCardPlayed(PlayerChoiceContext context, CardPlay cardPlay) {
-        if (cardPlay.Card.Owner != Owner) {
-            return;
-        }
-
-        if (cardPlay.Card.Type == CardType.Attack) {
-            await PowerCmd.Apply<TemporaryDexterityPower>(Owner.Creature, DynamicVars["Amount"].BaseValue, Owner.Creature, this);
-        } else if (cardPlay.Card.Type == CardType.Skill) {
-            await PowerCmd.Apply<TemporaryStrengthPower>(Owner.Creature, DynamicVars["Amount"].BaseValue, Owner.Creature, this);
-        }
+    protected override void OnUpgrade() {
+        DynamicVars["Amount"].UpgradeValueBy(1);
     }
-
-    protected override void OnUpgrade() => DynamicVars["Amount"].UpgradeValueBy(1);
 }

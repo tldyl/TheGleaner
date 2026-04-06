@@ -18,6 +18,33 @@ public static class CardColorPatch {
         "DEMOMOD-SHRIEKOFDREAD"
     ];
 
+    // 不受这个 patch 影响的卡
+    private static readonly string[] _excludedCardIds =
+    [
+        "DEMOMOD-SHRIEK_OF_DREAD",
+        "DEMOMOD-HOWL_OF_WRATH",
+        "DEMOMOD-DIRGE_OF_FAREWELL",
+        "DEMOMOD-SHRIEKOFDREAD",
+        "DEMOMOD-HOWLOFWRATH",
+        "DEMOMOD-DIRGEOFFAREWELL",
+
+        "DEMOMOD-NIGHTINGALE_AT_THE_ABYSS",
+        "DEMOMOD-FORGING_AT_DAWN",
+        "DEMOMOD-PULSATION_OF_THE_TIDES",
+        "DEMOMOD-SWAP_PILES",
+        "DEMOMOD-SHUFFLE",
+        "DEMOMOD-GLEAN_CARD",
+        "DEMOMOD-CLUSTER_STRIKE",
+
+        // 保险：有些项目里 Id 可能会写成去掉下划线的形式
+        "DEMOMOD-NIGHTINGALEATTHEABYSS",
+        "DEMOMOD-FORGINGATDAWN",
+        "DEMOMOD-PULSATIONOFTHETIDES",
+        "DEMOMOD-SWAPPILES",
+        "DEMOMOD-GLEANCARD",
+        "DEMOMOD-CLUSTERSTRIKE"
+    ];
+
     private static Texture2D? _attackIcon;
     private static Texture2D? _skillIcon;
     private static Texture2D? _powerIcon;
@@ -35,7 +62,6 @@ public static class CardColorPatch {
                     return tex;
                 }
 
-                // Fallback for local/dev when raw file is available.
                 Image image = new Image();
                 Error err = image.Load(path);
                 if (err == Error.Ok) {
@@ -46,6 +72,16 @@ public static class CardColorPatch {
         }
 
         return null;
+    }
+
+    private static bool IsExcluded(string cardId) {
+        for (int i = 0; i < _excludedCardIds.Length; i++) {
+            if (string.Equals(_excludedCardIds[i], cardId, StringComparison.OrdinalIgnoreCase)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     private static Texture2D? GetEnergyIcon(string type) {
@@ -246,6 +282,11 @@ public static class CardColorPatch {
 
             string cardId = model.Id?.Entry ?? "<null-id>";
             string type = model.Type.ToString();
+
+            // 这些牌完全跳过，不受本 patch 影响
+            if (IsExcluded(cardId)) {
+                return;
+            }
 
             if (string.Equals(cardId, "DEMOMOD-SCORE_ENTRY_CARD", StringComparison.OrdinalIgnoreCase)) {
                 ApplyScoreEntryCardStyle(__instance, cardId);

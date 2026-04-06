@@ -18,44 +18,44 @@ namespace DemoMod.TheGleaner.Cards.GleanerCard;
 
 [Pool(typeof(CardPool))]
 public class TwiningTone : CustomCardModel {
-    public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
+	public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
 
-    protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new DamageVar(6, ValueProp.Move),
-        new ExtraDamageVar(3)
-    ];
+	protected override IEnumerable<DynamicVar> CanonicalVars => [
+		new DamageVar(8, ValueProp.Move),
+		new ExtraDamageVar(3)
+	];
 
-    public TwiningTone() : base(1, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy) {
-    }
+	public TwiningTone() : base(1, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy) {
+	}
 
-    protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
-        await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
-            .FromCard(this)
-            .Targeting(cardPlay.Target)
-            .Execute(choiceContext);
-    }
+	protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
+		await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
+			.FromCard(this)
+			.Targeting(cardPlay.Target)
+			.Execute(choiceContext);
+	}
 
-    public override decimal ModifyDamageAdditive(
-        Creature? target,
-        decimal amount,
-        ValueProp props,
-        Creature? dealer,
-        CardModel? cardSource) {
-        if (cardSource == this && !props.HasFlag(ValueProp.Unpowered)) {
-            if (Owner?.PlayerCombatState == null) {
-                return 0m;
-            }
+	public override decimal ModifyDamageAdditive(
+		Creature? target,
+		decimal amount,
+		ValueProp props,
+		Creature? dealer,
+		CardModel? cardSource) {
+		if (cardSource == this && !props.HasFlag(ValueProp.Unpowered)) {
+			if (Owner?.PlayerCombatState == null) {
+				return 0m;
+			}
 
-            CardPile? scorePile = CustomPiles.GetCustomPile(Owner.PlayerCombatState, GleanerCustomEnums.ScorePile);
-            int scoreCount = scorePile?.Cards.Count ?? 0;
+			CardPile? scorePile = CustomPiles.GetCustomPile(Owner.PlayerCombatState, GleanerCustomEnums.ScorePile);
+			int scoreCount = scorePile?.Cards.Count ?? 0;
 
-            return scoreCount * DynamicVars.ExtraDamage.BaseValue;
-        }
+			return scoreCount * DynamicVars.ExtraDamage.BaseValue;
+		}
 
-        return 0m;
-    }
+		return 0m;
+	}
 
-    protected override void OnUpgrade() {
-        DynamicVars.ExtraDamage.UpgradeValueBy(1);
-    }
+	protected override void OnUpgrade() {
+		DynamicVars.ExtraDamage.UpgradeValueBy(1);
+	}
 }
