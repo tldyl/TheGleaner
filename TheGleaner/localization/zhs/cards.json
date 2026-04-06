@@ -142,7 +142,7 @@
   "DEMOMOD-BOILING.title": "沸腾",
   "DEMOMOD-BOILING.description": "获得{EnergyAmount:energyIcons()}。\n你的所有手牌直到下一次打出前，耗能增加{Amount:energyIcons()}。",
   "DEMOMOD-BISBIGLIANDO.title": "呢喃奏",
-  "DEMOMOD-BISBIGLIANDO.description": "造成{CalculatedDamage:diff()}点伤害。\n将此牌放入[gold]乐谱[/gold]。\n本回合内此牌的伤害下降{ExtraDamage:inverseDiff()}点。",
+  "DEMOMOD-BISBIGLIANDO.description": "造成{Damage:diff()}点伤害。\n如果这是这张牌本回合被打出的第一次，则将其放入[gold]乐谱[/gold]。",
   "DEMOMOD-EMERGENCY_EXPANSION.title": "应急展开",
   "DEMOMOD-EMERGENCY_EXPANSION.description": "获得{Block:diff()}点[gold]格挡[/gold]{Times}次。\n这张牌每被打出一次，它在本场战斗中就少获得一次格挡，最低降至1次。",
   "DEMOMOD-PHANTASM.title": "罔象",
@@ -152,5 +152,9 @@
   "DEMOMOD-STAFF_SURGING.title": "谱面跃动",
   "DEMOMOD-STAFF_SURGING.description": "战斗开始时，放入[gold]乐谱[/gold]。\n给予{IfUpgraded:show:所有敌人|}{Amount}层[gold]易伤[/gold]。",
   "DEMOMOD-PAPER_FROST.title": "霜纸花",
-  "DEMOMOD-PAPER_FROST.description": "战斗开始时，放入[gold]乐谱[/gold]。\n让{IfUpgraded:show:所有|一个}敌人在本回合失去{Amount}点[gold]力量[/gold]。"
+  "DEMOMOD-PAPER_FROST.description": "战斗开始时，放入[gold]乐谱[/gold]。\n让{IfUpgraded:show:所有|一个}敌人在本回合失去{Amount}点[gold]力量[/gold]。",
+  "DEMOMOD-WHEN_THE_GRAIN_FLOWS_GOLD.title": "流金穗时",
+  "DEMOMOD-WHEN_THE_GRAIN_FLOWS_GOLD.description": "拾录等同于[gold]乐谱[/gold]上限的牌。",
+  "DEMOMOD-IMPROVISATION.title": "即兴",
+  "DEMOMOD-IMPROVISATION.description": "将{Cards:diff()}张随机{IfUpgraded:show:升级的}牌放入[gold]乐谱[/gold]。"
 }
