@@ -8,10 +8,7 @@ using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Rooms;
-
 using MegaCrit.Sts2.Core.Entities.Relics;
-
-
 
 namespace DemoMod.TheGleaner.Relics;
 
@@ -43,18 +40,30 @@ public class ChronXIVGleaner : JeraExclusiveRelic
         InvokeDisplayAmountChanged();
     }
 
+    public override decimal ModifyHandDraw(Player player, decimal count)
+    {
+        if (player != Owner)
+        {
+            return count;
+        }
+
+        if (player.Creature?.CombatState?.RoundNumber > 1)
+        {
+            return count;
+        }
+
+        return count + DynamicVars["Draws"].BaseValue;
+    }
+
     public override async Task BeforeSideTurnStart(PlayerChoiceContext choiceContext, CombatSide side, CombatState combatState)
     {
-        if (side == CombatSide.Player)
+        if (side != CombatSide.Player)
         {
-            counter++;
-            InvokeDisplayAmountChanged();
-
-            if (counter == 1)
-            {
-                await CardPileCmd.Draw(choiceContext, DynamicVars["Draws"].BaseValue, Owner);
-            }
+            return;
         }
+
+        counter++;
+        InvokeDisplayAmountChanged();
     }
 
     public override async Task AfterEnergyReset(Player player)
