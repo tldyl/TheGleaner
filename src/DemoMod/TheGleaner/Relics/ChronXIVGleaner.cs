@@ -1,30 +1,37 @@
-using BaseLib.Abstracts;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using BaseLib.Utils;
 using DemoMod.TheGleaner.Pools;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Players;
-using MegaCrit.Sts2.Core.Entities.Relics;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Rooms;
+using MegaCrit.Sts2.Core.Entities.Relics;
 
 namespace DemoMod.TheGleaner.Relics;
 
 [Pool(typeof(JeraRelicPool))]
-public class Jera : CustomRelicModel
+public class ChronXIVGleaner : JeraExclusiveRelic
 {
     public override RelicRarity Rarity => RelicRarity.Starter;
-    public override string PackedIconPath => "res://TheGleaner/images/relics/Jera.png";
-    protected override string PackedIconOutlinePath => "res://TheGleaner/images/relics/Jera.png";
-    protected override string BigIconPath => "res://TheGleaner/images/relics/Jera.png";
+
+    public override string PackedIconPath => "res://TheGleaner/images/relics/demomod-chron_xi_v_gleaner.png";
+    protected override string PackedIconOutlinePath => "res://TheGleaner/images/relics/demomod-chron_xi_v_gleaner.png";
+    protected override string BigIconPath => "res://TheGleaner/images/relics/demomod-chron_xi_v_gleaner.png";
 
     private int counter;
     private bool _showCounter;
+
     public override bool ShowCounter => _showCounter;
     public override int DisplayAmount => counter;
 
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new IntVar("Draws", 1)];
+    protected override IEnumerable<DynamicVar> CanonicalVars =>
+    [
+        new IntVar("Draws", 3),
+        new IntVar("Energy", 3)
+    ];
 
     public override async Task BeforeCombatStart()
     {
@@ -63,7 +70,7 @@ public class Jera : CustomRelicModel
     {
         if (counter == 2)
         {
-            await PlayerCmd.GainEnergy(1, Owner);
+            await PlayerCmd.GainEnergy(DynamicVars["Energy"].BaseValue, Owner);
         }
     }
 
