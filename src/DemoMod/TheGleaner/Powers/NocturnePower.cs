@@ -12,7 +12,7 @@ public class NocturnePower : CustomPowerModel {
     public override PowerStackType StackType => PowerStackType.Counter;
 
     public override async Task AfterTurnEnd(PlayerChoiceContext choiceContext, CombatSide side) {
-        if (side != Owner.Side || Owner.Block < 10) {
+        if (side == Owner.Side || Owner.Block < 10) {
             return;
         }
         await PowerCmd.Apply<StrengthPower>(Owner, Amount, Owner, null);

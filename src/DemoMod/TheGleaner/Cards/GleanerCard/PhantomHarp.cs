@@ -40,7 +40,7 @@ public class PhantomHarp : CustomCardModel {
 
     public override async Task BeforeTurnEnd(PlayerChoiceContext choiceContext, CombatSide side) {
         CardPile scorePile = CustomPiles.GetCustomPile(Owner.PlayerCombatState, CustomEnums.ScorePile);
-        if (scorePile != null && scorePile.Cards.Contains(this)) {
+        if (scorePile != null && scorePile.Cards.Contains(this) && side == CombatSide.Player) {
             EnergyCost.AddUntilPlayed(-1);
             return;
         }

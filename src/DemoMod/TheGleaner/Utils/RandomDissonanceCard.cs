@@ -18,4 +18,8 @@ public class RandomDissonanceCard {
         }
         return ret;
     }
+
+    public static List<CardModel> transformedDissonanceCards() {
+        return [ModelDb.Card<ForgingAtDawn>(), ModelDb.Card<NightingaleAtTheAbyss>(), ModelDb.Card<PulsationOfTheTides>()];
+    }
 }

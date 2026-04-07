@@ -18,8 +18,7 @@ public class Instrumentation : CustomCardModel {
         get {
             if (_hoverTips.Count == 0) {
                 _hoverTips.Add(HoverTipFactory.FromKeyword(CustomEnums.Concerto));
-                CardModel card = ModelDb.Card<ClusterStringWeave>();
-                _hoverTips.Add(HoverTipFactory.FromCard(card, true));
+                _hoverTips.Add(HoverTipFactory.FromKeyword(CustomEnums.Resonance));
             }
             return _hoverTips;
         }
@@ -33,24 +32,27 @@ public class Instrumentation : CustomCardModel {
             List<CardModel> concertoCards = ModelDb.CardPool<CardPool>().AllCards.Where(c => c is IConcertoCard).ToList();
             CardModel commonCard = commonCards[Owner.RunState.Rng.CombatCardGeneration.NextInt(commonCards.Count)].ToMutable();
             CardModel concertoCard = concertoCards[Owner.RunState.Rng.CombatCardGeneration.NextInt(concertoCards.Count)].ToMutable();
-            CardModel clusterStringWeave = ModelDb.Card<ClusterStringWeave>().ToMutable();
-            commonCard.UpgradeInternal();
-            commonCard.FinalizeUpgradeInternal();
+            List<CardModel> resonanceCards = [ModelDb.Card<CascadingStrings>(), ModelDb.Card<HarmonicPillar>()];
+            CardModel resonanceCard = resonanceCards[Owner.RunState.Rng.CombatCardGeneration.NextInt(resonanceCards.Count)].ToMutable();
+            if (CurrentUpgradeLevel > 0) {
+                commonCard.UpgradeInternal();
+                commonCard.FinalizeUpgradeInternal();
+                concertoCard.UpgradeInternal();
+                concertoCard.FinalizeUpgradeInternal();
+                resonanceCard.UpgradeInternal();
+                resonanceCard.FinalizeUpgradeInternal();
+            }
             CombatState.AddCard(commonCard, Owner);
-            concertoCard.UpgradeInternal();
-            concertoCard.FinalizeUpgradeInternal();
             CombatState.AddCard(concertoCard, Owner);
-            clusterStringWeave.UpgradeInternal();
-            clusterStringWeave.FinalizeUpgradeInternal();
-            CombatState.AddCard(clusterStringWeave, Owner);
+            CombatState.AddCard(resonanceCard, Owner);
             ret.Add(commonCard);
             ret.Add(concertoCard);
-            ret.Add(clusterStringWeave);
+            ret.Add(resonanceCard);
             return ret;
         }
     }
 
-    public Instrumentation() : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.Self) {
+    public Instrumentation() : base(0, CardType.Skill, CardRarity.Uncommon, TargetType.Self) {
         
     }
 
@@ -61,6 +63,4 @@ public class Instrumentation : CustomCardModel {
         }
         await CardPileCmd.AddGeneratedCardToCombat(chosenCard, PileType.Hand, true);
     }
-
-    protected override void OnUpgrade() => EnergyCost.UpgradeBy(-1);
 }

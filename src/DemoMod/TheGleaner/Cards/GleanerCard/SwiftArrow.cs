@@ -37,12 +37,10 @@ public class SwiftArrow : CustomCardModel, IArrowCard {
             .FromCard(this)
             .Targeting(cardPlay.Target)
             .Execute(choiceContext);
-        DamageResult damageResult = attackCommand.Results.FirstOrDefault();
-        if (damageResult == null) {
-            return;
-        }
-        if (!damageResult.WasFullyBlocked) {
-            await PowerCmd.Apply<SwiftArrowPower>(cardPlay.Target, DynamicVars["Amount"].BaseValue, Owner.Creature, this);
+        foreach (DamageResult damageResult in attackCommand.Results) {
+            if (damageResult.Receiver == cardPlay.Target && !damageResult.WasFullyBlocked) {
+                await PowerCmd.Apply<SwiftArrowPower>(cardPlay.Target, DynamicVars["Amount"].BaseValue, Owner.Creature, this);
+            }
         }
     }
 
@@ -57,12 +55,10 @@ public class SwiftArrow : CustomCardModel, IArrowCard {
     }
 
     public async Task arrowEffect(PlayerChoiceContext choiceContext, CardPlay cardPlay, IEnumerable<DamageResult> damageResults, CardModel clusterCard, AttackContext context) {
-        DamageResult damageResult = damageResults.FirstOrDefault();
-        if (damageResult == null) {
-            return;
-        }
-        if (!damageResult.WasFullyBlocked) {
-            await PowerCmd.Apply<SwiftArrowPower>(cardPlay.Target, DynamicVars["Amount"].BaseValue, Owner.Creature, this);
+        foreach (DamageResult damageResult in damageResults) {
+            if (damageResult.Receiver == cardPlay.Target && !damageResult.WasFullyBlocked) {
+                await PowerCmd.Apply<SwiftArrowPower>(cardPlay.Target, DynamicVars["Amount"].BaseValue, Owner.Creature, this);
+            }
         }
     }
 }

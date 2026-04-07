@@ -18,8 +18,8 @@ public class SwapPiles : CustomCardModel, IChoosable {
     }
 
     public async Task OnChosen(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
-        IEnumerable<CardModel> cardsInDrawPile = cardPlay.Card.Owner.PlayerCombatState.DrawPile.Cards;
-        IEnumerable<CardModel> cardsInDiscardPile = cardPlay.Card.Owner.PlayerCombatState.DiscardPile.Cards;
+        List<CardModel> cardsInDrawPile = cardPlay.Card.Owner.PlayerCombatState.DrawPile.Cards.ToList();
+        List<CardModel> cardsInDiscardPile = cardPlay.Card.Owner.PlayerCombatState.DiscardPile.Cards.ToList();
         await CardPileCmd.Add(cardsInDrawPile, PileType.Discard, CardPilePosition.Bottom, cardPlay.Card);
         await CardPileCmd.Add(cardsInDiscardPile, PileType.Draw, CardPilePosition.Bottom, cardPlay.Card);
     }

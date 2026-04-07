@@ -47,6 +47,9 @@ public class HowlOfWrath : CustomCardModel, IDissonanceCard {
 
     public void OnEnterScorePile(PlayerCombatState combatState, Player player) {
         CardModel card = Owner.Creature.CombatState.CreateCard<ForgingAtDawn>(Owner);
+        TransformFollowupAction?.Invoke(card);
         TaskHelper.RunSafely(CardCmd.Transform(this, card));
     }
+
+    public Action<CardModel> TransformFollowupAction { get; set; }
 }

@@ -10,6 +10,7 @@ using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.CardPools;
 using MegaCrit.Sts2.Core.ValueProps;
+using System.Collections;
 
 namespace DemoMod.TheGleaner.Cards.GleanerCard;
 
@@ -47,6 +48,10 @@ public class ClusterStrike : CustomCardModel, IAppendDescriptionCard {
             }
             if (card is ClusterStrike) {
                 hitCount += card.DynamicVars["HitCount"].IntValue;
+                if (card.IsUpgraded && !IsUpgraded) {
+                    UpgradeInternal();
+                    FinalizeUpgradeInternal();
+                }
             } else {
                 hitCount++;
             }
@@ -57,15 +62,16 @@ public class ClusterStrike : CustomCardModel, IAppendDescriptionCard {
     
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
         AttackContext context = await AttackCommand.CreateContextAsync(CombatState, this);
-        AttackCommand attackCommand = await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
-            .FromCard(this)
-            .WithHitCount(DynamicVars["HitCount"].IntValue)
-            .Targeting(cardPlay.Target)
-            .Execute(choiceContext);
-        context.AddHit(attackCommand.Results);
+        List<DamageResult> results = [];
+        for (int _ = 0; _ < DynamicVars["HitCount"].IntValue; _++) {
+            IEnumerable<DamageResult> damageResults = await CreatureCmd.Damage(choiceContext, cardPlay.Target, DynamicVars.Damage, this);
+            context.AddHit(damageResults);
+            results.AddRange(damageResults);
+        }
+        
         foreach (CardModel card in cards) {
             if (card is IArrowCard arrowCard) {
-                await arrowCard.arrowEffect(choiceContext, cardPlay, attackCommand.Results, this, context);
+                await arrowCard.arrowEffect(choiceContext, cardPlay, results, this, context);
             }
         }
     }

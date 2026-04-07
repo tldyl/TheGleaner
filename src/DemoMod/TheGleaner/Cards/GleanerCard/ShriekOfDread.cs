@@ -46,6 +46,9 @@ public class ShriekOfDread : CustomCardModel, IDissonanceCard {
 
     public void OnEnterScorePile(PlayerCombatState combatState, Player player) {
         CardModel card = Owner.Creature.CombatState.CreateCard<NightingaleAtTheAbyss>(Owner);
+        TransformFollowupAction?.Invoke(card);
         TaskHelper.RunSafely(CardCmd.Transform(this, card));
     }
+
+    public Action<CardModel> TransformFollowupAction { get; set; }
 }

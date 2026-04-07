@@ -21,7 +21,6 @@ public class BlazingHorn : CustomCardModel, IConcertoCard {
         new EnergyVar("Energy2", 1)
     ];
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromKeyword(CustomEnums.Concerto)];
-    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
 
     public BlazingHorn() : base(2, CardType.Skill, CardRarity.Uncommon, TargetType.Self) {
         

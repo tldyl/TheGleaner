@@ -41,6 +41,8 @@
   "DEMOMOD-TEMP_STRENGTH_POWER.smartDescription": "本回合内获得 {Amount} 点[gold]力量[/gold]。回合结束时失去等量的力量。",
   "DEMOMOD-TEMP_DEXTERITY_POWER.title": "临时敏捷",
   "DEMOMOD-TEMP_DEXTERITY_POWER.description": "本回合内获得 {Amount} 点[gold]敏捷[/gold]。回合结束时失去等量的敏捷。",
-  "DEMOMOD-TEMP_DEXTERITY_POWER.smartDescription": "本回合内获得 {Amount} 点[gold]敏捷[/gold]。回合结束时失去等量的敏捷。"
-
+  "DEMOMOD-TEMP_DEXTERITY_POWER.smartDescription": "本回合内获得 {Amount} 点[gold]敏捷[/gold]。回合结束时失去等量的敏捷。",
+  "DEMOMOD-BOTTOMLESS_QUIVER_POWER.title": "无底箭袋",
+  "DEMOMOD-BOTTOMLESS_QUIVER_POWER.description": "每回合首次打出名字中带有打击或箭簇的牌时，获得{energyPrefix:energyIcons(1)}。",
+  "DEMOMOD-BOTTOMLESS_QUIVER_POWER.smartDescription": "每回合首次打出名字中带有打击或箭簇的牌时，获得{Amount:energyIcons()}。"
 }

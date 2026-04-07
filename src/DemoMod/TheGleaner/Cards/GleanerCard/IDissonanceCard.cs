@@ -1,4 +1,5 @@
 using MegaCrit.Sts2.Core.Entities.Players;
+using MegaCrit.Sts2.Core.Models;
 
 namespace DemoMod.TheGleaner.Cards.GleanerCard;
 
@@ -7,4 +8,5 @@ namespace DemoMod.TheGleaner.Cards.GleanerCard;
 /// </summary>
 public interface IDissonanceCard {
     public void OnEnterScorePile(PlayerCombatState combatState, Player player);
+    public Action<CardModel> TransformFollowupAction { get; set; }
 }

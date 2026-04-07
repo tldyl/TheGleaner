@@ -72,6 +72,10 @@
       <HintPath>$(Sts2Path)/mods/BaseLib/BaseLib.dll</HintPath>
       <Private>false</Private>
     </Reference>
+    <Reference Include="SmartFormat">
+      <HintPath>$(Sts2DataDir)/SmartFormat.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
   </ItemGroup>
 
   <ItemGroup>

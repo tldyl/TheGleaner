@@ -92,7 +92,7 @@ public class TheGleaner : PlaceholderCharacterModel {
     public override CreatureAnimator GenerateAnimator(MegaSprite controller) {
         AnimState animState = new AnimState("idle_loop", true);
         AnimState state1 = new AnimState("zhouyin"); //cast
-        AnimState state2 = new AnimState("shuaitan"); //attack
+        AnimState state2 = new AnimState("shuaidan"); //attack
         AnimState state3 = new AnimState("zhouyin"); //hurt
         AnimState state4 = new AnimState("idle_loop"); //die
         AnimState state5 = new AnimState("idle_loop", true); //relaxed_loop

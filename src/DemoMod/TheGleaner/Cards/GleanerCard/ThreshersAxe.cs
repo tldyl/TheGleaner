@@ -34,6 +34,9 @@ public class ThreshersAxe : CustomCardModel, IConcertoCard {
             .FromCard(this)
             .TargetingRandomOpponents(Owner.Creature.CombatState)
             .Execute(choiceContext);
+        if (Owner.Creature.CombatState.HittableEnemies.Count == 0 && cardPlay.IsAutoPlay) {
+            await CombatManager.Instance.CheckWinCondition();
+        }
     }
 
     public override (PileType, CardPilePosition) ModifyCardPlayResultPileTypeAndPosition(

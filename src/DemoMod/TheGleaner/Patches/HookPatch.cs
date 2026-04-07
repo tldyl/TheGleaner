@@ -34,13 +34,12 @@ public class HookPatch {
                 List<CardModel> cardsToReduceCost = [];
                 cardsToReduceCost.AddRange(player.PlayerCombatState.Hand.Cards.Where(cardModel => cardModel != card && cardModel.Type != card.Type && cardModel.EnergyCost.GetResolved() > 1));
                 cardsToReduceCost.ForEach(model => {
+                    model.EnergyCost.SetUntilPlayed(model.EnergyCost.GetResolved() - 1);
+                    if (!model.Keywords.Contains(CustomEnums.Resonance)) {
+                        model.AddKeyword(CustomEnums.Resonance);
+                    }
                     if (model is IConcertoCard concertoCard) {
                         TaskHelper.RunSafely(concertoCard.OnConcerto(combatState, choiceContext, cardPlay));
-                    } else {
-                        model.EnergyCost.SetThisCombat(model.EnergyCost.GetResolved() - 1);
-                        if (!model.Keywords.Contains(CustomEnums.Resonance)) {
-                            model.AddKeyword(CustomEnums.Resonance);
-                        }
                     }
                 });
             }

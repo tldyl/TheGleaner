@@ -51,8 +51,7 @@ public class BusterArrow : CustomCardModel, IArrowCard {
             DamageResult damageResult = damageResults.First();
             List<Creature> list2 = CombatState.GetTeammatesOf(damageResult.Receiver).Except<Creature>([cardPlay.Target]).Where((Func<Creature, bool>) (e => e.IsHittable)).ToList();
             if (list2.Count != 0) {
-                AttackContext attackContext = context;
-                attackContext.AddHit(await CreatureCmd.Damage(choiceContext, list2, damageResult.TotalDamage + damageResult.OverkillDamage, ValueProp.Unpowered | ValueProp.Move, Owner.Creature, clusterCard));
+                context.AddHit(await CreatureCmd.Damage(choiceContext, list2, damageResult.TotalDamage + damageResult.OverkillDamage, ValueProp.Unpowered | ValueProp.Move, Owner.Creature, clusterCard));
             }
         }
     }
