@@ -18,11 +18,11 @@ namespace DemoMod.TheGleaner.Cards.GleanerCard;
 public class BusterArrow : CustomCardModel, IArrowCard {
     public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new DamageVar(30, ValueProp.Move)
+        new DamageVar(24, ValueProp.Move)
     ];
     protected override HashSet<CardTag> CanonicalTags => [CustomEnums.Arrow];
 
-    public BusterArrow() : base(4, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy) {
+    public BusterArrow() : base(3, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy) {
         
     }
 
@@ -36,7 +36,7 @@ public class BusterArrow : CustomCardModel, IArrowCard {
         await arrowEffect(choiceContext, cardPlay, attackCommand.Results, this, context);
     }
     
-    protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(10);
+    protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(6);
     
     public LocString getArrowName() {
         return new LocString("cards", "DEMOMOD-BUSTER_ARROW.arrowName");
