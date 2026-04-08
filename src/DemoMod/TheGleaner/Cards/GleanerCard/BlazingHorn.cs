@@ -16,30 +16,43 @@ namespace DemoMod.TheGleaner.Cards.GleanerCard;
 [Pool(typeof(CardPool))]
 public class BlazingHorn : CustomCardModel, IConcertoCard {
     public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
+
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new EnergyVar(2),
+        new EnergyVar(3),
         new EnergyVar("Energy2", 1)
     ];
-    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromKeyword(CustomEnums.Concerto)];
 
+    protected override IEnumerable<IHoverTip> ExtraHoverTips => [
+        HoverTipFactory.FromKeyword(CustomEnums.Concerto)
+    ];
 
-    public BlazingHorn() : base(2, CardType.Skill, CardRarity.Uncommon, TargetType.Self) {
-        
+    public BlazingHorn() : base(3, CardType.Skill, CardRarity.Uncommon, TargetType.Self) {
     }
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
-        SoundManager.Instance.PlaySound(SoundKeys.GetSoundResourcePath("HORN_" + new Random().Next(1, 5)), 1.0f);
+        SoundManager.Instance.PlaySound(
+            SoundKeys.GetSoundResourcePath("HORN_" + new Random().Next(1, 5)),
+            1.0f
+        );
+
         await PlayerCmd.GainEnergy(DynamicVars.Energy.BaseValue, Owner);
     }
-    
+
     public async Task OnConcerto(CombatState combatState, PlayerChoiceContext choiceContext, CardPlay cardPlay) {
-        SoundManager.Instance.PlaySound(SoundKeys.GetSoundResourcePath("HORN_" + new Random().Next(1, 5)), 1.0f);
-        await PowerCmd.Apply<EnergyNextTurnPower>(Owner.Creature, DynamicVars["Energy2"].BaseValue, Owner.Creature, this);
+        SoundManager.Instance.PlaySound(
+            SoundKeys.GetSoundResourcePath("HORN_" + new Random().Next(1, 5)),
+            1.0f
+        );
+
+        await PowerCmd.Apply<EnergyNextTurnPower>(
+            Owner.Creature,
+            DynamicVars["Energy2"].BaseValue,
+            Owner.Creature,
+            this
+        );
     }
 
-    protected override void OnUpgrade()
-    {
+    protected override void OnUpgrade() {
         DynamicVars.Energy.UpgradeValueBy(1);
-        base.AddKeyword(CardKeyword.Exhaust);
-        }
+    }
 }
