@@ -9,6 +9,7 @@ using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization;
+using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using CustomEnums = DemoMod.TheGleaner.Enums.CustomEnums;
 
@@ -17,7 +18,17 @@ namespace DemoMod.TheGleaner.Powers;
 public class JeraFormPower : CustomPowerModel {
     public override PowerType Type => PowerType.Buff;
     public override PowerStackType StackType => PowerStackType.Counter;
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new DynamicVar("DissonanceAmount", 1)];
 
+    public override async Task AfterModifyingPowerAmountReceived(PowerModel power) {
+        if (power is not JeraFormPower) {
+            return;
+        }
+        if (Amount > 0) {
+            DynamicVars["DissonanceAmount"].UpgradeValueBy(1);
+        }
+    }
+    
     public override async Task AfterPlayerTurnStartLate(PlayerChoiceContext choiceContext, Player player) {
         if (player.Creature == Owner) {
             CardPile pile = CustomPiles.GetCustomPile(player.PlayerCombatState, CustomEnums.ScorePile);
@@ -46,6 +57,10 @@ public class JeraFormPower : CustomPowerModel {
                     Creature target = player.RunState.Rng.CombatTargets.NextItem(hittableEnemies);
                     await PlayCardMock.MockPlayCard(selectedCard, target, choiceContext, resources);
                 }
+            }
+            List<CardModel> cards = RandomDissonanceCard.getRandomDissonanceCards(DynamicVars["DissonanceAmount"].IntValue, player.RunState.Rng.CombatCardGeneration);
+            foreach (CardModel card in cards) {
+                CardCmd.PreviewCardPileAdd(await CardPileCmd.AddGeneratedCardToCombat(CombatState.CreateCard(card, player), PileType.Discard, true));
             }
         }
     }

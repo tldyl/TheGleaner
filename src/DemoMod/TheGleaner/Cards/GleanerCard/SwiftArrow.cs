@@ -20,12 +20,11 @@ namespace DemoMod.TheGleaner.Cards.GleanerCard;
 [Pool(typeof(CardPool))]
 public class SwiftArrow : CustomCardModel, IArrowCard {
     public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
-    public override bool GainsBlock => true;
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new IntVar("Amount", 1),
         new DamageVar(4, ValueProp.Move)
     ];
-    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<StrengthPower>()];
+    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<StrengthPower>(), HoverTipFactory.Static(StaticHoverTip.Block)];
     protected override HashSet<CardTag> CanonicalTags => [CustomEnums.Arrow];
 
     public SwiftArrow() : base(0, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy) {

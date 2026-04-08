@@ -55,6 +55,8 @@ public class ClusterStringWeave : CustomCardModel {
     }
 
     protected override void OnUpgrade() {
+        previewCard.DowngradeInternal();
         AccessTools.Method(typeof(CardModel), "OnUpgrade", []).Invoke(previewCard, []);
+        previewCard.FinalizeUpgradeInternal();
     }
 }

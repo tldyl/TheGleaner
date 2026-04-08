@@ -18,7 +18,7 @@ public class JeraForm : CustomCardModel {
     public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new IntVar("ScoreAmount", 1),
-        new IntVar("DissonanceAmount", 2)
+        new IntVar("DissonanceAmount", 1)
     ];
 
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Ethereal];

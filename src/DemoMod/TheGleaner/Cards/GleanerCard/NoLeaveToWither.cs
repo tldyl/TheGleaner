@@ -17,9 +17,8 @@ namespace DemoMod.TheGleaner.Cards.GleanerCard;
 [Pool(typeof(CardPool))]
 public class NoLeaveToWither : CustomCardModel {
     public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
-    public override bool GainsBlock => true;
     protected override IEnumerable<DynamicVar> CanonicalVars => [new IntVar("Amount", 1)];
-    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromKeyword(CustomEnums.Dissonance), HoverTipFactory.FromPower<DoomPower>()];
+    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromKeyword(CustomEnums.Dissonance), HoverTipFactory.FromPower<DoomPower>(), HoverTipFactory.Static(StaticHoverTip.Block)];
 
     public NoLeaveToWither() : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.Self) {
         

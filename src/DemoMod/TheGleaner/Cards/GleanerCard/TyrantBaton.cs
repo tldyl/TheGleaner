@@ -25,7 +25,7 @@ public class TyrantBaton : CustomCardModel, IConcertoCard {
     }
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
-        foreach (CardModel card in Owner.PlayerCombatState.Hand.Cards.Where(c => c is IConcertoCard and not TyrantBaton)) {
+        foreach (CardModel card in Owner.PlayerCombatState.Hand.Cards.Where(c => c is IConcertoCard and not TyrantBaton).ToList()) {
             await CardCmd.AutoPlay(choiceContext, card, null);
         }
     }

@@ -3,15 +3,12 @@ using BaseLib.Utils;
 using DemoMod.TheGleaner.Commands;
 using DemoMod.TheGleaner.Enums;
 using DemoMod.TheGleaner.Pools;
-using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
-using MegaCrit.Sts2.Core.Entities.Players;
 
 
 namespace DemoMod.TheGleaner.Cards.GleanerCard;
-
 [Pool(typeof(CardPool))]
 public class WhenTheGrainFlowsGold : CustomCardModel {
     public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
@@ -34,9 +31,9 @@ public class WhenTheGrainFlowsGold : CustomCardModel {
             ScorePileCmd.GetCapacity(Owner),
             this
         );
-        
     }
-        protected override void OnUpgrade() {
+
+    protected override void OnUpgrade() {
         RemoveKeyword(CardKeyword.Exhaust);
     }
 }

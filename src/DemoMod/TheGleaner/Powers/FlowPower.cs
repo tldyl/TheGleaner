@@ -12,10 +12,6 @@ public class FlowPower : CustomPowerModel {
     public override PowerStackType StackType => PowerStackType.Counter;
 
     public override async Task AfterCardDrawn(PlayerChoiceContext choiceContext, CardModel card, bool fromHandDraw) {
-        if (!fromHandDraw) {
-            return;
-        }
-
         if (card.Owner?.Creature != Owner) {
             return;
         }

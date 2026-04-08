@@ -31,7 +31,7 @@ public class Collapse : CustomCardModel {
         AttackCommand _ = await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
             .FromCard(this)
             .TargetingRandomOpponents(Owner.Creature.CombatState)
-            .WithHitCount(Owner.Creature.CombatState.HittableEnemies.Count)
+            .WithHitCount(Owner.Creature.CombatState.HittableEnemies.Count + 1)
             .Execute(choiceContext);
         List<CardModel> cards = RandomDissonanceCard.getRandomDissonanceCards(DynamicVars["DissonanceAmount"].IntValue, Owner.RunState.Rng.CombatCardGeneration);
         foreach (CardModel card in cards) {
