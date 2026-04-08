@@ -32,8 +32,7 @@ public class Instrumentation : CustomCardModel {
             List<CardModel> concertoCards = ModelDb.CardPool<CardPool>().AllCards.Where(c => c is IConcertoCard).ToList();
             CardModel commonCard = commonCards[Owner.RunState.Rng.CombatCardGeneration.NextInt(commonCards.Count)].ToMutable();
             CardModel concertoCard = concertoCards[Owner.RunState.Rng.CombatCardGeneration.NextInt(concertoCards.Count)].ToMutable();
-            List<CardModel> resonanceCards = [ModelDb.Card<CascadingStrings>(), ModelDb.Card<HarmonicPillar>()];
-            CardModel resonanceCard = resonanceCards[Owner.RunState.Rng.CombatCardGeneration.NextInt(resonanceCards.Count)].ToMutable();
+            CardModel resonanceCard = ModelDb.Card<StringAndPillar>().ToMutable();
             if (CurrentUpgradeLevel > 0) {
                 commonCard.UpgradeInternal();
                 commonCard.FinalizeUpgradeInternal();

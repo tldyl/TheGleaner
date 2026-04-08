@@ -14,7 +14,7 @@ namespace DemoMod.TheGleaner.Cards.GleanerCard;
 [Pool(typeof(CardPool))]
 public class Rubato : CustomCardModel
 {
-    //public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
+    public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new EnergyVar(1),
