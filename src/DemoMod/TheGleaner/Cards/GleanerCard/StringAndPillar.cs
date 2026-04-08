@@ -17,7 +17,7 @@ public class StringAndPillar : CustomCardModel {
 	public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
 	protected override IEnumerable<DynamicVar> CanonicalVars => [new IntVar("Amount", 1)];
 	protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<StrengthPower>(), HoverTipFactory.FromPower<DexterityPower>()];
-	public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Innate, CardKeyword.Retain];
+	public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Innate, CardKeyword.Retain, CustomEnums.Resonance];
 
 	public StringAndPillar() : base(6, CardType.Power, CardRarity.Basic, TargetType.Self) {
 	}
@@ -34,7 +34,6 @@ public class StringAndPillar : CustomCardModel {
 	}
 	
 	protected override void OnUpgrade() {
-		AddKeyword(CustomEnums.Resonance);
-		EnergyCost.UpgradeBy(-2);
+		DynamicVars["Amount"].UpgradeValueBy(1);
 	}
 }
