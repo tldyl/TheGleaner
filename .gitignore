@@ -1,9 +1,13 @@
-/.idea
-/.godot
+.idea/
+.godot/
 *.uid
 *.pck
 *.xlsx
 *.docx
 *.sln.DotSettings.user
 *.import
-/bin/windows/~libspine_godot.windows.editor.x86_64.dll
+*.bak
+*.TMP
+*.tmp
+bin/
+obj/
