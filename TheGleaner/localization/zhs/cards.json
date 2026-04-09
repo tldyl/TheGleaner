@@ -120,6 +120,11 @@
   "DEMOMOD-SENTIENT_MUSICAL_NOTE.description": "你每打出三张[gold]乐句[/gold]牌，\n将一张[gold]周往而复始[/gold]放入你的手牌。\n回合结束时，将一张[gold]不和谐音[/gold]放入你的弃牌堆。",
   "DEMOMOD-ROUND_AND_ROUND.title": "周往而复始",
   "DEMOMOD-ROUND_AND_ROUND.description": "击晕所有敌人。{IfUpgraded:show:\n下回合开始时，获得等同于能量上限的{Energy:energyIcons()}|}",
+  "DEMOMOD-EVER_ECHOING.title": "寰宇不绝",
+  "DEMOMOD-EVER_ECHOING.description": "从[gold]乐谱[/gold]中选择一张牌，为其添加[gold]重放[/gold]X{IfUpgraded:show:+1|}和[gold]消耗[/gold]。",
+  "DEMOMOD-EVER_ECHOING.selectionScreenPrompt": "选择1张牌。",
+  "DEMOMOD-RENDEZVOUS_WITH_DOOM.title": "邂逅终焉",
+  "DEMOMOD-RENDEZVOUS_WITH_DOOM.description": "每回合首次用尽{Energy:energyIcons()}时，将{Energy:energyIcons()}恢复至上限。\n在X+{IfUpgraded:show:2|1}回合后死亡。",
 
   "DEMOMOD-CASCADING_STRINGS.title": "流弦",
   "DEMOMOD-CASCADING_STRINGS.description": "造成{Damage:diff()}点伤害。\n在本回合获得{Amount}点[gold]敏捷[/gold]",
