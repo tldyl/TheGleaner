@@ -19,7 +19,7 @@ public class StringAndPillar : CustomCardModel {
 	protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<StrengthPower>(), HoverTipFactory.FromPower<DexterityPower>()];
 	public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Innate, CardKeyword.Retain, CustomEnums.Resonance];
 
-	public StringAndPillar() : base(6, CardType.Power, CardRarity.Basic, TargetType.Self) {
+	public StringAndPillar() : base(5, CardType.Power, CardRarity.Basic, TargetType.Self) {
 	}
 
 	protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
