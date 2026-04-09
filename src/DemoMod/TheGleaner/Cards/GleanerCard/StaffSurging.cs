@@ -32,7 +32,11 @@ public class StaffSurging : CustomCardModel {
         }
     }
 
-    public override async Task BeforeCombatStartLate() {
+    public override async Task BeforeCombatStart() {
+        if (!IsInCombat || CombatState == null) {
+            return;
+        }
+
         await ScorePileCmd.AddCards(Owner.PlayerCombatState, Owner, this);
     }
     

@@ -19,6 +19,7 @@ public class NoLeaveToWither : CustomCardModel {
     public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
     protected override IEnumerable<DynamicVar> CanonicalVars => [new IntVar("Amount", 1)];
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromKeyword(CustomEnums.Dissonance), HoverTipFactory.FromPower<DoomPower>(), HoverTipFactory.Static(StaticHoverTip.Block)];
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
 
     public NoLeaveToWither() : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.Self) {
         

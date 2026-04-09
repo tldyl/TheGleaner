@@ -12,23 +12,24 @@ using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.ValueProps;
 
 namespace DemoMod.TheGleaner.Cards.GleanerCard;
+
 [Pool(typeof(CardPool))]
-public class TremorChord : CustomCardModel {
+public class VeeringStrike : CustomCardModel {
     public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new DamageVar(4, ValueProp.Move),
-        new RepeatVar(3)
+        new DamageVar(3, ValueProp.Move),
+        new RepeatVar(4)
     ];
 
-    public TremorChord() : base(2, CardType.Attack, CardRarity.Common, TargetType.AllEnemies) {
+    public VeeringStrike() : base(2, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy) {
     }
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
-        AttackCommand _ = await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
+        await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
             .WithHitCount(DynamicVars.Repeat.IntValue)
             .FromCard(this)
-            .TargetingRandomOpponents(CombatState)
+            .Targeting(cardPlay.Target) // ✅ 改这里：固定目标
             .WithHitFx("vfx/vfx_attack_slash")
             .Execute(choiceContext);
     }
@@ -37,12 +38,17 @@ public class TremorChord : CustomCardModel {
         Player player,
         PlayerChoiceContext choiceContext,
         CombatState combatState) {
+
         CardPile pile = Pile;
+
         if ((pile != null ? pile.Type != CustomEnums.ScorePile ? 1 : 0 : 1) != 0 || player != Owner) {
             return;
         }
+
         await CardCmd.AutoPlay(choiceContext, this, null);
     }
 
-    protected override void OnUpgrade() => DynamicVars.Repeat.UpgradeValueBy(1);
+    protected override void OnUpgrade() {
+        DynamicVars.Damage.UpgradeValueBy(1); // 3 → 4
+    }
 }

@@ -9,5 +9,6 @@
 *.bak
 *.TMP
 *.tmp
+deploy.ps1
 bin/
 obj/
