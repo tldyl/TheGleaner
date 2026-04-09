@@ -56,8 +56,8 @@ public class ClusterStringWeave : CustomCardModel {
             }
 
             if (pile.Cards.Count == 0 && NRun.Instance.CombatRoom.Ui.Hand.ActiveHolders.Any(holder => holder.CardModel is ScoreEntryCard)) {
-                NRun.Instance.CombatRoom.Ui.Hand.RemoveCardHolder(
-                    NRun.Instance.CombatRoom.Ui.Hand.ActiveHolders.FirstOrDefault(holder => holder.CardModel is ScoreEntryCard)
+                NRun.Instance.CombatRoom.Ui.Hand.Remove(
+                    NRun.Instance.CombatRoom.Ui.Hand.ActiveHolders.FirstOrDefault(holder => holder.CardModel is ScoreEntryCard).CardModel
                 );
             }
 

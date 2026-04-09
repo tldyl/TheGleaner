@@ -43,6 +43,9 @@ public class Phantasm : CustomCardModel {
         CardPile scorePile = CustomPiles.GetCustomPile(Owner.PlayerCombatState, CustomEnums.ScorePile);
 
         if (scorePile != null && scorePile.Cards.Contains(this)) {
+            if (side != CombatSide.Player) {
+                return;
+            }
             EnergyCost.AddUntilPlayed(-1);
             return;
         }

@@ -21,8 +21,7 @@ public class UnfurlShieldscore : CustomCardModel {
         new BlockVar(3, ValueProp.Move),
         new IntVar("GleanAmount", 2),
     ];
-    public override bool GainsBlock => true;
-    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<DexterityPower>(), HoverTipFactory.FromKeyword(CustomEnums.Glean)];
+    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<DexterityPower>(), HoverTipFactory.FromKeyword(CustomEnums.Glean), HoverTipFactory.Static(StaticHoverTip.Block)];
 
     public UnfurlShieldscore() : base(2, CardType.Power, CardRarity.Uncommon, TargetType.Self) {
         

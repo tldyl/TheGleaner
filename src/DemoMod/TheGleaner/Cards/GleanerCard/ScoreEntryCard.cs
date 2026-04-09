@@ -22,15 +22,6 @@ public class ScoreEntryCard : CustomCardModel {
     public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Retain];
 
-    protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new CalculationBaseVar(0),
-        new ExtraDamageVar(1),
-        new CalculatedDamageVar(ValueProp.Unpowered).WithMultiplier((Func<CardModel, Creature, Decimal>) ((card, _) => {
-                return ScorePileCmd.GetCapacity(card.Owner);
-            })
-        )
-    ];
-
     public ScoreEntryCard() : base(0, CardType.Status, CardRarity.Event, TargetType.Self) {
     }
 

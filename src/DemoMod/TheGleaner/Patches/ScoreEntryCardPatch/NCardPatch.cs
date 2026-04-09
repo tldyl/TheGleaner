@@ -1,4 +1,6 @@
+using DemoMod.TheGleaner.CardPiles;
 using DemoMod.TheGleaner.Cards.GleanerCard;
+using DemoMod.TheGleaner.Commands;
 using DemoMod.TheGleaner.Enums;
 using Godot;
 using HarmonyLib;
@@ -25,6 +27,44 @@ public class NCardPatch {
                 string str = __instance.Model.GetDescriptionForPile(PileType.Hand);
                 MegaRichTextLabel descriptionLines = (MegaRichTextLabel) AccessTools.Field(typeof(NCard), "_descriptionLabel").GetValue(__instance);
                 descriptionLines.SetTextAutoSize("[center]" + str + "[/center]");
+                //乐谱内牌的缩略图显示
+                if (!__instance.HasNode("ScrollContainer")) {
+                    ScrollContainer scrollContainer = new ScrollContainer();
+                    scrollContainer.Name = "ScrollContainer";
+                    scrollContainer.HorizontalScrollMode = ScrollContainer.ScrollMode.ShowNever;
+                    scrollContainer.VerticalScrollMode = ScrollContainer.ScrollMode.ShowNever;
+                    scrollContainer.CustomMinimumSize = new Vector2(252.0f, 0.0f);
+                    scrollContainer.Size = new Vector2(268, 204);
+                    scrollContainer.Position = new Vector2(-128, -164);
+                    
+                    HFlowContainer flowContainer = new HFlowContainer();
+                    flowContainer.Name = "FlowContainer";
+                    flowContainer.CustomMinimumSize = new Vector2(268.0f, 0.0f);
+                    
+                    scrollContainer.AddChild(flowContainer);
+                    __instance.AddChild(scrollContainer);
+                }
+                HFlowContainer flowContainer2 = __instance.GetNode<HFlowContainer>("ScrollContainer/FlowContainer");
+                foreach (Node child in flowContainer2.GetChildren()) {
+                    child.QueueFree();
+                }
+                ScorePile scorePile = ScorePileCmd.GetOrCreateScorePile(__instance.Model.Owner.PlayerCombatState);
+                foreach (CardModel card in scorePile.Cards) {
+                    TextureRect cardIcon = new TextureRect();
+                    cardIcon.Texture = PreloadManager.Cache.GetTexture2D(getScoreCardIconPath(card));
+                    cardIcon.ExpandMode = TextureRect.ExpandModeEnum.IgnoreSize;
+                    cardIcon.StretchMode = TextureRect.StretchModeEnum.KeepAspectCentered;
+                    cardIcon.CustomMinimumSize = new Vector2(50.0f, 78.0f);
+                    flowContainer2.AddChild(cardIcon);
+                }
+                for (int _ = 0; _ < ScorePileCmd.GetCapacity(__instance.Model.Owner) - scorePile.Cards.Count; _++) {
+                    TextureRect cardIcon = new TextureRect();
+                    cardIcon.Texture = PreloadManager.Cache.GetTexture2D(getScoreCardIconPath(null));
+                    cardIcon.ExpandMode = TextureRect.ExpandModeEnum.IgnoreSize;
+                    cardIcon.StretchMode = TextureRect.StretchModeEnum.KeepAspectCentered;
+                    cardIcon.CustomMinimumSize = new Vector2(50.0f, 78.0f);
+                    flowContainer2.AddChild(cardIcon);
+                }
                 return false;
             }
             if (__instance.Model.Pile is {IsCombatPile: true}) {
@@ -34,6 +74,29 @@ public class NCardPatch {
                     .GetNode<TextureRect>("GleanerResonanceGlowIcon").Visible = 
                 __instance.Model.Keywords.Contains(CustomEnums.Resonance) && __instance.Model.Pile is {IsCombatPile: true};
             return true;
+        }
+
+        private static string getScoreCardIconPath(CardModel? card) {
+            if (card == null) {
+                return "res://TheGleaner/images/score_card_icon/empty.png";
+            }
+            if (card is ClusterStrike) {
+                return "res://TheGleaner/images/score_card_icon/cluster_strike.png";
+            }
+            if (card.Tags.Contains(CardTag.Strike)) {
+                return "res://TheGleaner/images/score_card_icon/strike.png";
+            }
+            if (card.Tags.Contains(CardTag.Defend)) {
+                return "res://TheGleaner/images/score_card_icon/defend.png";
+            }
+            return card.Type switch {
+                CardType.Attack => "res://TheGleaner/images/score_card_icon/attack.png",
+                CardType.Skill => "res://TheGleaner/images/score_card_icon/skill.png",
+                CardType.Power => "res://TheGleaner/images/score_card_icon/power.png",
+                CardType.Status => "res://TheGleaner/images/score_card_icon/status.png",
+                CardType.Curse or CardType.Quest => "res://TheGleaner/images/score_card_icon/curse.png",
+                _ => "res://TheGleaner/images/score_card_icon/unknown.png"
+            };
         }
     }
 
