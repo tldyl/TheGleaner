@@ -51,6 +51,7 @@ public class ClusterStrike : CustomCardModel, IAppendDescriptionCard {
         }
         
         return $"res://TheGleaner/images/cards/demomod-cluster_strike_{stage}.png";
+        
     }
 
     private int GetCurrentHitCount() {
