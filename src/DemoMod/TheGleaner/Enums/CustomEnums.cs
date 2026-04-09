@@ -10,7 +10,7 @@ public class CustomEnums {
     [CustomEnum]
     public static CardTag Arrow;
 
-    [CustomEnum, KeywordProperties(AutoKeywordPosition.Before)]
+    [CustomEnum, KeywordProperties(AutoKeywordPosition.After)]
     public static CardKeyword Resonance;
 
     [CustomEnum, KeywordProperties(AutoKeywordPosition.Before)]
