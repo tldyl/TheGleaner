@@ -62,22 +62,8 @@ public class ClusterStrike : CustomCardModel, IAppendDescriptionCard {
         return DynamicVars["HitCount"].IntValue;
     }
 
-<<<<<<< Updated upstream
     private int GetPortraitStage(int hitCount) {
         return hitCount >= 5 ? 5 : hitCount;
-=======
-    private int GetPortraitStage(int hitCount)
-    {
-
-
-
-        if (hitCount >= 10)
-            return 9;
-        else if (hitCount <=2)
-            return 2;
-
-        return hitCount - 1;
->>>>>>> Stashed changes
     }
 
     public void setCards(List<CardModel> cards) {

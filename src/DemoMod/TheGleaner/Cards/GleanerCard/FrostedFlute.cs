@@ -20,7 +20,7 @@ public class FrostedFlute : CustomCardModel, IConcertoCard {
     public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new DamageVar(13, ValueProp.Move),
-        new IntVar("Amount", 1)
+        new IntVar("Amount", 2)
     ];
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromKeyword(CustomEnums.Concerto), HoverTipFactory.FromPower<StrengthPower>()];
 
@@ -35,13 +35,16 @@ public class FrostedFlute : CustomCardModel, IConcertoCard {
             .WithHitFx("vfx/vfx_attack_slash")
             .Targeting(cardPlay.Target)
             .Execute(choiceContext);
-        await PowerCmd.Apply<PreventStrengthIncreasePower>(cardPlay.Target, 1, Owner.Creature, this);
+        await PowerCmd.Apply<PreventStrengthIncreasePower>(cardPlay.Target, 2, Owner.Creature, this);
     }
 
-    protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(4);
     
     public async Task OnConcerto(CombatState combatState, PlayerChoiceContext choiceContext, CardPlay cardPlay) {
         SoundManager.Instance.PlaySound(SoundKeys.GetSoundResourcePath("FLUTE_" + new Random().Next(1, 5)), 1.0f);
         await PowerCmd.Apply<FrostedFlutePower>(combatState.HittableEnemies, DynamicVars["Amount"].BaseValue, Owner.Creature, this);
     }
+        protected override void OnUpgrade() {
+            DynamicVars.Damage.UpgradeValueBy(4);
+            DynamicVars["Amount"].UpgradeValueBy(1);
+        }
 }
