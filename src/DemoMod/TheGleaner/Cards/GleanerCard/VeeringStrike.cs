@@ -14,7 +14,7 @@ using MegaCrit.Sts2.Core.ValueProps;
 namespace DemoMod.TheGleaner.Cards.GleanerCard;
 
 [Pool(typeof(CardPool))]
-public class TremorChord : CustomCardModel {
+public class VeeringStrike : CustomCardModel {
     public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [
@@ -22,7 +22,7 @@ public class TremorChord : CustomCardModel {
         new RepeatVar(4)
     ];
 
-    public TremorChord() : base(2, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy) {
+    public VeeringStrike() : base(2, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy) {
     }
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {

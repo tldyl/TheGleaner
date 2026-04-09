@@ -23,7 +23,7 @@ public class ClusterStringWeave : CustomCardModel {
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromCard(previewCard)];
 
-    public ClusterStringWeave() : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.Self) {
+    public ClusterStringWeave() : base(1, CardType.Skill, CardRarity.Common, TargetType.Self) {
     }
 
     public override async Task BeforeCombatStart() {
