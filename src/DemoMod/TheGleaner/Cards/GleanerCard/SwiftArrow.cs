@@ -53,10 +53,10 @@ public class SwiftArrow : CustomCardModel, IArrowCard {
         return new LocString("cards", "DEMOMOD-SWIFT_ARROW.arrowDescription");
     }
 
-    public async Task arrowEffect(PlayerChoiceContext choiceContext, CardPlay cardPlay, IEnumerable<DamageResult> damageResults, CardModel clusterCard, AttackContext context) {
+    public async Task arrowEffect(PlayerChoiceContext choiceContext, CardPlay cardPlay, List<DamageResult> damageResults, CardModel clusterCard, AttackContext context) {
         foreach (DamageResult damageResult in damageResults) {
-            if (damageResult.Receiver == cardPlay.Target && !damageResult.WasFullyBlocked) {
-                await PowerCmd.Apply<SwiftArrowPower>(cardPlay.Target, DynamicVars["Amount"].BaseValue, Owner.Creature, this);
+            if (!damageResult.WasFullyBlocked) {
+                await PowerCmd.Apply<SwiftArrowPower>(damageResult.Receiver, DynamicVars["Amount"].BaseValue, Owner.Creature, clusterCard);
             }
         }
     }

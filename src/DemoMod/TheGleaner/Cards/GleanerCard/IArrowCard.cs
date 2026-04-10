@@ -12,7 +12,7 @@ public interface IArrowCard {
 
     public LocString getArrowDescription();
 
-    public Task arrowEffect(PlayerChoiceContext choiceContext, CardPlay cardPlay, IEnumerable<DamageResult> damageResults, CardModel clusterCard, AttackContext context);
+    public Task arrowEffect(PlayerChoiceContext choiceContext, CardPlay cardPlay, List<DamageResult> damageResults, CardModel clusterCard, AttackContext context);
 
     public void onMerge(CardModel clusterCard) {
         

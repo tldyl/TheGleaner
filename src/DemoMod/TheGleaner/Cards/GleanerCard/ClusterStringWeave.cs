@@ -69,7 +69,7 @@ public class ClusterStringWeave : CustomCardModel {
 
             clusterStrike.setCards(mergedCards);
             Owner.Creature.CombatState.AddCard(clusterStrike, Owner);
-            await CardPileCmd.AddGeneratedCardToCombat(clusterStrike, CustomEnums.ScorePile, true);
+            await CardPileCmd.AddGeneratedCardToCombat(clusterStrike, PileType.Hand, true);
         }
     }
 

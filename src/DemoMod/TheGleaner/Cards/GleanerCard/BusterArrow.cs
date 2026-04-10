@@ -28,12 +28,9 @@ public class BusterArrow : CustomCardModel, IArrowCard {
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
         AttackContext context = await AttackCommand.CreateContextAsync(CombatState, this);
-        AttackCommand attackCommand = await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
-            .FromCard(this)
-            .Targeting(cardPlay.Target)
-            .Execute(choiceContext);
-        context.AddHit(attackCommand.Results);
-        await arrowEffect(choiceContext, cardPlay, attackCommand.Results, this, context);
+        IEnumerable<DamageResult> damageResults = await CreatureCmd.Damage(choiceContext, cardPlay.Target, DynamicVars.Damage, this);
+        context.AddHit(damageResults);
+        await arrowEffect(choiceContext, cardPlay, damageResults.ToList(), this, context);
     }
     
     protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(6);
@@ -46,13 +43,14 @@ public class BusterArrow : CustomCardModel, IArrowCard {
         return new LocString("cards", "DEMOMOD-BUSTER_ARROW.arrowDescription");
     }
 
-    public async Task arrowEffect(PlayerChoiceContext choiceContext, CardPlay cardPlay, IEnumerable<DamageResult> damageResults, CardModel clusterCard, AttackContext context) {
-        if (damageResults.Any()) {
-            DamageResult damageResult = damageResults.First();
-            List<Creature> list2 = CombatState.GetTeammatesOf(damageResult.Receiver).Except<Creature>([cardPlay.Target]).Where((Func<Creature, bool>) (e => e.IsHittable)).ToList();
-            if (list2.Count != 0) {
-                context.AddHit(await CreatureCmd.Damage(choiceContext, list2, damageResult.TotalDamage + damageResult.OverkillDamage, ValueProp.Unpowered | ValueProp.Move, Owner.Creature, clusterCard));
-            }
+    public async Task arrowEffect(PlayerChoiceContext choiceContext, CardPlay cardPlay, List<DamageResult> damageResults, CardModel clusterCard, AttackContext context) {
+        DamageResult damageResult = damageResults.First();
+        List<Creature> list2 = Owner.Creature.CombatState.GetTeammatesOf(damageResult.Receiver).Except<Creature>([cardPlay.Target]).Where((Func<Creature, bool>) (e => e.IsHittable)).ToList();
+        if (list2.Count != 0) {
+            IEnumerable<DamageResult> damageResultList = await CreatureCmd.Damage(choiceContext, list2, damageResult.TotalDamage + damageResult.OverkillDamage, ValueProp.Unpowered | ValueProp.Move,
+                Owner.Creature, clusterCard);
+            context.AddHit(damageResultList);
+            damageResults.AddRange(damageResultList);
         }
     }
 }

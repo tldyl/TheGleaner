@@ -31,7 +31,7 @@ public class EchoingArrow : CustomCardModel, IArrowCard {
 			.FromCard(this)
 			.Targeting(cardPlay.Target)
 			.Execute(choiceContext);
-		await arrowEffect(choiceContext, cardPlay, attackCommand.Results, this, null);
+		await arrowEffect(choiceContext, cardPlay, attackCommand.Results.ToList(), this, null);
 	}
 	
 	protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(3);
@@ -44,7 +44,7 @@ public class EchoingArrow : CustomCardModel, IArrowCard {
 		return new LocString("cards", "DEMOMOD-ECHOING_ARROW.arrowDescription");
 	}
 
-	public async Task arrowEffect(PlayerChoiceContext choiceContext, CardPlay cardPlay, IEnumerable<DamageResult> damageResults, CardModel clusterCard, AttackContext context) {
+	public async Task arrowEffect(PlayerChoiceContext choiceContext, CardPlay cardPlay, List<DamageResult> damageResults, CardModel clusterCard, AttackContext context) {
 		CardCmd.PreviewCardPileAdd(await CardPileCmd.AddGeneratedCardToCombat(clusterCard.CreateClone(), PileType.Discard, true), 2.2f);
 	}
 }

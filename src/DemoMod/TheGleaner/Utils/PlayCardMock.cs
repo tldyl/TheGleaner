@@ -18,7 +18,6 @@ using MegaCrit.Sts2.Core.Saves;
 using MegaCrit.Sts2.Core.Settings;
 
 namespace DemoMod.TheGleaner.Utils;
-
 public class PlayCardMock {
     public static async Task MockPlayCard(CardModel cardModel, Creature target, PlayerChoiceContext choiceContext, ResourceInfo resources) {
         CombatState combatState = cardModel.CombatState ?? cardModel.Owner.Creature.CombatState;
@@ -30,7 +29,7 @@ public class PlayCardMock {
         NCard cardNode = NCard.FindOnTable(cardModel, PileType.Play);
         await Cmd.CustomScaledWait(0.25f, 0.35f);
         IEnumerable<AbstractModel> modifiers = [];
-        PileType originalPileType = (PileType) AccessTools.Method(typeof(CardModel), "GetResultPileType", []).Invoke(cardModel, []);
+        PileType originalPileType = (PileType)AccessTools.Method(typeof(CardModel), "GetResultPileType", []).Invoke(cardModel, []);
         (PileType pileType, CardPilePosition position) =
             Hook.ModifyCardPlayResultPileTypeAndPosition(combatState, cardModel, true, resources, originalPileType, CardPilePosition.Bottom, out modifiers);
         foreach (AbstractModel abstractModel in modifiers)
@@ -42,14 +41,15 @@ public class PlayCardMock {
         ulong playStartTime = Time.GetTicksMsec();
         for (int i = 0; i < playCount; i++) {
             if (cardModel.Type == CardType.Power) {
-                await (Task) AccessTools.Method(typeof(CardModel), "PlayPowerCardFlyVfx", []).Invoke(cardModel, []);
+                await (Task)AccessTools.Method(typeof(CardModel), "PlayPowerCardFlyVfx", []).Invoke(cardModel, []);
             } else if (i > 0) {
                 NCard onTable = NCard.FindOnTable(cardModel);
                 if (onTable != null) {
                     await onTable.AnimMultiCardPlay();
                 }
             }
-            CardPlay cardPlay = new CardPlay {
+            CardPlay cardPlay = new CardPlay
+            {
                 Card = cardModel,
                 Target = target,
                 ResultPile = pileType,
@@ -60,7 +60,7 @@ public class PlayCardMock {
             };
             await Hook.BeforeCardPlayed(combatState, cardPlay);
             CombatManager.Instance.History.CardPlayStarted(combatState, cardPlay);
-            await (Task) AccessTools.Method(typeof(CardModel), "OnPlay", [typeof(PlayerChoiceContext), typeof(CardPlay)]).Invoke(cardModel, [choiceContext, cardPlay]);
+            await (Task)AccessTools.Method(typeof(CardModel), "OnPlay", [typeof(PlayerChoiceContext), typeof(CardPlay)]).Invoke(cardModel, [choiceContext, cardPlay]);
             cardModel.InvokeExecutionFinished();
             if (cardModel.Enchantment != null) {
                 await cardModel.Enchantment.OnPlay(choiceContext, cardPlay);
@@ -79,16 +79,21 @@ public class PlayCardMock {
         float num = (Time.GetTicksMsec() - playStartTime) / 1000f;
         await Cmd.CustomScaledWait(0.15f - num, 0.3f - num);
 
-        if (pile is ScorePile) {
-            cardModel.RemoveFromCurrentPile();
-            await ScorePileCmd.AddCards(cardModel.Owner.PlayerCombatState, cardModel.Owner, cardModel);
+        if (cardModel.Keywords.Contains(CardKeyword.Exhaust) || cardModel.Type == CardType.Power) {
+            await CardPileCmd.RemoveFromCombat(cardModel);
         } else {
-            await CardPileCmd.Add(cardModel, pileType, position, skipVisuals: false);
+            if (pile is ScorePile) {
+                cardModel.RemoveFromCurrentPile();
+                await ScorePileCmd.AddCards(cardModel.Owner.PlayerCombatState, cardModel.Owner, cardModel);
+            } else {
+                await CardPileCmd.Add(cardModel, pileType, position, skipVisuals: false);
+            }
         }
+
         await CombatManager.Instance.CheckForEmptyHand(choiceContext, cardModel.Owner);
         Tween tween = NCombatRoom.Instance.CreateTween().SetParallel();
-        tween.Chain().TweenCallback(Callable.From((Action) (() => NCombatRoom.Instance.Ui.AddChildSafely((Node) NExhaustVfx.Create(cardNode)))));
-        tween.Parallel().TweenProperty(cardNode, (NodePath) "modulate", StsColors.exhaustGray, SaveManager.Instance.PrefsSave.FastMode == FastModeType.Fast ? 0.2 : 0.3);
+        tween.Chain().TweenCallback(Callable.From((Action)(() => NCombatRoom.Instance.Ui.AddChildSafely((Node)NExhaustVfx.Create(cardNode)))));
+        tween.Parallel().TweenProperty(cardNode, (NodePath)"modulate", StsColors.exhaustGray, SaveManager.Instance.PrefsSave.FastMode == FastModeType.Fast ? 0.2 : 0.3);
         tween.Chain().TweenCallback(Callable.From(cardNode.QueueFreeSafely));
         Action played = AccessTools.Field(typeof(CardModel), "Played").GetValue(cardModel) as Action;
         played?.Invoke();

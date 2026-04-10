@@ -2,6 +2,7 @@ using BaseLib.Abstracts;
 using BaseLib.Patches.Content;
 using DemoMod.TheGleaner.CardPiles;
 using DemoMod.TheGleaner.Cards.GleanerCard;
+using Godot;
 using MegaCrit.Sts2.Core.CardSelection;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
@@ -12,6 +13,7 @@ using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Nodes;
 using MegaCrit.Sts2.Core.Nodes.Cards;
+using MegaCrit.Sts2.Core.Nodes.Cards.Holders;
 using CustomEnums = DemoMod.TheGleaner.Enums.CustomEnums;
 
 namespace DemoMod.TheGleaner.Commands;
@@ -107,7 +109,11 @@ public static class ScorePileCmd {
         if (pile.Cards.Count > 0 && !NRun.Instance.CombatRoom.Ui.Hand.ActiveHolders.Any(holder => holder.CardModel is ScoreEntryCard)) {
             CardModel scoreEntryCard = ModelDb.Card<ScoreEntryCard>().ToMutable();
             scoreEntryCard.Owner = player;
-            NRun.Instance.CombatRoom.Ui.Hand.Add(NCard.Create(scoreEntryCard));
+            NCard nCard = NCard.Create(scoreEntryCard);
+            nCard.Position = PileType.Hand.GetTargetPosition(nCard);
+            NHandCardHolder holder = NRun.Instance.CombatRoom.Ui.Hand.Add(nCard);
+            holder.Hitbox.Size = new Vector2(400, 500);
+            holder.Hitbox.Position = new Vector2(-200, -250);
             NetCombatCardDb.Instance.IdCardForTesting(scoreEntryCard);
         }
     }

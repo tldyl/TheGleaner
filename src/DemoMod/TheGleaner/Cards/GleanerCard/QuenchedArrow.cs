@@ -58,7 +58,7 @@ public class QuenchedArrow : CustomCardModel, IArrowCard {
 		return new LocString("cards", "DEMOMOD-QUENCHED_ARROW.arrowDescription");
 	}
 
-	public async Task arrowEffect(PlayerChoiceContext choiceContext, CardPlay cardPlay, IEnumerable<DamageResult> damageResults, CardModel clusterCard, AttackContext context) {
+	public async Task arrowEffect(PlayerChoiceContext choiceContext, CardPlay cardPlay, List<DamageResult> damageResults, CardModel clusterCard, AttackContext context) {
 		clusterCard.DynamicVars["Amount"].UpgradeValueBy(clusterCard.DynamicVars["Grow"].BaseValue);
 	}
 

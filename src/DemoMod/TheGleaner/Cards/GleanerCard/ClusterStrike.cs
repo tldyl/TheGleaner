@@ -49,7 +49,7 @@ public class ClusterStrike : CustomCardModel, IAppendDescriptionCard {
         if (stage <= 2) {
             return "res://TheGleaner/images/cards/demomod-cluster_strike.png";
         }
-        
+
         return $"res://TheGleaner/images/cards/demomod-cluster_strike_{stage}.png";
     }
 
@@ -89,22 +89,25 @@ public class ClusterStrike : CustomCardModel, IAppendDescriptionCard {
             }
         }
 
+        foreach (CardModel card in this.cards.Where(c => c is BusterArrow).ToList()) {
+            this.cards.Remove(card);
+            this.cards.Insert(0, card);
+        }
+
         DynamicVars["HitCount"].UpgradeValueBy(hitCount);
     }
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
         AttackContext context = await AttackCommand.CreateContextAsync(CombatState, this);
-        List<DamageResult> results = [];
 
         for (int _ = 0; _ < DynamicVars["HitCount"].IntValue; _++) {
             IEnumerable<DamageResult> damageResults = await CreatureCmd.Damage(choiceContext, cardPlay.Target, DynamicVars.Damage, this);
             context.AddHit(damageResults);
-            results.AddRange(damageResults);
-        }
-
-        foreach (CardModel card in cards) {
-            if (card is IArrowCard arrowCard) {
-                await arrowCard.arrowEffect(choiceContext, cardPlay, results, this, context);
+            List<DamageResult> damageResultsList = damageResults.ToList();
+            foreach (CardModel card in cards) {
+                if (card is IArrowCard arrowCard) {
+                    await arrowCard.arrowEffect(choiceContext, cardPlay, damageResultsList, this, context);
+                }
             }
         }
     }
