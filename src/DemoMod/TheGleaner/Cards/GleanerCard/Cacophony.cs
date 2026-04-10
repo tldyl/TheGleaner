@@ -28,8 +28,9 @@ public class Cacophony : CustomCardModel {
     }
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
-        await CreatureCmd.Damage(choiceContext, CombatState.HittableEnemies, DynamicVars.Damage, Owner.Creature, this);
         await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, cardPlay);
+        await CreatureCmd.Damage(choiceContext, CombatState.HittableEnemies, DynamicVars.Damage, Owner.Creature, this);
+        
         List<CardModel> cards = RandomDissonanceCard.getRandomDissonanceCards(1, Owner.RunState.Rng.CombatCardGeneration);
         foreach (CardModel card in cards) {
             CardCmd.PreviewCardPileAdd(await CardPileCmd.AddGeneratedCardToCombat(CombatState.CreateCard(card, Owner), PileType.Discard, true));

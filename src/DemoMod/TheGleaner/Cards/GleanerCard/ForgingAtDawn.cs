@@ -12,27 +12,27 @@ namespace DemoMod.TheGleaner.Cards.GleanerCard;
 
 [Pool(typeof(TokenCardPool))]
 public class ForgingAtDawn : CustomCardModel {
-    public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
+	public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
 
-    protected override IEnumerable<DynamicVar> CanonicalVars =>
-    [
-        new IntVar("StrVal", 2),
-        new IntVar("DexVal", 1),
-    ];
+	protected override IEnumerable<DynamicVar> CanonicalVars =>
+	[
+		new IntVar("StrVal", 2),
+		new IntVar("DexVal", 1),
+	];
 
-    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<StrengthPower>(), HoverTipFactory.FromPower<DexterityPower>()];
+	protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<StrengthPower>(), HoverTipFactory.FromPower<DexterityPower>()];
 
-    public ForgingAtDawn() : base(1, CardType.Power, CardRarity.Common, TargetType.Self) {
-        
-    }
+	public ForgingAtDawn() : base(0, CardType.Power, CardRarity.Common, TargetType.Self) {
+		
+	}
 
-    protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
-        await PowerCmd.Apply<StrengthPower>(Owner.Creature, DynamicVars["StrVal"].BaseValue, Owner.Creature, this);
-        await PowerCmd.Apply<DexterityPower>(Owner.Creature, DynamicVars["DexVal"].BaseValue, Owner.Creature, this);
-    }
+	protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
+		await PowerCmd.Apply<StrengthPower>(Owner.Creature, DynamicVars["StrVal"].BaseValue, Owner.Creature, this);
+		await PowerCmd.Apply<DexterityPower>(Owner.Creature, DynamicVars["DexVal"].BaseValue, Owner.Creature, this);
+	}
 
-    protected override void OnUpgrade() {
-        DynamicVars["StrVal"].UpgradeValueBy(1);
-        DynamicVars["DexVal"].UpgradeValueBy(1);
-    }
+	protected override void OnUpgrade() {
+		DynamicVars["StrVal"].UpgradeValueBy(1);
+		DynamicVars["DexVal"].UpgradeValueBy(1);
+	}
 }

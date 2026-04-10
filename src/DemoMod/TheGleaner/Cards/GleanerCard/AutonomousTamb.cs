@@ -17,8 +17,8 @@ namespace DemoMod.TheGleaner.Cards.GleanerCard;
 public class AutonomousTamb : CustomCardModel, IConcertoCard {
     public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new IntVar("KillThreshold", 15),
-        new IntVar("VulVal", 1)
+        new IntVar("KillThreshold", 18),
+        new IntVar("VulVal", 2)
     ];
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromKeyword(CustomEnums.Concerto), HoverTipFactory.FromPower<WeakPower>(), HoverTipFactory.FromPower<VulnerablePower>()];
 
@@ -34,8 +34,11 @@ public class AutonomousTamb : CustomCardModel, IConcertoCard {
         }
     }
 
-    protected override void OnUpgrade() => DynamicVars["KillThreshold"].UpgradeValueBy(6);
-    
+    protected override void OnUpgrade() {
+        DynamicVars["KillThreshold"].UpgradeValueBy(9);
+        DynamicVars["VulVal"].UpgradeValueBy(1);
+    }
+
     public async Task OnConcerto(CombatState combatState, PlayerChoiceContext choiceContext, CardPlay cardPlay) {
         foreach (Creature creature in Owner.Creature.CombatState.HittableEnemies) {
             if (creature.IsMonster && creature.Monster.IntendsToAttack) {

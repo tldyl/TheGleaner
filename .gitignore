@@ -12,3 +12,4 @@
 deploy.ps1
 bin/
 obj/
+*.disabled

@@ -21,7 +21,7 @@ public class PreshowPrep : CustomCardModel {
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new BlockVar(9, ValueProp.Move),
         new IntVar("GleanAmount", 1),
-        new EnergyVar("EnergyAmount", 1)
+        new EnergyVar("EnergyAmount", 2)
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
