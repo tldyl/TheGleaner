@@ -16,28 +16,28 @@ namespace DemoMod.TheGleaner.Cards.GleanerCard;
 
 [Pool(typeof(CardPool))]
 public class Collapse : CustomCardModel {
-    public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
-    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromKeyword(CustomEnums.Dissonance)];
-    protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new DamageVar(8, ValueProp.Move),
-        new IntVar("DissonanceAmount", 1)
-    ];
+	public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
+	protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromKeyword(CustomEnums.Dissonance)];
+	protected override IEnumerable<DynamicVar> CanonicalVars => [
+		new DamageVar(10, ValueProp.Move),
+		new IntVar("DissonanceAmount", 1)
+	];
 
-    public Collapse() : base(2, CardType.Attack, CardRarity.Common, TargetType.RandomEnemy) {
-        
-    }
+	public Collapse() : base(2, CardType.Attack, CardRarity.Common, TargetType.RandomEnemy) {
+		
+	}
 
-    protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
-        AttackCommand _ = await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
-            .FromCard(this)
-            .TargetingRandomOpponents(Owner.Creature.CombatState)
-            .WithHitCount(Owner.Creature.CombatState.HittableEnemies.Count + 1)
-            .Execute(choiceContext);
-        List<CardModel> cards = RandomDissonanceCard.getRandomDissonanceCards(DynamicVars["DissonanceAmount"].IntValue, Owner.RunState.Rng.CombatCardGeneration);
-        foreach (CardModel card in cards) {
-            CardCmd.PreviewCardPileAdd(await CardPileCmd.AddGeneratedCardToCombat(CombatState.CreateCard(card, Owner), PileType.Discard, true));
-        }
-    }
+	protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
+		AttackCommand _ = await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
+			.FromCard(this)
+			.TargetingRandomOpponents(Owner.Creature.CombatState)
+			.WithHitCount(Owner.Creature.CombatState.HittableEnemies.Count + 1)
+			.Execute(choiceContext);
+		List<CardModel> cards = RandomDissonanceCard.getRandomDissonanceCards(DynamicVars["DissonanceAmount"].IntValue, Owner.RunState.Rng.CombatCardGeneration);
+		foreach (CardModel card in cards) {
+			CardCmd.PreviewCardPileAdd(await CardPileCmd.AddGeneratedCardToCombat(CombatState.CreateCard(card, Owner), PileType.Discard, true));
+		}
+	}
 
-    protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(3);
+	protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(3);
 }

@@ -13,29 +13,29 @@ namespace DemoMod.TheGleaner.Cards.GleanerCard;
 
 [Pool(typeof(TokenCardPool))]
 public class NightingaleAtTheAbyss : CustomCardModel {
-    public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
+	public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
 
-    protected override IEnumerable<DynamicVar> CanonicalVars =>
-    [
-        new IntVar("VulVal", 2),
-        new IntVar("WeakVal", 1),
-    ];
-    
-    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<VulnerablePower>(), HoverTipFactory.FromPower<WeakPower>()];
-    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
+	protected override IEnumerable<DynamicVar> CanonicalVars =>
+	[
+		new IntVar("VulVal", 2),
+		new IntVar("WeakVal", 1),
+	];
+	
+	protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<VulnerablePower>(), HoverTipFactory.FromPower<WeakPower>()];
+	public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
 
-    public NightingaleAtTheAbyss() : base(1, CardType.Skill, CardRarity.Common, TargetType.AllEnemies) {
-    }
-    
-    protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
-        foreach (Creature creature in Owner.Creature.CombatState.Enemies) {
-            await PowerCmd.Apply<VulnerablePower>(creature, DynamicVars["VulVal"].BaseValue, Owner.Creature, this);
-            await PowerCmd.Apply<WeakPower>(creature, DynamicVars["WeakVal"].BaseValue, Owner.Creature, this);
-        }
-    }
-    
-    protected override void OnUpgrade() {
-        DynamicVars["VulVal"].UpgradeValueBy(1);
-        DynamicVars["WeakVal"].UpgradeValueBy(1);
-    }
+	public NightingaleAtTheAbyss() : base(0, CardType.Skill, CardRarity.Common, TargetType.AllEnemies) {
+	}
+	
+	protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
+		foreach (Creature creature in Owner.Creature.CombatState.Enemies) {
+			await PowerCmd.Apply<VulnerablePower>(creature, DynamicVars["VulVal"].BaseValue, Owner.Creature, this);
+			await PowerCmd.Apply<WeakPower>(creature, DynamicVars["WeakVal"].BaseValue, Owner.Creature, this);
+		}
+	}
+	
+	protected override void OnUpgrade() {
+		DynamicVars["VulVal"].UpgradeValueBy(1);
+		DynamicVars["WeakVal"].UpgradeValueBy(1);
+	}
 }
