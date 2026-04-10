@@ -28,9 +28,9 @@ public class TheGleaner : PlaceholderCharacterModel {
     // 能量表盘tscn路径。要自定义见下。
     public override string CustomEnergyCounterPath => "res://TheGleaner/scenes/gleaner_energy_counter.tscn";
     // 篝火休息动画。
-    // public override string CustomRestSiteAnimPath => "res://scenes/rest_site/characters/ironclad_rest_site.tscn";
+    public override string CustomRestSiteAnimPath => "res://TheGleaner/scenes/gleaner_character_rest_site.tscn";
     // 商店人物动画。
-    // public override string CustomMerchantAnimPath => "res://scenes/merchant/characters/ironclad_merchant.tscn";
+    public override string CustomMerchantAnimPath => "res://TheGleaner/scenes/gleaner_character_shop.tscn";
     // 多人模式-手指。
     public override string CustomArmPointingTexturePath => "res://TheGleaner/images/multiplayer/multiplayer_hand_gleaner_point.png";
     // 多人模式剪刀石头布-石头。

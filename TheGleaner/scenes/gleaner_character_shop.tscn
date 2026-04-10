@@ -1,0 +1,32 @@
+[gd_scene load_steps=3 format=3 uid="uid://cjcp1avm5xus0"]
+
+[ext_resource type="SpineSkeletonDataResource" uid="uid://cc14xylic3ujv" path="res://TheGleaner/scenes/char/TheGleaner/Q/combat/Q.tres" id="1_igo4b"]
+[ext_resource type="Script" uid="uid://enrfsyanxdwb" path="res://src/DemoMod/TheGleaner/UI/NGleanerMerchantCharacter.cs" id="1_w4guc"]
+
+[node name="GleanerCharacter" type="Node2D"]
+script = ExtResource("1_w4guc")
+
+[node name="Visuals" type="SpineSprite" parent="."]
+skeleton_data_res = ExtResource("1_igo4b")
+preview_skin = "default"
+preview_animation = "idle_loop"
+preview_frame = false
+preview_time = 0.0
+unique_name_in_owner = true
+scale = Vector2(0.3, 0.3)
+
+[node name="Bounds" type="Control" parent="."]
+unique_name_in_owner = true
+layout_mode = 3
+anchors_preset = 0
+offset_left = -80.0
+offset_top = -256.0
+offset_right = 80.0
+
+[node name="IntentPos" type="Marker2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(0, -320)
+
+[node name="CenterPos" type="Marker2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(0, -128)

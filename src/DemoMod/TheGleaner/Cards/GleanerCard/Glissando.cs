@@ -2,6 +2,7 @@ using BaseLib.Abstracts;
 using BaseLib.Utils;
 using DemoMod.TheGleaner.Pools;
 using MegaCrit.Sts2.Core.Commands;
+using MegaCrit.Sts2.Core.Commands.Builders;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
@@ -38,12 +39,14 @@ public class Glissando : CustomCardModel {
 	}
 
 	protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
-		await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, cardPlay, false);
+		await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, cardPlay);
 
 		await CreatureCmd.TriggerAnim(Owner.Creature, "Attack", 0.5f);
+		AttackContext context = await AttackCommand.CreateContextAsync(CombatState, this);
 
 		IEnumerable<DamageResult> damageResults =
 			await CreatureCmd.Damage(choiceContext, CombatState.HittableEnemies, DynamicVars.Damage, Owner.Creature, this);
+		context.AddHit(damageResults);
 
 		int count = damageResults.Count(result => result.WasTargetKilled);
 
@@ -59,8 +62,7 @@ public class Glissando : CustomCardModel {
 				CombatState.HittableEnemies,
 				DynamicVars.Vulnerable.BaseValue,
 				Owner.Creature,
-				this,
-				false
+				this
 			);
 		}
 	}

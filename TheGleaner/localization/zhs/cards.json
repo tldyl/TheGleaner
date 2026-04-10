@@ -121,7 +121,11 @@
   "DEMOMOD-EVER_ECHOING.selectionScreenPrompt": "选择1张牌。",
   "DEMOMOD-RENDEZVOUS_WITH_DOOM.title": "邂逅终焉",
   "DEMOMOD-RENDEZVOUS_WITH_DOOM.description": "每回合首次用尽{Energy:energyIcons()}时，将{Energy:energyIcons()}恢复至上限。\n在X+{IfUpgraded:show:2|1}回合后死亡。",
-
+  "DEMOMOD-WINDMILL.title": "风车",
+  "DEMOMOD-WINDMILL.description": "获得{Block:diff()}点[gold]格挡[/gold]。\n对所有敌人造成{Damage:diff()}点伤害{Repeat}次。\n每次攻击后，如果仅剩一个敌人，给予{Debuff}层[gold]虚弱[/gold]与[gold]易伤[/gold]。",
+  "DEMOMOD-RAIMENT.title": "礼装",
+  "DEMOMOD-RAIMENT.description": "使你的所有牌随机附魔[gold]迅捷[/gold]2、[gold]播种[/gold]或[gold]华彩[/gold]。",
+  
   "DEMOMOD-DAMPING.title": "闷音",
   "DEMOMOD-DAMPING.description": "使敌人本回合失去{StrengthLoss}点[gold]力量[/gold]。\n获得{Block:diff()}点[gold]格挡[/gold]两次。",
   "DEMOMOD-SOUNDBOARD_THUMP.title": "琴腹钝击",

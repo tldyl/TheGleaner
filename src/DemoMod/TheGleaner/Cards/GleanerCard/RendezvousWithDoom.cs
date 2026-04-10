@@ -23,5 +23,6 @@ public class RendezvousWithDoom : CustomCardModel {
 
 	protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
 		await PowerCmd.Apply<RendezvousWithDoomPower>(Owner.Creature, ResolveEnergyXValue() + CurrentUpgradeLevel + 1, Owner.Creature, this);
+		await PlayerCmd.GainEnergy(Owner.PlayerCombatState.MaxEnergy, Owner);
 	}
 }
