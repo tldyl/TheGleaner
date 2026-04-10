@@ -12,6 +12,7 @@ namespace DemoMod.TheGleaner.Cards.TokenCards;
 
 [Pool(typeof(TokenCardPool))]
 public class GleanCard : CustomCardModel, IChoosable {
+    public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
     public override bool CanBeGeneratedInCombat => false;
     public override int MaxUpgradeLevel => 0;
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromKeyword(CustomEnums.Glean)];
