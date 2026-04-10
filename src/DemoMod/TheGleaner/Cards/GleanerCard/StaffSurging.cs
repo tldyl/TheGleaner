@@ -29,7 +29,7 @@ public class StaffSurging : CustomCardModel
         HoverTipFactory.FromPower<StaffSurgingPower>()
     ];
 
-    public StaffSurging() : base(0, CardType.Skill, CardRarity.Common, TargetType.AllEnemies)
+    public StaffSurging() : base(2, CardType.Skill, CardRarity.Common, TargetType.AllEnemies)
     {
     }
 

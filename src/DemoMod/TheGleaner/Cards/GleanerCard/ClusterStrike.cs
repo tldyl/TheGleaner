@@ -13,17 +13,21 @@ using MegaCrit.Sts2.Core.ValueProps;
 using System.Collections;
 
 namespace DemoMod.TheGleaner.Cards.GleanerCard;
+
 [Pool(typeof(TokenCardPool))]
-public class ClusterStrike : CustomCardModel, IAppendDescriptionCard {
+public class ClusterStrike : CustomCardModel, IAppendDescriptionCard
+{
     public override string PortraitPath => GetPortraitPath();
 
     protected override HashSet<CardTag> CanonicalTags => [CardTag.Strike];
 
-    protected override IEnumerable<IHoverTip> ExtraHoverTips {
-        get {
+    protected override IEnumerable<IHoverTip> ExtraHoverTips
+    {
+        get
+        {
             return cards.Where(card => card is IArrowCard).Select(card =>
             {
-                IArrowCard arrowCard = card as IArrowCard;
+                IArrowCard arrowCard = (IArrowCard)card;
                 return (IHoverTip)new HoverTip(arrowCard.getArrowName(), arrowCard.getArrowDescription());
             });
         }
@@ -39,58 +43,84 @@ public class ClusterStrike : CustomCardModel, IAppendDescriptionCard {
 
     private List<CardModel> cards = [];
 
-    public ClusterStrike() : base(1, CardType.Attack, CardRarity.Token, TargetType.AnyEnemy) {
+    public ClusterStrike() : base(1, CardType.Attack, CardRarity.Token, TargetType.AnyEnemy)
+    {
     }
 
-    private string GetPortraitPath() {
+    private string GetPortraitPath()
+    {
         int hitCount = GetCurrentHitCount();
         int stage = GetPortraitStage(hitCount);
 
-        if (stage <= 2) {
+        // 1 hit 或更低时使用默认图
+        if (stage <= 0)
+        {
             return "res://TheGleaner/images/cards/demomod-cluster_strike.png";
         }
 
         return $"res://TheGleaner/images/cards/demomod-cluster_strike_{stage}.png";
-
     }
 
-    private int GetCurrentHitCount() {
-        if (DynamicVars == null || !DynamicVars.ContainsKey("HitCount")) {
+    private int GetCurrentHitCount()
+    {
+        if (DynamicVars == null || !DynamicVars.ContainsKey("HitCount"))
+        {
             return 0;
         }
 
         return DynamicVars["HitCount"].IntValue;
     }
 
-    private int GetPortraitStage(int hitCount) {
-        return hitCount >= 5 ? 5 : hitCount;
+    private int GetPortraitStage(int hitCount)
+    {
+        // 图片编号逻辑改为：
+        // 默认图 = 1 hit
+        // cluster_strike_1 = 2 hit
+        // cluster_strike_2 = 3 hit
+        // ...
+        // cluster_strike_9 = 10 hit及以上
+        if (hitCount <= 1)
+        {
+            return 0;
+        }
+
+        return Math.Min(hitCount - 1, 9);
     }
 
-    public void setCards(List<CardModel> cards) {
+    public void setCards(List<CardModel> cards)
+    {
         int hitCount = 0;
 
-        foreach (CardModel card in cards) {
-            if (!this.cards.Any(c => c.Id.Equals(card.Id))) {
+        foreach (CardModel card in cards)
+        {
+            if (!this.cards.Any(c => c.Id.Equals(card.Id)))
+            {
                 this.cards.Add(card);
             }
 
-            if (card is IArrowCard arrowCard) {
+            if (card is IArrowCard arrowCard)
+            {
                 arrowCard.onMerge(this);
             }
 
-            if (card is ClusterStrike) {
+            if (card is ClusterStrike)
+            {
                 hitCount += card.DynamicVars["HitCount"].IntValue;
 
-                if (card.IsUpgraded && !IsUpgraded) {
+                if (card.IsUpgraded && !IsUpgraded)
+                {
                     UpgradeInternal();
                     FinalizeUpgradeInternal();
                 }
-            } else {
+            }
+            else
+            {
                 hitCount++;
             }
         }
 
-        foreach (CardModel card in this.cards.Where(c => c is BusterArrow).ToList()) {
+        foreach (CardModel card in this.cards.Where(c => c is BusterArrow).ToList())
+        {
             this.cards.Remove(card);
             this.cards.Insert(0, card);
         }
@@ -98,15 +128,20 @@ public class ClusterStrike : CustomCardModel, IAppendDescriptionCard {
         DynamicVars["HitCount"].UpgradeValueBy(hitCount);
     }
 
-    protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
+    protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
+    {
         AttackContext context = await AttackCommand.CreateContextAsync(CombatState, this);
 
-        for (int _ = 0; _ < DynamicVars["HitCount"].IntValue; _++) {
+        for (int i = 0; i < DynamicVars["HitCount"].IntValue; i++)
+        {
             IEnumerable<DamageResult> damageResults = await CreatureCmd.Damage(choiceContext, cardPlay.Target, DynamicVars.Damage, this);
             context.AddHit(damageResults);
+
             List<DamageResult> damageResultsList = damageResults.ToList();
-            foreach (CardModel card in cards) {
-                if (card is IArrowCard arrowCard) {
+            foreach (CardModel card in cards)
+            {
+                if (card is IArrowCard arrowCard)
+                {
                     await arrowCard.arrowEffect(choiceContext, cardPlay, damageResultsList, this, context);
                 }
             }
@@ -118,8 +153,10 @@ public class ClusterStrike : CustomCardModel, IAppendDescriptionCard {
         decimal amount,
         ValueProp props,
         Creature? dealer,
-        CardModel? cardSource) {
-        if (cardSource == this && !props.HasFlag(ValueProp.Unpowered)) {
+        CardModel? cardSource)
+    {
+        if (cardSource == this && !props.HasFlag(ValueProp.Unpowered))
+        {
             decimal baseDamage = DynamicVars.Damage.BaseValue;
             return baseDamage * DynamicVars["Amount"].BaseValue / 100M;
         }
@@ -127,16 +164,18 @@ public class ClusterStrike : CustomCardModel, IAppendDescriptionCard {
         return 0M;
     }
 
-    protected override void OnUpgrade() {
+    protected override void OnUpgrade()
+    {
         DynamicVars.Damage.UpgradeValueBy(3);
     }
 
-    public string AppendDescription() {
+    public string AppendDescription()
+    {
         List<string> descriptions = [];
         descriptions.AddRange(cards
             .Where(card => card is IArrowCard)
             .Select(card => ((IArrowCard)card).getArrowName().GetFormattedText()));
 
-        return "[gold]" + string.Join<string>("[/gold]\n[gold]", descriptions) + "[/gold]";
+        return "[gold]" + string.Join("[/gold]\n[gold]", descriptions) + "[/gold]";
     }
 }
