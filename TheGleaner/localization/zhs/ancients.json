@@ -33,9 +33,9 @@
   "OROBAS.talk.DEMOMOD-THE_GLEANER.0-1.next": "继续",
   "OROBAS.talk.DEMOMOD-THE_GLEANER.0-2.ancient": "叫我欧洛巴斯！你手上拿的那弯铁块是做什么用的？",
   "OROBAS.talk.DEMOMOD-THE_GLEANER.0-2.next": "演奏",
-  "OROBAS.talk.DEMOMOD-THE_GLEANER.0-3.char": "[i][font_size=22]拾穗者演奏了一段[pink][sine]欢快的旋律[/sine][/pink]。[font_size=22][/i]",
+  "OROBAS.talk.DEMOMOD-THE_GLEANER.0-3.char": "[i][font_size=22]拾穗者演奏了一段[pink][sine]欢快的旋律[/sine][/pink]。[/font_size][/i]",
   "OROBAS.talk.DEMOMOD-THE_GLEANER.0-3.next": "继续",
-  "OROBAS.talk.DEMOMOD-THE_GLEANER.0-4.next": "欧洛巴斯发现！听这铁块的响来响去会很快乐！！",
+  "OROBAS.talk.DEMOMOD-THE_GLEANER.0-4.ancient": "欧洛巴斯发现！听这铁块的响来响去会很快乐！！",
 
   "TANX.talk.DEMOMOD-THE_GLEANER.0-0.ancient": "[b]小人儿，你拿着的那是什么？\n那也能算武器吗？快来挑点武器与我一战！[/b]",
   "TANX.talk.DEMOMOD-THE_GLEANER.0-0.next": "查看",

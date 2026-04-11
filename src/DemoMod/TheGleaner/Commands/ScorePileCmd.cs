@@ -7,13 +7,16 @@ using MegaCrit.Sts2.Core.CardSelection;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Players;
+using MegaCrit.Sts2.Core.Extensions;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.Helpers;
 using MegaCrit.Sts2.Core.Hooks;
 using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Nodes;
 using MegaCrit.Sts2.Core.Nodes.Cards;
 using MegaCrit.Sts2.Core.Nodes.Cards.Holders;
+using MegaCrit.Sts2.Core.Nodes.Vfx;
 using CustomEnums = DemoMod.TheGleaner.Enums.CustomEnums;
 
 namespace DemoMod.TheGleaner.Commands;
@@ -112,8 +115,8 @@ public static class ScorePileCmd {
             NCard nCard = NCard.Create(scoreEntryCard);
             nCard.Position = PileType.Hand.GetTargetPosition(nCard);
             NHandCardHolder holder = NRun.Instance.CombatRoom.Ui.Hand.Add(nCard);
-            holder.Hitbox.Size = new Vector2(400, 500);
-            holder.Hitbox.Position = new Vector2(-200, -250);
+            holder.Hitbox.Size = new Vector2(400, 550);
+            holder.Hitbox.Position = new Vector2(-200, -275);
             NetCombatCardDb.Instance.IdCardForTesting(scoreEntryCard);
         }
     }
@@ -128,6 +131,9 @@ public static class ScorePileCmd {
     public static async Task Glean(Player player, PlayerChoiceContext choiceContext, decimal baseValue, CardModel cardSource) {
         CardSelectorPrefs prefs = new CardSelectorPrefs(new LocString("cards", "DEMOMOD-WINDS_MUSE.selectionScreenPrompt"), 0, (int) baseValue);
         IEnumerable<CardModel> selectedCards = await CardSelectCmd.FromHand(choiceContext, player, prefs, _ => true, cardSource);
+        foreach (CardModel card in selectedCards.Where(c => c is not IDissonanceCard)) {
+            CardCmd.Preview(card);
+        }
         await AddCards(player.PlayerCombatState, player, selectedCards.ToArray());
         if (selectedCards.Count() < baseValue) {
             int amount = (int) baseValue - selectedCards.Count();
@@ -137,6 +143,9 @@ public static class ScorePileCmd {
                 await CardPileCmd.ShuffleIfNecessary(choiceContext, player);
                 CardModel cardModel = drawPile.Cards.FirstOrDefault();
                 if (cardModel != null) {
+                    if (cardModel is not IDissonanceCard) {
+                        CardCmd.Preview(cardModel);
+                    }
                     cardModel.RemoveFromCurrentPile();
                     cards.Add(cardModel);
                 } else {

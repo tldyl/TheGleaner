@@ -21,6 +21,7 @@ public class NCardPatch {
     public static class PatchUpdateVisuals {
         public static bool Prefix(NCard __instance, PileType pileType, CardPreviewMode previewMode) {
             if (__instance.Model is ScoreEntryCard && __instance.IsNodeReady() && pileType != PileType.None) {
+                AccessTools.Method(typeof(NCard), "UpdateStarCostVisuals", [typeof(PileType)]).Invoke(__instance, [pileType]);
                 __instance.Model.UpgradePreviewType = CardUpgradePreviewType.Combat;
                 foreach (DynamicVar dynamicVar in __instance.Model.DynamicVars.Values)
                     dynamicVar.UpdateCardPreview(__instance.Model, CardPreviewMode.Normal, null, true);

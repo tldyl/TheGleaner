@@ -58,7 +58,7 @@ public class ClusterStrike : CustomCardModel, IAppendDescriptionCard
             return "res://TheGleaner/images/cards/demomod-cluster_strike.png";
         }
 
-        return $"res://TheGleaner/images/cards/demomod-cluster_strike_{stage}.png";
+        return $"res://TheGleaner/images/cards/demomod-cluster_strike_{stage + 1}.png";
     }
 
     private int GetCurrentHitCount()
@@ -164,6 +164,12 @@ public class ClusterStrike : CustomCardModel, IAppendDescriptionCard
         return 0M;
     }
 
+    public override async Task AfterAttack(AttackCommand command) {
+        foreach (CardModel cardModel in cards) {
+            await cardModel.AfterAttack(command);
+        }
+    }
+    
     protected override void OnUpgrade()
     {
         DynamicVars.Damage.UpgradeValueBy(3);

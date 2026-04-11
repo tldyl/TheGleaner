@@ -32,7 +32,6 @@ public class QuenchedArrow : CustomCardModel, IArrowCard {
 			.FromCard(this)
 			.Targeting(cardPlay.Target)
 			.Execute(choiceContext);
-		DynamicVars["Amount"].UpgradeValueBy(DynamicVars["Grow"].BaseValue);
 	}
 
 	public override Decimal ModifyDamageAdditive(
@@ -48,6 +47,10 @@ public class QuenchedArrow : CustomCardModel, IArrowCard {
 		return 0M;
 	}
 
+	public override async Task AfterAttack(AttackCommand command) {
+		DynamicVars["Amount"].UpgradeValueBy(DynamicVars["Grow"].BaseValue);
+	}
+	
 	protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(4);
 	
 	public LocString getArrowName() {
@@ -59,7 +62,6 @@ public class QuenchedArrow : CustomCardModel, IArrowCard {
 	}
 
 	public async Task arrowEffect(PlayerChoiceContext choiceContext, CardPlay cardPlay, List<DamageResult> damageResults, CardModel clusterCard, AttackContext context) {
-		clusterCard.DynamicVars["Amount"].UpgradeValueBy(clusterCard.DynamicVars["Grow"].BaseValue);
 	}
 
 	public void onMerge(CardModel clusterCard) {
