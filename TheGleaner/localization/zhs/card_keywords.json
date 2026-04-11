@@ -1,12 +1,12 @@
 {
   "DEMOMOD-RESONANCE.title": "共鸣",
-  "DEMOMOD-RESONANCE.description": "使手牌中所有与该牌类型不同的牌在下次打出前耗能减少[blue]1[/blue]，最低至[blue]1[/blue]。\n所有因[gold]共鸣[/gold]降低了耗能的卡牌将会继承[gold]共鸣[/gold]。",
+  "DEMOMOD-RESONANCE.description": "使手牌中所有与该牌[gold]类型不同[/gold]的牌在下次打出前耗能减少[blue]1[/blue]{energyPrefix:energyIcons(1)}，最低至[blue]1[/blue]。\n所有因[gold]共鸣[/gold]降低了耗能的卡牌将会继承[gold]共鸣[/gold]。",
   "DEMOMOD-CONCERTO.title": "协奏",
-  "DEMOMOD-CONCERTO.description": "此牌受[gold]共鸣[/gold]时，从手牌触发额外的效果。",
+  "DEMOMOD-CONCERTO.description": "此牌因[gold]共鸣[/gold]减少耗能时，从手牌触发额外效果。",
   "DEMOMOD-DISSONANCE.title": "不和谐音",
-  "DEMOMOD-DISSONANCE.description": "[gold]不和谐音[/gold]是一系列作为代价生成的负面卡牌。\n[gold]不和谐音[/gold]在放入[gold]乐谱[/gold]时，会变化为对应的正面[gold]乐句[/gold]卡牌。",
+  "DEMOMOD-DISSONANCE.description": "在放入[gold]乐谱[/gold]时，[gold]不和谐音[/gold]将转化为对应的正面[gold]乐句[/gold]卡牌。",
   "DEMOMOD-GLEAN.title": "拾录",
-  "DEMOMOD-GLEAN.description": "从手牌或抽牌堆顶将一定数量的牌放入[gold]乐谱[/gold]。",
+  "DEMOMOD-GLEAN.description": "从手牌或抽牌堆顶将一定数量的卡牌放入[gold]乐谱[/gold]。\n（先从手牌选取任意的数量，如果少于对应数量，则会从牌库顶盲抽补齐。）",
   "DEMOMOD-PHRASE.title": "乐句",
   "DEMOMOD-PHRASE.description": "由[gold]不和谐音[/gold]变化而来的正面卡牌。"
 }

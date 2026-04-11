@@ -1,12 +1,12 @@
 {
   "DEMOMOD-JERA.title": "莫比乌斯",
   "DEMOMOD-JERA.description": "每场战斗开始时，额外抽[blue]{Draws}[/blue]张牌。\n第二回合开始时，额外获得{energyPrefix:energyIcons(1)}。",
-  "DEMOMOD-JERA.flavor": "不能复制掉落物。",
+  "DEMOMOD-JERA.flavor": "周往而复始，不是吗？。",
   "DEMOMOD-JERA.selectionScreenPrompt": "选择任意张牌(每回合首张以外的牌需要花费一点额外费用)。",
   "DEMOMOD-GREEN_APPLE_SCENTED_VESSEL.title": "“青苹果气味的液体容器”",
   "DEMOMOD-GREEN_APPLE_SCENTED_VESSEL.description": "回合开始时，如果你[gold]乐谱[/gold]中的卡牌抵达了上限，则获得{energyPrefix:energyIcons(1)}。",
   "DEMOMOD-GREEN_APPLE_SCENTED_VESSEL.flavor": "[red]这个遗物的细节将在未来揭晓……[/red]",
   "DEMOMOD-CHRON_XI_V_GLEANER.title": "历十四的拾穗者",
-  "DEMOMOD-CHRON_XI_V_GLEANER.description": "在第一回合开始时，额外抽{Draws}张牌。\n在第二回合开始时，额外获得{Energy}点能量。",
+  "DEMOMOD-CHRON_XI_V_GLEANER.description": "在第一回合开始时，额外抽{Draws}张牌。\n在第二回合开始时，额外获得{energyPrefix:energyIcons(3)}",
   "DEMOMOD-CHRON_XI_V_GLEANER.flavor": ""
 }
