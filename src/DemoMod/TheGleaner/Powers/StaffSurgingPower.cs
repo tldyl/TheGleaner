@@ -1,15 +1,15 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using BaseLib.Abstracts;
+using BaseLib.Extensions;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
-using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
-using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.ValueProps;
 
 namespace DemoMod.TheGleaner.Powers;
@@ -24,11 +24,6 @@ public class StaffSurgingPower : CustomPowerModel
         HoverTipFactory.FromPower<WeakPower>()
     ];
 
-    private static bool IsPoweredAttack(ValueProp props)
-    {
-        return props.HasFlag(ValueProp.Move) && !props.HasFlag(ValueProp.Unpowered);
-    }
-
     public decimal ModifyVulnerableMultiplier(
         Creature target,
         decimal amount,
@@ -41,7 +36,7 @@ public class StaffSurgingPower : CustomPowerModel
             return amount;
         }
 
-        if (!IsPoweredAttack(props))
+        if (!props.IsPoweredAttack_())
         {
             return amount;
         }
@@ -61,7 +56,7 @@ public class StaffSurgingPower : CustomPowerModel
             return amount;
         }
 
-        if (!IsPoweredAttack(props))
+        if (!props.IsPoweredAttack_())
         {
             return amount;
         }
