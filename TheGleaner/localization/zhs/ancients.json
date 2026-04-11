@@ -47,11 +47,9 @@
   "TANX.talk.DEMOMOD-THE_GLEANER.0-3.next": "继续",
   "TANX.talk.DEMOMOD-THE_GLEANER.0-4.ancient": "[b]我不是这个意思！[/b]",
 
-  "THE_ARCHITECT.talk.DEMOMOD-THE_GLEANER.0-0r.ancient": "[sine]..做好...我们的...交易...[/sine]",
+  "THE_ARCHITECT.talk.DEMOMOD-THE_GLEANER.0-0r.ancient": "[red]拾穗者[/red]，希望你还记得我们的交易。",
   "THE_ARCHITECT.talk.DEMOMOD-THE_GLEANER.0-0r.next": "回应",
-  "THE_ARCHITECT.talk.DEMOMOD-THE_GLEANER.0-1r.char": "诘拉也没有浑水摸鱼。",
+  "THE_ARCHITECT.talk.DEMOMOD-THE_GLEANER.0-1r.char": "自然。诘拉很快会再上来的。",
   "THE_ARCHITECT.talk.DEMOMOD-THE_GLEANER.0-1r.next": "继续",
-  "THE_ARCHITECT.talk.DEMOMOD-THE_GLEANER.0-2r.ancient": "……",
-  "THE_ARCHITECT.talk.DEMOMOD-THE_GLEANER.0-2r.next": "继续",
-  "THE_ARCHITECT.talk.DEMOMOD-THE_GLEANER.0-2r.char": "你也知道，[red][jitter]那东西[/jitter][/red]有点难办...诘拉得有方法。"
+  "THE_ARCHITECT.talk.DEMOMOD-THE_GLEANER.0-2r.ancient": "……"
 }

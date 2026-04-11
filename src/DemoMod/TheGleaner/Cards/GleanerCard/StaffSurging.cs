@@ -18,7 +18,7 @@ public class StaffSurging : CustomCardModel
     public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new PowerVar<WeakPower>(2),
+        new PowerVar<WeakPower>(1),
         new PowerVar<VulnerablePower>(1),
         new PowerVar<StaffSurgingPower>(1)
     ];
@@ -49,15 +49,12 @@ public class StaffSurging : CustomCardModel
             this
         );
 
-        if (CurrentUpgradeLevel > 0)
-        {
-            await PowerCmd.Apply<StaffSurgingPower>(
-                CombatState.HittableEnemies,
-                DynamicVars["StaffSurgingPower"].BaseValue,
-                Owner.Creature,
-                this
-            );
-        }
+        await PowerCmd.Apply<StaffSurgingPower>(
+            CombatState.HittableEnemies,
+            DynamicVars["StaffSurgingPower"].BaseValue,
+            Owner.Creature,
+            this
+        );
     }
 
     public override async Task BeforeCombatStart()
@@ -72,5 +69,6 @@ public class StaffSurging : CustomCardModel
 
     protected override void OnUpgrade()
     {
+        DynamicVars["WeakPower"].UpgradeValueBy(1);
     }
 }

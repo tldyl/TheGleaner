@@ -14,37 +14,37 @@ namespace DemoMod.TheGleaner.Cards.GleanerCard;
 [Pool(typeof(CardPool))]
 public class Rubato : CustomCardModel
 {
-    public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
+	public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
 
-    protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new EnergyVar(1),
-        new EnergyVar("Energy2", 2)
-    ];
+	protected override IEnumerable<DynamicVar> CanonicalVars => [
+		new EnergyVar(1),
+		new EnergyVar("Energy2", 2)
+	];
 
-    public override IEnumerable<CardKeyword> CanonicalKeywords => [
-        CardKeyword.Exhaust
-    ];
+	public override IEnumerable<CardKeyword> CanonicalKeywords => [
+		CardKeyword.Exhaust
+	];
 
-    public Rubato() : base(0, CardType.Skill, CardRarity.Common, TargetType.Self)
-    {
-    }
+	public Rubato() : base(0, CardType.Skill, CardRarity.Uncommon, TargetType.Self)
+	{
+	}
 
-    protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
-    {
-        await PlayerCmd.GainEnergy(DynamicVars.Energy.BaseValue, Owner);
-    }
+	protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
+	{
+		await PlayerCmd.GainEnergy(DynamicVars.Energy.BaseValue, Owner);
+	}
 
-    public override async Task BeforeCombatStart()
+	public override async Task BeforeCombatStart()
 {
-    if (!IsInCombat || CombatState == null) {
-        return;
-    }
+	if (!IsInCombat || CombatState == null) {
+		return;
+	}
 
-    await ScorePileCmd.AddCards(Owner.PlayerCombatState, Owner, this);
+	await ScorePileCmd.AddCards(Owner.PlayerCombatState, Owner, this);
 }   
 
-    protected override void OnUpgrade()
-    {
-        DynamicVars.Energy.UpgradeValueBy(1);
-    }
+	protected override void OnUpgrade()
+	{
+		DynamicVars.Energy.UpgradeValueBy(1);
+	}
 }

@@ -51,13 +51,6 @@ public class ClusterStrike : CustomCardModel, IAppendDescriptionCard
     {
         int hitCount = GetCurrentHitCount();
         int stage = GetPortraitStage(hitCount);
-
-        // 1 hit 或更低时使用默认图
-        if (stage <= 0)
-        {
-            return "res://TheGleaner/images/cards/demomod-cluster_strike.png";
-        }
-
         return $"res://TheGleaner/images/cards/demomod-cluster_strike_{stage}.png";
     }
 
@@ -73,18 +66,12 @@ public class ClusterStrike : CustomCardModel, IAppendDescriptionCard
 
     private int GetPortraitStage(int hitCount)
     {
-        // 图片编号逻辑改为：
-        // 默认图 = 1 hit
-        // cluster_strike_1 = 2 hit
-        // cluster_strike_2 = 3 hit
+        // strike_1 对应 1 hit 和 2 hit
+        // strike_2 对应 3 hit
+        // strike_3 对应 4 hit
         // ...
-        // cluster_strike_9 = 10 hit及以上
-        if (hitCount <= 1)
-        {
-            return 0;
-        }
-
-        return Math.Min(hitCount - 1, 9);
+        // strike_9 对应 10 hit 及以上
+        return Math.Min(Math.Max(hitCount - 1, 1), 9);
     }
 
     public void setCards(List<CardModel> cards)

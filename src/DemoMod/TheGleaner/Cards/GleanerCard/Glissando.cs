@@ -25,8 +25,8 @@ public class Glissando : CustomCardModel {
 
 	protected override IEnumerable<DynamicVar> CanonicalVars => [
 		new IntVar("Amount", 1),
-		new DamageVar(7, ValueProp.Move),
-		new BlockVar(7, ValueProp.Move),
+		new DamageVar(6, ValueProp.Move),
+		new BlockVar(6, ValueProp.Move),
 		new PowerVar<VulnerablePower>(1)
 	];
 
