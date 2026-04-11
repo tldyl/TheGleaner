@@ -18,7 +18,7 @@ public class Clamor : CustomCardModel {
 	protected override IEnumerable<DynamicVar> CanonicalVars => [new EnergyVar("Amount", 2)];
 	protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromKeyword(CustomEnums.Dissonance), HoverTipFactory.ForEnergy(this)];
 
-	public Clamor() : base(0, CardType.Skill, CardRarity.Uncommon, TargetType.Self) {
+	public Clamor() : base(0, CardType.Skill, CardRarity.Common, TargetType.Self) {
 	}
 
 	protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
