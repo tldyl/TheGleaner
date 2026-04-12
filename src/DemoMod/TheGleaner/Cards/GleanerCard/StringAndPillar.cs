@@ -15,7 +15,7 @@ namespace DemoMod.TheGleaner.Cards.GleanerCard;
 [Pool(typeof(CardPool))]
 public class StringAndPillar : CustomCardModel {
 	public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
-	protected override IEnumerable<DynamicVar> CanonicalVars => [new IntVar("Amount", 1)];
+	protected override IEnumerable<DynamicVar> CanonicalVars => [new IntVar("Amount", 1), new EnergyVar(1)];
 	protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<StrengthPower>(), HoverTipFactory.FromPower<DexterityPower>()];
 	public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Innate, CardKeyword.Retain, CustomEnums.Resonance];
 

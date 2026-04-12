@@ -4,22 +4,20 @@ using BaseLib.Utils;
 using DemoMod.TheGleaner.CardPiles;
 using DemoMod.TheGleaner.Commands;
 using DemoMod.TheGleaner.Pools;
-using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
-using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Hooks;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Nodes;
-using MegaCrit.Sts2.Core.ValueProps;
 using CustomEnums = DemoMod.TheGleaner.Enums.CustomEnums;
 
 namespace DemoMod.TheGleaner.Cards.GleanerCard;
 [Pool(typeof(CardPool))]
 public class ScoreEntryCard : CustomCardModel {
     public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new EnergyVar(1)];
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Retain];
 
     public ScoreEntryCard() : base(0, CardType.Status, CardRarity.Event, TargetType.Self) {
