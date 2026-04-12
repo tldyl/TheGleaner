@@ -48,8 +48,17 @@ public class QuenchedArrow : CustomCardModel, IArrowCard {
 	}
 
 	public override async Task AfterAttack(AttackCommand command) {
-		if (command.Attacker != Owner.Creature) {
+		if (command.Attacker != Owner.Creature || command.ModelSource is not CardModel card) {
 			return;
+		}
+		if (card != this) {
+			if (card is ClusterStrike clusterStrike) {
+				if (!clusterStrike.cards.Contains(this)) {
+					return;
+				}
+			} else {
+				return;
+			}
 		}
 		DynamicVars["Amount"].UpgradeValueBy(DynamicVars["Grow"].BaseValue);
 	}
