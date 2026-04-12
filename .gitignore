@@ -13,3 +13,4 @@ deploy.ps1
 bin/
 obj/
 *.disabled
+src/DemoMod/TheGleaner/TheGleanerMod.cs

@@ -27,7 +27,6 @@ public class Nocturne : CustomCardModel {
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
         await PowerCmd.Apply<DexterityPower>(Owner.Creature, DynamicVars["DexAmount"].BaseValue, Owner.Creature, null);
-        await PowerCmd.Apply<NocturnePower>(Owner.Creature, DynamicVars["DexLoseAmount"].BaseValue, Owner.Creature, null);
     }
 
     protected override void OnUpgrade() => DynamicVars["DexAmount"].UpgradeValueBy(1);

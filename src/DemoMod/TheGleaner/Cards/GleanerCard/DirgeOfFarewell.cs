@@ -24,7 +24,7 @@ public class DirgeOfFarewell : CustomCardModel, IDissonanceCard {
 	protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromCard<PulsationOfTheTides>()];
 	public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Ethereal, CardKeyword.Exhaust, CustomEnums.Dissonance];
 
-	public DirgeOfFarewell() : base(0, CardType.Status, CardRarity.Status, TargetType.AllEnemies) {
+	public DirgeOfFarewell() : base(1, CardType.Status, CardRarity.Status, TargetType.AllEnemies) {
 		
 	}
 

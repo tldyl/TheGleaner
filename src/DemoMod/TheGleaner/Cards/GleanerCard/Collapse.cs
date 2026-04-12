@@ -19,7 +19,7 @@ public class Collapse : CustomCardModel {
 	public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
 	protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromKeyword(CustomEnums.Dissonance)];
 	protected override IEnumerable<DynamicVar> CanonicalVars => [
-		new DamageVar(10, ValueProp.Move),
+		new DamageVar(9, ValueProp.Move),
 		new IntVar("DissonanceAmount", 1)
 	];
 
