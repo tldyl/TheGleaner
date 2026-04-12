@@ -31,7 +31,23 @@ public class EchoingArrow : CustomCardModel, IArrowCard {
 			.FromCard(this)
 			.Targeting(cardPlay.Target)
 			.Execute(choiceContext);
-		await arrowEffect(choiceContext, cardPlay, attackCommand.Results.ToList(), this, null);
+		CardCmd.PreviewCardPileAdd(await CardPileCmd.AddGeneratedCardToCombat(CreateClone(), PileType.Discard, true), 2.2f);
+	}
+	
+	public override async Task AfterAttack(AttackCommand command) {
+		if (command.Attacker != Owner.Creature || command.ModelSource is not CardModel card) {
+			return;
+		}
+		if (card != this) {
+			if (card is ClusterStrike clusterStrike) {
+				if (!clusterStrike.cards.Contains(this)) {
+					return;
+				}
+			} else {
+				return;
+			}
+		}
+		CardCmd.PreviewCardPileAdd(await CardPileCmd.AddGeneratedCardToCombat(card.CreateClone(), PileType.Discard, true), 2.2f);
 	}
 	
 	protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(3);
@@ -45,6 +61,5 @@ public class EchoingArrow : CustomCardModel, IArrowCard {
 	}
 
 	public async Task arrowEffect(PlayerChoiceContext choiceContext, CardPlay cardPlay, List<DamageResult> damageResults, CardModel clusterCard, AttackContext context) {
-		CardCmd.PreviewCardPileAdd(await CardPileCmd.AddGeneratedCardToCombat(clusterCard.CreateClone(), PileType.Discard, true), 2.2f);
 	}
 }

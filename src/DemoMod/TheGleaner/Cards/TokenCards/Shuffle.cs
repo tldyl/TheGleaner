@@ -3,6 +3,7 @@ using BaseLib.Utils;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.CardPools;
 
 namespace DemoMod.TheGleaner.Cards.TokenCards;
@@ -18,6 +19,7 @@ public class Shuffle : CustomCardModel, IChoosable {
     }
 
     public async Task OnChosen(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
-        await CardPileCmd.Shuffle(choiceContext, cardPlay.Card.Owner);
+        List<CardModel> cardsInDrawPile = cardPlay.Card.Owner.PlayerCombatState.DrawPile.Cards.ToList();
+        await CardPileCmd.Add(cardsInDrawPile, PileType.Discard, CardPilePosition.Bottom, cardPlay.Card);
     }
 }

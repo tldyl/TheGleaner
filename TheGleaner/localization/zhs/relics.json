@@ -8,5 +8,6 @@
   "DEMOMOD-GREEN_APPLE_SCENTED_VESSEL.flavor": "[red]这个遗物的细节将在未来揭晓……[/red]",
   "DEMOMOD-CHRON_XI_V_GLEANER.title": "历十四的拾穗者",
   "DEMOMOD-CHRON_XI_V_GLEANER.description": "在第一回合开始时，额外抽{Draws}张牌。\n在第二回合开始时，额外获得{Energy}点能量。",
-  "DEMOMOD-CHRON_XI_V_GLEANER.flavor": ""
+  "DEMOMOD-CHRON_XI_V_GLEANER.flavor": "",
+  "SEA_GLASS.DEMOMOD-THE_GLEANER.title": "麦穗玻璃"
 }

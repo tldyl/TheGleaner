@@ -41,7 +41,7 @@ public class ClusterStrike : CustomCardModel, IAppendDescriptionCard
         new DamageVar(6, ValueProp.Move)
     ];
 
-    private List<CardModel> cards = [];
+    public List<CardModel> cards = [];
 
     public ClusterStrike() : base(1, CardType.Attack, CardRarity.Token, TargetType.AnyEnemy)
     {

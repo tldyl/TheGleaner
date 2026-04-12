@@ -11,7 +11,7 @@ namespace DemoMod.TheGleaner.Powers;
 public class RendezvousWithDoomPower : CustomPowerModel {
     public override PowerType Type => PowerType.Buff;
     public override PowerStackType StackType => PowerStackType.Counter;
-    private bool activated = true;
+    private bool activated;
 
     public override async Task AfterBlockCleared(Creature creature) {
         if (creature != Owner) {
