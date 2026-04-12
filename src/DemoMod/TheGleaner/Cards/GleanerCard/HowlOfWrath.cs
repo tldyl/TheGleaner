@@ -27,7 +27,7 @@ public class HowlOfWrath : CustomCardModel, IDissonanceCard {
 	protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<StrengthPower>(), HoverTipFactory.FromCard<ForgingAtDawn>()];
 	public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Ethereal, CardKeyword.Exhaust, CustomEnums.Dissonance];
 
-	public HowlOfWrath() : base(0, CardType.Status, CardRarity.Status, TargetType.AllEnemies) {
+	public HowlOfWrath() : base(1, CardType.Status, CardRarity.Status, TargetType.AllEnemies) {
 	}
 
 	protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
