@@ -2,6 +2,7 @@ using BaseLib.Abstracts;
 using BaseLib.Utils;
 using DemoMod.TheGleaner.Commands;
 using DemoMod.TheGleaner.Pools;
+using DemoMod.TheGleaner.Powers;
 using HarmonyLib;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
@@ -34,20 +35,18 @@ public class PaperFrost : CustomCardModel {
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
         if (CurrentUpgradeLevel > 0) {
-            await PowerCmd.Apply<StrengthPower>(
+            await PowerCmd.Apply<PaperFrostPower>(
                 CombatState.HittableEnemies,
-                -DynamicVars["Amount"].BaseValue,
+                DynamicVars["Amount"].BaseValue,
                 Owner.Creature,
-                this,
-                false
+                this
             );
         } else {
-            await PowerCmd.Apply<StrengthPower>(
+            await PowerCmd.Apply<PaperFrostPower>(
                 cardPlay.Target,
-                -DynamicVars["Amount"].BaseValue,
+                DynamicVars["Amount"].BaseValue,
                 Owner.Creature,
-                this,
-                false
+                this
             );
         }
     }
