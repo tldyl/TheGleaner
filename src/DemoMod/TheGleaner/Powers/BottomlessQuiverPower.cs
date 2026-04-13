@@ -31,8 +31,7 @@ public class BottomlessQuiverPower : CustomPowerModel {
             return;
         }
 
-        if (!cardPlay.Card.Tags.Contains(CardTag.Strike) &&
-            !cardPlay.Card.Tags.Contains(CustomEnums.Arrow)) {
+        if (!cardPlay.Card.Tags.Contains(CustomEnums.Arrow)) {
             return;
         }
 
