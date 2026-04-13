@@ -15,47 +15,45 @@ using MegaCrit.Sts2.Core.ValueProps;
 namespace DemoMod.TheGleaner.Cards.GleanerCard;
 [Pool(typeof(CardPool))]
 public class VeeringStrike : CustomCardModel {
-    public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
+	public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
 
-    public override IEnumerable<CardTag> Tags => [CardTag.Strike];
+	protected override IEnumerable<DynamicVar> CanonicalVars =>
+	[
+		new DamageVar(3, ValueProp.Move),
+		new RepeatVar(4)
+	];
 
-    protected override IEnumerable<DynamicVar> CanonicalVars =>
-    [
-        new DamageVar(3, ValueProp.Move),
-        new RepeatVar(4)
-    ];
+	public VeeringStrike() : base(2, CardType.Attack, CardRarity.Common, TargetType.RandomEnemy) {
+	}
 
-    public VeeringStrike() : base(2, CardType.Attack, CardRarity.Common, TargetType.RandomEnemy) {
-    }
+	protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
+		await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
+			.WithHitCount(DynamicVars.Repeat.IntValue)
+			.FromCard(this)
+			.TargetingRandomOpponents(CombatState, true)
+			.WithHitFx("vfx/vfx_attack_slash")
+			.Execute(choiceContext);
+	}
 
-    protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
-        await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
-            .WithHitCount(DynamicVars.Repeat.IntValue)
-            .FromCard(this)
-            .TargetingRandomOpponents(CombatState, true)
-            .WithHitFx("vfx/vfx_attack_slash")
-            .Execute(choiceContext);
-    }
+	public override async Task BeforeHandDraw(
+		Player player,
+		PlayerChoiceContext choiceContext,
+		CombatState combatState) {
+		CardPile? pile = Pile;
 
-    public override async Task BeforeHandDraw(
-        Player player,
-        PlayerChoiceContext choiceContext,
-        CombatState combatState) {
-        CardPile? pile = Pile;
+		if (pile != null && pile.Type != CustomEnums.ScorePile || player != Owner || pile == null) {
+			return;
+		}
 
-        if (pile != null && pile.Type != CustomEnums.ScorePile || player != Owner || pile == null) {
-            return;
-        }
+		await CardCmd.AutoPlay(choiceContext, this, null);
+		if (pile.Cards.Count == 0 && NRun.Instance.CombatRoom.Ui.Hand.ActiveHolders.Any(holder => holder.CardModel is ScoreEntryCard)) {
+			NRun.Instance.CombatRoom.Ui.Hand.Remove(
+				NRun.Instance.CombatRoom.Ui.Hand.ActiveHolders.FirstOrDefault(holder => holder.CardModel is ScoreEntryCard).CardModel
+			);
+		}
+	}
 
-        await CardCmd.AutoPlay(choiceContext, this, null);
-        if (pile.Cards.Count == 0 && NRun.Instance.CombatRoom.Ui.Hand.ActiveHolders.Any(holder => holder.CardModel is ScoreEntryCard)) {
-            NRun.Instance.CombatRoom.Ui.Hand.Remove(
-                NRun.Instance.CombatRoom.Ui.Hand.ActiveHolders.FirstOrDefault(holder => holder.CardModel is ScoreEntryCard).CardModel
-            );
-        }
-    }
-
-    protected override void OnUpgrade() {
-        DynamicVars.Damage.UpgradeValueBy(1);
-    }
+	protected override void OnUpgrade() {
+		DynamicVars.Damage.UpgradeValueBy(1);
+	}
 }

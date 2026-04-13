@@ -15,8 +15,8 @@ public class EmergencyExpansion : CustomCardModel {
 	public override bool GainsBlock => true;
 
 	protected override IEnumerable<DynamicVar> CanonicalVars => [
-		new BlockVar(3, ValueProp.Move),
-		new IntVar("Times", 4)
+		new BlockVar(5, ValueProp.Move),
+		new IntVar("Times", 3)
 	];
 
 	public EmergencyExpansion() : base(1, CardType.Skill, CardRarity.Rare, TargetType.Self) {
