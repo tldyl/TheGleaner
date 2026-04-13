@@ -13,25 +13,55 @@ using MegaCrit.Sts2.Core.Models;
 namespace DemoMod.TheGleaner.Cards.GleanerCard;
 
 [Pool(typeof(CardPool))]
-public class Clamor : CustomCardModel {
-	public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
-	protected override IEnumerable<DynamicVar> CanonicalVars => [new EnergyVar("Amount", 2)];
-	protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromKeyword(CustomEnums.Dissonance), HoverTipFactory.ForEnergy(this)];
-public override IEnumerable<CardKeyword> CanonicalKeywords => [
-		CardKeyword.Exhaust
-	];
-	public Clamor() : base(0, CardType.Skill, CardRarity.Common, TargetType.Self) {
-	}
+public class Clamor : CustomCardModel
+{
+    public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
 
-	protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
-		await PlayerCmd.GainEnergy(DynamicVars["Amount"].BaseValue, Owner);
-		List<CardModel> cards = RandomDissonanceCard.getRandomDissonanceCards(1, Owner.RunState.Rng.CombatCardGeneration);
-		foreach (CardModel card in cards) {
-			CardCmd.PreviewCardPileAdd(await CardPileCmd.AddGeneratedCardToCombat(CombatState.CreateCard(card, Owner), PileType.Discard, true));
-		}
-	}
+    protected override IEnumerable<DynamicVar> CanonicalVars => [
+        new EnergyVar("Amount", 2)
+    ];
 
-	protected override void OnUpgrade() {
-		RemoveKeyword(CardKeyword.Exhaust);
-	}
+    protected override IEnumerable<IHoverTip> ExtraHoverTips => [
+        HoverTipFactory.FromKeyword(CustomEnums.Dissonance),
+        HoverTipFactory.ForEnergy(this)
+    ];
+
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [
+        CardKeyword.Exhaust
+    ];
+
+    public Clamor() : base(0, CardType.Skill, CardRarity.Common, TargetType.Self)
+    {
+    }
+
+    protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
+    {
+        await PlayerCmd.GainEnergy(DynamicVars["Amount"].BaseValue, Owner);
+
+        List<CardModel> cards = RandomDissonanceCard.getRandomDissonanceCards(
+            1,
+            Owner.RunState.Rng.CombatCardGeneration
+        );
+
+        foreach (CardModel card in cards)
+        {
+            PileType targetPile =
+                Owner.RunState.Rng.CombatCardGeneration.NextInt(2) == 0
+                    ? PileType.Draw
+                    : PileType.Discard;
+
+            CardCmd.PreviewCardPileAdd(
+                await CardPileCmd.AddGeneratedCardToCombat(
+                    CombatState.CreateCard(card, Owner),
+                    targetPile,
+                    true
+                )
+            );
+        }
+    }
+
+    protected override void OnUpgrade()
+    {
+        RemoveKeyword(CardKeyword.Exhaust);
+    }
 }
