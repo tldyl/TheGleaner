@@ -39,7 +39,7 @@ public class PreventStrengthIncreasePower : CustomPowerModel {
     }
 
     public override async Task AfterSideTurnStart(CombatSide side, CombatState combatState) {
-        if (side != Owner.Side) {
+        if (side == Owner.Side) {
             return;
         }
         await PowerCmd.Remove(this);
