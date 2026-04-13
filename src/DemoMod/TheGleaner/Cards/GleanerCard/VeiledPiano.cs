@@ -72,6 +72,6 @@ public class VeiledPiano : CustomCardModel, IConcertoCard
 
 	protected override void OnUpgrade()
 	{
-		DynamicVars.ExtraDamage.UpgradeValueBy(1);
+		DynamicVars.Damage.UpgradeValueBy(3);
 	}
 }

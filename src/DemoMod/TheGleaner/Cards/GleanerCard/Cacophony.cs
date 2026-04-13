@@ -18,59 +18,58 @@ namespace DemoMod.TheGleaner.Cards.GleanerCard;
 [Pool(typeof(CardPool))]
 public class Cacophony : CustomCardModel
 {
-    public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
+	public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
 
-    protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new DamageVar(9, ValueProp.Move),
-        new PowerVar<WeakPower>(1)
-    ];
+	protected override IEnumerable<DynamicVar> CanonicalVars => [
+		new DamageVar(8, ValueProp.Move),
+		new PowerVar<WeakPower>(1)
+	];
 
-    protected override IEnumerable<IHoverTip> ExtraHoverTips => [
-        HoverTipFactory.FromKeyword(CustomEnums.Dissonance),
-        HoverTipFactory.FromPower<WeakPower>()
-    ];
+	protected override IEnumerable<IHoverTip> ExtraHoverTips => [
+		HoverTipFactory.FromKeyword(CustomEnums.Dissonance),
+		HoverTipFactory.FromPower<WeakPower>()
+	];
 
-    public Cacophony() : base(1, CardType.Attack, CardRarity.Common, TargetType.AllEnemies)
-    {
-    }
+	public Cacophony() : base(1, CardType.Attack, CardRarity.Common, TargetType.AllEnemies)
+	{
+	}
 
-    protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
-    {
-        await CreatureCmd.Damage(
-            choiceContext,
-            CombatState.HittableEnemies,
-            DynamicVars.Damage,
-            Owner.Creature,
-            this
-        );
+	protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
+	{
+		await CreatureCmd.Damage(
+			choiceContext,
+			CombatState.HittableEnemies,
+			DynamicVars.Damage,
+			Owner.Creature,
+			this
+		);
 
-        await PowerCmd.Apply<WeakPower>(
-            CombatState.HittableEnemies,
-            DynamicVars["WeakPower"].BaseValue,
-            Owner.Creature,
-            this
-        );
+		await PowerCmd.Apply<WeakPower>(
+			CombatState.HittableEnemies,
+			DynamicVars["WeakPower"].BaseValue,
+			Owner.Creature,
+			this
+		);
 
-        List<CardModel> cards = RandomDissonanceCard.getRandomDissonanceCards(
-            1,
-            Owner.RunState.Rng.CombatCardGeneration
-        );
+		List<CardModel> cards = RandomDissonanceCard.getRandomDissonanceCards(
+			1,
+			Owner.RunState.Rng.CombatCardGeneration
+		);
 
-        foreach (CardModel card in cards)
-        {
-            CardCmd.PreviewCardPileAdd(
-                await CardPileCmd.AddGeneratedCardToCombat(
-                    CombatState.CreateCard(card, Owner),
-                    PileType.Discard,
-                    true
-                )
-            );
-        }
-    }
+		foreach (CardModel card in cards)
+		{
+			CardCmd.PreviewCardPileAdd(
+				await CardPileCmd.AddGeneratedCardToCombat(
+					CombatState.CreateCard(card, Owner),
+					PileType.Discard,
+					true
+				)
+			);
+		}
+	}
 
-    protected override void OnUpgrade()
-    {
-        DynamicVars.Damage.UpgradeValueBy(2);
-        DynamicVars["WeakPower"].UpgradeValueBy(1);
-    }
+	protected override void OnUpgrade()
+	{
+		DynamicVars.Damage.UpgradeValueBy(3);
+	}
 }

@@ -10,9 +10,9 @@ using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.CardPools;
 using MegaCrit.Sts2.Core.ValueProps;
-using System.Collections;
 
 namespace DemoMod.TheGleaner.Cards.GleanerCard;
+
 [Pool(typeof(TokenCardPool))]
 public class ClusterStrike : CustomCardModel, IAppendDescriptionCard {
     public override string PortraitPath => GetPortraitPath();

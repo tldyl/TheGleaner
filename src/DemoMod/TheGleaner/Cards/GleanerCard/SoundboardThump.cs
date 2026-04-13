@@ -14,31 +14,30 @@ namespace DemoMod.TheGleaner.Cards.GleanerCard;
 
 [Pool(typeof(CardPool))]
 public class SoundboardThump : CustomCardModel {
-    public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
+	public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
 
-    protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new IntVar("Amount", 1),
-        new DamageVar(10, ValueProp.Move)
-    ];
+	protected override IEnumerable<DynamicVar> CanonicalVars => [
+		new IntVar("Amount", 2),
+		new DamageVar(7, ValueProp.Move)
+	];
 
-    protected override IEnumerable<IHoverTip> ExtraHoverTips => [
-        HoverTipFactory.FromKeyword(CustomEnums.Glean)
-    ];
+	protected override IEnumerable<IHoverTip> ExtraHoverTips => [
+		HoverTipFactory.FromKeyword(CustomEnums.Glean)
+	];
 
-    public SoundboardThump() : base(1, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy) {
-    }
+	public SoundboardThump() : base(1, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy) {
+	}
 
-    protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
-        await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
-            .FromCard(this)
-            .Targeting(cardPlay.Target)
-            .Execute(choiceContext);
+	protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
+		await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
+			.FromCard(this)
+			.Targeting(cardPlay.Target)
+			.Execute(choiceContext);
 
-        await ScorePileCmd.Glean(Owner, choiceContext, DynamicVars["Amount"].BaseValue, this);
-    }
+		await ScorePileCmd.Glean(Owner, choiceContext, DynamicVars["Amount"].BaseValue, this);
+	}
 
-    protected override void OnUpgrade() {
-        DynamicVars.Damage.UpgradeValueBy(2);
-        DynamicVars["Amount"].UpgradeValueBy(1);
-    }
+	protected override void OnUpgrade() {
+		DynamicVars.Damage.UpgradeValueBy(3);
+	}
 }

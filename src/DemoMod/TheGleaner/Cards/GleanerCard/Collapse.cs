@@ -39,5 +39,5 @@ public class Collapse : CustomCardModel {
 		}
 	}
 
-	protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(3);
+	protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(2);
 }

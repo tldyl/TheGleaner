@@ -15,30 +15,30 @@ namespace DemoMod.TheGleaner.Cards.GleanerCard;
 
 [Pool(typeof(CardPool))]
 public class RefiningThePhrasing : CustomCardModel {
-    public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
-    protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new IntVar("Amount", 2)
-    ];
-    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
-    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromKeyword(CustomEnums.Glean)];
+	public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
+	protected override IEnumerable<DynamicVar> CanonicalVars => [
+		new IntVar("Amount", 1)
+	];
+	public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
+	protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromKeyword(CustomEnums.Glean)];
 
-    public RefiningThePhrasing() : base(0, CardType.Skill, CardRarity.Uncommon, TargetType.Self) {
-        
-    }
+	public RefiningThePhrasing() : base(0, CardType.Skill, CardRarity.Uncommon, TargetType.Self) {
+		
+	}
 
-    protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
-        List<CardModel> selectedCards = (await ScorePileCmd.ShowScorePileScreen(Owner.PlayerCombatState, choiceContext, Owner, true)).ToList();
-        if (selectedCards.Count > 0) {
-            int gleanAmount = selectedCards.Count + (CurrentUpgradeLevel > 0 ? 1 : 0);
-            await CardCmd.Discard(choiceContext, selectedCards);
-            foreach (CardModel card in selectedCards) {
-                await Hook.AfterCardChangedPiles(Owner.RunState, Owner.Creature.CombatState, card, CustomEnums.ScorePile, this);
-            }
-            await ScorePileCmd.Glean(Owner, choiceContext, gleanAmount, this);
-        } else {
-            await ScorePileCmd.Glean(Owner, choiceContext, DynamicVars["Amount"].BaseValue, this);
-        }
-    }
-    
-    protected override void OnUpgrade() => DynamicVars["Amount"].UpgradeValueBy(1);
+	protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
+		List<CardModel> selectedCards = (await ScorePileCmd.ShowScorePileScreen(Owner.PlayerCombatState, choiceContext, Owner, true)).ToList();
+		if (selectedCards.Count > 0) {
+			int gleanAmount = selectedCards.Count + (CurrentUpgradeLevel > 0 ? 1 : 0);
+			await CardCmd.Discard(choiceContext, selectedCards);
+			foreach (CardModel card in selectedCards) {
+				await Hook.AfterCardChangedPiles(Owner.RunState, Owner.Creature.CombatState, card, CustomEnums.ScorePile, this);
+			}
+			await ScorePileCmd.Glean(Owner, choiceContext, gleanAmount, this);
+		} else {
+			await ScorePileCmd.Glean(Owner, choiceContext, DynamicVars["Amount"].BaseValue, this);
+		}
+	}
+	
+	protected override void OnUpgrade() => DynamicVars["Amount"].UpgradeValueBy(1);
 }
