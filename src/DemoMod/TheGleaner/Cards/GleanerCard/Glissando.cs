@@ -42,7 +42,7 @@ public class Glissando : CustomCardModel {
 		await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, cardPlay);
 
 		await CreatureCmd.TriggerAnim(Owner.Creature, "Attack", 0.5f);
-		AttackContext context = await AttackCommand.CreateContextAsync(CombatState, this);
+		await using AttackContext context = await AttackCommand.CreateContextAsync(Owner.Creature.CombatState, this);
 
 		IEnumerable<DamageResult> damageResults =
 			await CreatureCmd.Damage(choiceContext, CombatState.HittableEnemies, DynamicVars.Damage, Owner.Creature, this);

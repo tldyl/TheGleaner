@@ -27,7 +27,7 @@ public class BusterArrow : CustomCardModel, IArrowCard {
 	}
 
 	protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
-		AttackContext context = await AttackCommand.CreateContextAsync(CombatState, this);
+		await using AttackContext context = await AttackCommand.CreateContextAsync(Owner.Creature.CombatState, this);
 		IEnumerable<DamageResult> damageResults = await CreatureCmd.Damage(choiceContext, cardPlay.Target, DynamicVars.Damage, this);
 		context.AddHit(damageResults);
 		await arrowEffect(choiceContext, cardPlay, damageResults.ToList(), this, context);

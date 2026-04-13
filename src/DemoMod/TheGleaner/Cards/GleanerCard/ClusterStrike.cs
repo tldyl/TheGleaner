@@ -98,7 +98,7 @@ public class ClusterStrike : CustomCardModel, IAppendDescriptionCard {
     }
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
-        AttackContext context = await AttackCommand.CreateContextAsync(CombatState, this);
+        await using AttackContext context = await AttackCommand.CreateContextAsync(Owner.Creature.CombatState, this);
 
         for (int i = 0; i < DynamicVars["HitCount"].IntValue; i++) {
             IEnumerable<DamageResult> damageResults = await CreatureCmd.Damage(choiceContext, cardPlay.Target, DynamicVars.Damage, this);
