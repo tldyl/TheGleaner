@@ -7,6 +7,9 @@ using DemoMod.TheGleaner.Pools;
 using DemoMod.TheGleaner.Relics;
 using MegaCrit.Sts2.Core.Animation;
 using MegaCrit.Sts2.Core.Bindings.MegaSpine;
+using MegaCrit.Sts2.Core.Commands;
+using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 
 namespace DemoMod.TheGleaner.Characters;
 
@@ -89,9 +92,15 @@ public class TheGleaner : PlaceholderCharacterModel {
         "vfx/vfx_rock_shatter"
     ];
 
+    public override async Task BeforeCardPlayed(CardPlay cardPlay) {
+        if (cardPlay.Card.Type == CardType.Power) {
+            await CreatureCmd.TriggerAnim(cardPlay.Card.Owner.Creature, "Cast", cardPlay.Card.Owner.Character.CastAnimDelay);
+        }
+    }
+    
     public override CreatureAnimator GenerateAnimator(MegaSprite controller) {
         AnimState animState = new AnimState("idle_loop", true);
-        AnimState state1 = new AnimState("zhouyin"); //cast
+        AnimState state1 = new AnimState("nitan"); //cast
         AnimState state2 = new AnimState("shuaidan"); //attack
         AnimState state3 = new AnimState("hit"); //hurt
         AnimState state4 = new AnimState("idle_loop"); //die
