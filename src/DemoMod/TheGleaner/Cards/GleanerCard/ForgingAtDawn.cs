@@ -12,6 +12,7 @@ namespace DemoMod.TheGleaner.Cards.GleanerCard;
 
 [Pool(typeof(TokenCardPool))]
 public class ForgingAtDawn : CustomCardModel {
+	public override bool HasBuiltInOverlay => true;
 	public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
 
 	protected override IEnumerable<DynamicVar> CanonicalVars =>

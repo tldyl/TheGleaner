@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://c58psnrpasbpu"]
+
+[ext_resource type="Material" uid="uid://kixubfxw01ed" path="res://TheGleaner/images/vfx/vineShader_gold/vine_gold.tres" id="1_2iilk"]
+[ext_resource type="Texture2D" uid="uid://igg1csj0irf4" path="res://TheGleaner/images/vfx/vineShader/infectiona.png" id="2_n10b1"]
+
+[node name="DemomodHowlOfWrath" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+
+[node name="Visuals" type="Sprite2D" parent="."]
+material = ExtResource("1_2iilk")
+scale = Vector2(0.54, 0.54)
+texture = ExtResource("2_n10b1")
