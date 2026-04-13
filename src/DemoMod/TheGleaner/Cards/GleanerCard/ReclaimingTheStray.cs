@@ -24,7 +24,7 @@ public class ReclaimingTheStray : CustomCardModel {
         CardKeyword.Exhaust
     ];
 
-    public ReclaimingTheStray() : base(0, CardType.Skill, CardRarity.Uncommon, TargetType.Self) {
+    public ReclaimingTheStray() : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.Self) {
     }
 
     public override async Task BeforeCombatStart() {
@@ -55,12 +55,13 @@ public class ReclaimingTheStray : CustomCardModel {
 
         foreach (CardModel selectedCard in selectedCards) {
             if (selectedCard != null) {
-                await ScorePileCmd.AddCards(Owner.PlayerCombatState, Owner, selectedCard);
+                await CardPileCmd.Add(selectedCard, PileType.Hand, CardPilePosition.Bottom, null, false);
             }
         }
     }
 
-    protected override void OnUpgrade() {
-        DynamicVars.Cards.UpgradeValueBy(1);
+    protected override void OnUpgrade()
+    {
+        EnergyCost.UpgradeBy(-1);
     }
 }
