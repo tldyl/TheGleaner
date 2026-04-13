@@ -17,7 +17,9 @@ public class Clamor : CustomCardModel {
 	public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
 	protected override IEnumerable<DynamicVar> CanonicalVars => [new EnergyVar("Amount", 2)];
 	protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromKeyword(CustomEnums.Dissonance), HoverTipFactory.ForEnergy(this)];
-
+public override IEnumerable<CardKeyword> CanonicalKeywords => [
+		CardKeyword.Exhaust
+	];
 	public Clamor() : base(0, CardType.Skill, CardRarity.Common, TargetType.Self) {
 	}
 
@@ -29,5 +31,7 @@ public class Clamor : CustomCardModel {
 		}
 	}
 
-	protected override void OnUpgrade() => DynamicVars["Amount"].UpgradeValueBy(1);
+	protected override void OnUpgrade() {
+		RemoveKeyword(CardKeyword.Exhaust);
+	}
 }

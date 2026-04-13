@@ -12,22 +12,22 @@ namespace DemoMod.TheGleaner.Cards.GleanerCard;
 
 [Pool(typeof(CardPool))]
 public class StrikeGleaner : CustomCardModel {
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new DamageVar(6, ValueProp.Move)];
-    public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
-    protected override HashSet<CardTag> CanonicalTags => [CardTag.Strike];
-    
-    public StrikeGleaner() : base(1, CardType.Attack, CardRarity.Basic, TargetType.AnyEnemy) {
-    }
-    
-    protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
-        GleanerVfxCmd.PlayOnCreature(cardPlay.Target, "res://TheGleaner/scenes/vfx/attack_demo.tscn", 0.5f);
-        await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
-            .FromCard(this)
-            .Targeting(cardPlay.Target)
-            .Execute(choiceContext);
-    }
-    
-    protected override void OnUpgrade() {
-        DynamicVars.Damage.UpgradeValueBy(3);
-    }
+	protected override IEnumerable<DynamicVar> CanonicalVars => [new DamageVar(6, ValueProp.Move)];
+	public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
+	protected override HashSet<CardTag> CanonicalTags => [CardTag.Strike];
+	
+	public StrikeGleaner() : base(1, CardType.Attack, CardRarity.Basic, TargetType.AnyEnemy) {
+	}
+	
+	protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
+		GleanerVfxCmd.PlayOnCreature(cardPlay.Target, "res://TheGleaner/scenes/vfx/attack_demo.tscn", 0.5f);
+		await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
+			.FromCard(this)
+			.Targeting(cardPlay.Target)
+			.Execute(choiceContext);
+	}
+	
+	protected override void OnUpgrade() {
+		DynamicVars.Damage.UpgradeValueBy(3);
+	}
 }
