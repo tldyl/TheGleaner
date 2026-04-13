@@ -15,6 +15,8 @@ namespace DemoMod.TheGleaner.Cards.GleanerCard;
 [Pool(typeof(CardPool))]
 public class SoundboardThump : CustomCardModel {
 	public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
+	
+	protected override HashSet<CardTag> CanonicalTags => [CardTag.Strike];	
 
 	protected override IEnumerable<DynamicVar> CanonicalVars => [
 		new IntVar("Amount", 2),

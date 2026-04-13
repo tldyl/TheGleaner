@@ -19,7 +19,7 @@ public class PreshowPrep : CustomCardModel {
 	public override bool GainsBlock => true;
 
 	protected override IEnumerable<DynamicVar> CanonicalVars => [
-		new BlockVar(8, ValueProp.Move),
+		new BlockVar(9, ValueProp.Move),
 		new IntVar("GleanAmount", 2),
 		new EnergyVar("EnergyAmount", 1)
 	];

@@ -21,11 +21,11 @@ public class TwiningTone : CustomCardModel {
 	public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
 
 	protected override IEnumerable<DynamicVar> CanonicalVars => [
-		new DamageVar(8, ValueProp.Move),
+		new DamageVar(7, ValueProp.Move),
 		new ExtraDamageVar(3)
 	];
 
-	public TwiningTone() : base(1, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy) {
+	public TwiningTone() : base(1, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy) {
 	}
 
 	protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
@@ -57,5 +57,6 @@ public class TwiningTone : CustomCardModel {
 
 	protected override void OnUpgrade() {
 		DynamicVars.ExtraDamage.UpgradeValueBy(1);
+		DynamicVars.Damage.UpgradeValueBy(2);		
 	}
 }
