@@ -16,6 +16,5 @@ public class NocturnePower : CustomPowerModel {
             return;
         }
         await PowerCmd.Apply<StrengthPower>(Owner, Amount, Owner, null);
-        await PowerCmd.Apply<DexterityPower>(Owner, -Amount, Owner, null);
     }
 }

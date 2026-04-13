@@ -18,6 +18,7 @@ namespace DemoMod.TheGleaner.Cards.GleanerCard;
 [Pool(typeof(StatusCardPool))]
 public class ShriekOfDread : CustomCardModel, IDissonanceCard {
 	public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
+	public override bool HasBuiltInOverlay => true;
 	protected override IEnumerable<DynamicVar> CanonicalVars =>
 	[
 		new IntVar("VulVal", 2)

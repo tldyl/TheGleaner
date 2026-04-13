@@ -17,6 +17,7 @@ namespace DemoMod.TheGleaner.Cards.GleanerCard;
 
 [Pool(typeof(StatusCardPool))]
 public class HowlOfWrath : CustomCardModel, IDissonanceCard {
+	public override bool HasBuiltInOverlay => true;
 	public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
 
 	protected override IEnumerable<DynamicVar> CanonicalVars =>
