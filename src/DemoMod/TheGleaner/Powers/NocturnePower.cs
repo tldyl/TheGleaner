@@ -1,10 +1,9 @@
 using BaseLib.Abstracts;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
-using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models.Powers;
-
+using MegaCrit.Sts2.Core.Entities.Powers;
 namespace DemoMod.TheGleaner.Powers;
 
 public class NocturnePower : CustomPowerModel {
@@ -15,7 +14,10 @@ public class NocturnePower : CustomPowerModel {
         if (side == Owner.Side || Owner.Block < 10) {
             return;
         }
-        await PowerCmd.Apply<StrengthPower>(Owner, Amount, Owner, null);
-        await PowerCmd.Apply<DexterityPower>(Owner, -Amount, Owner, null);
+
+        Flash();
+
+        await PowerCmd.Apply<StrengthPower>(Owner, Amount - 1, Owner, null);
+        await PowerCmd.Apply<DemoTempDexterityPower>(Owner, Amount, Owner, null);
     }
 }
