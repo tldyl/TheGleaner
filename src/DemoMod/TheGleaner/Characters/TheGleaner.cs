@@ -93,7 +93,7 @@ public class TheGleaner : PlaceholderCharacterModel {
     ];
 
     public override async Task BeforeCardPlayed(CardPlay cardPlay) {
-        if (cardPlay.Card.Type == CardType.Power) {
+        if (cardPlay.Card.Owner.Character == this && cardPlay.Card.Type == CardType.Power) {
             await CreatureCmd.TriggerAnim(cardPlay.Card.Owner.Creature, "Cast", cardPlay.Card.Owner.Character.CastAnimDelay);
         }
     }

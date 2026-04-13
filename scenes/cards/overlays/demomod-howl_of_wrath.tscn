@@ -9,5 +9,5 @@ anchors_preset = 0
 
 [node name="Visuals" type="Sprite2D" parent="."]
 material = ExtResource("1_ydwgf")
-scale = Vector2(0.55, 0.55)
+scale = Vector2(0.54, 0.54)
 texture = ExtResource("2_ydwgf")
