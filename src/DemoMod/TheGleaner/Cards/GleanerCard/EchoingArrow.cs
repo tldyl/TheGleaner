@@ -31,13 +31,10 @@ public class EchoingArrow : CustomCardModel, IArrowCard {
 			.FromCard(this)
 			.Targeting(cardPlay.Target)
 			.Execute(choiceContext);
-		CardCmd.PreviewCardPileAdd(await CardPileCmd.AddGeneratedCardToCombat(CreateClone(), PileType.Discard, true), 2.2f);
 	}
 	
-	public override async Task AfterAttack(AttackCommand command) {
-		if (command.Attacker != Owner.Creature || command.ModelSource is not CardModel card) {
-			return;
-		}
+	public override async Task AfterCardPlayed(PlayerChoiceContext context, CardPlay cardPlay) {
+		CardModel card = cardPlay.Card;
 		if (card != this) {
 			if (card is ClusterStrike clusterStrike) {
 				if (!clusterStrike.cards.Contains(this)) {
