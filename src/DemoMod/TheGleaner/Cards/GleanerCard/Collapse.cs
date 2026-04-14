@@ -52,12 +52,17 @@ public class Collapse : CustomCardModel
                     ? PileType.Draw
                     : PileType.Discard;
 
+            IReadOnlyList<CardPileAddResult> results = await CardPileCmd.AddGeneratedCardsToCombat(
+                [CombatState.CreateCard(card, Owner)],
+                targetPile,
+                true,
+                CardPilePosition.Random
+            );
+
             CardCmd.PreviewCardPileAdd(
-                await CardPileCmd.AddGeneratedCardToCombat(
-                    CombatState.CreateCard(card, Owner),
-                    targetPile,
-                    true
-                )
+                results,
+                1.2f,
+                MegaCrit.Sts2.Core.Nodes.CommonUi.CardPreviewStyle.HorizontalLayout
             );
         }
     }

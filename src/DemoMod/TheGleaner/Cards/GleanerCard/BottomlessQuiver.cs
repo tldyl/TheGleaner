@@ -25,7 +25,6 @@ public class BottomlessQuiver : CustomCardModel
 	];
 
 
-
 	public BottomlessQuiver() : base(1, CardType.Power, CardRarity.Uncommon, TargetType.Self)
 	{
 	}

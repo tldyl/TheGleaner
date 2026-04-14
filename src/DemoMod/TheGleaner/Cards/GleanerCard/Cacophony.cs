@@ -12,7 +12,7 @@ using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.ValueProps;
-
+using MegaCrit.Sts2.Core.Nodes.CommonUi;
 namespace DemoMod.TheGleaner.Cards.GleanerCard;
 
 [Pool(typeof(CardPool))]
@@ -63,13 +63,14 @@ public class Cacophony : CustomCardModel
                     ? PileType.Draw
                     : PileType.Discard;
 
-            CardCmd.PreviewCardPileAdd(
-                await CardPileCmd.AddGeneratedCardToCombat(
-                    CombatState.CreateCard(card, Owner),
-                    targetPile,
-                    true
-                )
+            IReadOnlyList<CardPileAddResult> results = await CardPileCmd.AddGeneratedCardsToCombat(
+                [CombatState.CreateCard(card, Owner)],
+                targetPile,
+                true,
+                CardPilePosition.Random
             );
+
+            CardCmd.PreviewCardPileAdd(results, 1.2f, CardPreviewStyle.HorizontalLayout);
         }
     }
 
