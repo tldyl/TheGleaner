@@ -1,15 +1,12 @@
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using BaseLib.Abstracts;
 using BaseLib.Utils;
 using DemoMod.TheGleaner.Pools;
 using MegaCrit.Sts2.Core.Commands;
+using MegaCrit.Sts2.Core.Commands.Builders;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
-using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.ValueProps;
 
 namespace DemoMod.TheGleaner.Cards.GleanerCard;
@@ -26,7 +23,9 @@ public class Standoff : CustomCardModel {
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
         IEnumerable<Creature> allEnemies = CombatState.HittableEnemies.Where(enemy => enemy.Monster.IntendsToAttack);
-        await CreatureCmd.Damage(choiceContext, allEnemies, DynamicVars.Damage, Owner.Creature, this);
+        await using AttackContext context = await AttackCommand.CreateContextAsync(Owner.Creature.CombatState, this);
+        IEnumerable<DamageResult> damageResults = await CreatureCmd.Damage(choiceContext, allEnemies, DynamicVars.Damage, Owner.Creature, this);
+        context.AddHit(damageResults);
     }
 
     protected override void OnUpgrade() {

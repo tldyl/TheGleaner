@@ -7,13 +7,14 @@ using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
+using MegaCrit.Sts2.Core.Models.Powers;
 
 namespace DemoMod.TheGleaner.Cards.GleanerCard;
 
 [Pool(typeof(CardPool))]
 public class RendezvousWithDoom : CustomCardModel {
 	public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
-	protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.Static(StaticHoverTip.Energy)];
+	protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<StrengthPower>(), HoverTipFactory.Static(StaticHoverTip.Energy)];
 	protected override IEnumerable<DynamicVar> CanonicalVars => [new EnergyVar(1)];
 	protected override bool HasEnergyCostX => true;
 
@@ -22,7 +23,7 @@ public class RendezvousWithDoom : CustomCardModel {
 	}
 
 	protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
-		await PowerCmd.Apply<RendezvousWithDoomPower>(Owner.Creature, ResolveEnergyXValue() + CurrentUpgradeLevel + 1, Owner.Creature, this);
-		await PlayerCmd.GainEnergy(Owner.PlayerCombatState.MaxEnergy, Owner);
+		await PowerCmd.Apply<StrengthPower>(Owner.Creature, ResolveEnergyXValue() + CurrentUpgradeLevel, Owner.Creature, this);
+		await PowerCmd.Apply<RendezvousWithDoomPower>(Owner.Creature, ResolveEnergyXValue() + CurrentUpgradeLevel, Owner.Creature, this);
 	}
 }

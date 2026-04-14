@@ -1,7 +1,9 @@
 using BaseLib.Abstracts;
+using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Powers;
+using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Helpers;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Rooms;
@@ -11,10 +13,10 @@ namespace DemoMod.TheGleaner.Powers;
 public class RendezvousWithDoomPower : CustomPowerModel {
     public override PowerType Type => PowerType.Buff;
     public override PowerStackType StackType => PowerStackType.Counter;
-    private bool activated;
+    private bool activated = true;
 
-    public override async Task AfterBlockCleared(Creature creature) {
-        if (creature != Owner) {
+    public override async Task BeforeTurnEnd(PlayerChoiceContext choiceContext, CombatSide side) {
+        if (side != Owner.Side) {
             return;
         }
         activated = true;
@@ -34,6 +36,10 @@ public class RendezvousWithDoomPower : CustomPowerModel {
         }
         target.Player.PlayerCombatState.EnergyChanged += onEnergyChanged;
         Removed += unsubscribeEnergyChanged;
+        if (target.IsPlayer && target.Player.PlayerCombatState.Energy <= 0) {
+            activated = false;
+            await PlayerCmd.GainEnergy(target.Player.PlayerCombatState.MaxEnergy, target.Player);
+        }
     }
 
     public override async Task AfterRemoved(Creature target) {

@@ -1,5 +1,7 @@
 using BaseLib.Abstracts;
+using DemoMod.TheGleaner.CardPiles;
 using DemoMod.TheGleaner.Cards.GleanerCard;
+using DemoMod.TheGleaner.Commands;
 using Godot;
 using MegaCrit.Sts2.Core.Entities.Characters;
 using MegaCrit.Sts2.Core.Models;
@@ -8,8 +10,10 @@ using DemoMod.TheGleaner.Relics;
 using MegaCrit.Sts2.Core.Animation;
 using MegaCrit.Sts2.Core.Bindings.MegaSpine;
 using MegaCrit.Sts2.Core.Commands;
+using MegaCrit.Sts2.Core.Context;
 using MegaCrit.Sts2.Core.Entities.Cards;
-using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.Rooms;
+using MegaCrit.Sts2.Core.Runs;
 
 namespace DemoMod.TheGleaner.Characters;
 
@@ -92,6 +96,11 @@ public class TheGleaner : PlaceholderCharacterModel {
         "vfx/vfx_rock_shatter"
     ];
 
+    public override async Task AfterCombatVictory(CombatRoom room) {
+        ScorePile scorePile = ScorePileCmd.GetOrCreateScorePile(LocalContext.GetMe(RunManager.Instance.DebugOnlyGetState()).PlayerCombatState);
+        scorePile.Clear();
+    }
+    
     public override async Task BeforeCardPlayed(CardPlay cardPlay) {
         if (cardPlay.Card.Owner.Character == this && cardPlay.Card.Type == CardType.Power) {
             await CreatureCmd.TriggerAnim(cardPlay.Card.Owner.Creature, "Cast", cardPlay.Card.Owner.Character.CastAnimDelay);

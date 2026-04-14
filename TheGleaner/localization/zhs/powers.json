@@ -59,5 +59,8 @@
   "DEMOMOD-STAFF_SURGING_POWER.smartDescription": "本回合内，目标身上的[gold]易伤[/gold]与[gold]虚弱[/gold]效果翻倍。",
   "DEMOMOD-MATINS_NOTATION_POWER.title": "晨间拾记",
   "DEMOMOD-MATINS_NOTATION_POWER.description": "你的回合开始时，抽[blue]1[/blue]张牌并将抽牌堆顶的[blue]1[/blue]张牌放入[gold]乐谱[/gold]。",
-  "DEMOMOD-MATINS_NOTATION_POWER.smartDescription": "你的回合开始时，抽[blue]{Amount}[/blue]张牌并将抽牌堆顶的[blue]{Amount}[/blue]张牌放入[gold]乐谱[/gold]。"
+  "DEMOMOD-MATINS_NOTATION_POWER.smartDescription": "你的回合开始时，抽[blue]{Amount}[/blue]张牌并将抽牌堆顶的[blue]{Amount}[/blue]张牌放入[gold]乐谱[/gold]。",
+  "DEMOMOD-BOILING_POWER.title": "沸腾",
+  "DEMOMOD-BOILING_POWER.description": "本回合，当你打出攻击牌时，结束你的回合。",
+  "DEMOMOD-BOILING_POWER.smartDescription": "本回合，当你打出攻击牌时，结束你的回合。"
 }

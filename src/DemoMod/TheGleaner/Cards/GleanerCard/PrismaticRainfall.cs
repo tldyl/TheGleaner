@@ -3,7 +3,9 @@ using BaseLib.Utils;
 using DemoMod.TheGleaner.Commands;
 using DemoMod.TheGleaner.Pools;
 using MegaCrit.Sts2.Core.Commands;
+using MegaCrit.Sts2.Core.Commands.Builders;
 using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
@@ -23,7 +25,11 @@ public class PrismaticRainfall : CustomCardModel {
     }
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
-        await CreatureCmd.Damage(choiceContext, Owner.Creature.CombatState.HittableEnemies, DynamicVars.Damage, Owner.Creature, this);
+        AttackContext context = await AttackCommand.CreateContextAsync(Owner.Creature.CombatState, this);
+        await using (context) {
+            IEnumerable<DamageResult> damageResults = await CreatureCmd.Damage(choiceContext, Owner.Creature.CombatState.HittableEnemies, DynamicVars.Damage, Owner.Creature, this);
+            context.AddHit(damageResults);
+        }
         List<CardModel> list = [];
         list.AddRange(PileType.Draw.GetPile(Owner).Cards.Where(c => c.Tags.Contains(CardTag.Strike) || c is IArrowCard));
         list.AddRange(PileType.Hand.GetPile(Owner).Cards.Where(c => c.Tags.Contains(CardTag.Strike) || c is IArrowCard));

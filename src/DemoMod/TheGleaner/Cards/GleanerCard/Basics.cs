@@ -37,12 +37,10 @@ public class Basics : CustomCardModel {
         await ScorePileCmd.AddCards(Owner.PlayerCombatState, Owner, card);
         if (card is IDissonanceCard dissonanceCard) {
             dissonanceCard.TransformFollowupAction = c => {
-                c.UpgradeInternal();
-                c.FinalizeUpgradeInternal();
+                CardCmd.Upgrade(c);
             };
         } else {
-            card.UpgradeInternal();
-            card.FinalizeUpgradeInternal();
+            CardCmd.Upgrade(card);
         }
     }
     
