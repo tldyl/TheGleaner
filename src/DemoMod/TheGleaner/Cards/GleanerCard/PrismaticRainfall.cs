@@ -33,7 +33,6 @@ public class PrismaticRainfall : CustomCardModel {
         List<CardModel> list = [];
         list.AddRange(PileType.Draw.GetPile(Owner).Cards.Where(c => c.Tags.Contains(CardTag.Strike) || c is IArrowCard));
         list.AddRange(PileType.Hand.GetPile(Owner).Cards.Where(c => c.Tags.Contains(CardTag.Strike) || c is IArrowCard));
-        list.AddRange(PileType.Discard.GetPile(Owner).Cards.Where(c => c.Tags.Contains(CardTag.Strike) || c is IArrowCard));
         list.AddRange(ScorePileCmd.GetOrCreateScorePile(Owner.PlayerCombatState).Cards.Where(c => c.Tags.Contains(CardTag.Strike) || c is IArrowCard));
         bool flag = true;
         foreach (CardModel card in list) {

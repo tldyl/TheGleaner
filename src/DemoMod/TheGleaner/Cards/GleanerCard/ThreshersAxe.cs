@@ -45,7 +45,7 @@ public class ThreshersAxe : CustomCardModel, IConcertoCard {
         ResourceInfo resources,
         PileType pileType,
         CardPilePosition position) {
-        return card != this ? (pileType, position) : (isAutoPlay ? PileType.Hand : base.GetResultPileType(), position);
+        return card != this ? (pileType, position) : (PileType.Hand, position);
     }
     
     public override Decimal ModifyDamageAdditive(

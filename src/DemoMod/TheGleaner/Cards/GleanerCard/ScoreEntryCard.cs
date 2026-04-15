@@ -4,6 +4,7 @@ using BaseLib.Utils;
 using DemoMod.TheGleaner.CardPiles;
 using DemoMod.TheGleaner.Commands;
 using DemoMod.TheGleaner.Pools;
+using DemoMod.TheGleaner.Powers;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
@@ -20,6 +21,15 @@ public class ScoreEntryCard : CustomCardModel {
     protected override IEnumerable<DynamicVar> CanonicalVars => [new EnergyVar(1)];
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Retain];
 
+    protected override bool ShouldGlowGoldInternal {
+        get {
+            ScorePile scorePile = ScorePileCmd.GetOrCreateScorePile(Owner.PlayerCombatState);
+            return scorePile.freeTakeCount > 0;
+        }
+    }
+
+    protected override bool ShouldGlowRedInternal => Owner.Creature.HasPower<StaffBurnoutPower>();
+    
     public ScoreEntryCard() : base(0, CardType.Status, CardRarity.Event, TargetType.Self) {
     }
 

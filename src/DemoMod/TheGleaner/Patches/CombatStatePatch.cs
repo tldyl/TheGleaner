@@ -8,7 +8,13 @@ public class CombatStatePatch {
     [HarmonyPatch(typeof(CombatState), "IterateHookListeners")]
     public static class PatchIterateHookListeners {
         public static void Postfix(CombatState __instance, ref IEnumerable<AbstractModel> __result) {
-            __result = [..__result, .. __instance.Players.Select(player => player.Character)];
+            // List<AbstractModel> ret = [];
+            // ret.AddRange(__result);
+            // ret.Reverse();
+            // ret.AddRange(__instance.Players.Select(player => player.Character));
+            // __result = ret;
+            IEnumerable<AbstractModel> newCharacters = __instance.Players.Select(player => player.Character);
+            __result = __result.Concat(newCharacters);
         }
     }
 }

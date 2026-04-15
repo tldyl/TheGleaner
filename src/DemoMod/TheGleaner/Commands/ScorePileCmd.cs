@@ -2,21 +2,20 @@ using BaseLib.Abstracts;
 using BaseLib.Patches.Content;
 using DemoMod.TheGleaner.CardPiles;
 using DemoMod.TheGleaner.Cards.GleanerCard;
+using DemoMod.TheGleaner.Powers;
 using Godot;
+using HarmonyLib;
 using MegaCrit.Sts2.Core.CardSelection;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Players;
-using MegaCrit.Sts2.Core.Extensions;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
-using MegaCrit.Sts2.Core.Helpers;
 using MegaCrit.Sts2.Core.Hooks;
 using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Nodes;
 using MegaCrit.Sts2.Core.Nodes.Cards;
 using MegaCrit.Sts2.Core.Nodes.Cards.Holders;
-using MegaCrit.Sts2.Core.Nodes.Vfx;
 using CustomEnums = DemoMod.TheGleaner.Enums.CustomEnums;
 
 namespace DemoMod.TheGleaner.Commands;
@@ -61,12 +60,18 @@ public static class ScorePileCmd {
     public static async Task<IEnumerable<CardModel>> ShowScorePileScreen(PlayerCombatState combatState,
         PlayerChoiceContext context,
         Player player, bool freeToTake = false) {
-        CardPile pile = CustomPiles.GetCustomPile(combatState, CustomEnums.ScorePile);
+        ScorePile pile = GetOrCreateScorePile(combatState);
         if (pile.Cards.Count == 0) {
             return [];
         }
-        CardSelectorPrefs prefs = new CardSelectorPrefs(new LocString("relics", "DEMOMOD-JERA.selectionScreenPrompt"), 0, 2147483647);
+        CardSelectorPrefs prefs = new CardSelectorPrefs(new LocString("cards", "DEMOMOD-SCORE_ENTRY_CARD.selectionScreenPromptFreeTakeOnOpen"), 0, 2147483647);
         if (!freeToTake) {
+            if (pile.freeTakeCount <= 0) {
+                AccessTools.Field(typeof(LocString), "<locEntryKey>P").SetValue(prefs.Prompt, "DEMOMOD-SCORE_ENTRY_CARD.selectionScreenPromptNoFreeTakeOnOpen");
+            }
+            if (player.Creature.HasPower<StaffBurnoutPower>()) {
+                AccessTools.Field(typeof(LocString), "<locEntryKey>P").SetValue(prefs.Prompt, "DEMOMOD-SCORE_ENTRY_CARD.selectionScreenPromptStaffBurntOut");
+            }
             openingScorePileAndTakeCardsToHand = true;
         }
         IEnumerable<CardModel> selectedCards = await CardSelectCmd.FromSimpleGrid(context, pile.Cards, player, prefs);
@@ -96,8 +101,9 @@ public static class ScorePileCmd {
                 pile.AddInternal(card, 0);
                 CardModel bottomCard = pile.Cards.Last();
                 pile.RemoveInternal(bottomCard);
-                await CardPileCmd.Add(bottomCard, PileType.Discard);
-                PileType.Discard.GetPile(player).InvokeCardAddFinished();
+                PileType destPile = player.Creature.HasPower<StaffBurnoutPower>() ? PileType.Discard : PileType.Hand;
+                await CardPileCmd.Add(bottomCard, destPile);
+                destPile.GetPile(player).InvokeCardAddFinished();
                 await Hook.AfterCardChangedPiles(player.RunState, player.Creature.CombatState, bottomCard, CustomEnums.ScorePile, bottomCard);
             } else {
                 pile.AddInternal(card, 0);

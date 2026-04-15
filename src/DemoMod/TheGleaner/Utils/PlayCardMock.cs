@@ -58,6 +58,9 @@ public class PlayCardMock {
                 PlayIndex = i,
                 PlayCount = playCount
             };
+            if (cardModel.EnergyCost.CostsX) {
+                cardModel.EnergyCost.CapturedXValue = cardModel.Owner.PlayerCombatState.Energy;
+            }
             await Hook.BeforeCardPlayed(combatState, cardPlay);
             CombatManager.Instance.History.CardPlayStarted(combatState, cardPlay);
             await (Task)AccessTools.Method(typeof(CardModel), "OnPlay", [typeof(PlayerChoiceContext), typeof(CardPlay)]).Invoke(cardModel, [choiceContext, cardPlay]);

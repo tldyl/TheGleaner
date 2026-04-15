@@ -37,13 +37,10 @@ public class VeeringStrike : CustomCardModel {
 			.Execute(choiceContext);
 	}
 
-	public override async Task BeforeHandDraw(
-		Player player,
-		PlayerChoiceContext choiceContext,
-		CombatState combatState) {
+	public override async Task BeforeTurnEnd(PlayerChoiceContext choiceContext, CombatSide side) {
 		CardPile? pile = Pile;
 
-		if (pile != null && pile.Type != CustomEnums.ScorePile || player != Owner || pile == null) {
+		if (pile != null && pile.Type != CustomEnums.ScorePile || side != Owner.Creature.Side || pile == null) {
 			return;
 		}
 
