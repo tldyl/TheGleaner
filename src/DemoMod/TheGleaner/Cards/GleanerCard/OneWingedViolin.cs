@@ -16,51 +16,43 @@ namespace DemoMod.TheGleaner.Cards.GleanerCard;
 [Pool(typeof(CardPool))]
 public class OneWingedViolin : CustomCardModel, IConcertoCard
 {
-    public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
+	public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
 
-    protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new IntVar("Amount", 2)
-    ];
+	protected override IEnumerable<DynamicVar> CanonicalVars => [
+		new IntVar("Amount", 2)
+	];
 
-    protected override IEnumerable<IHoverTip> ExtraHoverTips => [
-        HoverTipFactory.FromPower<StrengthPower>(),
-        HoverTipFactory.FromPower<DexterityPower>(),
-        HoverTipFactory.FromKeyword(CustomEnums.Concerto)
-    ];
+	protected override IEnumerable<IHoverTip> ExtraHoverTips => [
+		HoverTipFactory.FromPower<DexterityPower>(),
+		HoverTipFactory.FromKeyword(CustomEnums.Concerto)
+	];
 
-    public OneWingedViolin() : base(2, CardType.Skill, CardRarity.Uncommon, TargetType.Self)
-    {
-    }
+	public OneWingedViolin() : base(2, CardType.Skill, CardRarity.Rare, TargetType.Self)
+	{
+	}
 
-    protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
-    {
-        await PowerCmd.Apply<OneWingedViolinPower>(
-            Owner.Creature,
-            1,
-            Owner.Creature,
-            this
-        );
-    }
+	protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
+	{
+		await PowerCmd.Apply<OneWingedViolinPower>(
+			Owner.Creature,
+			1,
+			Owner.Creature,
+			this
+		);
+	}
 
-    public async Task OnConcerto(CombatState combatState, PlayerChoiceContext choiceContext, CardPlay cardPlay)
-    {
-        await PowerCmd.Apply<FlexPotionPower>(
-            Owner.Creature,
-            DynamicVars["Amount"].BaseValue,
-            Owner.Creature,
-            this
-        );
+	public async Task OnConcerto(CombatState combatState, PlayerChoiceContext choiceContext, CardPlay cardPlay)
+	{
+		await PowerCmd.Apply<SpeedPotionPower>(
+			Owner.Creature,
+			DynamicVars["Amount"].BaseValue,
+			Owner.Creature,
+			this
+		);
+	}
 
-        await PowerCmd.Apply<SpeedPotionPower>(
-            Owner.Creature,
-            DynamicVars["Amount"].BaseValue,
-            Owner.Creature,
-            this
-        );
-    }
-
-    protected override void OnUpgrade()
-    {
-        DynamicVars["Amount"].UpgradeValueBy(1);
-    }
+	protected override void OnUpgrade()
+	{
+		DynamicVars["Amount"].UpgradeValueBy(1);
+	}
 }

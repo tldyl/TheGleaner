@@ -14,6 +14,10 @@ public class EmergencyExpansion : CustomCardModel {
 	public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
 	public override bool GainsBlock => true;
 
+public override IEnumerable<CardKeyword> CanonicalKeywords => [
+		CardKeyword.Ethereal
+	];
+
 	protected override IEnumerable<DynamicVar> CanonicalVars => [
 		new BlockVar(5, ValueProp.Move),
 		new IntVar("Times", 3)
@@ -32,5 +36,5 @@ public class EmergencyExpansion : CustomCardModel {
 		DynamicVars["Times"].BaseValue = Math.Max(1, times - 1);
 	}
 
-	protected override void OnUpgrade() => DynamicVars["Times"].UpgradeValueBy(1);
+	protected override void OnUpgrade() => DynamicVars.Block.UpgradeValueBy(1);
 }
