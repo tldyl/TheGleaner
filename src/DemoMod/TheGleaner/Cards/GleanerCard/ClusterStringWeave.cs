@@ -16,66 +16,66 @@ namespace DemoMod.TheGleaner.Cards.GleanerCard;
 
 [Pool(typeof(CardPool))]
 public class ClusterStringWeave : CustomCardModel {
-    public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
+	public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
 
-    private CardModel previewCard = ModelDb.Card<ClusterStrike>().ToMutable();
+	private CardModel previewCard = ModelDb.Card<ClusterStrike>().ToMutable();
 
-    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
-    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromCard(previewCard)];
+	public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
+	protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromCard(previewCard)];
 
-    public ClusterStringWeave() : base(1, CardType.Skill, CardRarity.Common, TargetType.Self) {
-    }
+	public ClusterStringWeave() : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.Self) {
+	}
 
-    public override async Task BeforeCombatStart() {
-        if (!IsInCombat || CombatState == null) {
-            return;
-        }
+	public override async Task BeforeCombatStart() {
+		if (!IsInCombat || CombatState == null) {
+			return;
+		}
 
-        await ScorePileCmd.AddCards(Owner.PlayerCombatState, Owner, this);
-    }
+		await ScorePileCmd.AddCards(Owner.PlayerCombatState, Owner, this);
+	}
 
-    protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
-        List<CardModel> mergedCards = PileType.Hand.GetPile(Owner).Cards
-            .Where(c => c.Tags.Contains(CardTag.Strike) || c.Tags.Contains(CustomEnums.Arrow))
-            .ToList();
+	protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
+		List<CardModel> mergedCards = PileType.Hand.GetPile(Owner).Cards
+			.Where(c => c.Tags.Contains(CardTag.Strike) || c.Tags.Contains(CustomEnums.Arrow))
+			.ToList();
 
-        CardPile pile = ScorePileCmd.GetOrCreateScorePile(Owner.PlayerCombatState);
-        if (pile != null) {
-            List<CardModel> toRemove = pile.Cards
-                .Where(c => c.Tags.Contains(CardTag.Strike) || c.Tags.Contains(CustomEnums.Arrow))
-                .ToList();
+		CardPile pile = ScorePileCmd.GetOrCreateScorePile(Owner.PlayerCombatState);
+		if (pile != null) {
+			List<CardModel> toRemove = pile.Cards
+				.Where(c => c.Tags.Contains(CardTag.Strike) || c.Tags.Contains(CustomEnums.Arrow))
+				.ToList();
 
-            foreach (CardModel card in toRemove) {
-                mergedCards.Add(card);
-            }
-        }
+			foreach (CardModel card in toRemove) {
+				mergedCards.Add(card);
+			}
+		}
 
-        if (mergedCards.Count > 1) {
-            foreach (CardModel card in mergedCards) {
-                await CardPileCmd.RemoveFromCombat(card);
-            }
+		if (mergedCards.Count > 1) {
+			foreach (CardModel card in mergedCards) {
+				await CardPileCmd.RemoveFromCombat(card);
+			}
 
-            if (pile.Cards.Count == 0 && NRun.Instance.CombatRoom.Ui.Hand.ActiveHolders.Any(holder => holder.CardModel is ScoreEntryCard)) {
-                NRun.Instance.CombatRoom.Ui.Hand.Remove(
-                    NRun.Instance.CombatRoom.Ui.Hand.ActiveHolders.FirstOrDefault(holder => holder.CardModel is ScoreEntryCard).CardModel
-                );
-            }
+			if (pile.Cards.Count == 0 && NRun.Instance.CombatRoom.Ui.Hand.ActiveHolders.Any(holder => holder.CardModel is ScoreEntryCard)) {
+				NRun.Instance.CombatRoom.Ui.Hand.Remove(
+					NRun.Instance.CombatRoom.Ui.Hand.ActiveHolders.FirstOrDefault(holder => holder.CardModel is ScoreEntryCard).CardModel
+				);
+			}
 
-            ClusterStrike clusterStrike = (ClusterStrike)ModelDb.Card<ClusterStrike>().ToMutable();
-            if (CurrentUpgradeLevel > 0) {
-                clusterStrike.UpgradeInternal();
-                clusterStrike.FinalizeUpgradeInternal();
-            }
+			ClusterStrike clusterStrike = (ClusterStrike)ModelDb.Card<ClusterStrike>().ToMutable();
+			if (CurrentUpgradeLevel > 0) {
+				clusterStrike.UpgradeInternal();
+				clusterStrike.FinalizeUpgradeInternal();
+			}
 
-            clusterStrike.setCards(mergedCards);
-            Owner.Creature.CombatState.AddCard(clusterStrike, Owner);
-            await CardPileCmd.AddGeneratedCardToCombat(clusterStrike, PileType.Hand, true);
-        }
-    }
+			clusterStrike.setCards(mergedCards);
+			Owner.Creature.CombatState.AddCard(clusterStrike, Owner);
+			await CardPileCmd.AddGeneratedCardToCombat(clusterStrike, PileType.Hand, true);
+		}
+	}
 
-    protected override void OnUpgrade() {
-        previewCard.DowngradeInternal();
-        AccessTools.Method(typeof(CardModel), "OnUpgrade", []).Invoke(previewCard, []);
-        previewCard.FinalizeUpgradeInternal();
-    }
+	protected override void OnUpgrade() {
+		previewCard.DowngradeInternal();
+		AccessTools.Method(typeof(CardModel), "OnUpgrade", []).Invoke(previewCard, []);
+		previewCard.FinalizeUpgradeInternal();
+	}
 }

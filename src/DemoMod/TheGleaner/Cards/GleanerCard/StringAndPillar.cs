@@ -34,6 +34,6 @@ public class StringAndPillar : CustomCardModel {
 	}
 	
 	protected override void OnUpgrade() {
-		DynamicVars["Amount"].UpgradeValueBy(1);
+		   EnergyCost.UpgradeBy(-2);
 	}
 }

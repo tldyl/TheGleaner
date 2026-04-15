@@ -19,7 +19,7 @@ public override IEnumerable<CardKeyword> CanonicalKeywords => [
 	];
 
 	protected override IEnumerable<DynamicVar> CanonicalVars => [
-		new BlockVar(5, ValueProp.Move),
+		new BlockVar(4, ValueProp.Move),
 		new IntVar("Times", 3)
 	];
 

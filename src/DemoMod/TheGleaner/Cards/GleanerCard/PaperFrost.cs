@@ -16,50 +16,50 @@ namespace DemoMod.TheGleaner.Cards.GleanerCard;
 
 [Pool(typeof(CardPool))]
 public class PaperFrost : CustomCardModel {
-    public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
+	public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
 
-    protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new IntVar("Amount", 4)
-    ];
+	protected override IEnumerable<DynamicVar> CanonicalVars => [
+		new IntVar("Amount", 3)
+	];
 
-    public override IEnumerable<CardKeyword> CanonicalKeywords => [
-        CardKeyword.Exhaust
-    ];
+	public override IEnumerable<CardKeyword> CanonicalKeywords => [
+		CardKeyword.Exhaust
+	];
 
-    protected override IEnumerable<IHoverTip> ExtraHoverTips => [
-        HoverTipFactory.FromPower<StrengthPower>()
-    ];
+	protected override IEnumerable<IHoverTip> ExtraHoverTips => [
+		HoverTipFactory.FromPower<StrengthPower>()
+	];
 
-    public PaperFrost() : base(0, CardType.Skill, CardRarity.Uncommon, TargetType.AnyEnemy) {
-    }
+	public PaperFrost() : base(0, CardType.Skill, CardRarity.Uncommon, TargetType.AnyEnemy) {
+	}
 
-    protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
-        if (CurrentUpgradeLevel > 0) {
-            await PowerCmd.Apply<PaperFrostPower>(
-                CombatState.HittableEnemies,
-                DynamicVars["Amount"].BaseValue,
-                Owner.Creature,
-                this
-            );
-        } else {
-            await PowerCmd.Apply<PaperFrostPower>(
-                cardPlay.Target,
-                DynamicVars["Amount"].BaseValue,
-                Owner.Creature,
-                this
-            );
-        }
-    }
+	protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
+		if (CurrentUpgradeLevel > 0) {
+			await PowerCmd.Apply<PaperFrostPower>(
+				CombatState.HittableEnemies,
+				DynamicVars["Amount"].BaseValue,
+				Owner.Creature,
+				this
+			);
+		} else {
+			await PowerCmd.Apply<PaperFrostPower>(
+				cardPlay.Target,
+				DynamicVars["Amount"].BaseValue,
+				Owner.Creature,
+				this
+			);
+		}
+	}
 
-    public override async Task BeforeCombatStart() {
-        if (!IsInCombat || CombatState == null) {
-            return;
-        }
+	public override async Task BeforeCombatStart() {
+		if (!IsInCombat || CombatState == null) {
+			return;
+		}
 
-        await ScorePileCmd.AddCards(Owner.PlayerCombatState, Owner, this);
-    }
+		await ScorePileCmd.AddCards(Owner.PlayerCombatState, Owner, this);
+	}
 
-    protected override void OnUpgrade() {
-        AccessTools.Field(typeof(CardModel), "<TargetType>k__BackingField").SetValue(this, TargetType.AllEnemies);
-    }
+	protected override void OnUpgrade() {
+		AccessTools.Field(typeof(CardModel), "<TargetType>k__BackingField").SetValue(this, TargetType.AllEnemies);
+	}
 }

@@ -22,7 +22,7 @@ public class BusterArrow : CustomCardModel, IArrowCard {
 	];
 	protected override HashSet<CardTag> CanonicalTags => [CustomEnums.Arrow];
 
-	public BusterArrow() : base(3, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy) {
+	public BusterArrow() : base(3, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy) {
 		
 	}
 
