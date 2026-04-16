@@ -67,6 +67,7 @@ public class ClusterStrike : CustomCardModel, IAppendDescriptionCard {
 
 	public void setCards(List<CardModel> cards) {
 		int hitCount = 0;
+		this.cards.Clear();
 
 		foreach (CardModel card in cards) {
 			if (!this.cards.Any(c => c.Id.Equals(card.Id))) {

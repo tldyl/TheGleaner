@@ -32,7 +32,7 @@ public class HookPatch {
             if (card.Keywords.Contains(CustomEnums.Resonance)) {
                 Player player = LocalContext.GetMe(combatState.Players);
                 List<CardModel> cardsToReduceCost = [];
-                cardsToReduceCost.AddRange(player.PlayerCombatState.Hand.Cards.Where(cardModel => cardModel != card && cardModel.Type != card.Type && cardModel.EnergyCost.GetResolved() > 1));
+                cardsToReduceCost.AddRange(player.PlayerCombatState.Hand.Cards.Where(cardModel => cardModel != card && cardModel.Type != card.Type && cardModel.EnergyCost.GetResolved() > 1 && !cardModel.EnergyCost.CostsX));
                 cardsToReduceCost.ForEach(model => {
                     model.EnergyCost.SetUntilPlayed(model.EnergyCost.GetResolved() - 1);
                     if (!model.Keywords.Contains(CustomEnums.Resonance)) {

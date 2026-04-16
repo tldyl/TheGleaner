@@ -9,6 +9,7 @@ using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization;
+using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 
 namespace DemoMod.TheGleaner.Cards.GleanerCard;
@@ -19,10 +20,11 @@ public class EverEchoing : CustomCardModel {
 	public override IEnumerable<CardKeyword> CanonicalKeywords => [
 		CardKeyword.Exhaust
 	];
-	protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.Static(StaticHoverTip.ReplayStatic)];
-	protected override bool HasEnergyCostX => true;
 
-	public EverEchoing() : base(0, CardType.Skill, CardRarity.Rare, TargetType.Self) {
+	protected override IEnumerable<DynamicVar> CanonicalVars => [new RepeatVar(1)];
+	protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.Static(StaticHoverTip.ReplayStatic)];
+
+	public EverEchoing() : base(1, CardType.Skill, CardRarity.Rare, TargetType.Self) {
 		
 	}
 
@@ -31,10 +33,12 @@ public class EverEchoing : CustomCardModel {
 		CardSelectorPrefs prefs = new CardSelectorPrefs(new LocString("cards", "DEMOMOD-EVER_ECHOING.selectionScreenPrompt"), 1);
 		CardModel selectedCard = (await CardSelectCmd.FromSimpleGrid(choiceContext, scorePile.Cards.ToList(), Owner, prefs)).FirstOrDefault();
 		if (selectedCard != null) {
-			selectedCard.BaseReplayCount += ResolveEnergyXValue() + CurrentUpgradeLevel;
+			selectedCard.BaseReplayCount += DynamicVars.Repeat.IntValue;
 			if (!selectedCard.Keywords.Contains(CardKeyword.Exhaust)) {
 				selectedCard.AddKeyword(CardKeyword.Exhaust);
 			}
 		}
 	}
+	
+	protected override void OnUpgrade() => EnergyCost.UpgradeBy(-1);
 }
