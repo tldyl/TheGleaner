@@ -25,7 +25,7 @@ public class TwiningTone : CustomCardModel {
 		new ExtraDamageVar(2)
 	];
 
-	public TwiningTone() : base(1, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy) {
+	public TwiningTone() : base(1, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy) {
 	}
 
 	protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
@@ -56,6 +56,6 @@ public class TwiningTone : CustomCardModel {
 	}
 
 	protected override void OnUpgrade() {
-		DynamicVars.Damage.UpgradeValueBy(2);		
+		DynamicVars.Damage.UpgradeValueBy(3);		
 	}
 }
