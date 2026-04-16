@@ -15,36 +15,36 @@ namespace DemoMod.TheGleaner.Cards.GleanerCard;
 
 [Pool(typeof(CardPool))]
 public class Raiment : CustomCardModel {
-    //public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
-    protected override IEnumerable<IHoverTip> ExtraHoverTips => [
-        .. HoverTipFactory.FromEnchantment<Swift>(2),
-        .. HoverTipFactory.FromEnchantment<Sown>(),
-        .. HoverTipFactory.FromEnchantment<Glam>(),
-    ];
-    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Innate];
+	//public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
+	protected override IEnumerable<IHoverTip> ExtraHoverTips => [
+		.. HoverTipFactory.FromEnchantment<Swift>(2),
+		.. HoverTipFactory.FromEnchantment<Sown>(),
+		.. HoverTipFactory.FromEnchantment<Glam>(),
+	];
+	public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Innate,CardKeyword.Exhaust];
 
-    public Raiment() : base(1, CardType.Skill, CardRarity.Ancient, TargetType.Self) {
-        
-    }
+	public Raiment() : base(3, CardType.Skill, CardRarity.Ancient, TargetType.Self) {
+		
+	}
 
-    protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
-        foreach (CardModel allCard in Owner.PlayerCombatState.AllCards) {
-            List<EnchantmentModel> enchantments = [ModelDb.Enchantment<Swift>(), ModelDb.Enchantment<Sown>(), ModelDb.Enchantment<Glam>()];
-            Owner.RunState.Rng.Shuffle.Shuffle(enchantments);
-            foreach (EnchantmentModel enchantment in enchantments) {
-                if (enchantment.CanEnchant(allCard)) {
-                    CardCmd.Enchant(enchantment.ToMutable(), allCard, enchantment is Swift ? 2 : 1);
-                    NCardEnchantVfx child = NCardEnchantVfx.Create(allCard);
-                    if (child != null) {
-                        NRun instance = NRun.Instance;
-                        if (instance != null)
-                            instance.GlobalUi.CardPreviewContainer.AddChildSafely(child);
-                    }
-                    break;
-                }
-            }
-        }
-    }
+	protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
+		foreach (CardModel allCard in Owner.PlayerCombatState.AllCards) {
+			List<EnchantmentModel> enchantments = [ModelDb.Enchantment<Swift>(), ModelDb.Enchantment<Sown>(), ModelDb.Enchantment<Glam>()];
+			Owner.RunState.Rng.Shuffle.Shuffle(enchantments);
+			foreach (EnchantmentModel enchantment in enchantments) {
+				if (enchantment.CanEnchant(allCard)) {
+					CardCmd.Enchant(enchantment.ToMutable(), allCard, enchantment is Swift ? 2 : 1);
+					NCardEnchantVfx child = NCardEnchantVfx.Create(allCard);
+					if (child != null) {
+						NRun instance = NRun.Instance;
+						if (instance != null)
+							instance.GlobalUi.CardPreviewContainer.AddChildSafely(child);
+					}
+					break;
+				}
+			}
+		}
+	}
 
-    protected override void OnUpgrade() => EnergyCost.UpgradeBy(-1);
+	protected override void OnUpgrade() => EnergyCost.UpgradeBy(-1);
 }

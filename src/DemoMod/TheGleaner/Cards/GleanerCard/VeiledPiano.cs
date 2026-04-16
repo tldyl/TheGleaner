@@ -20,7 +20,7 @@ public class VeiledPiano : CustomCardModel, IConcertoCard
 	public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
 
 	protected override IEnumerable<DynamicVar> CanonicalVars => [
-		new DamageVar(6, ValueProp.Move),
+		new DamageVar(5, ValueProp.Move),
 		new ExtraDamageVar(2),
 		new CardsVar(2)
 	];
@@ -72,6 +72,6 @@ public class VeiledPiano : CustomCardModel, IConcertoCard
 
 	protected override void OnUpgrade()
 	{
-		DynamicVars.Damage.UpgradeValueBy(3);
+		DynamicVars.Damage.UpgradeValueBy(2);
 	}
 }

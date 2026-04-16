@@ -36,6 +36,6 @@ public class EvasiveShorthand : CustomCardModel {
 	}
 
 	protected override void OnUpgrade() {
-		DynamicVars.Block.UpgradeValueBy(4);
+		DynamicVars.Block.UpgradeValueBy(2);
 	}
 }

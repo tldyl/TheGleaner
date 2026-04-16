@@ -22,7 +22,7 @@ public class TwiningTone : CustomCardModel {
 
 	protected override IEnumerable<DynamicVar> CanonicalVars => [
 		new DamageVar(7, ValueProp.Move),
-		new ExtraDamageVar(3)
+		new ExtraDamageVar(2)
 	];
 
 	public TwiningTone() : base(1, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy) {
@@ -56,7 +56,6 @@ public class TwiningTone : CustomCardModel {
 	}
 
 	protected override void OnUpgrade() {
-		DynamicVars.ExtraDamage.UpgradeValueBy(1);
 		DynamicVars.Damage.UpgradeValueBy(2);		
 	}
 }
