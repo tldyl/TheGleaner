@@ -16,45 +16,45 @@ namespace DemoMod.TheGleaner.Cards.GleanerCard;
 
 [Pool(typeof(CardPool))]
 public class EarthedBell : CustomCardModel, IConcertoCard {
-    //public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
-    protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new DamageVar(0, ValueProp.Move),
-        new BlockVar(4, ValueProp.Move)
-    ];
-    protected override IEnumerable<IHoverTip> ExtraHoverTips => [
-        HoverTipFactory.FromKeyword(CustomEnums.Concerto)
-    ];
-    public override bool GainsBlock => true;
+	public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
+	protected override IEnumerable<DynamicVar> CanonicalVars => [
+		new DamageVar(0, ValueProp.Move),
+		new BlockVar(4, ValueProp.Move)
+	];
+	protected override IEnumerable<IHoverTip> ExtraHoverTips => [
+		HoverTipFactory.FromKeyword(CustomEnums.Concerto)
+	];
+	public override bool GainsBlock => true;
 
-    public EarthedBell() : base(2, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy) {
-        
-    }
+	public EarthedBell() : base(2, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy) {
+		
+	}
 
-    protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
-        await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
-            .FromCard(this)
-            .Targeting(cardPlay.Target)
-            .WithHitFx("vfx/vfx_attack_blunt", tmpSfx: "blunt_attack.mp3")
-            .Execute(choiceContext);
-    }
-    
-    public override Decimal ModifyDamageAdditive(
-        Creature? target,
-        Decimal amount,
-        ValueProp props,
-        Creature? dealer,
-        CardModel? cardSource) {
-        if (cardSource == this && !props.HasFlag(ValueProp.Unpowered)) {
-            return Owner.Creature.Block;
-        }
-        return 0M;
-    }
-    
-    protected override void OnUpgrade() {
-        DynamicVars.Block.UpgradeValueBy(2);
-    }
+	protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
+		await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
+			.FromCard(this)
+			.Targeting(cardPlay.Target)
+			.WithHitFx("vfx/vfx_attack_blunt", tmpSfx: "blunt_attack.mp3")
+			.Execute(choiceContext);
+	}
+	
+	public override Decimal ModifyDamageAdditive(
+		Creature? target,
+		Decimal amount,
+		ValueProp props,
+		Creature? dealer,
+		CardModel? cardSource) {
+		if (cardSource == this && !props.HasFlag(ValueProp.Unpowered)) {
+			return Owner.Creature.Block;
+		}
+		return 0M;
+	}
+	
+	protected override void OnUpgrade() {
+		DynamicVars.Block.UpgradeValueBy(2);
+	}
 
-    public async Task OnConcerto(CombatState combatState, PlayerChoiceContext choiceContext, CardPlay cardPlay) {
-        await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, cardPlay);
-    }
+	public async Task OnConcerto(CombatState combatState, PlayerChoiceContext choiceContext, CardPlay cardPlay) {
+		await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, cardPlay);
+	}
 }

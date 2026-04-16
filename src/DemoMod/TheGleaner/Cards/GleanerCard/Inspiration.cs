@@ -28,7 +28,7 @@ public class Inspiration : CustomCardModel {
 		HoverTipFactory.FromPower<DexterityPower>()
 	];
 
-	public Inspiration() : base(0, CardType.Skill, CardRarity.Uncommon, TargetType.Self) {
+	public Inspiration() : base(0, CardType.Skill, CardRarity.Common, TargetType.Self) {
 	}
 
 	protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {

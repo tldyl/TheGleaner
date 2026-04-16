@@ -20,7 +20,7 @@ public class QuenchedArrow : CustomCardModel, IArrowCard {
 	protected override IEnumerable<DynamicVar> CanonicalVars => [
 		new IntVar("Amount", 0),
 		new IntVar("Grow", 50),
-		new DamageVar(14, ValueProp.Move)
+		new DamageVar(12, ValueProp.Move)
 	];
 	protected override HashSet<CardTag> CanonicalTags => [CustomEnums.Arrow];
 
@@ -61,7 +61,7 @@ public class QuenchedArrow : CustomCardModel, IArrowCard {
 		card.DynamicVars["Amount"].UpgradeValueBy(card.DynamicVars["Grow"].BaseValue);
 	}
 	
-	protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(4);
+	protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(2);
 	
 	public LocString getArrowName() {
 		return new LocString("cards", "DEMOMOD-QUENCHED_ARROW.arrowName");
