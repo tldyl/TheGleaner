@@ -22,6 +22,10 @@ public class StoreAndRelease : CustomCardModel {
 		HoverTipFactory.Static(StaticHoverTip.Block)
 	];
 
+public override IEnumerable<CardKeyword> CanonicalKeywords => [
+		CardKeyword.Exhaust
+	];
+
 	protected override IEnumerable<DynamicVar> CanonicalVars => [new DamageVar(4, ValueProp.Move)];
 
 	private int blockedDamage;
