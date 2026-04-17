@@ -44,6 +44,7 @@ public class StoreAndRelease : CustomCardModel {
 	}
 
 	public override async Task BeforeCombatStart() {
+		DynamicVars["BlockedDamage"].BaseValue = 0;
 		if (!IsInCombat || CombatState == null) {
 			return;
 		}

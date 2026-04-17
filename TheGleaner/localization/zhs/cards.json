@@ -52,7 +52,7 @@
   "DEMOMOD-PULSATION_OF_THE_TIDES.title": "律动的潮汐",
   "DEMOMOD-PULSATION_OF_THE_TIDES.description": "对所有敌人造成{Damage:diff()}点伤害。\n如果只有一名敌人存活，再对所有敌人造成{Damage:diff()}点伤害一次。\n[gold]力量[/gold]在此牌上发挥{StrMul}倍效果。",
   "DEMOMOD-STANDOFF.title": "对位",
-  "DEMOMOD-STANDOFF.description": "对所有攻击意图的敌人造成{Damage:diff()}点伤害。",
+  "DEMOMOD-STANDOFF.description": "对所有攻击意图的敌人造成{Damage:diff()}点伤害。\n将一张[gold]不和谐音[/gold]放入牌堆。",
   "DEMOMOD-VEERING_STRIKE.title": "折枝",
   "DEMOMOD-VEERING_STRIKE.description": "随机造成{Damage:diff()}点伤害{Repeat:diff()}次。\n在你的回合结束时，从[gold]乐谱[/gold]将此牌打出。",
   "DEMOMOD-CRITICAL_TUNING.title": "临界息吹",
