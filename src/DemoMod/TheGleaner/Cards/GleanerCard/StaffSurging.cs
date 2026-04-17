@@ -1,6 +1,7 @@
 using BaseLib.Abstracts;
 using BaseLib.Utils;
 using DemoMod.TheGleaner.Commands;
+using DemoMod.TheGleaner.Enums;
 using DemoMod.TheGleaner.Pools;
 using HarmonyLib;
 using MegaCrit.Sts2.Core.Combat;
@@ -18,7 +19,7 @@ namespace DemoMod.TheGleaner.Cards.GleanerCard;
 public class StaffSurging : CustomCardModel {
 	public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
 	protected override IEnumerable<DynamicVar> CanonicalVars => [new IntVar("Amount", 1)];
-	protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<VulnerablePower>()];
+	protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<VulnerablePower>(), HoverTipFactory.FromKeyword(CustomEnums.Score)];
 
 	public StaffSurging() : base(0, CardType.Skill, CardRarity.Common, TargetType.AnyEnemy) {
 		

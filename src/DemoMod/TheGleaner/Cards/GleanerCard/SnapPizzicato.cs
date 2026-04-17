@@ -2,6 +2,7 @@ using BaseLib.Abstracts;
 using BaseLib.Utils;
 using DemoMod.TheGleaner.CardPiles;
 using DemoMod.TheGleaner.Commands;
+using DemoMod.TheGleaner.Enums;
 using DemoMod.TheGleaner.Pools;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Commands.Builders;
@@ -21,7 +22,7 @@ public class SnapPizzicato : CustomCardModel {
         new EnergyVar(2),
         new RepeatVar(2)
     ];
-    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.ForEnergy(this)];
+    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.ForEnergy(this), HoverTipFactory.FromKeyword(CustomEnums.Score)];
 
     protected override bool ShouldGlowGoldInternal {
         get {

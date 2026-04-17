@@ -2,6 +2,7 @@ using BaseLib.Abstracts;
 using BaseLib.Utils;
 using DemoMod.TheGleaner.CardPiles;
 using DemoMod.TheGleaner.Commands;
+using DemoMod.TheGleaner.Enums;
 using DemoMod.TheGleaner.Pools;
 using MegaCrit.Sts2.Core.CardSelection;
 using MegaCrit.Sts2.Core.Commands;
@@ -22,7 +23,7 @@ public class EverEchoing : CustomCardModel {
 	];
 
 	protected override IEnumerable<DynamicVar> CanonicalVars => [new RepeatVar(1)];
-	protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.Static(StaticHoverTip.ReplayStatic)];
+	protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.Static(StaticHoverTip.ReplayStatic), HoverTipFactory.FromKeyword(CustomEnums.Score)];
 
 	public EverEchoing() : base(1, CardType.Skill, CardRarity.Rare, TargetType.Self) {
 		

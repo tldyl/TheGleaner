@@ -1,18 +1,16 @@
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using BaseLib.Abstracts;
-using BaseLib.Patches.Content;
 using BaseLib.Utils;
+using DemoMod.TheGleaner.Commands;
+using DemoMod.TheGleaner.Enums;
 using DemoMod.TheGleaner.Pools;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.ValueProps;
-using GleanerCustomEnums = DemoMod.TheGleaner.Enums.CustomEnums;
 
 namespace DemoMod.TheGleaner.Cards.GleanerCard;
 
@@ -24,6 +22,7 @@ public class TwiningTone : CustomCardModel {
 		new DamageVar(7, ValueProp.Move),
 		new ExtraDamageVar(2)
 	];
+	protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromKeyword(CustomEnums.Score)];
 
 	public TwiningTone() : base(1, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy) {
 	}
@@ -46,7 +45,7 @@ public class TwiningTone : CustomCardModel {
 				return 0m;
 			}
 
-			CardPile? scorePile = CustomPiles.GetCustomPile(Owner.PlayerCombatState, GleanerCustomEnums.ScorePile);
+			CardPile? scorePile = ScorePileCmd.GetOrCreateScorePile(Owner.PlayerCombatState);
 			int scoreCount = scorePile?.Cards.Count ?? 0;
 
 			return scoreCount * DynamicVars.ExtraDamage.BaseValue;

@@ -1,6 +1,7 @@
 using BaseLib.Abstracts;
 using BaseLib.Utils;
 using DemoMod.TheGleaner.Commands;
+using DemoMod.TheGleaner.Enums;
 using DemoMod.TheGleaner.Pools;
 using DemoMod.TheGleaner.Powers;
 using HarmonyLib;
@@ -27,7 +28,8 @@ public class PaperFrost : CustomCardModel {
 	];
 
 	protected override IEnumerable<IHoverTip> ExtraHoverTips => [
-		HoverTipFactory.FromPower<StrengthPower>()
+		HoverTipFactory.FromPower<StrengthPower>(),
+		HoverTipFactory.FromKeyword(CustomEnums.Score)
 	];
 
 	public PaperFrost() : base(0, CardType.Skill, CardRarity.Uncommon, TargetType.AnyEnemy) {

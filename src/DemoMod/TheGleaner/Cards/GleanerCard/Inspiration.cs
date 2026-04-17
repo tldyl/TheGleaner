@@ -8,6 +8,7 @@ using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models.Powers;
 using DemoMod.TheGleaner.Commands;
+using DemoMod.TheGleaner.Enums;
 
 namespace DemoMod.TheGleaner.Cards.GleanerCard;
 
@@ -25,7 +26,8 @@ public class Inspiration : CustomCardModel {
 
 	protected override IEnumerable<IHoverTip> ExtraHoverTips => [
 		HoverTipFactory.FromPower<StrengthPower>(),
-		HoverTipFactory.FromPower<DexterityPower>()
+		HoverTipFactory.FromPower<DexterityPower>(),
+		HoverTipFactory.FromKeyword(CustomEnums.Score)
 	];
 
 	public Inspiration() : base(0, CardType.Skill, CardRarity.Common, TargetType.Self) {

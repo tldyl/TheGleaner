@@ -1,5 +1,6 @@
 using BaseLib.Abstracts;
 using BaseLib.Utils;
+using DemoMod.TheGleaner.Enums;
 using DemoMod.TheGleaner.Pools;
 using DemoMod.TheGleaner.Powers;
 using MegaCrit.Sts2.Core.Commands;
@@ -16,7 +17,7 @@ public class BottomlessQuiver : CustomCardModel
 	public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
 
 	protected override IEnumerable<IHoverTip> ExtraHoverTips => [
-		HoverTipFactory.Static(StaticHoverTip.Energy)
+		HoverTipFactory.Static(StaticHoverTip.Energy), HoverTipFactory.FromKeyword(CustomEnums.Score)
 	];
 
 	protected override IEnumerable<DynamicVar> CanonicalVars => [

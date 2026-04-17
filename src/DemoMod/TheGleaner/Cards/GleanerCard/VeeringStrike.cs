@@ -8,6 +8,7 @@ using MegaCrit.Sts2.Core.Commands.Builders;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Nodes;
 using MegaCrit.Sts2.Core.ValueProps;
@@ -21,6 +22,9 @@ public class VeeringStrike : CustomCardModel {
 	[
 		new DamageVar(3, ValueProp.Move),
 		new RepeatVar(4)
+	];
+	protected override IEnumerable<IHoverTip> ExtraHoverTips => [
+		HoverTipFactory.FromKeyword(CustomEnums.Score)
 	];
 
 	public VeeringStrike() : base(2, CardType.Attack, CardRarity.Common, TargetType.RandomEnemy) {

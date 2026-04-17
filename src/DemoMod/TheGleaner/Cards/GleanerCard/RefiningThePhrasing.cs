@@ -20,7 +20,7 @@ public class RefiningThePhrasing : CustomCardModel {
 		new IntVar("Amount", 1)
 	];
 	public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
-	protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromKeyword(CustomEnums.Glean)];
+	protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromKeyword(CustomEnums.Glean), HoverTipFactory.FromKeyword(CustomEnums.Score)];
 
 	public RefiningThePhrasing() : base(0, CardType.Skill, CardRarity.Uncommon, TargetType.Self) {
 		

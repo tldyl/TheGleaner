@@ -2,6 +2,7 @@ using BaseLib.Abstracts;
 using BaseLib.Utils;
 using DemoMod.TheGleaner.CardPiles;
 using DemoMod.TheGleaner.Commands;
+using DemoMod.TheGleaner.Enums;
 using DemoMod.TheGleaner.Pools;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Commands.Builders;
@@ -19,7 +20,8 @@ namespace DemoMod.TheGleaner.Cards.GleanerCard;
 public class StoreAndRelease : CustomCardModel {
 	public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
 	protected override IEnumerable<IHoverTip> ExtraHoverTips => [
-		HoverTipFactory.Static(StaticHoverTip.Block)
+		HoverTipFactory.Static(StaticHoverTip.Block),
+		HoverTipFactory.FromKeyword(CustomEnums.Score)
 	];
 
 	protected override IEnumerable<DynamicVar> CanonicalVars => [

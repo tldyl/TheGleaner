@@ -29,7 +29,7 @@ public class Sonotoxin : CustomCardModel
 	];
 
 	protected override IEnumerable<IHoverTip> ExtraHoverTips => [
-		HoverTipFactory.FromPower<VulnerablePower>()
+		HoverTipFactory.FromPower<VulnerablePower>(), HoverTipFactory.FromKeyword(CustomEnums.Score)
 	];
 
 	public Sonotoxin() : base(1, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy)

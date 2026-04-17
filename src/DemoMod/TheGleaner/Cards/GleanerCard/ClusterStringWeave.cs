@@ -19,7 +19,7 @@ public class ClusterStringWeave : CustomCardModel {
 	private CardModel previewCard = ModelDb.Card<ClusterStrike>().ToMutable();
 
 	public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
-	protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromCard(previewCard)];
+	protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromCard(previewCard), HoverTipFactory.FromKeyword(CustomEnums.Score)];
 
 	public ClusterStringWeave() : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.Self) {
 	}

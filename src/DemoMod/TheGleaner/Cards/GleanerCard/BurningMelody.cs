@@ -20,7 +20,8 @@ public class BurningMelody : CustomCardModel {
     public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
         HoverTipFactory.FromKeyword(CardKeyword.Exhaust),
-        HoverTipFactory.Static(StaticHoverTip.Energy)
+        HoverTipFactory.Static(StaticHoverTip.Energy),
+        HoverTipFactory.FromKeyword(CustomEnums.Score)
     ];
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new EnergyVar(2),

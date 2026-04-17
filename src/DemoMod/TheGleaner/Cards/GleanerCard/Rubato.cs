@@ -7,6 +7,8 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 
 using DemoMod.TheGleaner.Commands;
+using DemoMod.TheGleaner.Enums;
+using MegaCrit.Sts2.Core.HoverTips;
 
 
 namespace DemoMod.TheGleaner.Cards.GleanerCard;
@@ -24,6 +26,7 @@ public class Rubato : CustomCardModel
 	public override IEnumerable<CardKeyword> CanonicalKeywords => [
 		CardKeyword.Exhaust
 	];
+	protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromKeyword(CustomEnums.Score)];
 
 	public Rubato() : base(0, CardType.Skill, CardRarity.Uncommon, TargetType.Self)
 	{

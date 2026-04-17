@@ -14,7 +14,7 @@ namespace DemoMod.TheGleaner.Cards.GleanerCard;
 [Pool(typeof(CardPool))]
 public class ClusterConfluence : CustomCardModel {
 	public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
-	protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromCard<StrikeGleaner>(), HoverTipFactory.FromCard<ClusterStrike>()];
+	protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromCard<StrikeGleaner>(), HoverTipFactory.FromCard<ClusterStrike>(), HoverTipFactory.FromKeyword(CustomEnums.Score)];
 	protected override bool HasEnergyCostX => true;
 
 	public ClusterConfluence() : base(0, CardType.Skill, CardRarity.Uncommon, TargetType.Self) {

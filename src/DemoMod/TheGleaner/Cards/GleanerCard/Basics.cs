@@ -23,7 +23,7 @@ public class Basics : CustomCardModel {
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new IntVar("Amount", 1)
     ];
-    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromKeyword(CustomEnums.Glean)];
+    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromKeyword(CustomEnums.Glean), HoverTipFactory.FromKeyword(CustomEnums.Score)];
 
     public Basics() : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.Self) {
         

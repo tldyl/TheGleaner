@@ -20,7 +20,7 @@ public class Procession : CustomCardModel {
 		new DamageVar(12, ValueProp.Move),
 		new IntVar("ReduceVal", 1)
 	];
-	protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.ForEnergy(this)];
+	protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.ForEnergy(this), HoverTipFactory.FromKeyword(CustomEnums.Score)];
 
 	public Procession() : base(3, CardType.Attack, CardRarity.Uncommon, TargetType.AllEnemies) {
 		

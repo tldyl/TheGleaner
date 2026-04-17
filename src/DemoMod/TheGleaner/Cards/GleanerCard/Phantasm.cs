@@ -20,7 +20,8 @@ public class Phantasm : CustomCardModel {
 	public override bool GainsBlock => true;
 
 	protected override IEnumerable<IHoverTip> ExtraHoverTips => [
-		EnergyHoverTip
+		EnergyHoverTip,
+		HoverTipFactory.FromKeyword(CustomEnums.Score)
 	];
 
 	protected override IEnumerable<DynamicVar> CanonicalVars => [

@@ -18,7 +18,8 @@ public class WhenTheGrainFlowsGold : CustomCardModel {
 	];
 
 	protected override IEnumerable<IHoverTip> ExtraHoverTips => [
-		HoverTipFactory.FromKeyword(CustomEnums.Glean)
+		HoverTipFactory.FromKeyword(CustomEnums.Glean),
+		HoverTipFactory.FromKeyword(CustomEnums.Score)
 	];
 
 	public WhenTheGrainFlowsGold() : base(1, CardType.Skill, CardRarity.Rare, TargetType.Self) {
