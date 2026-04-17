@@ -40,8 +40,7 @@ public class Swing : CustomCardModel, IConcertoCard {
 		CardModel card1 = pileType.GetPile(Owner).Cards
 			.Where(c => c.Type == CardType.Attack && !c.Keywords.Contains(CardKeyword.Unplayable)).ToList()
 			.StableShuffle(Owner.RunState.Rng.Shuffle)
-			.FirstOrDefault() ?? PileType.Draw.GetPile(Owner).Cards.Where(c => c.Type == CardType.Attack).ToList()
-			.StableShuffle(Owner.RunState.Rng.Shuffle).FirstOrDefault();
+			.FirstOrDefault();
 		return card1;
 	}
 
