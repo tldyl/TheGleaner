@@ -132,7 +132,7 @@
   "DEMOMOD-PRISMATIC_RAINFALL.title": "天虹倾泻",
   "DEMOMOD-PRISMATIC_RAINFALL.description": "对所有敌人造成{Damage:diff()}点伤害。\n打出你抽牌堆、手牌和[gold]乐谱[/gold]中有所有名字中有“打击”或“箭镞”的牌。",
   "DEMOMOD-SWING.title": "唤风的指钹",
-  "DEMOMOD-SWING.description": "从抽牌堆{IfUpgraded:show:、|和}手牌{IfUpgraded:show:和弃牌堆|}中各随机打出一张攻击牌。\n[gold]协奏[/gold]：本回合内，获得{StrengthPower}点[gold]力量[/gold]。",
+  "DEMOMOD-SWING.description": "从抽牌堆和手牌中各随机打出一张攻击牌。\n[gold]协奏[/gold]：本回合内，获得{StrengthPower}点[gold]力量[/gold]。",
   "DEMOMOD-BURNING_MELODY.title": "焚烧旋律",
   "DEMOMOD-BURNING_MELODY.description": "[gold]消耗[/gold][gold]乐谱[/gold]中的一张牌，获得等同于其耗能{IfUpgraded:show:+1|}的{EnergyCard:energyIcons()}。\n如果是[gold]状态[/gold]或[gold]诅咒[/gold]牌，则改为获得{Energy:energyIcons()}。",
   "DEMOMOD-STORE_AND_RELEASE.title": "存与取",
