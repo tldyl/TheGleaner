@@ -1,7 +1,6 @@
 using BaseLib.Abstracts;
 using BaseLib.Utils;
 using DemoMod.TheGleaner.Commands;
-using DemoMod.TheGleaner.Enums;
 using DemoMod.TheGleaner.Pools;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
@@ -17,15 +16,12 @@ namespace DemoMod.TheGleaner.Cards.GleanerCard;
 
 [Pool(typeof(CardPool))]
 public class Raiment : CustomCardModel {
-	//public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
-	protected override IEnumerable<IHoverTip> ExtraHoverTips => hoverTips;
-
-	private List<IHoverTip> hoverTips = [
+	public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
+	protected override IEnumerable<IHoverTip> ExtraHoverTips => [
 		.. HoverTipFactory.FromEnchantment<Swift>(2),
 		.. HoverTipFactory.FromEnchantment<Sown>(),
-		.. HoverTipFactory.FromEnchantment<Glam>()
+		.. HoverTipFactory.FromEnchantment<Glam>(),
 	];
-	
 	public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
 
 	public Raiment() : base(7, CardType.Skill, CardRarity.Rare, TargetType.Self) {
@@ -58,6 +54,4 @@ public class Raiment : CustomCardModel {
 			}
 		}
 	}
-
-	protected override void OnUpgrade() => hoverTips.Add(HoverTipFactory.FromKeyword(CustomEnums.Score));
 }
