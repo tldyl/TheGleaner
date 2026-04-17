@@ -23,6 +23,7 @@ public class TheGleaner : PlaceholderCharacterModel {
     public override Color NameColor => new Color(0.5f, 0.5f, 1f);
     public override CharacterGender Gender => CharacterGender.Feminine;
     public override int StartingHp => 74;
+    public override Color EnergyLabelOutlineColor => new Color(0.7294118f, 0.5647059f, 0.24313726f);
     
     // 人物模型tscn路径。要自定义见下。
     public override string CustomVisualPath => "res://TheGleaner/scenes/gleaner_character.tscn";

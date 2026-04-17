@@ -130,6 +130,9 @@ public class ClusterStrike : CustomCardModel, IAppendDescriptionCard {
 
 	public override async Task AfterCardPlayed(PlayerChoiceContext context, CardPlay cardPlay) {
 		foreach (CardModel cardModel in cards) {
+			if (cardModel is ClusterStrike) {
+				continue;
+			}
 			await cardModel.AfterCardPlayed(context, cardPlay);
 		}
 	}

@@ -22,7 +22,10 @@ public class StoreAndRelease : CustomCardModel {
 		HoverTipFactory.Static(StaticHoverTip.Block)
 	];
 
-	protected override IEnumerable<DynamicVar> CanonicalVars => [new DamageVar(4, ValueProp.Move)];
+	protected override IEnumerable<DynamicVar> CanonicalVars => [
+		new DamageVar(4, ValueProp.Move),
+		new IntVar("BlockedDamage", 0)
+	];
 
 	private int blockedDamage;
 	
@@ -58,6 +61,7 @@ public class StoreAndRelease : CustomCardModel {
 			return;
 		}
 		blockedDamage += damageResult.BlockedDamage;
+		DynamicVars["BlockedDamage"].UpgradeValueBy(damageResult.BlockedDamage);
 	}
 
 	public override Decimal ModifyDamageAdditive(

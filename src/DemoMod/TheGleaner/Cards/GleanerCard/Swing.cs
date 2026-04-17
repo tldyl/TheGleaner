@@ -18,7 +18,7 @@ namespace DemoMod.TheGleaner.Cards.GleanerCard;
 [Pool(typeof(CardPool))]
 public class Swing : CustomCardModel, IConcertoCard {
 	public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
-	protected override IEnumerable<DynamicVar> CanonicalVars => [new PowerVar<StrengthPower>(1)];
+	protected override IEnumerable<DynamicVar> CanonicalVars => [new PowerVar<StrengthPower>(2)];
 	protected override IEnumerable<IHoverTip> ExtraHoverTips => [
 		HoverTipFactory.FromKeyword(CustomEnums.Concerto),
 		HoverTipFactory.FromPower<StrengthPower>()
@@ -30,9 +30,6 @@ public class Swing : CustomCardModel, IConcertoCard {
 
 	protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
 		List<CardModel?> cardsToPlay = [AutoplayRandomCardInPile(PileType.Draw), AutoplayRandomCardInPile(PileType.Hand)];
-		if (CurrentUpgradeLevel > 0) {
-			cardsToPlay.Add(AutoplayRandomCardInPile(PileType.Discard));
-		}
 		cardsToPlay.RemoveAll(c => c == null);
 		foreach (CardModel? card in cardsToPlay) {
 			await CardCmd.AutoPlay(choiceContext, card, null);
@@ -50,5 +47,9 @@ public class Swing : CustomCardModel, IConcertoCard {
 
 	public async Task OnConcerto(CombatState combatState, PlayerChoiceContext choiceContext, CardPlay cardPlay) {
 		await PowerCmd.Apply<DemoTempStrengthPower>(Owner.Creature, DynamicVars.Strength.BaseValue, Owner.Creature, this);
+	}
+	
+	protected override void OnUpgrade() {
+		DynamicVars.Strength.UpgradeValueBy(1);
 	}
 }

@@ -21,7 +21,7 @@ public class ClusterConfluence : CustomCardModel {
 		
 	}
 
-public override IEnumerable<CardKeyword> CanonicalKeywords => [
+	public override IEnumerable<CardKeyword> CanonicalKeywords => [
 		CardKeyword.Exhaust
 	];
 

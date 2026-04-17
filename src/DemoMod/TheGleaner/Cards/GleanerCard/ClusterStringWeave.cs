@@ -1,9 +1,7 @@
 using BaseLib.Abstracts;
-using BaseLib.Patches.Content;
 using BaseLib.Utils;
 using DemoMod.TheGleaner.Commands;
 using DemoMod.TheGleaner.Pools;
-using HarmonyLib;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
@@ -73,9 +71,5 @@ public class ClusterStringWeave : CustomCardModel {
 		}
 	}
 
-	protected override void OnUpgrade() {
-		previewCard.DowngradeInternal();
-		AccessTools.Method(typeof(CardModel), "OnUpgrade", []).Invoke(previewCard, []);
-		previewCard.FinalizeUpgradeInternal();
-	}
+	protected override void OnUpgrade() => EnergyCost.UpgradeBy(-1);
 }

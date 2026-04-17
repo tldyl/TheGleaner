@@ -31,7 +31,7 @@ public class EverEchoing : CustomCardModel {
 	protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
 		ScorePile scorePile = ScorePileCmd.GetOrCreateScorePile(Owner.PlayerCombatState);
 		CardSelectorPrefs prefs = new CardSelectorPrefs(new LocString("cards", "DEMOMOD-EVER_ECHOING.selectionScreenPrompt"), 1);
-		CardModel selectedCard = (await CardSelectCmd.FromSimpleGrid(choiceContext, scorePile.Cards.ToList(), Owner, prefs)).FirstOrDefault();
+		CardModel selectedCard = (await CardSelectCmd.FromSimpleGrid(choiceContext, scorePile.Cards.Where(c => c.Type == CardType.Attack).ToList(), Owner, prefs)).FirstOrDefault();
 		if (selectedCard != null) {
 			selectedCard.BaseReplayCount += DynamicVars.Repeat.IntValue;
 			if (!selectedCard.Keywords.Contains(CardKeyword.Exhaust)) {

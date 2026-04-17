@@ -18,12 +18,11 @@ public class RendezvousWithDoom : CustomCardModel {
 	protected override IEnumerable<DynamicVar> CanonicalVars => [new EnergyVar(1)];
 	protected override bool HasEnergyCostX => true;
 
-	public RendezvousWithDoom() : base(0, CardType.Power, CardRarity.Rare, TargetType.Self) {
+	public RendezvousWithDoom() : base(0, CardType.Power, CardRarity.Ancient, TargetType.Self) {
 		
 	}
 
 	protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
-		await PowerCmd.Apply<StrengthPower>(Owner.Creature, ResolveEnergyXValue() + CurrentUpgradeLevel, Owner.Creature, this);
 		await PowerCmd.Apply<RendezvousWithDoomPower>(Owner.Creature, ResolveEnergyXValue() + 1, Owner.Creature, this);
 	}
 }

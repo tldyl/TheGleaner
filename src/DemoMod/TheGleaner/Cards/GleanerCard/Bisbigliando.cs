@@ -28,6 +28,8 @@ public class Bisbigliando : CustomCardModel
 {
     public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
 
+    protected override bool ShouldGlowGoldInternal => !HasBeenPlayedThisTurn;
+    
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new DamageVar(5, ValueProp.Move)
     ];

@@ -11,6 +11,14 @@ public class RandomDissonanceCard {
         ModelDb.Card<DirgeOfFarewell>()
     ];
 
+    public static void initPool() {
+        pool = [
+            ModelDb.Card<HowlOfWrath>(),
+            ModelDb.Card<ShriekOfDread>(),
+            ModelDb.Card<DirgeOfFarewell>()
+        ];
+    }
+    
     public static List<CardModel> getRandomDissonanceCards(int count, Rng rng) {
         List<CardModel> ret = [];
         for (int i = 0; i < count; i++) {

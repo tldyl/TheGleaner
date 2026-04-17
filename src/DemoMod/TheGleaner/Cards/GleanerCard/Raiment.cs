@@ -1,5 +1,6 @@
 using BaseLib.Abstracts;
 using BaseLib.Utils;
+using DemoMod.TheGleaner.Commands;
 using DemoMod.TheGleaner.Pools;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
@@ -21,12 +22,20 @@ public class Raiment : CustomCardModel {
 		.. HoverTipFactory.FromEnchantment<Sown>(),
 		.. HoverTipFactory.FromEnchantment<Glam>(),
 	];
-	public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Innate,CardKeyword.Exhaust];
+	public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
 
-	public Raiment() : base(3, CardType.Skill, CardRarity.Ancient, TargetType.Self) {
+	public Raiment() : base(7, CardType.Skill, CardRarity.Rare, TargetType.Self) {
 		
 	}
 
+	public override async Task BeforeCombatStart() {
+		if (!IsInCombat || CombatState == null || !IsUpgraded) {
+			return;
+		}
+
+		await ScorePileCmd.AddCards(Owner.PlayerCombatState, Owner, this);
+	}
+	
 	protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
 		foreach (CardModel allCard in Owner.PlayerCombatState.AllCards) {
 			List<EnchantmentModel> enchantments = [ModelDb.Enchantment<Swift>(), ModelDb.Enchantment<Sown>(), ModelDb.Enchantment<Glam>()];
@@ -45,6 +54,4 @@ public class Raiment : CustomCardModel {
 			}
 		}
 	}
-
-	protected override void OnUpgrade() => EnergyCost.UpgradeBy(-1);
 }

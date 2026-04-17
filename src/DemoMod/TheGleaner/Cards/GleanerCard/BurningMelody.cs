@@ -64,9 +64,9 @@ public class BurningMelody : CustomCardModel {
         if (card.Type is CardType.Status or CardType.Curse) {
             await PlayerCmd.GainEnergy(DynamicVars.Energy.BaseValue, Owner);
         } else {
-            await PlayerCmd.GainEnergy(card.EnergyCost.GetResolved(), Owner);
+            await PlayerCmd.GainEnergy(card.EnergyCost.GetResolved() + CurrentUpgradeLevel, Owner);
         }
     }
 
-    protected override void OnUpgrade() => DynamicVars.Energy.UpgradeValueBy(-1);
+    protected override void OnUpgrade() => DynamicVars.Energy.UpgradeValueBy(1);
 }

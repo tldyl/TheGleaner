@@ -34,10 +34,8 @@ public class PrismaticRainfall : CustomCardModel {
 		list.AddRange(PileType.Draw.GetPile(Owner).Cards.Where(c => c.Tags.Contains(CardTag.Strike) || c is IArrowCard));
 		list.AddRange(PileType.Hand.GetPile(Owner).Cards.Where(c => c.Tags.Contains(CardTag.Strike) || c is IArrowCard));
 		list.AddRange(ScorePileCmd.GetOrCreateScorePile(Owner.PlayerCombatState).Cards.Where(c => c.Tags.Contains(CardTag.Strike) || c is IArrowCard));
-		bool flag = true;
 		foreach (CardModel card in list) {
-			await CardCmd.AutoPlay(choiceContext, card, null, skipCardPileVisuals: !flag);
-			flag = false;
+			await CardCmd.AutoPlay(choiceContext, card, null);
 		}
 	}
 

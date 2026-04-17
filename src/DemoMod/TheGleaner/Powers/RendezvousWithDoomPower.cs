@@ -6,6 +6,7 @@ using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Helpers;
 using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.Rooms;
 
 namespace DemoMod.TheGleaner.Powers;
@@ -64,6 +65,7 @@ public class RendezvousWithDoomPower : CustomPowerModel {
         if (after <= 0 && activated) {
             activated = false;
             TaskHelper.RunSafely(PlayerCmd.GainEnergy(Owner.Player.PlayerCombatState.MaxEnergy, Owner.Player));
+            TaskHelper.RunSafely(PowerCmd.Apply<StrengthPower>(Owner, 1, Owner, null));
         }
     }
 }
