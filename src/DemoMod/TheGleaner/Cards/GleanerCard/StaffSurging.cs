@@ -23,6 +23,9 @@ public class StaffSurging : CustomCardModel {
 	public StaffSurging() : base(0, CardType.Skill, CardRarity.Common, TargetType.AnyEnemy) {
 		
 	}
+public override IEnumerable<CardKeyword> CanonicalKeywords => [
+		CardKeyword.Exhaust
+	];
 
 	protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
 		if (CurrentUpgradeLevel > 0) {

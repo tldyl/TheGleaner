@@ -11,29 +11,29 @@ using MegaCrit.Sts2.Core.HoverTips;
 namespace DemoMod.TheGleaner.Cards.GleanerCard;
 [Pool(typeof(CardPool))]
 public class WhenTheGrainFlowsGold : CustomCardModel {
-    public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
+	public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
 
-    public override IEnumerable<CardKeyword> CanonicalKeywords => [
-        CardKeyword.Exhaust
-    ];
+	public override IEnumerable<CardKeyword> CanonicalKeywords => [
+		CardKeyword.Exhaust
+	];
 
-    protected override IEnumerable<IHoverTip> ExtraHoverTips => [
-        HoverTipFactory.FromKeyword(CustomEnums.Glean)
-    ];
+	protected override IEnumerable<IHoverTip> ExtraHoverTips => [
+		HoverTipFactory.FromKeyword(CustomEnums.Glean)
+	];
 
-    public WhenTheGrainFlowsGold() : base(1, CardType.Skill, CardRarity.Rare, TargetType.Self) {
-    }
+	public WhenTheGrainFlowsGold() : base(1, CardType.Skill, CardRarity.Rare, TargetType.Self) {
+	}
 
-    protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
-        await ScorePileCmd.Glean(
-            Owner,
-            choiceContext,
-            ScorePileCmd.GetCapacity(Owner),
-            this
-        );
-    }
+	protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
+		await ScorePileCmd.Glean(
+			Owner,
+			choiceContext,
+			ScorePileCmd.GetCapacity(Owner),
+			this
+		);
+	}
 
-    protected override void OnUpgrade() {
-        RemoveKeyword(CardKeyword.Exhaust);
-    }
+	protected override void OnUpgrade() {
+				   EnergyCost.UpgradeBy(-1);
+	}
 }

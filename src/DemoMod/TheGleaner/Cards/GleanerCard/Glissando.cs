@@ -68,7 +68,7 @@ public class Glissando : CustomCardModel {
 	}
 
 	protected override void OnUpgrade() {
-		DynamicVars.Damage.UpgradeValueBy(3);
-		DynamicVars.Block.UpgradeValueBy(3);
+		DynamicVars.Damage.UpgradeValueBy(2);
+		DynamicVars.Block.UpgradeValueBy(2);
 	}
 }
