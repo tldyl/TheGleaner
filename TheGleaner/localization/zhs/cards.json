@@ -204,5 +204,5 @@
   "DEMOMOD-TWO_COST_ATTACKS.title": "梅佐弗特",
   "DEMOMOD-TWO_COST_ATTACKS.description": "将3张{IfUpgraded:show:升级过的|}其他角色的耗能2攻击牌放入[gold]乐谱[/gold]。",
   "DEMOMOD-THREE_OR_MORE_COST_ATTACKS.title": "弗帝西莫",
-  "DEMOMOD-THREE_OR_MORE_COST_ATTACKS.description": "将3张其他角色耗能3+的攻击牌放入[gold]乐谱[/gold]。"
+  "DEMOMOD-THREE_OR_MORE_COST_ATTACKS.description": "将3张{IfUpgraded:show:升级过的|}其他角色耗能3+的攻击牌放入[gold]乐谱[/gold]。"
 }
