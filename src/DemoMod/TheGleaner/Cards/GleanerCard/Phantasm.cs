@@ -24,8 +24,8 @@ public class Phantasm : CustomCardModel {
 	];
 
 	protected override IEnumerable<DynamicVar> CanonicalVars => [
-		new BlockVar(5, ValueProp.Move),
-		new IntVar("Times", 3),
+		new BlockVar(7, ValueProp.Move),
+		new IntVar("Times", 2),
 		new EnergyVar(1)
 	];
 
