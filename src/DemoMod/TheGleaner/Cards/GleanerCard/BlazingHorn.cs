@@ -46,5 +46,6 @@ public class BlazingHorn : CustomCardModel, IConcertoCard
 	protected override void OnUpgrade()
 	{
 		DynamicVars.Cards.UpgradeValueBy(2);
+		DynamicVars["Energy2"].UpgradeValueBy(1);
 	}
 }

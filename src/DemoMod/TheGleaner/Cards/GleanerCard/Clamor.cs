@@ -18,7 +18,7 @@ public class Clamor : CustomCardModel
 	public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
 
 	protected override IEnumerable<DynamicVar> CanonicalVars => [
-		new EnergyVar("Amount", 2)
+		new EnergyVar("Amount", 1)
 	];
 
 	protected override IEnumerable<IHoverTip> ExtraHoverTips => [

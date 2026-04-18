@@ -18,9 +18,7 @@ public class SentinelShaft : CustomCardModel {
 	protected override IEnumerable<DynamicVar> CanonicalVars => [
 		new BlockVar(7, ValueProp.Move)
 	];
-	public override IEnumerable<CardKeyword> CanonicalKeywords => [
-		CardKeyword.Exhaust
-	];
+
 	public override bool GainsBlock => true;
 
 	public SentinelShaft() : base(1, CardType.Skill, CardRarity.Common, TargetType.Self) {

@@ -17,8 +17,8 @@ public class SoundboardThump : CustomCardModel {
 	public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
 
 	protected override IEnumerable<DynamicVar> CanonicalVars => [
-		new IntVar("Amount", 1),
-		new DamageVar(8, ValueProp.Move)
+		new IntVar("Amount", 2),
+		new DamageVar(7, ValueProp.Move)
 	];
 
 	protected override IEnumerable<IHoverTip> ExtraHoverTips => [
@@ -38,7 +38,6 @@ public class SoundboardThump : CustomCardModel {
 	}
 
 	protected override void OnUpgrade() {
-		DynamicVars.Damage.UpgradeValueBy(2);
-		DynamicVars["Amount"].UpgradeValueBy(1);
+		DynamicVars.Damage.UpgradeValueBy(3);
 	}
 }

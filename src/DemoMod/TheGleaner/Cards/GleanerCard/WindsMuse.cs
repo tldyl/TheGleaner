@@ -25,5 +25,7 @@ public override IEnumerable<CardKeyword> CanonicalKeywords => [
 		await ScorePileCmd.Glean(Owner, choiceContext, DynamicVars["Amount"].BaseValue, this);
 	}
 
-	protected override void OnUpgrade() => DynamicVars["Amount"].UpgradeValueBy(1);
+	protected override void OnUpgrade() {
+		RemoveKeyword(CardKeyword.Exhaust);
+	}
 }

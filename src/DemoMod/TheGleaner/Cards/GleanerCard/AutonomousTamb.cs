@@ -36,6 +36,7 @@ public class AutonomousTamb : CustomCardModel, IConcertoCard {
 
 	protected override void OnUpgrade() {
 		DynamicVars["KillThreshold"].UpgradeValueBy(4);
+		DynamicVars["VulVal"].UpgradeValueBy(1);
 	}
 
 	public async Task OnConcerto(CombatState combatState, PlayerChoiceContext choiceContext, CardPlay cardPlay){
