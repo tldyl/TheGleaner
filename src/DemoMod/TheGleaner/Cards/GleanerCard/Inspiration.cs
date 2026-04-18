@@ -53,14 +53,13 @@ public class Inspiration : CustomCardModel {
 		);
 	}
 
-	public override async Task BeforeCombatStart()
-{
-	if (!IsInCombat || CombatState == null) {
-		return;
-	}
+	public override async Task BeforeCombatStart() {
+		if (!IsInCombat || CombatState == null || Owner.Deck.Cards.Contains(this)) {
+			return;
+		}
 
-	await ScorePileCmd.AddCards(Owner.PlayerCombatState, Owner, this);
-}   
+		await ScorePileCmd.AddCards(Owner.PlayerCombatState, Owner, this);
+	}   
 
 	protected override void OnUpgrade() {
 		DynamicVars["Amount"].UpgradeValueBy(1);

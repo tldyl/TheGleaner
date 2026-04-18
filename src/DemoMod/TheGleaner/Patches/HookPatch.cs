@@ -1,7 +1,7 @@
+using BaseLib.Patches.Content;
 using DemoMod.TheGleaner.CardPiles;
 using DemoMod.TheGleaner.Cards.GleanerCard;
 using DemoMod.TheGleaner.Commands;
-using DemoMod.TheGleaner.Enums;
 using DemoMod.TheGleaner.Utils;
 using HarmonyLib;
 using MegaCrit.Sts2.Core.Combat;
@@ -14,6 +14,7 @@ using MegaCrit.Sts2.Core.Hooks;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Rooms;
 using MegaCrit.Sts2.Core.Runs;
+using CustomEnums = DemoMod.TheGleaner.Enums.CustomEnums;
 
 namespace DemoMod.TheGleaner.Patches;
 public class HookPatch {
@@ -64,6 +65,13 @@ public class HookPatch {
             CombatState? combatState,
             CombatRoom room) {
             RandomDissonanceCard.initPool();
+            Player player = LocalContext.GetMe(runState.Players);
+            foreach (CardModel card in ScorePileCmd.GetOrCreateScorePile(player.PlayerCombatState).Cards) {
+                player.Creature.CombatState.RemoveCard(card);
+            }
+            ScorePileCmd.GetOrCreateScorePile(player.PlayerCombatState).Clear();
+            CustomPiles.Piles.Set(player.PlayerCombatState, null);
+            CustomPiles.CustomPileProviders.Remove(CustomEnums.ScorePile);
         }
     }
 }

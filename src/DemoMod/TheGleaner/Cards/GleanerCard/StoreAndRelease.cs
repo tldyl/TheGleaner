@@ -10,6 +10,7 @@ using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
+using MegaCrit.Sts2.Core.Logging;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.ValueProps;
 
@@ -43,7 +44,7 @@ public class StoreAndRelease : CustomCardModel {
 
 	public override async Task BeforeCombatStart() {
 		DynamicVars["BlockedDamage"].BaseValue = 0;
-		if (!IsInCombat || CombatState == null) {
+		if (!IsInCombat || CombatState == null || Owner.Deck.Cards.Contains(this)) {
 			return;
 		}
 
@@ -61,6 +62,7 @@ public class StoreAndRelease : CustomCardModel {
 		if (!scorePile.Cards.Contains(this) || target != Owner.Creature) {
 			return;
 		}
+		Log.Info("StoreAndRelease AfterDamageReceived " + this);
 		blockedDamage += damageResult.BlockedDamage;
 		DynamicVars["BlockedDamage"].UpgradeValueBy(damageResult.BlockedDamage);
 	}

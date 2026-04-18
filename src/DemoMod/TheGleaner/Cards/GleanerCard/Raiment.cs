@@ -29,7 +29,7 @@ public class Raiment : CustomCardModel {
 	}
 
 	public override async Task BeforeCombatStart() {
-		if (!IsInCombat || CombatState == null || !IsUpgraded) {
+		if (!IsInCombat || CombatState == null || !IsUpgraded || Owner.Deck.Cards.Contains(this)) {
 			return;
 		}
 

@@ -96,11 +96,6 @@ public class TheGleaner : PlaceholderCharacterModel {
         "vfx/vfx_bloody_impact",
         "vfx/vfx_rock_shatter"
     ];
-
-    public override async Task AfterCombatVictory(CombatRoom room) {
-        ScorePile scorePile = ScorePileCmd.GetOrCreateScorePile(LocalContext.GetMe(RunManager.Instance.DebugOnlyGetState()).PlayerCombatState);
-        scorePile.Clear();
-    }
     
     public override async Task BeforeCardPlayed(CardPlay cardPlay) {
         if (cardPlay.Card.Owner.Character == this && cardPlay.Card.Type == CardType.Power) {

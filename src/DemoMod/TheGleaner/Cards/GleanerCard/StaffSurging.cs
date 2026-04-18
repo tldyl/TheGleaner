@@ -37,7 +37,7 @@ public override IEnumerable<CardKeyword> CanonicalKeywords => [
 	}
 
 	public override async Task BeforeCombatStart() {
-		if (!IsInCombat || CombatState == null) {
+		if (!IsInCombat || CombatState == null || Owner.Deck.Cards.Contains(this)) {
 			return;
 		}
 
