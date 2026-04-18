@@ -23,6 +23,10 @@ public class SummonMuseon : CustomCardModel {
 		new CardsVar(1)
 	];
 
+public override IEnumerable<CardKeyword> CanonicalKeywords => [
+		CardKeyword.Exhaust
+	];
+
 	public SummonMuseon() : base(1, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy) {
 		
 	}
@@ -53,5 +57,8 @@ public class SummonMuseon : CustomCardModel {
 		}
 	}
 
-	protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(3);
+	protected override void OnUpgrade() {
+		DynamicVars.Damage.UpgradeValueBy(2);
+		RemoveKeyword(CardKeyword.Exhaust);
+	}
 }

@@ -18,31 +18,33 @@ namespace DemoMod.TheGleaner.Cards.GleanerCard;
 
 [Pool(typeof(CardPool))]
 public class Basics : CustomCardModel {
-    public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
-    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
-    protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new IntVar("Amount", 1)
-    ];
-    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromKeyword(CustomEnums.Glean), HoverTipFactory.FromKeyword(CustomEnums.Score)];
+	public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
+	public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
+	protected override IEnumerable<DynamicVar> CanonicalVars => [
+		new IntVar("Amount", 1)
+	];
+	protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromKeyword(CustomEnums.Glean), HoverTipFactory.FromKeyword(CustomEnums.Score)];
 
-    public Basics() : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.Self) {
-        
-    }
+	public Basics() : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.Self) {
+		
+	}
 
-    protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
-        CardSelectorPrefs prefs = new CardSelectorPrefs(new LocString("cards", ModelDb.GetId<Wish>().Entry + ".selectionScreenPrompt"), 1);
-        CardModel card = (await CardSelectCmd.FromSimpleGrid(choiceContext, PileType.Draw.GetPile(Owner).Cards.OrderBy(c => c.Rarity).ThenBy(c => c.Id).ToList(), Owner, prefs)).FirstOrDefault();
-        if (card == null)
-            return;
-        await ScorePileCmd.AddCards(Owner.PlayerCombatState, Owner, card);
-        if (card is IDissonanceCard dissonanceCard) {
-            dissonanceCard.TransformFollowupAction = c => {
-                CardCmd.Upgrade(c);
-            };
-        } else {
-            CardCmd.Upgrade(card);
-        }
-    }
-    
-    protected override void OnUpgrade() => RemoveKeyword(CardKeyword.Exhaust);
+	protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
+		CardSelectorPrefs prefs = new CardSelectorPrefs(new LocString("cards", ModelDb.GetId<Wish>().Entry + ".selectionScreenPrompt"), 1);
+		CardModel card = (await CardSelectCmd.FromSimpleGrid(choiceContext, PileType.Draw.GetPile(Owner).Cards.OrderBy(c => c.Rarity).ThenBy(c => c.Id).ToList(), Owner, prefs)).FirstOrDefault();
+		if (card == null)
+			return;
+		await ScorePileCmd.AddCards(Owner.PlayerCombatState, Owner, card);
+		if (card is IDissonanceCard dissonanceCard) {
+			dissonanceCard.TransformFollowupAction = c => {
+				CardCmd.Upgrade(c);
+			};
+		} else {
+			CardCmd.Upgrade(card);
+		}
+	}
+	
+		protected override void OnUpgrade() {
+		EnergyCost.UpgradeBy(-1);
+	}
 }
