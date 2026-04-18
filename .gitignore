@@ -13,4 +13,5 @@ deploy.ps1
 bin/
 obj/
 *.disabled
-src/DemoMod/TheGleaner/TheGleanerMod.cs
+TheGleanerMod.cs
+export_all_gleaner_cards.py
