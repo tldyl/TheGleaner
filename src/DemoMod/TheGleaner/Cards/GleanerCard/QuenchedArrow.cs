@@ -20,7 +20,7 @@ public class QuenchedArrow : CustomCardModel, IArrowCard {
 	protected override IEnumerable<DynamicVar> CanonicalVars => [
 		new IntVar("Amount", 0),
 		new IntVar("Grow", 50),
-		new DamageVar(12, ValueProp.Move)
+		new DamageVar(14, ValueProp.Move)
 	];
 	protected override HashSet<CardTag> CanonicalTags => [CustomEnums.Arrow];
 
