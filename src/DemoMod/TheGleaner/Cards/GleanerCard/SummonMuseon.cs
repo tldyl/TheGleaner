@@ -19,19 +19,19 @@ public class SummonMuseon : CustomCardModel {
 	public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
 
 	protected override IEnumerable<DynamicVar> CanonicalVars => [
-		new DamageVar(5, ValueProp.Move),
+		new BlockVar(4, ValueProp.Move),
 		new CardsVar(1)
 	];
 
-	public SummonMuseon() : base(1, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy) {
+public override bool GainsBlock => true;
+
+	public SummonMuseon() : base(1, CardType.Skill, CardRarity.Common, TargetType.Self) {
 		
 	}
 
 	protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
-		AttackCommand _ = await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
-			.FromCard(this)
-			.Targeting(cardPlay.Target)
-			.Execute(choiceContext);
+		await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, cardPlay);
+		
 		CardPile discardPile = PileType.Discard.GetPile(Owner);
 		if (discardPile.Cards.Count == 0) {
 			return;
@@ -53,5 +53,7 @@ public class SummonMuseon : CustomCardModel {
 		}
 	}
 
-	protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(3);
+	protected override void OnUpgrade() {
+		DynamicVars.Block.UpgradeValueBy(3);
+	}
 }

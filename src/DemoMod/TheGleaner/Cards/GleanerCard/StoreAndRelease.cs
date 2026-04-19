@@ -79,5 +79,7 @@ public class StoreAndRelease : CustomCardModel {
 		return 0M;
 	}
 	
-	protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(3);
+	 protected override void OnUpgrade() {
+		EnergyCost.UpgradeBy(-1);
+	}
 }

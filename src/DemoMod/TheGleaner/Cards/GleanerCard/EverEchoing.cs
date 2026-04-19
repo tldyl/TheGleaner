@@ -18,9 +18,6 @@ namespace DemoMod.TheGleaner.Cards.GleanerCard;
 [Pool(typeof(CardPool))]
 public class EverEchoing : CustomCardModel {
 	public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
-	public override IEnumerable<CardKeyword> CanonicalKeywords => [
-		CardKeyword.Exhaust
-	];
 
 	protected override IEnumerable<DynamicVar> CanonicalVars => [new RepeatVar(1)];
 	protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.Static(StaticHoverTip.ReplayStatic), HoverTipFactory.FromKeyword(CustomEnums.Score)];
@@ -28,6 +25,10 @@ public class EverEchoing : CustomCardModel {
 	public EverEchoing() : base(1, CardType.Skill, CardRarity.Rare, TargetType.Self) {
 		
 	}
+
+public override IEnumerable<CardKeyword> CanonicalKeywords => [
+		CardKeyword.Exhaust
+	];
 
 	protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
 		ScorePile scorePile = ScorePileCmd.GetOrCreateScorePile(Owner.PlayerCombatState);
@@ -41,5 +42,7 @@ public class EverEchoing : CustomCardModel {
 		}
 	}
 	
-	protected override void OnUpgrade() => EnergyCost.UpgradeBy(-1);
+	protected override void OnUpgrade() {
+		RemoveKeyword(CardKeyword.Exhaust);
+	}
 }

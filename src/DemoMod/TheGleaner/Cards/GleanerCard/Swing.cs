@@ -24,7 +24,7 @@ public class Swing : CustomCardModel, IConcertoCard {
 		HoverTipFactory.FromPower<StrengthPower>()
 	];
 
-	public Swing() : base(3, CardType.Skill, CardRarity.Uncommon, TargetType.RandomEnemy) {
+	public Swing() : base(2, CardType.Skill, CardRarity.Uncommon, TargetType.RandomEnemy) {
 		
 	}
 

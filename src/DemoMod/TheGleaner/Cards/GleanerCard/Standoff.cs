@@ -19,7 +19,7 @@ namespace DemoMod.TheGleaner.Cards.GleanerCard;
 public class Standoff : CustomCardModel {
 	public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
 
-	protected override IEnumerable<DynamicVar> CanonicalVars => [new DamageVar(11, ValueProp.Move)];
+	protected override IEnumerable<DynamicVar> CanonicalVars => [new DamageVar(10, ValueProp.Move)];
 	protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromKeyword(CustomEnums.Dissonance)];
 
 	public Standoff() : base(0, CardType.Attack, CardRarity.Common, TargetType.AllEnemies, true, true) {

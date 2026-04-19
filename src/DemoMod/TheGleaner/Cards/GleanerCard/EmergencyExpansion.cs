@@ -19,7 +19,7 @@ public override IEnumerable<CardKeyword> CanonicalKeywords => [
 	];
 
 	protected override IEnumerable<DynamicVar> CanonicalVars => [
-		new BlockVar(4, ValueProp.Move),
+		new BlockVar(5, ValueProp.Move),
 		new IntVar("Times", 3)
 	];
 
@@ -36,5 +36,5 @@ public override IEnumerable<CardKeyword> CanonicalKeywords => [
 		DynamicVars["Times"].BaseValue = Math.Max(1, times - 1);
 	}
 
-	protected override void OnUpgrade() => DynamicVars.Block.UpgradeValueBy(1);
+	protected override void OnUpgrade() => DynamicVars.Block.UpgradeValueBy(2);
 }
