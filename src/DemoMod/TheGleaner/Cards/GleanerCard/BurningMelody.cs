@@ -17,57 +17,59 @@ namespace DemoMod.TheGleaner.Cards.GleanerCard;
 
 [Pool(typeof(CardPool))]
 public class BurningMelody : CustomCardModel {
-    public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
-    protected override IEnumerable<IHoverTip> ExtraHoverTips => [
-        HoverTipFactory.FromKeyword(CardKeyword.Exhaust),
-        HoverTipFactory.Static(StaticHoverTip.Energy),
-        HoverTipFactory.FromKeyword(CustomEnums.Score)
-    ];
-    protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new EnergyVar(2),
-        new EnergyVar("EnergyCard", 1)
-    ];
+	public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
+	protected override IEnumerable<IHoverTip> ExtraHoverTips => [
+		HoverTipFactory.FromKeyword(CardKeyword.Exhaust),
+		HoverTipFactory.Static(StaticHoverTip.Energy),
+		HoverTipFactory.FromKeyword(CustomEnums.Score)
+	];
+	protected override IEnumerable<DynamicVar> CanonicalVars => [
+		new EnergyVar(2),
+		new EnergyVar("EnergyCard", 1)
+	];
 
-    public BurningMelody() : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.Self) {
-        
-    }
+	public BurningMelody() : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.Self) {
+		
+	}
 
-    protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
-        CardPile pile = ScorePileCmd.GetOrCreateScorePile(Owner.PlayerCombatState);
-        CardSelectorPrefs prefs = new CardSelectorPrefs(
-            new LocString("cards", "DEMOMOD-SONOTOXIN.selectionScreenPrompt"),
-            1
-        );
+	protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
+		CardPile pile = ScorePileCmd.GetOrCreateScorePile(Owner.PlayerCombatState);
+		CardSelectorPrefs prefs = new CardSelectorPrefs(
+			new LocString("cards", "DEMOMOD-SONOTOXIN.selectionScreenPrompt"),
+			1
+		);
 
-        IEnumerable<CardModel> selected = await CardSelectCmd.FromSimpleGrid(
-            choiceContext,
-            pile.Cards,
-            Owner,
-            prefs
-        );
+		IEnumerable<CardModel> selected = await CardSelectCmd.FromSimpleGrid(
+			choiceContext,
+			pile.Cards,
+			Owner,
+			prefs
+		);
 
-        List<CardModel> selectedCards = selected.ToList();
-        if (selectedCards.Count == 0) {
-            return;
-        }
+		List<CardModel> selectedCards = selected.ToList();
+		if (selectedCards.Count == 0) {
+			return;
+		}
 
-        CardModel card = selectedCards.First();
-        await CardCmd.Exhaust(choiceContext, card);
+		CardModel card = selectedCards.First();
+		await CardCmd.Exhaust(choiceContext, card);
 
-        await Hook.AfterCardChangedPiles(
-            Owner.RunState,
-            Owner.Creature.CombatState,
-            card,
-            CustomEnums.ScorePile,
-            this
-        );
+		await Hook.AfterCardChangedPiles(
+			Owner.RunState,
+			Owner.Creature.CombatState,
+			card,
+			CustomEnums.ScorePile,
+			this
+		);
 
-        if (card.Type is CardType.Status or CardType.Curse) {
-            await PlayerCmd.GainEnergy(DynamicVars.Energy.BaseValue, Owner);
-        } else {
-            await PlayerCmd.GainEnergy(card.EnergyCost.GetResolved() + CurrentUpgradeLevel, Owner);
-        }
-    }
+		if (card.Type is CardType.Status or CardType.Curse) {
+			await PlayerCmd.GainEnergy(DynamicVars.Energy.BaseValue, Owner);
+		} else {
+			await PlayerCmd.GainEnergy(card.EnergyCost.GetResolved(), Owner);
+		}
+	}
 
-    protected override void OnUpgrade() => DynamicVars.Energy.UpgradeValueBy(1);
+	protected override void OnUpgrade() {
+		EnergyCost.UpgradeBy(-1);
+	}
 }

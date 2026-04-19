@@ -26,6 +26,10 @@ public class EverEchoing : CustomCardModel {
 		
 	}
 
+public override IEnumerable<CardKeyword> CanonicalKeywords => [
+		CardKeyword.Exhaust
+	];
+
 	protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
 		ScorePile scorePile = ScorePileCmd.GetOrCreateScorePile(Owner.PlayerCombatState);
 		CardSelectorPrefs prefs = new CardSelectorPrefs(new LocString("cards", "DEMOMOD-EVER_ECHOING.selectionScreenPrompt"), 1);
@@ -38,5 +42,7 @@ public class EverEchoing : CustomCardModel {
 		}
 	}
 	
-	protected override void OnUpgrade() => EnergyCost.UpgradeBy(-1);
+	protected override void OnUpgrade() {
+		RemoveKeyword(CardKeyword.Exhaust);
+	}
 }
