@@ -81,6 +81,9 @@ public class NCardPatch {
             if (card == null) {
                 return "res://TheGleaner/images/score_card_icon/empty.png";
             }
+            if (ResourceLoader.Exists("res://TheGleaner/images/score_card_icon/" + card.Id.Entry.ToLowerInvariant() + "__" + card.Type.ToString().ToLower() + "__" + card.Rarity.ToString().ToLower() + ".png")) {
+                return "res://TheGleaner/images/score_card_icon/" + card.Id.Entry.ToLowerInvariant() + "__" + card.Type.ToString().ToLower() + "__" + card.Rarity.ToString().ToLower() + ".png";
+            }
             if (card is ClusterStrike) {
                 return "res://TheGleaner/images/score_card_icon/cluster_strike.png";
             }
