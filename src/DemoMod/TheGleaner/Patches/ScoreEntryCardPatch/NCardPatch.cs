@@ -152,7 +152,7 @@ public class NCardPatch {
                     }
                 default:
                     glowIcon.Modulate = Color.FromHtml("26e532c8");
-                    return "res://Images/vfx/dot.png";
+                    return "res://images/vfx/dot.png";
             }
         }
     }

@@ -40,7 +40,7 @@ public class RendezvousWithDoomPower : CustomPowerModel {
         if (target.IsPlayer && target.Player.PlayerCombatState.Energy <= 0) {
             activated = false;
             await PlayerCmd.GainEnergy(target.Player.PlayerCombatState.MaxEnergy, target.Player);
-            await PowerCmd.Apply<StrengthPower>(Owner, 1, Owner, null);
+            await PowerCmd.Apply<StrengthPower>(target, 1, target, null);
         }
     }
 
