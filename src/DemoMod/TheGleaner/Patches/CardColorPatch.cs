@@ -2,6 +2,8 @@
 using Godot;
 using HarmonyLib;
 using MegaCrit.Sts2.addons.mega_text;
+using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Models.Cards;
 using MegaCrit.Sts2.Core.Nodes.Cards;
 
 namespace DemoMod.TheGleaner.Patches;
@@ -16,6 +18,21 @@ public static class CardColorPatch {
         "DEMOMOD-DIRGEOFFAREWELL",
         "DEMOMOD-HOWLOFWRATH",
         "DEMOMOD-SHRIEKOFDREAD"
+    ];
+
+    // 这几张牌强制恢复成游戏原版 colorless 外观
+    private static readonly string[] _forceVanillaColorlessCardIds =
+    [
+        "DEMOMOD-ZERO_COST_ATTACKS",
+        "DEMOMOD-ONE_COST_ATTACKS",
+        "DEMOMOD-TWO_COST_ATTACKS",
+        "DEMOMOD-THREE_OR_MORE_COST_ATTACKS",
+
+        // 保险：兼容去下划线写法
+        "DEMOMOD-ZEROCOSTATTACKS",
+        "DEMOMOD-ONECOSTATTACKS",
+        "DEMOMOD-TWOCOSTATTACKS",
+        "DEMOMOD-THREEORMORECOSTATTACKS"
     ];
 
     // 不受这个 patch 影响的卡
@@ -36,7 +53,7 @@ public static class CardColorPatch {
         "DEMOMOD-GLEAN_CARD",
         "DEMOMOD-CLUSTER_STRIKE",
 
-        // 保险：有些项目里 Id 可能会写成去掉下划线的形式
+        // 保险：兼容去下划线
         "DEMOMOD-NIGHTINGALEATTHEABYSS",
         "DEMOMOD-FORGINGATDAWN",
         "DEMOMOD-PULSATIONOFTHETIDES",
@@ -53,6 +70,9 @@ public static class CardColorPatch {
     private static Texture2D? _skillFrame;
     private static Texture2D? _powerFrame;
     private static Texture2D? _scoreFrame;
+
+    // 原版 colorless 模板卡缓存
+    private static CardModel? _vanillaColorlessTemplateCard;
 
     private static Texture2D? TryLoadTexture(params string[] paths) {
         foreach (string path in paths) {
@@ -77,6 +97,16 @@ public static class CardColorPatch {
     private static bool IsExcluded(string cardId) {
         for (int i = 0; i < _excludedCardIds.Length; i++) {
             if (string.Equals(_excludedCardIds[i], cardId, StringComparison.OrdinalIgnoreCase)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private static bool ShouldForceVanillaColorless(string cardId) {
+        for (int i = 0; i < _forceVanillaColorlessCardIds.Length; i++) {
+            if (string.Equals(_forceVanillaColorlessCardIds[i], cardId, StringComparison.OrdinalIgnoreCase)) {
                 return true;
             }
         }
@@ -137,6 +167,40 @@ public static class CardColorPatch {
             "res://images/packed/sprite_fonts/Score.png",
             "res://images/packed/sprite_fonts/score.png"
         );
+    }
+
+    private static CardModel? GetVanillaColorlessTemplateCard() {
+        if (_vanillaColorlessTemplateCard != null) {
+            return _vanillaColorlessTemplateCard;
+        }
+
+        try {
+            // 用原版 colorless 攻击牌当模板
+            // FlashOfSteel / SecretWeapon / Finesse 都行，优先选攻击牌
+            _vanillaColorlessTemplateCard = ModelDb.Card<FlashOfSteel>();
+            if (_vanillaColorlessTemplateCard != null) {
+                return _vanillaColorlessTemplateCard;
+            }
+        } catch (Exception e) {
+        }
+
+        try {
+            _vanillaColorlessTemplateCard = ModelDb.Card<SecretWeapon>();
+            if (_vanillaColorlessTemplateCard != null) {
+                return _vanillaColorlessTemplateCard;
+            }
+        } catch (Exception e) {
+        }
+
+        try {
+            _vanillaColorlessTemplateCard = ModelDb.Card<Finesse>();
+            if (_vanillaColorlessTemplateCard != null) {
+                return _vanillaColorlessTemplateCard;
+            }
+        } catch (Exception e) {
+        }
+
+        return null;
     }
 
     private static TextureRect? FindTextureRectByName(Node root, params string[] names) {
@@ -213,8 +277,7 @@ public static class CardColorPatch {
     private static void ApplyScoreEntryCardStyle(NCard cardNode, string cardId) {
         TextureRect? frameNode = FindTextureRectByName(cardNode, "%Frame", "Frame");
         Texture2D? scoreFrame = GetScoreFrame();
-        if (frameNode == null) {
-        } else {
+        if (frameNode != null) {
             frameNode.Texture = scoreFrame;
             frameNode.Material = null;
         }
@@ -223,16 +286,46 @@ public static class CardColorPatch {
         ClearTextureRect(cardNode, cardId, "card banner", "%CardBanner", "%Banner", "CardBanner", "Banner");
         ClearTextureRect(cardNode, cardId, "card portrait border", "%CardPortraitBorder", "%PortraitBorder", "%PortraitFrame", "CardPortraitBorder", "PortraitBorder", "PortraitFrame");
 
-        int bannerHidden = HideNodesByNameContains(cardNode, cardId, "card banner fallback", "banner");
-        if (bannerHidden == 0) {
-        }
-
-        int plaqueHidden = HideNodesByNameContains(cardNode, cardId, "card portrait border plaque", "portrait_border_plaque", "portraitborderplaque", "border_plaque", "plaque");
-        if (plaqueHidden == 0) {
-        }
+        HideNodesByNameContains(cardNode, cardId, "card banner fallback", "banner");
+        HideNodesByNameContains(cardNode, cardId, "card portrait border plaque", "portrait_border_plaque", "portraitborderplaque", "border_plaque", "plaque");
 
         HideLabelText(cardNode, cardId, "title", "%TitleLabel", "TitleLabel");
         HideLabelText(cardNode, cardId, "energy cost text", "%EnergyLabel", "EnergyLabel");
+    }
+
+    private static void ApplyVanillaColorlessStyle(NCard cardNode) {
+        CardModel? template = GetVanillaColorlessTemplateCard();
+        if (template == null) {
+            return;
+        }
+
+        TextureRect? frameNode = FindTextureRectByName(cardNode, "%Frame", "Frame");
+        TextureRect? energyNode = FindTextureRectByName(cardNode, "%EnergyIcon", "EnergyIcon");
+        TextureRect? bannerNode = FindTextureRectByName(cardNode, "%TitleBanner", "TitleBanner", "%Banner", "Banner");
+        TextureRect? portraitBorderNode = FindTextureRectByName(cardNode, "%PortraitBorder", "PortraitBorder");
+
+        if (energyNode != null) {
+            energyNode.Texture = template.EnergyIcon;
+            energyNode.Visible = template.EnergyIcon != null;
+        }
+
+        if (frameNode != null) {
+            frameNode.Texture = template.Frame;
+            frameNode.Material = template.FrameMaterial;
+            frameNode.Visible = true;
+        }
+
+        if (bannerNode != null) {
+            bannerNode.Texture = template.BannerTexture;
+            bannerNode.Material = template.BannerMaterial;
+            bannerNode.Visible = true;
+        }
+
+        if (portraitBorderNode != null) {
+            portraitBorderNode.Texture = template.PortraitBorder;
+            portraitBorderNode.Material = template.BannerMaterial;
+            portraitBorderNode.Visible = true;
+        }
     }
 
     private static void HideLabelText(Node root, string cardId, string label, params string[] names) {
@@ -283,7 +376,6 @@ public static class CardColorPatch {
             string cardId = model.Id?.Entry ?? "<null-id>";
             string type = model.Type.ToString();
 
-            // 这些牌完全跳过，不受本 patch 影响
             if (IsExcluded(cardId)) {
                 return;
             }
@@ -297,9 +389,14 @@ public static class CardColorPatch {
                 return;
             }
 
+            // 这 4 张牌强制改成游戏原版 colorless 外观
+            if (ShouldForceVanillaColorless(cardId)) {
+                ApplyVanillaColorlessStyle(__instance);
+                return;
+            }
+
             TextureRect? frameNode = __instance.GetNodeOrNull<TextureRect>("%Frame");
-            if (frameNode == null) {
-            } else {
+            if (frameNode != null) {
                 string frameType = type;
                 if (string.Equals(type, "Status", StringComparison.OrdinalIgnoreCase)
                     && ShouldForceColorlessStatusFrame(cardId)) {
@@ -314,8 +411,7 @@ public static class CardColorPatch {
             }
 
             TextureRect? energyNode = __instance.GetNodeOrNull<TextureRect>("%EnergyIcon");
-            if (energyNode == null) {
-            } else {
+            if (energyNode != null) {
                 Texture2D? energyTex = GetEnergyIcon(type);
                 if (energyTex != null) {
                     energyNode.Texture = energyTex;
