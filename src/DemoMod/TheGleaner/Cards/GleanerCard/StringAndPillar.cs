@@ -8,6 +8,7 @@ using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
+using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Powers;
 
 namespace DemoMod.TheGleaner.Cards.GleanerCard;
@@ -25,15 +26,17 @@ public class StringAndPillar : CustomCardModel {
 	protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
 		await PowerCmd.Apply<StrengthPower>(Owner.Creature, DynamicVars["Amount"].BaseValue, Owner.Creature, this);
 		await PowerCmd.Apply<DexterityPower>(Owner.Creature, DynamicVars["Amount"].BaseValue, Owner.Creature, this);
+
+		if (IsUpgraded) {
+			CardModel cpy = CreateClone();
+			CardCmd.Downgrade(cpy);
+			await CardPileCmd.AddGeneratedCardToCombat(cpy, PileType.Hand, true);
+		}
 	}
 
 	public override async Task AfterCardPlayed(PlayerChoiceContext context, CardPlay cardPlay) {
 		if (cardPlay.Card.Type != Type && EnergyCost.GetResolved() > 1 && cardPlay.Card is not ScoreEntryCard) {
 			EnergyCost.AddThisCombat(-1);
 		}
-	}
-	
-	protected override void OnUpgrade() {
-		   EnergyCost.UpgradeBy(-2);
 	}
 }

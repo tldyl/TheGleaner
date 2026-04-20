@@ -35,6 +35,11 @@ public class ReclaimingTheStray : CustomCardModel {
             return;
         }
 
+        if (IsUpgraded) {
+            CardModel cpy = CreateClone();
+            await ScorePileCmd.AddCards(Owner.PlayerCombatState, Owner, cpy);
+        }
+        
         await ScorePileCmd.AddCards(Owner.PlayerCombatState, Owner, this);
     }
 
@@ -61,10 +66,5 @@ public class ReclaimingTheStray : CustomCardModel {
                 await CardPileCmd.Add(selectedCard, PileType.Hand, CardPilePosition.Bottom, null, false);
             }
         }
-    }
-
-    protected override void OnUpgrade()
-    {
-        EnergyCost.UpgradeBy(-1);
     }
 }

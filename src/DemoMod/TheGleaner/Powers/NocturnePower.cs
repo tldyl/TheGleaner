@@ -17,7 +17,6 @@ public class NocturnePower : CustomPowerModel {
 
         Flash();
 
-        await PowerCmd.Apply<StrengthPower>(Owner, Amount - 1, Owner, null);
-        await PowerCmd.Apply<DemoTempDexterityPower>(Owner, Amount, Owner, null);
+        await PowerCmd.Apply<StrengthPower>(Owner, Amount, Owner, null);
     }
 }

@@ -5,6 +5,8 @@ using DemoMod.TheGleaner.CardPiles;
 using DemoMod.TheGleaner.Commands;
 using DemoMod.TheGleaner.Pools;
 using DemoMod.TheGleaner.Powers;
+using Godot;
+using MegaCrit.Sts2.Core.Assets;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
@@ -13,6 +15,7 @@ using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Nodes;
+using MegaCrit.Sts2.Core.Nodes.Rooms;
 using CustomEnums = DemoMod.TheGleaner.Enums.CustomEnums;
 
 namespace DemoMod.TheGleaner.Cards.GleanerCard;
@@ -37,7 +40,14 @@ public class ScoreEntryCard : CustomCardModel {
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
         ScorePile scorePile = ScorePileCmd.GetOrCreateScorePile(Owner.PlayerCombatState);
         await Cmd.Wait(0.2f);
+        if (!NCombatRoom.Instance.GetCreatureNode(Owner.Creature).HasNode("ScoreOpenVfx")) {
+            Node2D vfx = PreloadManager.Cache.GetScene("res://TheGleaner/scenes/vfx/score_open_vfx.tscn").Instantiate<Node2D>();
+            vfx.Name = "ScoreOpenVfx";
+            NCombatRoom.Instance.GetCreatureNode(Owner.Creature).AddChild(vfx);
+        }
+        NCombatRoom.Instance.GetCreatureNode(Owner.Creature).GetNode<Node2D>("ScoreOpenVfx").Visible = true;
         List<CardModel> selectedCards = (await ScorePileCmd.ShowScorePileScreen(Owner.PlayerCombatState, choiceContext, Owner)).ToList();
+        NCombatRoom.Instance.GetCreatureNode(Owner.Creature).GetNode<Node2D>("ScoreOpenVfx").Visible = false;
         if (selectedCards.Count > 0) {
             int cost = Math.Max(0, selectedCards.Count - scorePile.freeTakeCount);
             scorePile.freeTakeCount -= Math.Min(scorePile.freeTakeCount, selectedCards.Count);

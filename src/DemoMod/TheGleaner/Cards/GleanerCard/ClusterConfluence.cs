@@ -52,10 +52,6 @@ public class ClusterConfluence : CustomCardModel {
 			}
 
 			ClusterStrike clusterStrike = (ClusterStrike)ModelDb.Card<ClusterStrike>().ToMutable();
-			if (CurrentUpgradeLevel > 0) {
-				clusterStrike.UpgradeInternal();
-				clusterStrike.FinalizeUpgradeInternal();
-			}
 
 			clusterStrike.setCards(mergedCards);
 			Owner.Creature.CombatState.AddCard(clusterStrike, Owner);

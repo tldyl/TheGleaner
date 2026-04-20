@@ -21,7 +21,7 @@ public class ClusterStringWeave : CustomCardModel {
 	public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
 	protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromCard(previewCard), HoverTipFactory.FromKeyword(CustomEnums.Score)];
 
-	public ClusterStringWeave() : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.Self) {
+	public ClusterStringWeave() : base(0, CardType.Skill, CardRarity.Uncommon, TargetType.Self) {
 	}
 
 	public override async Task BeforeCombatStart() {
@@ -29,6 +29,11 @@ public class ClusterStringWeave : CustomCardModel {
 			return;
 		}
 
+		if (IsUpgraded) {
+			CardModel cpy = CreateClone();
+			await ScorePileCmd.AddCards(Owner.PlayerCombatState, Owner, cpy);
+		}
+		
 		await ScorePileCmd.AddCards(Owner.PlayerCombatState, Owner, this);
 	}
 
@@ -66,6 +71,4 @@ public class ClusterStringWeave : CustomCardModel {
 			await CardPileCmd.AddGeneratedCardToCombat(clusterStrike, PileType.Hand, true);
 		}
 	}
-
-	protected override void OnUpgrade() => EnergyCost.UpgradeBy(-1);
 }

@@ -1,0 +1,15 @@
+[gd_scene load_steps=2 format=3 uid="uid://dwuhsekaqsdhq"]
+
+[ext_resource type="Texture2D" uid="uid://br54310lmy0pi" path="res://TheGleaner/images/vfx/score_open_vfx/score.png" id="1_fm6hv"]
+
+[node name="ScoreOpenVfx" type="Node2D"]
+
+[node name="TextureRect" type="TextureRect" parent="."]
+offset_left = 32.0
+offset_top = -280.0
+offset_right = 208.0
+offset_bottom = -104.0
+pivot_offset = Vector2(88, 88)
+texture = ExtResource("1_fm6hv")
+expand_mode = 1
+stretch_mode = 5
