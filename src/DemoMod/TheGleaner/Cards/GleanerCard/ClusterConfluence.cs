@@ -3,11 +3,19 @@ using BaseLib.Utils;
 using DemoMod.TheGleaner.Commands;
 using DemoMod.TheGleaner.Enums;
 using DemoMod.TheGleaner.Pools;
+using DemoMod.TheGleaner.Utils;
+using Godot;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.Helpers;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Nodes;
+using MegaCrit.Sts2.Core.Nodes.Cards;
+using MegaCrit.Sts2.Core.Nodes.Rooms;
+using MegaCrit.Sts2.Core.Nodes.Vfx;
+using Vector2 = Godot.Vector2;
 
 namespace DemoMod.TheGleaner.Cards.GleanerCard;
 
@@ -47,15 +55,52 @@ public class ClusterConfluence : CustomCardModel {
 		}
 
 		if (mergedCards.Count > 1) {
+			List<NCard> cardVisuals = [];
 			foreach (CardModel card in mergedCards) {
-				await CardPileCmd.RemoveFromCombat(card);
+				if (Owner.PlayerCombatState.Hand.Cards.Contains(card)) {
+					NCard tmp = NCard.FindOnTable(card);
+					NCard nCard = NCard.Create(card);
+					nCard.GlobalPosition = new Vector2(tmp.GlobalPosition.X, tmp.GlobalPosition.Y);
+					NRun.Instance.CombatRoom.Ui.Hand.Remove(card);
+					cardVisuals.Add(nCard);
+				} else {
+					NCard nCard = NCard.Create(card);
+					nCard.GlobalPosition = card.Pile.Type.GetTargetPosition(nCard);
+					cardVisuals.Add(nCard);
+				}
 			}
+			foreach (NCard nCard in cardVisuals) {
+				Node node = nCard.Model.Pile.Type != PileType.Deck ? NCombatRoom.Instance.CombatVfxContainer : NRun.Instance.GlobalUi.TopBar.TrailContainer;
+				node.AddChild(nCard);
+				nCard.UpdateVisuals(PileType.Hand, CardPreviewMode.Normal);
+				NCardFlyVfx child = NCardFlyVfx.Create(nCard, PileType.Play.GetTargetPosition(nCard), false, nCard.Model.Owner.Character.TrailPath);
+				node.AddChildSafely((Node) child);
+			}
+			await CardPileCmd.RemoveFromCombat(mergedCards, true);
+			
+			GleanerVfxCmd.CheckScoreIsEmpty(Owner.PlayerCombatState);
 
 			ClusterStrike clusterStrike = (ClusterStrike)ModelDb.Card<ClusterStrike>().ToMutable();
 
 			clusterStrike.setCards(mergedCards);
 			Owner.Creature.CombatState.AddCard(clusterStrike, Owner);
-			await ScorePileCmd.AddCards(Owner.PlayerCombatState, Owner, clusterStrike);
+			await CardPileCmd.AddGeneratedCardToCombat(clusterStrike, PileType.Play, true);
+			TaskHelper.RunSafely(playVfx(clusterStrike));
 		}
+	}
+	
+	private async Task playVfx(CardModel clusterStrike) {
+		Tween tween = NCombatRoom.Instance.CreateTween().SetParallel();
+		tween.Chain().TweenCallback(Callable.From(() => {
+			NCardTransformVfx vfx = NCardTransformVfx.Create(this, clusterStrike, null);
+			vfx.GlobalPosition = NGame.Instance.GetViewportRect().Size * 0.5f - NCard.Create(this).Size * 0.5f + Vector2.Up * 100f;
+			vfx.Scale = new Vector2(0.9f, 0.9f);
+			NCombatRoom.Instance.Ui.AddChildSafely(vfx);
+		}));
+		tween.Chain().TweenCallback(Callable.From(() => {
+		})).SetDelay(2.8f);
+		await Cmd.Wait(2.7f);
+		clusterStrike.RemoveFromCurrentPile();
+		await ScorePileCmd.AddCards(Owner.PlayerCombatState, Owner, clusterStrike);
 	}
 }
