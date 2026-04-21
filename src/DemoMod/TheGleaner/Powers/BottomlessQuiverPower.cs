@@ -53,6 +53,7 @@ public class BottomlessQuiverPower : CustomPowerModel {
     private async Task AddCardToScore(CardModel card) {
         Player player = Owner.Player;
         await Cmd.Wait(0.1f);
+        CardCmd.Preview(card);
         await ScorePileCmd.AddCards(player.PlayerCombatState, player, card);
     }
 }

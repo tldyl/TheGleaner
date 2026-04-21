@@ -53,6 +53,7 @@ public class Phantasm : CustomCardModel {
 		}
 
 		if (Owner.PlayerCombatState.Hand.Cards.Contains(this)) {
+			CardCmd.Preview(this);
 			await ScorePileCmd.AddCards(Owner.PlayerCombatState, Owner, this);
 		}
 	}

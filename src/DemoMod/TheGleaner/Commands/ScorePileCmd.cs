@@ -5,17 +5,21 @@ using DemoMod.TheGleaner.Cards.GleanerCard;
 using DemoMod.TheGleaner.Powers;
 using Godot;
 using HarmonyLib;
+using MegaCrit.Sts2.Core.Assets;
 using MegaCrit.Sts2.Core.CardSelection;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.Helpers;
 using MegaCrit.Sts2.Core.Hooks;
 using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Nodes;
 using MegaCrit.Sts2.Core.Nodes.Cards;
 using MegaCrit.Sts2.Core.Nodes.Cards.Holders;
+using MegaCrit.Sts2.Core.Nodes.Rooms;
+using MegaCrit.Sts2.Core.Nodes.Vfx;
 using CustomEnums = DemoMod.TheGleaner.Enums.CustomEnums;
 
 namespace DemoMod.TheGleaner.Commands;
@@ -104,7 +108,7 @@ public static class ScorePileCmd {
 				PileType destPile = player.Creature.HasPower<StaffBurnoutPower>() ? PileType.Discard : PileType.Hand;
 				await CardPileCmd.Add(bottomCard, destPile);
 				destPile.GetPile(player).InvokeCardAddFinished();
-				await Hook.AfterCardChangedPiles(player.RunState, player.Creature.CombatState, bottomCard, CustomEnums.ScorePile, bottomCard);
+				//await Hook.AfterCardChangedPiles(player.RunState, player.Creature.CombatState, bottomCard, CustomEnums.ScorePile, bottomCard);
 			} else {
 				pile.AddInternal(card, 0);
 			}
@@ -124,6 +128,13 @@ public static class ScorePileCmd {
 			holder.Hitbox.Size = new Vector2(400, 550);
 			holder.Hitbox.Position = new Vector2(-200, -275);
 			NetCombatCardDb.Instance.IdCardForTesting(scoreEntryCard);
+			
+			if (!NCombatRoom.Instance.GetCreatureNode(player.Creature).HasNode("ScoreOpenVfx")) {
+				Node2D vfx = PreloadManager.Cache.GetScene("res://TheGleaner/scenes/vfx/score_open_vfx.tscn").Instantiate<Node2D>();
+				vfx.Name = "ScoreOpenVfx";
+				NCombatRoom.Instance.GetCreatureNode(player.Creature).AddChild(vfx);
+			}
+			NCombatRoom.Instance.GetCreatureNode(player.Creature).GetNode<Node2D>("ScoreOpenVfx").Visible = true;
 		}
 	}
 
@@ -149,6 +160,13 @@ public static class ScorePileCmd {
 				await CardPileCmd.ShuffleIfNecessary(choiceContext, player);
 				CardModel cardModel = drawPile.Cards.FirstOrDefault();
 				if (cardModel != null) {
+					NCard nCard = NCard.Create(cardModel);
+					nCard.GlobalPosition = PileType.Draw.GetTargetPosition(nCard);
+					Node node = NCombatRoom.Instance.CombatVfxContainer;
+					node.AddChild(nCard);
+					nCard.UpdateVisuals(PileType.Hand, CardPreviewMode.Normal);
+					NCardFlyVfx child = NCardFlyVfx.Create(nCard, PileType.Play.GetTargetPosition(nCard), false, nCard.Model.Owner.Character.TrailPath);
+					node.AddChildSafely((Node) child);
 					if (cardModel is not IDissonanceCard) {
 						CardCmd.Preview(cardModel);
 					}

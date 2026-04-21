@@ -3,6 +3,7 @@ using BaseLib.Utils;
 using DemoMod.TheGleaner.Commands;
 using DemoMod.TheGleaner.Enums;
 using DemoMod.TheGleaner.Pools;
+using DemoMod.TheGleaner.Utils;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Commands.Builders;
 using MegaCrit.Sts2.Core.Entities.Cards;
@@ -40,6 +41,7 @@ public class PrismaticRainfall : CustomCardModel {
 		foreach (CardModel card in list) {
 			await CardCmd.AutoPlay(choiceContext, card, null);
 		}
+		GleanerVfxCmd.CheckScoreIsEmpty(Owner.PlayerCombatState);
 	}
 
 	protected override void OnUpgrade() => 	DynamicVars.Damage.UpgradeValueBy(3);

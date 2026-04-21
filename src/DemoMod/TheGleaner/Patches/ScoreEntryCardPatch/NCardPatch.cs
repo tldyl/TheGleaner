@@ -72,7 +72,7 @@ public class NCardPatch {
                 PatchReady.refreshResonanceGlowIcon(__instance);
             }
             __instance.GetNode<TextureRect>("%EnergyIcon")
-                    .GetNode<TextureRect>("GleanerResonanceGlowIcon").Visible = 
+                    .GetNode<Node2D>("GleanerResonanceGlowIcon").Visible = 
                 __instance.Model.Keywords.Contains(CustomEnums.Resonance) && __instance.Model.Pile is {IsCombatPile: true};
             return true;
         }
@@ -110,23 +110,29 @@ public class NCardPatch {
             if (__instance.GetNode<TextureRect>("%EnergyIcon").HasNode("GleanerResonanceGlowIcon")) {
                 return;
             }
-            TextureRect glowIcon = new TextureRect();
+            Node2D gleanerResonanceGlowIcon = PreloadManager.Cache.GetScene("res://TheGleaner/scenes/resonance_glow_icon.tscn").Instantiate<Node2D>();
+            TextureRect glowIcon = gleanerResonanceGlowIcon.GetNode<TextureRect>("Icon");
+            TextureRect orbitVfx = gleanerResonanceGlowIcon.GetNode<TextureRect>("OrbitVfx");
             glowIcon.Texture = PreloadManager.Cache.GetTexture2D(getResonanceGlowIconPath(__instance.Model, glowIcon));
-            glowIcon.Size = new Vector2(256, 256);
-            glowIcon.Position = new Vector2(-96, -96);
-            glowIcon.PivotOffset = new Vector2(128, 128);
-            glowIcon.Material = new CanvasItemMaterial();
-            glowIcon.Name = "GleanerResonanceGlowIcon";
-            ((CanvasItemMaterial)glowIcon.Material).BlendMode = CanvasItemMaterial.BlendModeEnum.Add;
-            __instance.GetNode<TextureRect>("%EnergyIcon").AddChild(glowIcon);
-            glowIcon.GetParent().MoveChild(glowIcon, 0);
-            glowIcon.Visible = false;
+            string? orbitVfxPath = getResonanceGlowIconOrbitVfxPath(__instance.Model, orbitVfx);
+            if (orbitVfxPath != null) {
+                orbitVfx.Texture = PreloadManager.Cache.GetTexture2D(orbitVfxPath);
+            }
+            __instance.GetNode<TextureRect>("%EnergyIcon").AddChild(gleanerResonanceGlowIcon);
+            gleanerResonanceGlowIcon.GetParent().MoveChild(gleanerResonanceGlowIcon, 0);
+            gleanerResonanceGlowIcon.Visible = false;
         }
 
         public static void refreshResonanceGlowIcon(NCard nCard) {
-            TextureRect glowIcon = nCard.GetNode<TextureRect>("%EnergyIcon")
-                .GetNode<TextureRect>("GleanerResonanceGlowIcon");
+            Node2D gleanerResonanceGlowIcon = nCard.GetNode<TextureRect>("%EnergyIcon")
+                .GetNode<Node2D>("GleanerResonanceGlowIcon");
+            TextureRect glowIcon = gleanerResonanceGlowIcon.GetNode<TextureRect>("Icon");
+            TextureRect orbitVfx = gleanerResonanceGlowIcon.GetNode<TextureRect>("OrbitVfx");
             glowIcon.Texture = PreloadManager.Cache.GetTexture2D(getResonanceGlowIconPath(nCard.Model, glowIcon));
+            string? orbitVfxPath = getResonanceGlowIconOrbitVfxPath(nCard.Model, orbitVfx);
+            if (orbitVfxPath != null) {
+                orbitVfx.Texture = PreloadManager.Cache.GetTexture2D(orbitVfxPath);
+            }
         }
         
         private static string getResonanceGlowIconPath(CardModel? cardModel, TextureRect glowIcon) {
@@ -155,6 +161,33 @@ public class NCardPatch {
                     return "res://images/vfx/dot.png";
             }
         }
+
+        private static string? getResonanceGlowIconOrbitVfxPath(CardModel? cardModel, TextureRect glowIcon) {
+            Player player = LocalContext.GetMe(RunManager.Instance.DebugOnlyGetState());
+            if (player == null || cardModel == null) {
+                glowIcon.Modulate = Color.FromHtml("26e532c8");
+                return null;
+            }
+            switch (player.Character) {
+                case Characters.TheGleaner:
+                    switch (cardModel.Type) {
+                        case CardType.Attack:
+                            return "res://TheGleaner/images/resonance_energy_icon/R.png";
+                        case CardType.Skill:
+                            return "res://TheGleaner/images/resonance_energy_icon/B.png";
+                        case CardType.Power:
+                            return "res://TheGleaner/images/resonance_energy_icon/Y.png";
+                        case CardType.None:
+                        case CardType.Status:
+                        case CardType.Curse:
+                        case CardType.Quest:
+                        default:
+                            return "res://TheGleaner/images/resonance_energy_icon/BLACK.png";
+                    }
+                default:
+                    return null;
+            }
+        }
     }
     
     [HarmonyPatch(typeof(NCard), "Reload")]
@@ -167,7 +200,7 @@ public class NCardPatch {
                 PatchReady.Prefix(__instance);
             }
             __instance.GetNode<TextureRect>("%EnergyIcon")
-                .GetNode<TextureRect>("GleanerResonanceGlowIcon").Visible = 
+                .GetNode<Node2D>("GleanerResonanceGlowIcon").Visible = 
                 __instance.Model.Keywords.Contains(CustomEnums.Resonance) && __instance.Model.Pile is {IsCombatPile: true};
         }
     }

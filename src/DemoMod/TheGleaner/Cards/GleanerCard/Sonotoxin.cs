@@ -3,6 +3,7 @@ using BaseLib.Utils;
 using DemoMod.TheGleaner.Commands;
 using DemoMod.TheGleaner.Enums;
 using DemoMod.TheGleaner.Pools;
+using DemoMod.TheGleaner.Utils;
 using MegaCrit.Sts2.Core.CardSelection;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Commands.Builders;
@@ -81,6 +82,7 @@ public class Sonotoxin : CustomCardModel
 			Owner.Creature,
 			this
 		);
+		GleanerVfxCmd.CheckScoreIsEmpty(Owner.PlayerCombatState);
 	}
 
 	protected override void OnUpgrade()

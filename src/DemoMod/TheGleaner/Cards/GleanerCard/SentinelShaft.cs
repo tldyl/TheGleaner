@@ -37,6 +37,7 @@ public class SentinelShaft : CustomCardModel {
 				CardCmd.Upgrade(card2);
 			}
 		}
+		CardCmd.Preview(list2[0]);
 		await ScorePileCmd.AddCards(Owner.PlayerCombatState, Owner, list2[0]);
 	}
 	

@@ -3,6 +3,7 @@ using BaseLib.Utils;
 using DemoMod.TheGleaner.Commands;
 using DemoMod.TheGleaner.Enums;
 using DemoMod.TheGleaner.Pools;
+using DemoMod.TheGleaner.Utils;
 using MegaCrit.Sts2.Core.CardSelection;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
@@ -63,10 +64,11 @@ public class BurningMelody : CustomCardModel {
 		);
 
 		if (card.Type is CardType.Status or CardType.Curse) {
-			await PlayerCmd.GainEnergy(DynamicVars.Energy.BaseValue, Owner);
+			await PlayerCmd.GainEnergy(DynamicVars.Energy.BaseValue + CurrentUpgradeLevel, Owner);
 		} else {
 			await PlayerCmd.GainEnergy(card.EnergyCost.GetResolved(), Owner);
 		}
+		GleanerVfxCmd.CheckScoreIsEmpty(Owner.PlayerCombatState);
 	}
 
 	protected override void OnUpgrade() {

@@ -4,6 +4,7 @@ using DemoMod.TheGleaner.CardPiles;
 using DemoMod.TheGleaner.Commands;
 using DemoMod.TheGleaner.Enums;
 using DemoMod.TheGleaner.Pools;
+using DemoMod.TheGleaner.Utils;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
@@ -26,6 +27,7 @@ public class Tutti : CustomCardModel {
         foreach (CardModel card in scorePile.Cards.Reverse()) {
             await CardCmd.AutoPlay(choiceContext, card, null);
         }
+        GleanerVfxCmd.CheckScoreIsEmpty(Owner.PlayerCombatState);
     }
 
     protected override void OnUpgrade() => EnergyCost.UpgradeBy(-1);

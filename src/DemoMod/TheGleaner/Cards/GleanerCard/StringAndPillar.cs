@@ -30,6 +30,7 @@ public class StringAndPillar : CustomCardModel {
 		if (IsUpgraded) {
 			CardModel cpy = CreateClone();
 			CardCmd.Downgrade(cpy);
+			AccessTools.Field(typeof(CardModel), "_energyCost").SetValue(cpy, new CardEnergyCost(cpy, 5, false));
 			await CardPileCmd.AddGeneratedCardToCombat(cpy, PileType.Hand, true);
 		}
 	}

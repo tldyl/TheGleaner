@@ -1,7 +1,14 @@
+using DemoMod.TheGleaner.CardPiles;
+using DemoMod.TheGleaner.Cards.GleanerCard;
+using DemoMod.TheGleaner.Commands;
 using Godot;
 using MegaCrit.Sts2.Core.Assets;
 using MegaCrit.Sts2.Core.Entities.Creatures;
+using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Helpers;
+using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Nodes;
+using MegaCrit.Sts2.Core.Nodes.Cards.Holders;
 using MegaCrit.Sts2.Core.Nodes.Combat;
 using MegaCrit.Sts2.Core.Nodes.Rooms;
 using MegaCrit.Sts2.Core.Saves;
@@ -43,6 +50,21 @@ public class GleanerVfxCmd {
             }
 
             timer.Timeout += Action;
+        }
+    }
+
+    public static void CheckScoreIsEmpty(PlayerCombatState playerCombatState) {
+        ScorePile scorePile = ScorePileCmd.GetOrCreateScorePile(playerCombatState);
+        NHandCardHolder holder = NRun.Instance.CombatRoom.Ui.Hand.ActiveHolders.FirstOrDefault(holder => holder.CardModel is ScoreEntryCard);
+        if (holder == null) {
+            return;
+        }
+        CardModel card = holder.CardModel;
+        if (scorePile.Cards.Count == 0) {
+            NRun.Instance.CombatRoom.Ui.Hand.Remove(card);
+            NCombatRoom.Instance.GetCreatureNode(card.Owner.Creature).GetNode<Node2D>("ScoreOpenVfx").Visible = false;
+        } else {
+            NRun.Instance.CombatRoom.Ui.Hand.ForceRefreshCardIndices();
         }
     }
 }
