@@ -43,8 +43,8 @@ public class FrostedFlute : CustomCardModel, IConcertoCard {
 		SoundManager.Instance.PlaySound(SoundKeys.GetSoundResourcePath("FLUTE_" + new Random().Next(1, 5)), 1.0f);
 		await PowerCmd.Apply<FrostedFlutePower>(combatState.HittableEnemies, DynamicVars["Amount"].BaseValue, Owner.Creature, this);
 	}
-		protected override void OnUpgrade() {
-			DynamicVars.Damage.UpgradeValueBy(4);
-			DynamicVars["Amount"].UpgradeValueBy(1);
-		}
+	protected override void OnUpgrade() {
+		DynamicVars.Damage.UpgradeValueBy(4);
+		DynamicVars["Amount"].UpgradeValueBy(1);
+	}
 }
