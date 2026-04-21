@@ -19,7 +19,7 @@ public class EvasiveShorthand : CustomCardModel {
 	public override bool GainsBlock => true;
 
 	protected override IEnumerable<DynamicVar> CanonicalVars => [
-		new BlockVar(3, ValueProp.Move),
+		new BlockVar(2, ValueProp.Move),
 		new IntVar("Amount", 1)
 	];
 
@@ -36,6 +36,6 @@ public class EvasiveShorthand : CustomCardModel {
 	}
 
 	protected override void OnUpgrade() {
-		DynamicVars.Block.UpgradeValueBy(3);
+		DynamicVars.Block.UpgradeValueBy(2);
 	}
 }
