@@ -92,7 +92,7 @@
   "DEMOMOD-GLEAN_CARD.title": "专注当下",
   "DEMOMOD-GLEAN_CARD.description": "[gold]拾录[/gold]{Amount}张牌。",
   "DEMOMOD-STAFF_BURNOUT.title": "谱线熔断",
-  "DEMOMOD-STAFF_BURNOUT.description": "本回合内，\n你无法再从[gold]乐谱[/gold]中取出卡牌，\n你每从[gold]乐谱[/gold]中丢弃一张牌，\n对所有敌人造成等同于[gold]乐谱[/gold]容量上限两倍的伤害。\n[gold]拾录[/gold]{Amount:diff()}张牌。",
+  "DEMOMOD-STAFF_BURNOUT.description": "本回合内，\n你无法再从[gold]乐谱[/gold]中取出卡牌，\n你每从[gold]乐谱[/gold]中丢弃一张牌，\n对所有敌人造成等同于[gold]乐谱[/gold]容量上限的伤害。\n[gold]拾录[/gold]{Amount:diff()}张牌。",
   "DEMOMOD-THRESHERS_AXE.title": "处刑的吉他",
   "DEMOMOD-THRESHERS_AXE.description": "随机对敌人造成{Damage:diff()}点伤害。\n[gold]力量[/gold]在这张牌上发挥{Amount:diff()}倍效果。\n将此牌返回你的手牌。\n[gold]协奏[/gold]：为此牌添加[gold]虚无[/gold]并打出。",
   "DEMOMOD-TUTTI.title": "大全奏",
