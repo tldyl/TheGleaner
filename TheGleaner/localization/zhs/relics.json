@@ -12,5 +12,15 @@
   "DEMOMOD-CHRON_XI_V_GLEANER.title": "历十四的拾穗者",
   "DEMOMOD-CHRON_XI_V_GLEANER.description": "在第一回合开始时，额外抽{Draws}张牌。\n在第二回合开始时，额外获得{energyPrefix:energyIcons(3)}",
   "DEMOMOD-CHRON_XI_V_GLEANER.flavor": "",
-  "SEA_GLASS.DEMOMOD-THE_GLEANER.title": "麦穗玻璃"
+  "SEA_GLASS.DEMOMOD-THE_GLEANER.title": "麦穗玻璃",
+  "DEMOMOD-GOLDEN_SILK_POUCH.title": "金丝缎口袋",
+  "DEMOMOD-GOLDEN_SILK_POUCH.description": "拾起时，获得1瓶[gold]点金药水[/gold]。\n[gold]点金药水[/gold]：将你的金币翻倍。",
+  "DEMOMOD-COCKTAIL.title": "鸡尾酒",
+"DEMOMOD-COCKTAIL.description": "所有打击和防御附魔[gold]艾黎的碎霜[/gold]。",
+"DEMOMOD-HANDKERCHIEF.title": "手帕",
+"DEMOMOD-HANDKERCHIEF.description": "你在商店中移除卡牌的费用始终为50。",
+"DEMOMOD-ICED_BLUEBERRY.title": "冰中蓝莓",
+"DEMOMOD-ICED_BLUEBERRY.description": "每个回合开始时，获得1点能量。\n在你受到伤害后，休眠2个回合。",
+"DEMOMOD-TELESCOPE.title": "望星镜",
+"DEMOMOD-TELESCOPE.description": "你可以在休息处进行[gold]观星[/gold]。\n[gold]观星[/gold]：变化2张牌。"
 }

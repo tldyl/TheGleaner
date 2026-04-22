@@ -13,3 +13,4 @@ public class TheGleanerMod {
         ScriptManagerBridge.LookupScriptsInAssembly(typeof(TheGleanerMod).Assembly);
     }
 }
+

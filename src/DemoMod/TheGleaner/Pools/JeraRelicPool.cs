@@ -13,7 +13,12 @@ public class JeraRelicPool : RelicPoolModel {
         return new List<RelicModel> {
             ModelDb.Relic<Jera>(),
             ModelDb.Relic<TriangleHairClip>(),
-            ModelDb.Relic<GreenAppleScentedVessel>()
+            ModelDb.Relic<GreenAppleScentedVessel>(),
+            ModelDb.Relic<GoldenSilkPouch>(),
+            ModelDb.Relic<Cocktail>(),
+            ModelDb.Relic<Handkerchief>(),
+            ModelDb.Relic<IcedBlueberry>(),
+            ModelDb.Relic<Telescope>()
         };
     }
 }

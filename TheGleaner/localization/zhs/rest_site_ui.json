@@ -1,0 +1,5 @@
+{
+  "OPTION_DEMOMOD_STARGAZE.name": "观星",
+  "OPTION_DEMOMOD_STARGAZE.description": "变化[blue]{Cards}[/blue]张牌。",
+  "OPTION_DEMOMOD_STARGAZE.descriptionDisabled": "[red]你没有足够的可变化牌。[/red]"
+}
