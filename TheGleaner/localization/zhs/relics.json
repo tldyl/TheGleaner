@@ -10,7 +10,7 @@
   "DEMOMOD-TRIANGLE_HAIR_CLIP.description": "战斗开始时，将你牌库顶的两张牌放入[gold]乐谱[/gold]。",
   "DEMOMOD-TRIANGLE_HAIR_CLIP.flavor": "[red]这个遗物的细节将在未来揭晓……[/red]",
   "DEMOMOD-CHRON_XI_V_GLEANER.title": "历十四的拾穗者",
-  "DEMOMOD-CHRON_XI_V_GLEANER.description": "在第一回合开始时，额外抽{Draws}张牌。\n在第二回合开始时，额外获得{energyPrefix:energyIcons(3)}",
+  "DEMOMOD-CHRON_XI_V_GLEANER.description": "在第一回合开始时，额外抽[blue]2[/blue]张牌。\n在第二回合开始时，额外抽[blue]1[/blue]张牌，获得{energyPrefix:energyIcons(1)}。\n在第三回合开始时，额外获得{energyPrefix:energyIcons(2)}。",
   "DEMOMOD-CHRON_XI_V_GLEANER.flavor": "",
   "SEA_GLASS.DEMOMOD-THE_GLEANER.title": "麦穗玻璃",
   "DEMOMOD-GOLDEN_SILK_POUCH.title": "金丝缎口袋",
@@ -22,5 +22,7 @@
 "DEMOMOD-ICED_BLUEBERRY.title": "冰中蓝莓",
 "DEMOMOD-ICED_BLUEBERRY.description": "每个回合开始时，获得1点能量。\n在你受到伤害后，休眠2个回合。",
 "DEMOMOD-TELESCOPE.title": "望星镜",
-"DEMOMOD-TELESCOPE.description": "你可以在休息处进行[gold]观星[/gold]。\n[gold]观星[/gold]：变化2张牌。"
+"DEMOMOD-TELESCOPE.description": "你可以在休息处进行[gold]观星[/gold]。\n[gold]观星[/gold]：变化2张牌。",
+"DEMOMOD-BRITTLE_STAR.title": "脆星",
+"DEMOMOD-BRITTLE_STAR.description": "在战斗奖励中，如果你在本场战斗未受到伤害，则额外获得一个遗物。"
 }
