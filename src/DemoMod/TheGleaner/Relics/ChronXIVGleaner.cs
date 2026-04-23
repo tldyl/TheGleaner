@@ -29,8 +29,10 @@ public class ChronXIVGleaner : JeraExclusiveRelic
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new IntVar("Draws", 3),
-        new IntVar("Energy", 3)
+        new IntVar("DrawTurn1", 2),
+        new IntVar("DrawTurn2", 1),
+        new IntVar("EnergyTurn2", 1),
+        new IntVar("EnergyTurn3", 2)
     ];
 
     public override async Task BeforeCombatStart()
@@ -47,12 +49,23 @@ public class ChronXIVGleaner : JeraExclusiveRelic
             return count;
         }
 
-        if (player.Creature?.CombatState?.RoundNumber > 1)
+        int? roundNumber = player.Creature?.CombatState?.RoundNumber;
+        if (roundNumber == null)
         {
             return count;
         }
 
-        return count + DynamicVars["Draws"].BaseValue;
+        if (roundNumber == 1)
+        {
+            return count + DynamicVars["DrawTurn1"].BaseValue;
+        }
+
+        if (roundNumber == 2)
+        {
+            return count + DynamicVars["DrawTurn2"].BaseValue;
+        }
+
+        return count;
     }
 
     public override async Task BeforeSideTurnStart(PlayerChoiceContext choiceContext, CombatSide side, CombatState combatState)
@@ -68,9 +81,18 @@ public class ChronXIVGleaner : JeraExclusiveRelic
 
     public override async Task AfterEnergyReset(Player player)
     {
+        if (player != Owner)
+        {
+            return;
+        }
+
         if (counter == 2)
         {
-            await PlayerCmd.GainEnergy(DynamicVars["Energy"].BaseValue, Owner);
+            await PlayerCmd.GainEnergy(DynamicVars["EnergyTurn2"].BaseValue, Owner);
+        }
+        else if (counter == 3)
+        {
+            await PlayerCmd.GainEnergy(DynamicVars["EnergyTurn3"].BaseValue, Owner);
         }
     }
 
