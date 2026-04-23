@@ -20,7 +20,7 @@ public sealed class GoldenSilkPouch : CustomRelicModel
     {
     }
 
-    public override RelicRarity Rarity => RelicRarity.Uncommon;
+    public override RelicRarity Rarity => RelicRarity.Ancient;
 
     public override bool HasUponPickupEffect => true;
 

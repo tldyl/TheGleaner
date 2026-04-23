@@ -19,7 +19,7 @@ public sealed class Telescope : CustomRelicModel
     {
     }
 
-    public override RelicRarity Rarity => RelicRarity.Uncommon;
+    public override RelicRarity Rarity => RelicRarity.Ancient;
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
     [

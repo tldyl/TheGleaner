@@ -29,7 +29,7 @@ public sealed class IcedBlueberry : CustomRelicModel
     {
     }
 
-    public override RelicRarity Rarity => RelicRarity.Uncommon;
+    public override RelicRarity Rarity => RelicRarity.Ancient;
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [

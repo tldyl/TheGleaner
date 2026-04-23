@@ -56,5 +56,8 @@
   "DEMOMOD-FROST_NOVA_DIRECTOR.talk.ANY.0-0r": "不必报名字。排队的人太多，名字会互相踩到。",
   "DEMOMOD-FROST_NOVA_DIRECTOR.talk.ANY.1-0r": "你又来了？门没锁。我也没走。我们只是……还在。",
   "DEMOMOD-FROST_NOVA_DIRECTOR.title": "霜星理事",
-  "DEMOMOD-FROST_NOVA_DIRECTOR.epithet": "冻霜之女"
+  "DEMOMOD-FROST_NOVA_DIRECTOR.epithet": "冻霜之女",
+  "DEMOMOD-FROST_NOVA_DIRECTOR.talk.ANY.0-0r.ancient": "占位0-0",
+  "DEMOMOD-FROST_NOVA_DIRECTOR.talk.ANY.1-0r.ancient": "占位1-0",
+  "DEMOMOD-FROST_NOVA_DIRECTOR.talk.ANY.firstVisitEver.0-0.ancient": "占位firstVisitEver-0-0"
 }
