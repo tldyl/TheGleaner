@@ -14,11 +14,7 @@ public class JeraRelicPool : RelicPoolModel {
             ModelDb.Relic<Jera>(),
             ModelDb.Relic<TriangleHairClip>(),
             ModelDb.Relic<GreenAppleScentedVessel>(),
-            ModelDb.Relic<GoldenSilkPouch>(),
-            ModelDb.Relic<Cocktail>(),
-            ModelDb.Relic<Handkerchief>(),
-            ModelDb.Relic<IcedBlueberry>(),
-            ModelDb.Relic<Telescope>()
+
         };
     }
 }

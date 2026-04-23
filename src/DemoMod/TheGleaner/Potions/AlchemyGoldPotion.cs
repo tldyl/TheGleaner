@@ -15,7 +15,7 @@ namespace DemoMod.TheGleaner.Potions;
 [Pool(typeof(PotionPool))]
 public sealed class AlchemyGoldPotion : CustomPotionModel
 {
-    public override PotionRarity Rarity => PotionRarity.Common;
+    public override PotionRarity Rarity => PotionRarity.Token;
 
     public override PotionUsage Usage => PotionUsage.AnyTime;
 

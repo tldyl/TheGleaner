@@ -15,8 +15,7 @@ public sealed class Handkerchief : CustomRelicModel
     {
     }
 
-    public override RelicRarity Rarity => RelicRarity.Uncommon;
-
+    public override RelicRarity Rarity => RelicRarity.Ancient;
     public override decimal ModifyMerchantPrice(Player player, MerchantEntry entry, decimal originalPrice)
     {
         if (Owner == null)
