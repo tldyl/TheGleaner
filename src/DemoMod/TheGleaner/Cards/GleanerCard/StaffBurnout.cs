@@ -15,10 +15,10 @@ namespace DemoMod.TheGleaner.Cards.GleanerCard;
 [Pool(typeof(CardPool))]
 public class StaffBurnout : CustomCardModel {
 	public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
-	protected override IEnumerable<DynamicVar> CanonicalVars => [new IntVar("Amount", 4)];
+	protected override IEnumerable<DynamicVar> CanonicalVars => [new IntVar("Amount", 2)];
 	protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromKeyword(CustomEnums.Glean), HoverTipFactory.FromKeyword(CustomEnums.Score)];
 
-	public StaffBurnout() : base(2, CardType.Skill, CardRarity.Uncommon, TargetType.Self) {
+	public StaffBurnout() : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.Self) {
 		
 	}
 
@@ -27,5 +27,5 @@ public class StaffBurnout : CustomCardModel {
 		await ScorePileCmd.Glean(Owner, choiceContext, DynamicVars["Amount"].BaseValue, this);
 	}
 	
-	protected override void OnUpgrade() => DynamicVars["Amount"].UpgradeValueBy(2);
+	protected override void OnUpgrade() => DynamicVars["Amount"].UpgradeValueBy(1);
 }
