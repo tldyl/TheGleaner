@@ -17,11 +17,7 @@ namespace DemoMod.TheGleaner.Cards.GleanerCard;
 public class Glissando : CustomCardModel {
 	public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
 
-	public override bool GainsBlock {
-		get {
-			return true;
-		}
-	}
+	public override bool GainsBlock => true;
 
 	protected override IEnumerable<DynamicVar> CanonicalVars => [
 		new IntVar("Amount", 1),
@@ -39,14 +35,16 @@ public class Glissando : CustomCardModel {
 	}
 
 	protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
-		await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, cardPlay);
+		Glissando card = this;
+		Decimal _ = await CreatureCmd.GainBlock(card.Owner.Creature, card.DynamicVars.Block, cardPlay);
 
 		await CreatureCmd.TriggerAnim(Owner.Creature, "Attack", 0.5f);
-		await using AttackContext context = await AttackCommand.CreateContextAsync(Owner.Creature.CombatState, this);
-
-		IEnumerable<DamageResult> damageResults =
-			await CreatureCmd.Damage(choiceContext, CombatState.HittableEnemies, DynamicVars.Damage, Owner.Creature, this);
-		context.AddHit(damageResults);
+		AttackCommand attackCommand = await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
+			.FromCard(this)
+			.TargetingAllOpponents(Owner.Creature.CombatState)
+			.WithNoAttackerAnim()
+			.Execute(choiceContext);
+		IEnumerable<DamageResult> damageResults = attackCommand.Results;
 
 		int count = damageResults.Count(result => result.WasTargetKilled);
 

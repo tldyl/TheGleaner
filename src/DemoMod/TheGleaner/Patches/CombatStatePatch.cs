@@ -1,6 +1,21 @@
+using BaseLib.Patches.Content;
+using DemoMod.TheGleaner.CardPiles;
+using DemoMod.TheGleaner.Cards.GleanerCard;
+using DemoMod.TheGleaner.Commands;
+using DemoMod.TheGleaner.Utils;
+using Godot;
 using HarmonyLib;
 using MegaCrit.Sts2.Core.Combat;
+using MegaCrit.Sts2.Core.Context;
+using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.Entities.Players;
+using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Nodes.Cards;
+using MegaCrit.Sts2.Core.Nodes.Rooms;
+using MegaCrit.Sts2.Core.Rooms;
+using MegaCrit.Sts2.Core.Runs;
+using CustomEnums = DemoMod.TheGleaner.Enums.CustomEnums;
 
 namespace TheGleaner.DemoMod.TheGleaner.Patches;
 
@@ -12,8 +27,71 @@ public class CombatStatePatch {
             ret.AddRange(__result);
             ret.Reverse();
             ret.AddRange(__instance.Players.Select(player => player.Character));
+            ret.Add(HookListenerModel.Instance);
             ret = ret.Distinct().ToList();
             __result = ret;
+        }
+    }
+
+    public class HookListenerModel : AbstractModel {
+        private static HookListenerModel? _instance;
+        public static HookListenerModel Instance {
+            get {
+                return _instance ??= ModelDb.GetById<HookListenerModel>(new ModelId(ModelDb.GetCategory(typeof(HookListenerModel)), ModelDb.GetEntry(typeof(HookListenerModel))));
+            }
+        }
+
+        public override bool ShouldReceiveCombatHooks => true;
+
+        public override async Task BeforeSideTurnStart(
+            PlayerChoiceContext choiceContext,
+            CombatSide side,
+            CombatState combatState) {
+            if (side == CombatSide.Player) {
+                ScorePile scorePile = ScorePileCmd.GetOrCreateScorePile(LocalContext.GetMe(combatState.Players).PlayerCombatState);
+                scorePile.freeTakeCount = 1;
+                scorePile.cardsAddedToScoreThisTurn = false;
+            }
+        }
+        
+        public override async Task AfterCardPlayed(PlayerChoiceContext context, CardPlay cardPlay) {
+            CardModel card = cardPlay.Card;
+            if (card.Keywords.Contains(CustomEnums.Resonance)) {
+                Player player = cardPlay.Card.Owner;
+                List<CardModel> cardsToReduceCost = [];
+                cardsToReduceCost.AddRange(player.PlayerCombatState.Hand.Cards.Where(cardModel => cardModel != card && cardModel.Type != card.Type && cardModel.EnergyCost.GetResolved() > 1 && !cardModel.EnergyCost.CostsX));
+                cardsToReduceCost.AddRange(player.PlayerCombatState.PlayPile.Cards.Where(cardModel => cardModel != card && cardModel.Type != card.Type && cardModel.EnergyCost.GetResolved() > 1 && !cardModel.EnergyCost.CostsX));
+                foreach (CardModel model in cardsToReduceCost) {
+                    model.EnergyCost.SetUntilPlayed(model.EnergyCost.GetResolved() - 1);
+                    if (!model.Keywords.Contains(CustomEnums.Resonance)) {
+                        model.AddKeyword(CustomEnums.Resonance);
+                    }
+                    if (model is IConcertoCard concertoCard) {
+                        NCard nCard = NCard.FindOnTable(model);
+                        if (nCard != null) {
+                            Tween tween = NCombatRoom.Instance.CreateTween().SetParallel();
+                            tween.Chain().TweenCallback(Callable.From(() => {})).SetDelay(Random.Shared.NextDouble() * 0.15);
+                            tween.Chain().TweenProperty(nCard, "position:y", -128.0f, 0.25).SetEase(Tween.EaseType.Out).SetTrans(Tween.TransitionType.Expo);
+                            tween.Chain().TweenProperty(nCard, "position:y", 0.0f, 0.25).SetEase(Tween.EaseType.In).SetTrans(Tween.TransitionType.Expo);
+                            tween.Chain().TweenCallback(Callable.From(() => tween.Kill()));
+                        }
+                        await concertoCard.OnConcerto(player.Creature.CombatState, context, cardPlay);
+                    }
+                }
+            }
+        }
+
+        public override async Task AfterCombatVictory(CombatRoom room) {
+            RandomDissonanceCard.initPool();
+            foreach (Player player in RunManager.Instance.DebugOnlyGetState().Players) {
+                foreach (CardModel card in ScorePileCmd.GetOrCreateScorePile(player.PlayerCombatState).Cards) {
+                    player.Creature.CombatState.RemoveCard(card);
+                }
+                ScorePileCmd.GetOrCreateScorePile(player.PlayerCombatState).Clear();
+                CustomPiles.Piles.Set(player.PlayerCombatState, null);
+                ScorePileCmd.hasScoreEntryCard.Set(player, false);
+            }
+            CustomPiles.CustomPileProviders.Remove(CustomEnums.ScorePile);
         }
     }
 }

@@ -5,10 +5,12 @@ using DemoMod.TheGleaner.Pools;
 using DemoMod.TheGleaner.Utils;
 using Godot;
 using MegaCrit.Sts2.Core.Commands;
+using MegaCrit.Sts2.Core.Context;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Helpers;
 using MegaCrit.Sts2.Core.HoverTips;
+using MegaCrit.Sts2.Core.Logging;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Nodes;
 using MegaCrit.Sts2.Core.Nodes.Cards;
@@ -63,10 +65,12 @@ public class ClusterStringWeave : CustomCardModel {
 			List<NCard> cardVisuals = [];
 			foreach (CardModel card in mergedCards) {
 				if (Owner.PlayerCombatState.Hand.Cards.Contains(card)) {
-					NCard tmp = NCard.FindOnTable(card);
+					NCard tmp = NCard.FindOnTable(card) ?? NCard.Create(card);
 					NCard nCard = NCard.Create(card);
 					nCard.GlobalPosition = new Vector2(tmp.GlobalPosition.X, tmp.GlobalPosition.Y);
-					NRun.Instance.CombatRoom.Ui.Hand.Remove(card);
+					if (NRun.Instance.CombatRoom.Ui.Hand.GetCardHolder(card) != null) {
+						NRun.Instance.CombatRoom.Ui.Hand.Remove(card);
+					}
 					cardVisuals.Add(nCard);
 				} else {
 					NCard nCard = NCard.Create(card);
@@ -88,9 +92,15 @@ public class ClusterStringWeave : CustomCardModel {
 			ClusterStrike clusterStrike = (ClusterStrike)ModelDb.Card<ClusterStrike>().ToMutable();
 
 			clusterStrike.setCards(mergedCards);
+			Log.Info($"clusterStrike netId: {NetCombatCardDb.Instance.IdCardForTesting(clusterStrike)}");
 			Owner.Creature.CombatState.AddCard(clusterStrike, Owner);
 			await CardPileCmd.AddGeneratedCardToCombat(clusterStrike, PileType.Play, true);
-			TaskHelper.RunSafely(playVfx(clusterStrike));
+			if (LocalContext.IsMe(Owner)) {
+				TaskHelper.RunSafely(playVfx(clusterStrike));
+			} else {
+				clusterStrike.RemoveFromCurrentPile();
+				await CardPileCmd.Add(clusterStrike, PileType.Hand.GetPile(Owner));
+			}
 		}
 	}
 
@@ -98,7 +108,7 @@ public class ClusterStringWeave : CustomCardModel {
 		Tween tween = NCombatRoom.Instance.CreateTween().SetParallel();
 		tween.Chain().TweenCallback(Callable.From(() => {
 			NCardTransformVfx vfx = NCardTransformVfx.Create(this, clusterStrike, null);
-			vfx.GlobalPosition = NGame.Instance.GetViewportRect().Size * 0.5f - NCard.FindOnTable(this).Size * 0.5f + Vector2.Up * 100f;
+			vfx.GlobalPosition = NGame.Instance.GetViewportRect().Size * 0.5f - NCard.Create(this).Size * 0.5f + Vector2.Up * 100f;
 			vfx.Scale = new Vector2(0.9f, 0.9f);
 			NCombatRoom.Instance.Ui.AddChildSafely(vfx);
 		}));

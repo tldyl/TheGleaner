@@ -1,18 +1,18 @@
 using BaseLib.Abstracts;
 using BaseLib.Patches.Content;
 using BaseLib.Utils;
+using DemoMod.TheGleaner.Actions;
 using DemoMod.TheGleaner.CardPiles;
 using DemoMod.TheGleaner.Commands;
 using DemoMod.TheGleaner.Pools;
 using DemoMod.TheGleaner.Powers;
-using DemoMod.TheGleaner.Utils;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
-using MegaCrit.Sts2.Core.Hooks;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Runs;
 using CustomEnums = DemoMod.TheGleaner.Enums.CustomEnums;
 
 namespace DemoMod.TheGleaner.Cards.GleanerCard;
@@ -20,7 +20,6 @@ namespace DemoMod.TheGleaner.Cards.GleanerCard;
 public class ScoreEntryCard : CustomCardModel {
     public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
     protected override IEnumerable<DynamicVar> CanonicalVars => [new EnergyVar(1)];
-    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Retain];
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromKeyword(CustomEnums.Score)];
     protected override bool ShouldGlowGoldInternal {
         get {
@@ -35,22 +34,7 @@ public class ScoreEntryCard : CustomCardModel {
     }
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
-        ScorePile scorePile = ScorePileCmd.GetOrCreateScorePile(Owner.PlayerCombatState);
-        await Cmd.Wait(0.2f);
-        List<CardModel> selectedCards = (await ScorePileCmd.ShowScorePileScreen(Owner.PlayerCombatState, choiceContext, Owner)).ToList();
-        if (selectedCards.Count > 0) {
-            int cost = Math.Max(0, selectedCards.Count - scorePile.freeTakeCount);
-            scorePile.freeTakeCount -= Math.Min(scorePile.freeTakeCount, selectedCards.Count);
-            if (cost > 0) {
-                await PlayerCmd.LoseEnergy(cost, Owner);
-            }
-            selectedCards.ForEach(card => scorePile.RemoveInternal(card));
-            await CardPileCmd.Add(selectedCards, PileType.Hand);
-            foreach (CardModel card in selectedCards) {
-                await Hook.AfterCardChangedPiles(Owner.RunState, Owner.Creature.CombatState, card, CustomEnums.ScorePile, this);
-            }
-        }
-        GleanerVfxCmd.CheckScoreIsEmpty(Owner.PlayerCombatState);
+        RunManager.Instance.ActionQueueSynchronizer.RequestEnqueue(new TakeCardsFromScoreAction(Owner));
     }
 
     protected override PileType GetResultPileType() {

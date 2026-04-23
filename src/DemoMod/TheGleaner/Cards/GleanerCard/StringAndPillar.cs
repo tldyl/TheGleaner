@@ -36,7 +36,7 @@ public class StringAndPillar : CustomCardModel {
 	}
 
 	public override async Task AfterCardPlayed(PlayerChoiceContext context, CardPlay cardPlay) {
-		if (cardPlay.Card.Type != Type && EnergyCost.GetResolved() > 1 && cardPlay.Card is not ScoreEntryCard) {
+		if (cardPlay.Card.Type != Type && EnergyCost.GetResolved() > 1 && cardPlay.Card is not ScoreEntryCard && cardPlay.Card.Owner == Owner) {
 			EnergyCost.AddThisCombat(-1);
 		}
 	}

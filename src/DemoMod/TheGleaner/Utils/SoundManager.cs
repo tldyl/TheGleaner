@@ -9,7 +9,7 @@ public partial class SoundManager : Node {
 
     // 音效池，避免频繁创建/销毁
     private List<AudioStreamPlayer> soundPool = new List<AudioStreamPlayer>();
-    private const int POOL_SIZE = 10;
+    private const int POOL_SIZE = 40;
 
     public override void _Ready() {
         // 单例初始化

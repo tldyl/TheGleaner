@@ -6,6 +6,7 @@ using DemoMod.TheGleaner.Pools;
 using DemoMod.TheGleaner.Utils;
 using Godot;
 using MegaCrit.Sts2.Core.Commands;
+using MegaCrit.Sts2.Core.Context;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Helpers;
@@ -58,10 +59,12 @@ public class ClusterConfluence : CustomCardModel {
 			List<NCard> cardVisuals = [];
 			foreach (CardModel card in mergedCards) {
 				if (Owner.PlayerCombatState.Hand.Cards.Contains(card)) {
-					NCard tmp = NCard.FindOnTable(card);
+					NCard tmp = NCard.FindOnTable(card) ?? NCard.Create(card);
 					NCard nCard = NCard.Create(card);
 					nCard.GlobalPosition = new Vector2(tmp.GlobalPosition.X, tmp.GlobalPosition.Y);
-					NRun.Instance.CombatRoom.Ui.Hand.Remove(card);
+					if (NRun.Instance.CombatRoom.Ui.Hand.GetCardHolder(card) != null) {
+						NRun.Instance.CombatRoom.Ui.Hand.Remove(card);
+					}
 					cardVisuals.Add(nCard);
 				} else {
 					NCard nCard = NCard.Create(card);
@@ -85,7 +88,12 @@ public class ClusterConfluence : CustomCardModel {
 			clusterStrike.setCards(mergedCards);
 			Owner.Creature.CombatState.AddCard(clusterStrike, Owner);
 			await CardPileCmd.AddGeneratedCardToCombat(clusterStrike, PileType.Play, true);
-			TaskHelper.RunSafely(playVfx(clusterStrike));
+			if (LocalContext.IsMe(Owner)) {
+				TaskHelper.RunSafely(playVfx(clusterStrike));
+			} else {
+				clusterStrike.RemoveFromCurrentPile();
+				await CardPileCmd.Add(clusterStrike, PileType.Hand.GetPile(Owner));
+			}
 		}
 	}
 	

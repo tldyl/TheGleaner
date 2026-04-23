@@ -1,5 +1,6 @@
 using BaseLib.Abstracts;
 using BaseLib.Utils;
+using DemoMod.TheGleaner.Utils;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Commands.Builders;
 using MegaCrit.Sts2.Core.Entities.Cards;
@@ -101,9 +102,13 @@ public class ClusterStrike : CustomCardModel, IAppendDescriptionCard {
 	protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
 		await using AttackContext context = await AttackCommand.CreateContextAsync(Owner.Creature.CombatState, this);
 
+		List<string> sfxGroup = HitSfxGroup.nextGroup("harp", DynamicVars["HitCount"].IntValue);
+		
 		for (int i = 0; i < DynamicVars["HitCount"].IntValue; i++) {
 			IEnumerable<DamageResult> damageResults = await CreatureCmd.Damage(choiceContext, cardPlay.Target, DynamicVars.Damage, this);
 			context.AddHit(damageResults);
+			SfxCmd.Play(sfxGroup[0]);
+			sfxGroup.RemoveAt(0);
 
 			List<DamageResult> damageResultsList = damageResults.ToList();
 			foreach (CardModel card in cards) {

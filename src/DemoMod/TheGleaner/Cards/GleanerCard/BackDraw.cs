@@ -3,12 +3,19 @@ using BaseLib.Utils;
 using DemoMod.TheGleaner.Commands;
 using DemoMod.TheGleaner.Enums;
 using DemoMod.TheGleaner.Pools;
+using Godot;
 using MegaCrit.Sts2.Core.Commands;
+using MegaCrit.Sts2.Core.Commands.Builders;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.Helpers;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Nodes.Rooms;
+using MegaCrit.Sts2.Core.Nodes.Vfx;
+using MegaCrit.Sts2.Core.Saves;
+using MegaCrit.Sts2.Core.Settings;
 using MegaCrit.Sts2.Core.ValueProps;
 
 namespace DemoMod.TheGleaner.Cards.GleanerCard;
@@ -31,11 +38,20 @@ public class BackDraw : CustomCardModel {
 		if (selectedCards.Count == 0) {
 			return;
 		}
-
-		await ScorePileCmd.AddCards(Owner.PlayerCombatState, Owner, selectedCards.ToArray());
-		for (int i = 0; i < selectedCards.Count; i++) {
-			await CreatureCmd.Damage(choiceContext, CombatState.HittableEnemies, DynamicVars.Damage, Owner.Creature, this);
+		double num2 = SaveManager.Instance.PrefsSave.FastMode == FastModeType.Fast ? 0.2 : 0.3;
+		NCombatRoom instance1 = NCombatRoom.Instance;
+		if (instance1 != null) {
+			instance1.CombatVfxContainer.AddChildSafely((Node) NHorizontalLinesVfx.Create(new Color("FFFFFF80"), 0.8 + Mathf.Min(8, selectedCards.Count) * num2, false));
 		}
+		await ScorePileCmd.AddCards(Owner.PlayerCombatState, Owner, selectedCards.ToArray());
+		
+		await CreatureCmd.TriggerAnim(Owner.Creature, "Attack", 0.5f);
+		AttackCommand _ = await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
+			.FromCard(this)
+			.TargetingAllOpponents(Owner.Creature.CombatState)
+			.WithHitCount(selectedCards.Count)
+			.WithNoAttackerAnim()
+			.Execute(choiceContext);
 	}
 
 	protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(2);

@@ -3,6 +3,7 @@ using DemoMod.TheGleaner.Cards.GleanerCard;
 using DemoMod.TheGleaner.Commands;
 using Godot;
 using MegaCrit.Sts2.Core.Assets;
+using MegaCrit.Sts2.Core.Context;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Helpers;
@@ -61,8 +62,12 @@ public class GleanerVfxCmd {
         }
         CardModel card = holder.CardModel;
         if (scorePile.Cards.Count == 0) {
-            NRun.Instance.CombatRoom.Ui.Hand.Remove(card);
+            ScorePileCmd.hasScoreEntryCard.Set(card.Owner, false);
             NCombatRoom.Instance.GetCreatureNode(card.Owner.Creature).GetNode<Node2D>("ScoreOpenVfx").Visible = false;
+            if (!LocalContext.IsMe(card.Owner)) {
+                return;
+            }
+            NRun.Instance.CombatRoom.Ui.Hand.Remove(card);
         } else {
             NRun.Instance.CombatRoom.Ui.Hand.ForceRefreshCardIndices();
         }

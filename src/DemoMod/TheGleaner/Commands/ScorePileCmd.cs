@@ -1,5 +1,6 @@
 using BaseLib.Abstracts;
 using BaseLib.Patches.Content;
+using BaseLib.Utils;
 using DemoMod.TheGleaner.CardPiles;
 using DemoMod.TheGleaner.Cards.GleanerCard;
 using DemoMod.TheGleaner.Powers;
@@ -8,12 +9,13 @@ using HarmonyLib;
 using MegaCrit.Sts2.Core.Assets;
 using MegaCrit.Sts2.Core.CardSelection;
 using MegaCrit.Sts2.Core.Commands;
+using MegaCrit.Sts2.Core.Context;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Helpers;
-using MegaCrit.Sts2.Core.Hooks;
 using MegaCrit.Sts2.Core.Localization;
+using MegaCrit.Sts2.Core.Logging;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Nodes;
 using MegaCrit.Sts2.Core.Nodes.Cards;
@@ -27,6 +29,7 @@ namespace DemoMod.TheGleaner.Commands;
 public static class ScorePileCmd {
 	public static bool openingScorePileAndTakeCardsToHand;
 	private static readonly Dictionary<PlayerCombatState, int> CombatStartDeckCounts = new();
+	public static readonly SpireField<Player, bool> hasScoreEntryCard = new SpireField<Player, bool>(() => false);
 
 	public static int GetCapacity(Player player) {
 		if (player?.PlayerCombatState == null) {
@@ -34,7 +37,7 @@ public static class ScorePileCmd {
 		}
 
 		PlayerCombatState combatState = player.PlayerCombatState;
-		ScorePile scorePile = CustomPiles.GetCustomPile(combatState, CustomEnums.ScorePile) as ScorePile;
+		ScorePile scorePile = GetOrCreateScorePile(player.PlayerCombatState);
 		int combatStartDeckCount = player.Deck.Cards.Count;
 
 		if (scorePile != null && scorePile.combatStartDeckCount > 0) {
@@ -86,6 +89,7 @@ public static class ScorePileCmd {
 	}
 
 	public static async Task AddCards(PlayerCombatState combatState, Player player, params CardModel[] cards) {
+		Log.Info($"Player {player.NetId} added {cards.Length} cards.");
 		ScorePile pile = GetOrCreateScorePile(combatState);
 		if (pile.combatStartDeckCount <= 0) {
 			if (CombatStartDeckCounts.TryGetValue(combatState, out int snapshotDeckCount) && snapshotDeckCount > 0) {
@@ -119,15 +123,20 @@ public static class ScorePileCmd {
 		if (cards.Length > 0) {
 			pile.cardsAddedToScoreThisTurn = true;
 		}
-		if (pile.Cards.Count > 0 && !NRun.Instance.CombatRoom.Ui.Hand.ActiveHolders.Any(holder => holder.CardModel is ScoreEntryCard)) {
+		if (pile.Cards.Count > 0 && !hasScoreEntryCard.Get(player)) {
 			CardModel scoreEntryCard = ModelDb.Card<ScoreEntryCard>().ToMutable();
 			scoreEntryCard.Owner = player;
-			NCard nCard = NCard.Create(scoreEntryCard);
-			nCard.Position = PileType.Hand.GetTargetPosition(nCard);
-			NHandCardHolder holder = NRun.Instance.CombatRoom.Ui.Hand.Add(nCard);
-			holder.Hitbox.Size = new Vector2(400, 550);
-			holder.Hitbox.Position = new Vector2(-200, -275);
+			if (LocalContext.IsMe(player) && !NRun.Instance.CombatRoom.Ui.Hand.ActiveHolders.Any(holder => holder.CardModel is ScoreEntryCard)) {
+                NCard nCard = NCard.Create(scoreEntryCard);
+                nCard.Position = PileType.Hand.GetTargetPosition(nCard);
+                NHandCardHolder holder = NRun.Instance.CombatRoom.Ui.Hand.Add(nCard, 0);
+                holder.Hitbox.Size = new Vector2(400, 550);
+                holder.Hitbox.Position = new Vector2(-200, -275);
+			}
+			Log.Info($"Create Score entry card for player {player.NetId}.");
 			NetCombatCardDb.Instance.IdCardForTesting(scoreEntryCard);
+			hasScoreEntryCard.Set(player, true);
+			
 			
 			if (!NCombatRoom.Instance.GetCreatureNode(player.Creature).HasNode("ScoreOpenVfx")) {
 				Node2D vfx = PreloadManager.Cache.GetScene("res://TheGleaner/scenes/vfx/score_open_vfx.tscn").Instantiate<Node2D>();

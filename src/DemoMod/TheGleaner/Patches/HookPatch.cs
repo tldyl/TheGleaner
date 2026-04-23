@@ -1,77 +1,16 @@
-using BaseLib.Patches.Content;
-using DemoMod.TheGleaner.CardPiles;
-using DemoMod.TheGleaner.Cards.GleanerCard;
-using DemoMod.TheGleaner.Commands;
-using DemoMod.TheGleaner.Utils;
 using HarmonyLib;
 using MegaCrit.Sts2.Core.Combat;
-using MegaCrit.Sts2.Core.Context;
-using MegaCrit.Sts2.Core.Entities.Cards;
-using MegaCrit.Sts2.Core.Entities.Players;
-using MegaCrit.Sts2.Core.GameActions.Multiplayer;
-using MegaCrit.Sts2.Core.Helpers;
 using MegaCrit.Sts2.Core.Hooks;
 using MegaCrit.Sts2.Core.Models;
-using MegaCrit.Sts2.Core.Rooms;
-using MegaCrit.Sts2.Core.Runs;
-using CustomEnums = DemoMod.TheGleaner.Enums.CustomEnums;
 
 namespace DemoMod.TheGleaner.Patches;
 public class HookPatch {
-    [HarmonyPatch(typeof(Hook), "BeforeSideTurnStart")]
-    public static class PatchBeforeSideTurnStart {
-        public static void Prefix(CombatState combatState, CombatSide side) {
-            if (side == CombatSide.Player) {
-                ScorePile scorePile = ScorePileCmd.GetOrCreateScorePile(LocalContext.GetMe(combatState.Players).PlayerCombatState);
-                scorePile.freeTakeCount = 1;
-                scorePile.cardsAddedToScoreThisTurn = false;
-            }
-        }
-    }
-    
-    [HarmonyPatch(typeof(Hook), "AfterCardPlayed")]
-    public static class PatchAfterCardPlayed {
-        public static void Prefix(CombatState combatState, PlayerChoiceContext choiceContext, CardPlay cardPlay) {
-            CardModel card = cardPlay.Card;
-            if (card.Keywords.Contains(CustomEnums.Resonance)) {
-                Player player = LocalContext.GetMe(combatState.Players);
-                List<CardModel> cardsToReduceCost = [];
-                cardsToReduceCost.AddRange(player.PlayerCombatState.Hand.Cards.Where(cardModel => cardModel != card && cardModel.Type != card.Type && cardModel.EnergyCost.GetResolved() > 1 && !cardModel.EnergyCost.CostsX));
-                cardsToReduceCost.ForEach(model => {
-                    model.EnergyCost.SetUntilPlayed(model.EnergyCost.GetResolved() - 1);
-                    if (!model.Keywords.Contains(CustomEnums.Resonance)) {
-                        model.AddKeyword(CustomEnums.Resonance);
-                    }
-                    if (model is IConcertoCard concertoCard) {
-                        TaskHelper.RunSafely(concertoCard.OnConcerto(combatState, choiceContext, cardPlay));
-                    }
-                });
-            }
-        }
-    }
-
     [HarmonyPatch(typeof(Hook), "AfterCardEnteredCombat")]
     public static class PatchAfterCardEnteredCombat {
         public static void Prefix(ref CombatState combatState, CardModel card) {
             if (combatState == null) {
                 combatState = card.Owner.Creature.CombatState;
             }
-        }
-    }
-    
-    [HarmonyPatch(typeof(Hook), "AfterCombatVictory")]
-    public static class PatchAfterCombatVictory {
-        public static void Prefix(IRunState runState,
-            CombatState? combatState,
-            CombatRoom room) {
-            RandomDissonanceCard.initPool();
-            Player player = LocalContext.GetMe(runState.Players);
-            foreach (CardModel card in ScorePileCmd.GetOrCreateScorePile(player.PlayerCombatState).Cards) {
-                player.Creature.CombatState.RemoveCard(card);
-            }
-            ScorePileCmd.GetOrCreateScorePile(player.PlayerCombatState).Clear();
-            CustomPiles.Piles.Set(player.PlayerCombatState, null);
-            CustomPiles.CustomPileProviders.Remove(CustomEnums.ScorePile);
         }
     }
 }

@@ -61,7 +61,7 @@ public class Jera : CustomRelicModel
 
     public override async Task AfterEnergyReset(Player player)
     {
-        if (counter == 2)
+        if (counter == 2 && player == Owner)
         {
             await PlayerCmd.GainEnergy(1, Owner);
         }

@@ -143,6 +143,7 @@ public class NCardPatch {
             }
             switch (player.Character) {
                 case Characters.TheGleaner:
+                    glowIcon.Modulate = Color.FromHtml("ffffffff");
                     switch (cardModel.Type) {
                         case CardType.Attack:
                             return "res://TheGleaner/images/resonance_energy_icon/energy_colorless_rl.png";
