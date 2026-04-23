@@ -8,7 +8,7 @@ public partial class NGleanerEnergyCounter : NEnergyCounter {
     public override void _Ready() {
         base._Ready();
         MegaLabel _label = GetNode<MegaLabel>("Label");
-        _label.Position = new Vector2(40, 40);
+        _label.Position = new Vector2(40, 42);
         Font font = (Font)ResourceLoader.Load("res://fonts/kreon_bold.ttf", "Font");
         _label.AddThemeFontOverride("font", font);
         _label.AddThemeFontSizeOverride("font_size", 36);

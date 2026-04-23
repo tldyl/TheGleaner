@@ -1,9 +1,8 @@
-[gd_scene load_steps=11 format=3 uid="uid://bla1qownq8gc3"]
+[gd_scene load_steps=10 format=3 uid="uid://bla1qownq8gc3"]
 
 [ext_resource type="Script" uid="uid://dibh2c5vgqv7n" path="res://src/DemoMod/TheGleaner/Nodes/CombatUI/NGleanerParticlesContainer.cs" id="1_5tdhi"]
 [ext_resource type="Texture2D" uid="uid://yyu1yqo5m568" path="res://TheGleaner/images/gleaner_energy_counter/layer2.png" id="1_bj4wx"]
 [ext_resource type="Texture2D" uid="uid://bl4du1olqdfou" path="res://TheGleaner/images/gleaner_energy_counter/layer4.png" id="2_ucg6v"]
-[ext_resource type="Texture2D" uid="uid://b5fe7s2wxenp" path="res://TheGleaner/images/gleaner_energy_counter/layer1.png" id="3_5tdhi"]
 [ext_resource type="Texture2D" uid="uid://nib02ia5mnpx" path="res://TheGleaner/images/gleaner_energy_counter/layer3.png" id="4_1wtcq"]
 [ext_resource type="Texture2D" uid="uid://y4kteya5g02h" path="res://TheGleaner/images/gleaner_energy_counter/layer5.png" id="5_14vhv"]
 [ext_resource type="Texture2D" uid="uid://cutoh1866x67t" path="res://TheGleaner/images/gleaner_energy_counter/layer6.png" id="6_8p5mk"]
@@ -35,49 +34,6 @@ offset_top = 40.0
 offset_right = 88.0
 offset_bottom = 88.0
 
-[node name="RotationLayers" type="Control" parent="Layers"]
-unique_name_in_owner = true
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -24.0
-offset_top = -24.0
-offset_right = 24.0
-offset_bottom = 24.0
-grow_horizontal = 2
-grow_vertical = 2
-pivot_offset = Vector2(24, 24)
-
-[node name="TextureRect2" type="TextureRect" parent="Layers/RotationLayers"]
-layout_mode = 0
-offset_left = -40.0
-offset_top = -40.0
-offset_right = 88.0
-offset_bottom = 88.0
-pivot_offset = Vector2(64, 64)
-texture = ExtResource("1_bj4wx")
-
-[node name="TextureRect3" type="TextureRect" parent="Layers/RotationLayers"]
-layout_mode = 0
-offset_left = -40.0
-offset_top = -40.0
-offset_right = 88.0
-offset_bottom = 88.0
-pivot_offset = Vector2(64, 64)
-texture = ExtResource("2_ucg6v")
-
-[node name="TextureRect" type="TextureRect" parent="Layers/RotationLayers"]
-layout_mode = 0
-offset_left = -40.0
-offset_top = -40.0
-offset_right = 88.0
-offset_bottom = 88.0
-pivot_offset = Vector2(64, 64)
-texture = ExtResource("3_5tdhi")
-
 [node name="Layer3" type="TextureRect" parent="Layers"]
 visible = false
 layout_mode = 1
@@ -108,8 +64,55 @@ offset_bottom = 64.0
 pivot_offset = Vector2(64, 64)
 texture = ExtResource("5_14vhv")
 
+[node name="TextureRect4" type="TextureRect" parent="Layers"]
+layout_mode = 0
+offset_left = -40.0
+offset_top = -40.0
+offset_right = 88.0
+offset_bottom = 88.0
+texture = ExtResource("9_14vhv")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="RotationLayers" type="Control" parent="Layers"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -24.0
+offset_top = -24.0
+offset_right = 24.0
+offset_bottom = 24.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(24, 24)
+
+[node name="TextureRect2" type="TextureRect" parent="Layers/RotationLayers"]
+layout_mode = 0
+offset_left = -40.0
+offset_top = -40.0
+offset_right = 88.0
+offset_bottom = 88.0
+pivot_offset = Vector2(64, 64)
+texture = ExtResource("1_bj4wx")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="TextureRect3" type="TextureRect" parent="Layers/RotationLayers"]
+layout_mode = 0
+offset_left = -40.0
+offset_top = -40.0
+offset_right = 88.0
+offset_bottom = 88.0
+pivot_offset = Vector2(64, 64)
+texture = ExtResource("2_ucg6v")
+expand_mode = 1
+stretch_mode = 5
+
 [node name="Layer1" type="TextureRect" parent="Layers"]
-visible = false
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.5
@@ -122,15 +125,8 @@ offset_right = 64.0
 offset_bottom = 64.0
 pivot_offset = Vector2(64, 64)
 texture = ExtResource("6_8p5mk")
-
-[node name="TextureRect4" type="TextureRect" parent="Layers"]
-layout_mode = 0
-offset_left = -40.0
-offset_top = -40.0
-offset_right = 88.0
-offset_bottom = 88.0
-texture = ExtResource("9_14vhv")
 expand_mode = 1
+stretch_mode = 5
 
 [node name="EnergyVfxFront" type="Node2D" parent="."]
 unique_name_in_owner = true
@@ -143,16 +139,16 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 24.0
-offset_top = 43.0
-offset_right = -1814.0
-offset_bottom = -991.25
+offset_left = 22.0
+offset_top = 46.0
+offset_right = -1816.0
+offset_bottom = -988.25
 grow_horizontal = 2
 grow_vertical = 2
 pivot_offset = Vector2(41, 21)
 theme_override_colors/font_color = Color(1, 0.9647059, 0.95686275, 1)
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.1882353)
-theme_override_colors/font_outline_color = Color(0.627451, 0.6627451, 0.7058824, 1)
+theme_override_colors/font_outline_color = Color(0.5137255, 0.54509807, 0.5882353, 1)
 theme_override_constants/shadow_offset_x = 3
 theme_override_constants/shadow_offset_y = 2
 theme_override_constants/outline_size = 16
