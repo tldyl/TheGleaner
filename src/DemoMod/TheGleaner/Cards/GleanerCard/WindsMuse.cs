@@ -15,17 +15,13 @@ public class WindsMuse : CustomCardModel {
 	public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
 	protected override IEnumerable<DynamicVar> CanonicalVars => [new IntVar("Amount", 3)];
 	protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromKeyword(CustomEnums.Glean)];
-public override IEnumerable<CardKeyword> CanonicalKeywords => [
-		CardKeyword.Exhaust
-	];
-	public WindsMuse() : base(1, CardType.Skill, CardRarity.Common, TargetType.Self) {
+
+	public WindsMuse() : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.Self) {
 	}
 
 	protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
 		await ScorePileCmd.Glean(Owner, choiceContext, DynamicVars["Amount"].BaseValue, this);
 	}
 
-	protected override void OnUpgrade() {
-		RemoveKeyword(CardKeyword.Exhaust);
-	}
+	protected override void OnUpgrade() => DynamicVars["Amount"].UpgradeValueBy(1);
 }

@@ -23,7 +23,7 @@ public class StaffBurnout : CustomCardModel {
 	}
 
 	protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
-		await PowerCmd.Apply<StaffBurnoutPower>(Owner.Creature, 2, Owner.Creature, this);
+		await PowerCmd.Apply<StaffBurnoutPower>(Owner.Creature, 1, Owner.Creature, this);
 		await ScorePileCmd.Glean(Owner, choiceContext, DynamicVars["Amount"].BaseValue, this);
 	}
 	

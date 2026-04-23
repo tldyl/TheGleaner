@@ -274,25 +274,25 @@ public static class CardColorPatch {
         return hiddenCount;
     }
 
-    private static void ApplyScoreEntryCardStyle(NCard cardNode, string cardId) {
-        TextureRect? frameNode = FindTextureRectByName(cardNode, "%Frame", "Frame");
-        Texture2D? scoreFrame = GetScoreFrame();
-        if (frameNode != null) {
-            frameNode.Texture = scoreFrame;
-            frameNode.Material = null;
-        }
-
-        ClearTextureRect(cardNode, cardId, "energy icon", "%EnergyIcon", "EnergyIcon");
-        ClearTextureRect(cardNode, cardId, "card banner", "%CardBanner", "%Banner", "CardBanner", "Banner");
-        ClearTextureRect(cardNode, cardId, "card portrait border", "%CardPortraitBorder", "%PortraitBorder", "%PortraitFrame", "CardPortraitBorder", "PortraitBorder", "PortraitFrame");
-
-        HideNodesByNameContains(cardNode, cardId, "card banner fallback", "banner");
-        HideNodesByNameContains(cardNode, cardId, "card portrait border plaque", "portrait_border_plaque", "portraitborderplaque", "border_plaque", "plaque");
-
-        HideLabelText(cardNode, cardId, "title", "%TitleLabel", "TitleLabel");
-        HideLabelText(cardNode, cardId, "energy cost text", "%EnergyLabel", "EnergyLabel");
+    private static void ApplyScoreEntryCardStyle(NCard cardNode, string cardId)
+{
+    TextureRect? frameNode = FindTextureRectByName(cardNode, "%Frame", "Frame");
+    Texture2D? scoreFrame = GetScoreFrame();
+    if (frameNode != null)
+    {
+        frameNode.Texture = scoreFrame;
+        frameNode.Material = null;
     }
 
+    // 只清你明确想隐藏的内容
+    ClearTextureRect(cardNode, cardId, "energy icon", "%EnergyIcon", "EnergyIcon");
+    ClearTextureRect(cardNode, cardId, "card banner", "%CardBanner", "%Banner", "CardBanner", "Banner");
+
+    // 不再动 portrait border / plaque，避免对象池复用后丢失 type plaque
+
+    HideLabelText(cardNode, cardId, "title", "%TitleLabel", "TitleLabel");
+    HideLabelText(cardNode, cardId, "energy cost text", "%EnergyLabel", "EnergyLabel");
+}
     private static void ApplyVanillaColorlessStyle(NCard cardNode) {
         CardModel? template = GetVanillaColorlessTemplateCard();
         if (template == null) {
