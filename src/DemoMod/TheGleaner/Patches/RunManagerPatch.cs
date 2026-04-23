@@ -16,7 +16,7 @@ public class RunManagerPatch {
                 CustomPiles.Piles.Set(player.PlayerCombatState, null);
             }
         }
-        
+
         public static void Postfix(RunManager __instance, bool graceful) {
             RandomDissonanceCard.initPool();
             CustomPiles.CustomPileProviders.Remove(CustomEnums.ScorePile);
