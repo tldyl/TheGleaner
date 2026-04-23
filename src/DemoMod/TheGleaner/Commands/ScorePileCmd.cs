@@ -130,7 +130,7 @@ public static class ScorePileCmd {
                 NCard nCard = NCard.Create(scoreEntryCard);
                 nCard.Position = PileType.Hand.GetTargetPosition(nCard);
                 NHandCardHolder holder = NRun.Instance.CombatRoom.Ui.Hand.Add(nCard, 0);
-                holder.Hitbox.Size = new Vector2(450, 620);
+                holder.Hitbox.Size = new Vector2(420, 620);
                 holder.Hitbox.Position = new Vector2(-200, -275);
 			}
 			Log.Info($"Create Score entry card for player {player.NetId}.");

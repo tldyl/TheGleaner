@@ -11,7 +11,9 @@ using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Nodes;
 using MegaCrit.Sts2.Core.Nodes.Cards;
+using MegaCrit.Sts2.Core.Nodes.Cards.Holders;
 using MegaCrit.Sts2.Core.Nodes.Rooms;
 using MegaCrit.Sts2.Core.Rooms;
 using MegaCrit.Sts2.Core.Runs;
@@ -92,6 +94,22 @@ public class CombatStatePatch {
                 ScorePileCmd.hasScoreEntryCard.Set(player, false);
             }
             CustomPiles.CustomPileProviders.Remove(CustomEnums.ScorePile);
+        }
+
+        public override async Task AfterTurnEnd(PlayerChoiceContext choiceContext, CombatSide side) {
+            Player player = LocalContext.GetMe(RunManager.Instance.DebugOnlyGetState().Players);
+            ScorePile scorePile = ScorePileCmd.GetOrCreateScorePile(player.PlayerCombatState);
+            if (scorePile.Cards.Count > 0 && !NRun.Instance.CombatRoom.Ui.Hand.ActiveHolders.Any(holder => holder.CardModel is ScoreEntryCard)) {
+                CardModel scoreEntryCard = ModelDb.Card<ScoreEntryCard>().ToMutable();
+                scoreEntryCard.Owner = player;
+                NCard nCard = NCard.Create(scoreEntryCard);
+                nCard.Position = PileType.Hand.GetTargetPosition(nCard);
+                NHandCardHolder holder = NRun.Instance.CombatRoom.Ui.Hand.Add(nCard, 0);
+                holder.Hitbox.Size = new Vector2(420, 620);
+                holder.Hitbox.Position = new Vector2(-200, -275);
+                NetCombatCardDb.Instance.IdCardForTesting(scoreEntryCard);
+                ScorePileCmd.hasScoreEntryCard.Set(player, true);
+            }
         }
     }
 }

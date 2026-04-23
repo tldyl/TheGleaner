@@ -133,10 +133,7 @@ public static class ScoreEntryCardFramePatch
 		ClearTextureRect((Node)(object)cardNode, "%CardPortraitBorder", "%PortraitBorder", "%PortraitFrame", "CardPortraitBorder", "PortraitBorder", "PortraitFrame");
 		HideNodesByNameContains((Node)(object)cardNode, "banner");
 		HideNodesByNameContains((Node)(object)cardNode, "portrait_border_plaque", "portraitborderplaque", "border_plaque", "plaque");
-		Node2D scoreCardVfx = PreloadManager.Cache.GetScene("res://TheGleaner/scenes/score_card_vfx.tscn").Instantiate<Node2D>();
-		scoreCardVfx.Position = new Vector2(-158.0f, -211.0f);
-		cardNode.GetNode("CardContainer").AddChild(scoreCardVfx);
-		cardNode.GetNode("CardContainer").MoveChild(scoreCardVfx, frameNode.GetIndex() + 1);
+		cardNode.GetNode<Node2D>("CardContainer/ScoreCardVfx").Visible = true;
 	}
 
 	[HarmonyPostfix]
@@ -163,9 +160,16 @@ public static class ScoreEntryCardFramePatch
 					obj = string.Empty;
 				}
 				string cardId = (string)obj;
-				if (string.Equals(cardId, "DEMOMOD-SCORE_ENTRY_CARD", StringComparison.OrdinalIgnoreCase))
-				{
+				if (!__instance.HasNode("CardContainer/ScoreCardVfx")) {
+					Node2D scoreCardVfx = PreloadManager.Cache.GetScene("res://TheGleaner/scenes/score_card_vfx.tscn").Instantiate<Node2D>();
+					scoreCardVfx.Position = new Vector2(-158.0f, -211.0f);
+					__instance.GetNode("CardContainer").AddChild(scoreCardVfx);
+					__instance.GetNode("CardContainer").MoveChild(scoreCardVfx, __instance.GetNode("%Frame").GetIndex() + 1);
+				}
+				if (string.Equals(cardId, "DEMOMOD-SCORE_ENTRY_CARD", StringComparison.OrdinalIgnoreCase)) {
 					ApplyScoreEntryCardStyle(__instance);
+				} else {
+					__instance.GetNode<Node2D>("CardContainer/ScoreCardVfx").Visible = false;
 				}
 			}
 		}
