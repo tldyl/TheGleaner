@@ -38,15 +38,17 @@ public class FrostNovaDirector : CustomAncientModel
         {
             return new OptionPools(
                 CustomAncientModel.MakePool(
-                    CustomAncientModel.AncientOption<Cocktail>(),
-                    CustomAncientModel.AncientOption<GoldenSilkPouch>()
+                    CustomAncientModel.AncientOption<Telescope>()
+                    
                 ),
                 CustomAncientModel.MakePool(
-                    CustomAncientModel.AncientOption<Handkerchief>()
+                    CustomAncientModel.AncientOption<Handkerchief>(),
+                    CustomAncientModel.AncientOption<BrittleStar>()
                 ),
                 CustomAncientModel.MakePool(
                     CustomAncientModel.AncientOption<IcedBlueberry>(),
-                    CustomAncientModel.AncientOption<Telescope>()
+                    CustomAncientModel.AncientOption<GoldenSilkPouch>()
+
                 )
             );
         }

@@ -22,5 +22,7 @@
 "DEMOMOD-ICED_BLUEBERRY.title": "冰中蓝莓",
 "DEMOMOD-ICED_BLUEBERRY.description": "每个回合开始时，获得1点能量。\n在你受到伤害后，休眠2个回合。",
 "DEMOMOD-TELESCOPE.title": "望星镜",
-"DEMOMOD-TELESCOPE.description": "你可以在休息处进行[gold]观星[/gold]。\n[gold]观星[/gold]：变化2张牌。"
+"DEMOMOD-TELESCOPE.description": "你可以在休息处进行[gold]观星[/gold]。\n[gold]观星[/gold]：变化2张牌。",
+"DEMOMOD-BRITTLE_STAR.title": "脆星",
+"DEMOMOD-BRITTLE_STAR.description": "在战斗奖励中，如果你在本场战斗未受到伤害，则额外获得一个遗物。"
 }

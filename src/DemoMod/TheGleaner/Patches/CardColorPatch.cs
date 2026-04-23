@@ -160,14 +160,6 @@ public static class CardColorPatch {
         return false;
     }
 
-    private static Texture2D? GetScoreFrame() {
-        return _scoreFrame ??= TryLoadTexture(
-            "res://TheGleaner/images/packed/sprite_fonts/Score.png",
-            "res://TheGleaner/images/packed/sprite_fonts/score.png",
-            "res://images/packed/sprite_fonts/Score.png",
-            "res://images/packed/sprite_fonts/score.png"
-        );
-    }
 
     private static CardModel? GetVanillaColorlessTemplateCard() {
         if (_vanillaColorlessTemplateCard != null) {
@@ -230,69 +222,8 @@ public static class CardColorPatch {
         return null;
     }
 
-    private static void ClearTextureRect(Node root, string cardId, string label, params string[] names) {
-        TextureRect? target = FindTextureRectByName(root, names);
-        if (target == null) {
-            return;
-        }
 
-        target.Texture = null;
-        target.Visible = false;
-    }
 
-    private static int HideNodesByNameContains(Node root, string cardId, string label, params string[] fragments) {
-        int hiddenCount = 0;
-        string nodeName = root.Name.ToString();
-        bool shouldHide = false;
-        for (int i = 0; i < fragments.Length; i++) {
-            if (nodeName.Contains(fragments[i], StringComparison.OrdinalIgnoreCase)) {
-                shouldHide = true;
-                break;
-            }
-        }
-
-        if (shouldHide && root is CanvasItem canvasItem) {
-            canvasItem.Visible = false;
-            switch (root) {
-                case TextureRect textureRect:
-                    textureRect.Texture = null;
-                    break;
-                case Sprite2D sprite2D:
-                    sprite2D.Texture = null;
-                    break;
-                case NinePatchRect ninePatchRect:
-                    ninePatchRect.Texture = null;
-                    break;
-            }
-            hiddenCount++;
-        }
-
-        foreach (Node child in root.GetChildren()) {
-            hiddenCount += HideNodesByNameContains(child, cardId, label, fragments);
-        }
-
-        return hiddenCount;
-    }
-
-    private static void ApplyScoreEntryCardStyle(NCard cardNode, string cardId)
-{
-    TextureRect? frameNode = FindTextureRectByName(cardNode, "%Frame", "Frame");
-    Texture2D? scoreFrame = GetScoreFrame();
-    if (frameNode != null)
-    {
-        frameNode.Texture = scoreFrame;
-        frameNode.Material = null;
-    }
-
-    // 只清你明确想隐藏的内容
-    ClearTextureRect(cardNode, cardId, "energy icon", "%EnergyIcon", "EnergyIcon");
-    ClearTextureRect(cardNode, cardId, "card banner", "%CardBanner", "%Banner", "CardBanner", "Banner");
-
-    // 不再动 portrait border / plaque，避免对象池复用后丢失 type plaque
-
-    HideLabelText(cardNode, cardId, "title", "%TitleLabel", "TitleLabel");
-    HideLabelText(cardNode, cardId, "energy cost text", "%EnergyLabel", "EnergyLabel");
-}
     private static void ApplyVanillaColorlessStyle(NCard cardNode) {
         CardModel? template = GetVanillaColorlessTemplateCard();
         if (template == null) {
@@ -328,42 +259,7 @@ public static class CardColorPatch {
         }
     }
 
-    private static void HideLabelText(Node root, string cardId, string label, params string[] names) {
-        foreach (string name in names) {
-            var megaLabel = root.GetNodeOrNull<MegaLabel>(name);
-            if (megaLabel != null) {
-                megaLabel.SetTextAutoSize(string.Empty);
-                megaLabel.Visible = false;
-                return;
-            }
-        }
 
-        foreach (Node child in root.GetChildren()) {
-            HideLabelTextRecursive(child, cardId, label, names);
-        }
-    }
-
-    private static bool HideLabelTextRecursive(Node node, string cardId, string label, params string[] names) {
-        if (node is MegaLabel megaLabel) {
-            string nodeName = megaLabel.Name.ToString();
-            for (int i = 0; i < names.Length; i++) {
-                string candidate = names[i].TrimStart('%');
-                if (string.Equals(nodeName, candidate, StringComparison.OrdinalIgnoreCase)) {
-                    megaLabel.SetTextAutoSize(string.Empty);
-                    megaLabel.Visible = false;
-                    return true;
-                }
-            }
-        }
-
-        foreach (Node child in node.GetChildren()) {
-            if (HideLabelTextRecursive(child, cardId, label, names)) {
-                return true;
-            }
-        }
-
-        return false;
-    }
 
     [HarmonyPostfix]
     public static void Postfix(NCard __instance) {
@@ -380,10 +276,6 @@ public static class CardColorPatch {
                 return;
             }
 
-            if (string.Equals(cardId, "DEMOMOD-SCORE_ENTRY_CARD", StringComparison.OrdinalIgnoreCase)) {
-                ApplyScoreEntryCardStyle(__instance, cardId);
-                return;
-            }
 
             if (!cardId.StartsWith("DEMOMOD-", StringComparison.OrdinalIgnoreCase)) {
                 return;
@@ -448,4 +340,5 @@ public static class CardVisualTextPatch {
         } catch (Exception e) {
         }
     }
+    
 }
