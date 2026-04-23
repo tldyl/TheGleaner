@@ -65,9 +65,9 @@ public class TheGleaner : PlaceholderCharacterModel {
     // 死亡音效
     // public override string CustomDeathSfx => null;
     // 角色选择音效
-    // public override string CharacterSelectSfx => null;
+    public override string CharacterSelectSfx => "res://TheGleaner/audio/sfx/char_chosen.wav";
     // 过渡音效。这个不能删。
-    public override string CharacterTransitionSfx => "event:/sfx/ui/wipe_ironclad";
+    public override string CharacterTransitionSfx => "res://TheGleaner/audio/sfx/char_transition.wav";
     
     public override CardPoolModel CardPool => ModelDb.CardPool<CardPool>();
     public override RelicPoolModel RelicPool => ModelDb.RelicPool<JeraRelicPool>();

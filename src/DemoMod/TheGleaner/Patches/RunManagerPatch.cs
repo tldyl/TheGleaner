@@ -12,7 +12,9 @@ public class RunManagerPatch {
     public static class PatchCleanUp {
         public static void Prefix(RunManager __instance, bool graceful) {
             Player player = LocalContext.GetMe(__instance.DebugOnlyGetState().Players);
-            CustomPiles.Piles.Set(player.PlayerCombatState, null);
+            if (player.PlayerCombatState != null) {
+                CustomPiles.Piles.Set(player.PlayerCombatState, null);
+            }
         }
         
         public static void Postfix(RunManager __instance, bool graceful) {

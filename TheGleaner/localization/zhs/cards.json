@@ -150,6 +150,7 @@
   "DEMOMOD-SUMMON_MUSEON.description": "获得{Block:diff()}点[gold]格挡[/gold]。\n将[gold]弃牌堆[/gold]中的一张牌放入[gold]乐谱[/gold]。",
   "DEMOMOD-WHISPERS.title": "嗔视",
   "DEMOMOD-WHISPERS.description": "将[gold]抽牌堆[/gold]中的一张牌变化为[gold]蚀律[/gold]。",
+  "DEMOMOD-WHISPERS.selectionScreenPrompt": "选择一张牌变化为[gold]蚀律[/gold]。",
   "DEMOMOD-DAMPING.title": "闷音",
   "DEMOMOD-DAMPING.description": "使敌人本回合失去{StrengthLoss:diff()}点[gold]力量[/gold]。\n获得{Block:diff()}点[gold]格挡[/gold]两次。",
   "DEMOMOD-SOUNDBOARD_THUMP.title": "琴箱顿",
