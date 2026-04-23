@@ -24,7 +24,7 @@ public class Collapse : CustomCardModel
 	];
 
 	protected override IEnumerable<DynamicVar> CanonicalVars => [
-		new DamageVar(8, ValueProp.Move),
+		new DamageVar(9, ValueProp.Move),
 		new IntVar("DissonanceAmount", 1)
 	];
 
@@ -37,8 +37,6 @@ public class Collapse : CustomCardModel
 		AttackCommand _ = await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
 			.FromCard(this)
 			.TargetingRandomOpponents(Owner.Creature.CombatState)
-			.WithHitFx("vfx/vfx_heavy_blunt", tmpSfx: "heavy_attack.mp3")
-			.WithHitVfxSpawnedAtBase()
 			.WithHitCount(Owner.Creature.CombatState.HittableEnemies.Count + 1)
 			.Execute(choiceContext);
 

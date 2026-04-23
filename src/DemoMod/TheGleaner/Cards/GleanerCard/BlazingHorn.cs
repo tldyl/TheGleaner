@@ -19,7 +19,7 @@ public class BlazingHorn : CustomCardModel, IConcertoCard
 
 	protected override IEnumerable<DynamicVar> CanonicalVars => [
 		new CardsVar(4),
-		new EnergyVar("Energy2", 2)
+		new EnergyVar("Energy2", 1)
 	];
 
 	protected override IEnumerable<IHoverTip> ExtraHoverTips => [
@@ -28,7 +28,7 @@ public class BlazingHorn : CustomCardModel, IConcertoCard
 		HoverTipFactory.FromKeyword(CustomEnums.Concerto)
 	];
 
-	public BlazingHorn() : base(2, CardType.Skill, CardRarity.Uncommon, TargetType.Self)
+	public BlazingHorn() : base(3, CardType.Skill, CardRarity.Uncommon, TargetType.Self)
 	{
 	}
 
@@ -46,6 +46,5 @@ public class BlazingHorn : CustomCardModel, IConcertoCard
 	protected override void OnUpgrade()
 	{
 		DynamicVars.Cards.UpgradeValueBy(2);
-		DynamicVars["Energy2"].UpgradeValueBy(1);
 	}
 }
