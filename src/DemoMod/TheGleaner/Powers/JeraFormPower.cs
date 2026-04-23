@@ -15,7 +15,8 @@ using CustomEnums = DemoMod.TheGleaner.Enums.CustomEnums;
 
 namespace DemoMod.TheGleaner.Powers;
 
-public class JeraFormPower : CustomPowerModel {
+public class JeraFormPower : CustomPowerModel
+{
     public override PowerType Type => PowerType.Buff;
     public override PowerStackType StackType => PowerStackType.Counter;
 
@@ -23,8 +24,11 @@ public class JeraFormPower : CustomPowerModel {
         new DynamicVar("DissonanceAmount", 1)
     ];
 
-    public override async Task AfterModifyingPowerAmountReceived(PowerModel power) {
-        if (power is not JeraFormPower) {
+
+    public override async Task AfterModifyingPowerAmountReceived(PowerModel power)
+    {
+        if (power is not JeraFormPower)
+        {
             return;
         }
 
@@ -58,7 +62,9 @@ public class JeraFormPower : CustomPowerModel {
             );
 
             selectedCards = selected.ToList();
-        } else {
+        }
+        else
+        {
             selectedCards = pile.Cards.ToList();
         }
 
@@ -70,10 +76,13 @@ public class JeraFormPower : CustomPowerModel {
             StarValue = 0
         };
 
-        for (int i = 0; i < Amount; i++) {
-            foreach (CardModel selectedCard in selectedCards) {
+        for (int i = 0; i < Amount; i++)
+        {
+            foreach (CardModel selectedCard in selectedCards)
+            {
                 IReadOnlyList<Creature> hittableEnemies = CombatState.HittableEnemies;
-                if (hittableEnemies.Count == 0) {
+                if (hittableEnemies.Count == 0)
+                {
                     return;
                 }
 
@@ -81,30 +90,25 @@ public class JeraFormPower : CustomPowerModel {
                 await PlayCardMock.MockPlayCard(selectedCard, target, choiceContext, resources);
             }
         }
-        GleanerVfxCmd.CheckScoreIsEmpty(Owner.Player.PlayerCombatState);
 
         List<CardModel> cards = RandomDissonanceCard.getRandomDissonanceCards(
             DynamicVars["DissonanceAmount"].IntValue,
             player.RunState.Rng.CombatCardGeneration
         );
 
-        foreach (CardModel card in cards) {
+        foreach (CardModel card in cards)
+        {
             PileType targetPile =
                 player.RunState.Rng.CombatCardGeneration.NextInt(2) == 0
                     ? PileType.Draw
                     : PileType.Discard;
 
-            IReadOnlyList<CardPileAddResult> results = await CardPileCmd.AddGeneratedCardsToCombat(
-                [CombatState.CreateCard(card, player)],
-                targetPile,
-                true,
-                CardPilePosition.Random
-            );
-
             CardCmd.PreviewCardPileAdd(
-                results,
-                1.2f,
-                MegaCrit.Sts2.Core.Nodes.CommonUi.CardPreviewStyle.HorizontalLayout
+                await CardPileCmd.AddGeneratedCardToCombat(
+                    CombatState.CreateCard(card, player),
+                    targetPile,
+                    true
+                )
             );
         }
     }

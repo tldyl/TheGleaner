@@ -25,8 +25,7 @@ public class JeraForm : CustomCardModel
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
         HoverTipFactory.FromKeyword(CardKeyword.Ethereal),
-        HoverTipFactory.FromKeyword(CustomEnums.Dissonance),
-        HoverTipFactory.FromKeyword(CustomEnums.Score)
+        HoverTipFactory.FromKeyword(CustomEnums.Dissonance)
     ];
 
     public JeraForm() : base(3, CardType.Power, CardRarity.Rare, TargetType.Self)
