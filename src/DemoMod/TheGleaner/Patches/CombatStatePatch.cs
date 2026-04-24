@@ -11,6 +11,7 @@ using MegaCrit.Sts2.Core.Context;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.Helpers;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Nodes;
 using MegaCrit.Sts2.Core.Nodes.Cards;
@@ -104,10 +105,11 @@ public class CombatStatePatch {
                 CardModel scoreEntryCard = ModelDb.Card<ScoreEntryCard>().ToMutable();
                 scoreEntryCard.Owner = player;
                 NCard nCard = NCard.Create(scoreEntryCard);
+                NCombatRoom.Instance.Ui.AddChildSafely(nCard);
                 nCard.Position = PileType.Hand.GetTargetPosition(nCard);
                 NHandCardHolder holder = NRun.Instance.CombatRoom.Ui.Hand.Add(nCard, 0);
-                holder.Hitbox.Size = new Vector2(420, 620);
-                holder.Hitbox.Position = new Vector2(-200, -275);
+                holder.Hitbox.Size = new Vector2(770, 620);
+                holder.Hitbox.Position = new Vector2(-350, -311);
                 //如果发现自己需要新增一张乐谱，写个action通知其他队友往联机卡牌数据库中增加一张乐谱
                 //如果不需要新增乐谱，则不发送这个action
                 RunManager.Instance.ActionQueueSynchronizer.RequestEnqueue(new EndTurnAddScoreCardAction(player, scoreEntryCard));
