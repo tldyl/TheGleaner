@@ -3,14 +3,18 @@ using BaseLib.Utils;
 using DemoMod.TheGleaner.Enums;
 using DemoMod.TheGleaner.Pools;
 using DemoMod.TheGleaner.Utils;
+using Godot;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
+using MegaCrit.Sts2.Core.Commands.Builders;
 using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Powers;
+using MegaCrit.Sts2.Core.Nodes;
 using MegaCrit.Sts2.Core.ValueProps;
 using MegaCrit.Sts2.Core.Nodes.CommonUi;
 namespace DemoMod.TheGleaner.Cards.GleanerCard;
@@ -36,13 +40,18 @@ public class Cacophony : CustomCardModel
 
 	protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
 	{
-		await CreatureCmd.Damage(
+		Vector2 windowSize = NRun.Instance.CombatRoom.Ui.GetViewport().GetVisibleRect().Size;
+		GleanerVfxCmd.PlayVfx(new Vector2(windowSize.X * 0.65f, windowSize.Y * 0.5f), "res://TheGleaner/scenes/vfx/aoe_attack.tscn", 0.5f);
+		await CreatureCmd.TriggerAnim(Owner.Creature, "AoEAttack", 0.5f);
+		await using AttackContext context = await AttackCommand.CreateContextAsync(Owner.Creature.CombatState, this);
+		IEnumerable<DamageResult> damageResults = await CreatureCmd.Damage(
 			choiceContext,
 			CombatState.HittableEnemies,
 			DynamicVars.Damage,
 			Owner.Creature,
 			this
 		);
+		context.AddHit(damageResults);
 
 		await PowerCmd.Apply<WeakPower>(
 			CombatState.HittableEnemies,

@@ -1,4 +1,5 @@
 using BaseLib.Patches.Content;
+using DemoMod.TheGleaner.Actions;
 using DemoMod.TheGleaner.CardPiles;
 using DemoMod.TheGleaner.Cards.GleanerCard;
 using DemoMod.TheGleaner.Commands;
@@ -97,7 +98,7 @@ public class CombatStatePatch {
         }
 
         public override async Task AfterTurnEnd(PlayerChoiceContext choiceContext, CombatSide side) {
-            Player player = LocalContext.GetMe(RunManager.Instance.DebugOnlyGetState().Players);
+            Player player = LocalContext.GetMe(RunManager.Instance.DebugOnlyGetState().Players); //只检查自己，发现需要往手牌中增加乐谱牌时再用action通知队友
             ScorePile scorePile = ScorePileCmd.GetOrCreateScorePile(player.PlayerCombatState);
             if (scorePile.Cards.Count > 0 && !NRun.Instance.CombatRoom.Ui.Hand.ActiveHolders.Any(holder => holder.CardModel is ScoreEntryCard)) {
                 CardModel scoreEntryCard = ModelDb.Card<ScoreEntryCard>().ToMutable();
@@ -107,8 +108,9 @@ public class CombatStatePatch {
                 NHandCardHolder holder = NRun.Instance.CombatRoom.Ui.Hand.Add(nCard, 0);
                 holder.Hitbox.Size = new Vector2(420, 620);
                 holder.Hitbox.Position = new Vector2(-200, -275);
-                NetCombatCardDb.Instance.IdCardForTesting(scoreEntryCard);
-                ScorePileCmd.hasScoreEntryCard.Set(player, true);
+                //如果发现自己需要新增一张乐谱，写个action通知其他队友往联机卡牌数据库中增加一张乐谱
+                //如果不需要新增乐谱，则不发送这个action
+                RunManager.Instance.ActionQueueSynchronizer.RequestEnqueue(new EndTurnAddScoreCardAction(player, scoreEntryCard));
             }
         }
     }

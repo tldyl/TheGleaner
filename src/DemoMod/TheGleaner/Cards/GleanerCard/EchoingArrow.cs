@@ -2,6 +2,7 @@ using BaseLib.Abstracts;
 using BaseLib.Utils;
 using DemoMod.TheGleaner.Enums;
 using DemoMod.TheGleaner.Pools;
+using DemoMod.TheGleaner.Utils;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Commands.Builders;
 using MegaCrit.Sts2.Core.Entities.Cards;
@@ -27,8 +28,14 @@ public class EchoingArrow : CustomCardModel, IArrowCard {
 	}
 
 	protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
+		if (!cardPlay.IsAutoPlay) {
+			GleanerVfxCmd.PlayOnCreature(cardPlay.Target, "res://TheGleaner/scenes/vfx/arrow_attack.tscn", 0.3f);
+			await CreatureCmd.TriggerAnim(Owner.Creature, "Attack", 0.5f);
+			GleanerVfxCmd.PlayOnCreature(cardPlay.Target, "res://TheGleaner/scenes/vfx/arrow_hit_vfx.tscn");
+		}
 		AttackCommand attackCommand = await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
 			.FromCard(this)
+			.WithNoAttackerAnim()
 			.Targeting(cardPlay.Target)
 			.Execute(choiceContext);
 	}

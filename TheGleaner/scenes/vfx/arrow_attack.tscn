@@ -1,0 +1,81 @@
+[gd_scene load_steps=19 format=3 uid="uid://bearj8tbtfhpk"]
+
+[ext_resource type="Texture2D" uid="uid://sj0s0jpc0c0u" path="res://TheGleaner/images/vfx/arrow/jian_00000.png" id="1_3lxi7"]
+[ext_resource type="Texture2D" uid="uid://4xqrq3bmb1tb" path="res://TheGleaner/images/vfx/arrow/jian_00001.png" id="2_cwooe"]
+[ext_resource type="Texture2D" uid="uid://c187lq7b7brjt" path="res://TheGleaner/images/vfx/arrow/jian_00002.png" id="3_kgy4n"]
+[ext_resource type="Texture2D" uid="uid://b5yi8yfn01b6g" path="res://TheGleaner/images/vfx/arrow/jian_00003.png" id="4_jt70e"]
+[ext_resource type="Texture2D" uid="uid://biauicv4k0m1b" path="res://TheGleaner/images/vfx/arrow/jian_00004.png" id="5_75ilh"]
+[ext_resource type="Texture2D" uid="uid://cm2myk8i4lqjx" path="res://TheGleaner/images/vfx/arrow/jian_00005.png" id="6_lsomc"]
+[ext_resource type="Texture2D" uid="uid://cbhrfb0vj5ajo" path="res://TheGleaner/images/vfx/arrow/jian_00006.png" id="7_73l01"]
+[ext_resource type="Texture2D" uid="uid://wc4jd52qa1td" path="res://TheGleaner/images/vfx/arrow/jian_00007.png" id="8_eefb3"]
+[ext_resource type="Texture2D" uid="uid://bub5wnjt16qyo" path="res://TheGleaner/images/vfx/arrow/jian_00008.png" id="9_lu8ox"]
+[ext_resource type="Texture2D" uid="uid://d0qt86g5stt1q" path="res://TheGleaner/images/vfx/arrow/jian_00009.png" id="10_bqw6n"]
+[ext_resource type="Texture2D" uid="uid://dowo643if4btx" path="res://TheGleaner/images/vfx/arrow/jian_00010.png" id="11_k7135"]
+[ext_resource type="Texture2D" uid="uid://d1ufo0cc04axi" path="res://TheGleaner/images/vfx/arrow/jian_00011.png" id="12_7t8sl"]
+[ext_resource type="Texture2D" uid="uid://bn1dws3ioce2" path="res://TheGleaner/images/vfx/arrow/jian_00012.png" id="13_84dvf"]
+[ext_resource type="Texture2D" uid="uid://svnuehugpj2m" path="res://TheGleaner/images/vfx/arrow/jian_00013.png" id="14_03s7x"]
+[ext_resource type="Texture2D" uid="uid://be2cis13msriw" path="res://TheGleaner/images/vfx/arrow/jian_00014.png" id="15_rmwmr"]
+
+[sub_resource type="Animation" id="Animation_5edu7"]
+resource_name = "attack"
+length = 0.50000167
+step = 0.016666668
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Animation:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.033333335, 0.06666667, 0.1, 0.13333334, 0.16666667, 0.2, 0.23333333, 0.26666668, 0.3, 0.33333334, 0.36666667, 0.4, 0.43333334, 0.46666667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [ExtResource("1_3lxi7"), ExtResource("2_cwooe"), ExtResource("3_kgy4n"), ExtResource("4_jt70e"), ExtResource("5_75ilh"), ExtResource("6_lsomc"), ExtResource("7_73l01"), ExtResource("8_eefb3"), ExtResource("9_lu8ox"), ExtResource("10_bqw6n"), ExtResource("11_k7135"), ExtResource("12_7t8sl"), ExtResource("13_84dvf"), ExtResource("14_03s7x"), ExtResource("15_rmwmr")]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.5),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"queue_free"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_5xwil"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Animation:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("1_3lxi7")]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_2q28f"]
+_data = {
+&"RESET": SubResource("Animation_5xwil"),
+&"attack": SubResource("Animation_5edu7")
+}
+
+[node name="ArrowAttack" type="Node2D"]
+
+[node name="Animation" type="Sprite2D" parent="."]
+position = Vector2(-415, -276)
+texture = ExtResource("1_3lxi7")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_2q28f")
+}
+autoplay = "attack"

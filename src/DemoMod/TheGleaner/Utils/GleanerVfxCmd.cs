@@ -23,7 +23,7 @@ public class GleanerVfxCmd {
         if (!TestMode.IsOn && NCombatRoom.Instance != null && !target.IsDead) {
             NCreature creatureNode = NCombatRoom.Instance.GetCreatureNode(target);
             if (creatureNode != null) {
-                PlayVfx(creatureNode.GlobalPosition, path, delay);
+                PlayVfx(creatureNode.Visuals.GetNode<Marker2D>("%CenterPos").GlobalPosition, path, delay);
             }
         }
     }
@@ -34,23 +34,29 @@ public class GleanerVfxCmd {
             delay = Math.Min(delay, 0.25f);
         }
         if (!TestMode.IsOn && NCombatRoom.Instance != null) {
-            Godot.Timer timer = new Godot.Timer
-            {
-                WaitTime = delay,
-                OneShot = true,
-                Autostart = true
-            };
-            NCombatRoom.Instance.CombatVfxContainer.AddChildSafely(timer);
+            if (delay > 0) {
+                Godot.Timer timer = new Godot.Timer
+                {
+                    WaitTime = delay,
+                    OneShot = true,
+                    Autostart = true
+                };
+                NCombatRoom.Instance.CombatVfxContainer.AddChildSafely(timer);
 
-            void Action() {
+                void Action() {
+                    Node2D node2D = PreloadManager.Cache.GetScene(path).Instantiate<Node2D>();
+                    NCombatRoom.Instance.CombatVfxContainer.AddChildSafely(node2D);
+                    node2D.GlobalPosition = position;
+                    timer.Timeout -= Action;
+                    NCombatRoom.Instance.CombatVfxContainer.RemoveChildSafely(timer);
+                }
+
+                timer.Timeout += Action;
+            } else {
                 Node2D node2D = PreloadManager.Cache.GetScene(path).Instantiate<Node2D>();
                 NCombatRoom.Instance.CombatVfxContainer.AddChildSafely(node2D);
                 node2D.GlobalPosition = position;
-                timer.Timeout -= Action;
-                NCombatRoom.Instance.CombatVfxContainer.RemoveChildSafely(timer);
             }
-
-            timer.Timeout += Action;
         }
     }
 

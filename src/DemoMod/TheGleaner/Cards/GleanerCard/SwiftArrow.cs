@@ -3,6 +3,7 @@ using BaseLib.Utils;
 using DemoMod.TheGleaner.Enums;
 using DemoMod.TheGleaner.Pools;
 using DemoMod.TheGleaner.Powers;
+using DemoMod.TheGleaner.Utils;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Commands.Builders;
 using MegaCrit.Sts2.Core.Entities.Cards;
@@ -32,9 +33,15 @@ public class SwiftArrow : CustomCardModel, IArrowCard {
 	}
 
 	protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
+		if (!cardPlay.IsAutoPlay) {
+			GleanerVfxCmd.PlayOnCreature(cardPlay.Target, "res://TheGleaner/scenes/vfx/arrow_attack.tscn", 0.3f);
+			await CreatureCmd.TriggerAnim(Owner.Creature, "Attack", 0.5f);
+			GleanerVfxCmd.PlayOnCreature(cardPlay.Target, "res://TheGleaner/scenes/vfx/arrow_hit_vfx.tscn");
+		}
 		AttackCommand attackCommand = await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
 			.FromCard(this)
 			.Targeting(cardPlay.Target)
+			.WithNoAttackerAnim()
 			.Execute(choiceContext);
 		foreach (DamageResult damageResult in attackCommand.Results) {
 			if (damageResult.Receiver == cardPlay.Target && !damageResult.WasFullyBlocked) {

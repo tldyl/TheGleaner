@@ -3,48 +3,6 @@
 [ext_resource type="Texture2D" uid="uid://6q68rb67dlb8" path="res://TheGleaner/images/packed/sprite_fonts/score_bg.png" id="1_byr0i"]
 [ext_resource type="Texture2D" uid="uid://b41fdc3vvgu4n" path="res://TheGleaner/images/packed/sprite_fonts/Score.png" id="2_c2jou"]
 
-[sub_resource type="Animation" id="Animation_e0gfo"]
-resource_name = "new_animation"
-length = 20.0
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("SubViewportContainer/SubViewport/ScrollContainer:scroll_vertical")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 20),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [0, 1700]
-}
-tracks/1/type = "method"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("AnimationPlayer")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(20),
-"transitions": PackedFloat32Array(1),
-"values": [{
-"args": [&"new_animation", -1, 1.0, false],
-"method": &"play"
-}]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("SubViewportContainer/SubViewport/ScrollContainer:scroll_horizontal")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0, 20),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [468, 0]
-}
-
 [sub_resource type="Animation" id="Animation_vy7ni"]
 length = 0.001
 tracks/0/type = "value"
@@ -72,6 +30,35 @@ tracks/1/keys = {
 "values": [0]
 }
 
+[sub_resource type="Animation" id="Animation_e0gfo"]
+resource_name = "new_animation"
+length = 20.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("SubViewportContainer/SubViewport/ScrollContainer:scroll_vertical")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 20),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0, 1700]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("SubViewportContainer/SubViewport/ScrollContainer:scroll_horizontal")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 20),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [468, 0]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_oc03k"]
 _data = {
 &"RESET": SubResource("Animation_vy7ni"),
@@ -82,9 +69,9 @@ _data = {
 scale = Vector2(0.5, 0.5)
 
 [node name="SubViewportContainer" type="SubViewportContainer" parent="."]
-offset_left = 48.0
+offset_left = 56.0
 offset_top = 12.0
-offset_right = 580.0
+offset_right = 588.0
 offset_bottom = 824.0
 
 [node name="SubViewport" type="SubViewport" parent="SubViewportContainer"]
@@ -106,7 +93,7 @@ expand_mode = 1
 stretch_mode = 1
 
 [node name="TextureRect" type="TextureRect" parent="."]
-offset_right = 638.0
+offset_right = 654.0
 offset_bottom = 843.0
 texture = ExtResource("2_c2jou")
 expand_mode = 1

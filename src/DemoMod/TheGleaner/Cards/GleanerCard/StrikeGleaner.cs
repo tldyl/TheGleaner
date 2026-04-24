@@ -20,10 +20,15 @@ public class StrikeGleaner : CustomCardModel {
 	}
 	
 	protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
-		GleanerVfxCmd.PlayOnCreature(cardPlay.Target, "res://TheGleaner/scenes/vfx/attack_demo.tscn", 0.5f);
+		if (!cardPlay.IsAutoPlay) {
+			GleanerVfxCmd.PlayOnCreature(cardPlay.Target, "res://TheGleaner/scenes/vfx/arrow_attack.tscn", 0.3f);
+			await CreatureCmd.TriggerAnim(Owner.Creature, "Attack", 0.5f);
+			GleanerVfxCmd.PlayOnCreature(cardPlay.Target, "res://TheGleaner/scenes/vfx/arrow_hit_vfx.tscn");
+		}
 		await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
 			.FromCard(this)
 			.Targeting(cardPlay.Target)
+			.WithNoAttackerAnim()
 			.Execute(choiceContext);
 	}
 	
