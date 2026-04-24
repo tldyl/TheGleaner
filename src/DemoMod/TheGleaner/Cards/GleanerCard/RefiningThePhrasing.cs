@@ -2,6 +2,7 @@ using BaseLib.Abstracts;
 using BaseLib.Utils;
 using DemoMod.TheGleaner.Commands;
 using DemoMod.TheGleaner.Pools;
+using DemoMod.TheGleaner.Powers;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
@@ -32,7 +33,9 @@ public class RefiningThePhrasing : CustomCardModel {
 			int gleanAmount = selectedCards.Count + (CurrentUpgradeLevel > 0 ? 1 : 0);
 			await CardCmd.Discard(choiceContext, selectedCards);
 			foreach (CardModel card in selectedCards) {
-				await Hook.AfterCardChangedPiles(Owner.RunState, Owner.Creature.CombatState, card, CustomEnums.ScorePile, this);
+				if (Owner.Creature.HasPower<StaffBurnoutPower>()) {
+					await Owner.Creature.GetPower<StaffBurnoutPower>().AfterCardChangedPiles(card, CustomEnums.ScorePile, null);
+				}
 			}
 			await ScorePileCmd.Glean(Owner, choiceContext, gleanAmount, this);
 		} else {

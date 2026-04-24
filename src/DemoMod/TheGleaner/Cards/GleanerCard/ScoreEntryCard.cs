@@ -34,6 +34,7 @@ public class ScoreEntryCard : CustomCardModel {
     }
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
+        await Cmd.Wait(0.2f);
         RunManager.Instance.ActionQueueSynchronizer.RequestEnqueue(new TakeCardsFromScoreAction(Owner));
     }
 

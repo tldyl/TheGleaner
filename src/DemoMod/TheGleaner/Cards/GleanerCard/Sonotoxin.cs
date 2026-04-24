@@ -3,6 +3,7 @@ using BaseLib.Utils;
 using DemoMod.TheGleaner.Commands;
 using DemoMod.TheGleaner.Enums;
 using DemoMod.TheGleaner.Pools;
+using DemoMod.TheGleaner.Powers;
 using DemoMod.TheGleaner.Utils;
 using MegaCrit.Sts2.Core.CardSelection;
 using MegaCrit.Sts2.Core.Commands;
@@ -71,15 +72,10 @@ public class Sonotoxin : CustomCardModel
 
 		await CardCmd.Discard(choiceContext, selectedCards);
 
-		foreach (CardModel card in selectedCards)
-		{
-			await Hook.AfterCardChangedPiles(
-				Owner.RunState,
-				Owner.Creature.CombatState,
-				card,
-				CustomEnums.ScorePile,
-				this
-			);
+		foreach (CardModel card in selectedCards) {
+			if (Owner.Creature.HasPower<StaffBurnoutPower>()) {
+				await Owner.Creature.GetPower<StaffBurnoutPower>().AfterCardChangedPiles(card, CustomEnums.ScorePile, null);
+			}
 		}
 
 		await PowerCmd.Apply<VulnerablePower>(

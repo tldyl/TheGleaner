@@ -1,6 +1,7 @@
 using BaseLib.Abstracts;
 using BaseLib.Utils;
 using DemoMod.TheGleaner.Enums;
+using DemoMod.TheGleaner.Hooks;
 using DemoMod.TheGleaner.Pools;
 using DemoMod.TheGleaner.Utils;
 using Godot;
@@ -13,7 +14,6 @@ using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
-using MegaCrit.Sts2.Core.Logging;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Nodes;
 using MegaCrit.Sts2.Core.Nodes.Combat;
@@ -22,7 +22,7 @@ using MegaCrit.Sts2.Core.ValueProps;
 namespace DemoMod.TheGleaner.Cards.GleanerCard;
 
 [Pool(typeof(CardPool))]
-public class Procession : CustomCardModel {
+public class Procession : CustomCardModel, IAfterTakeCardsFromScore {
 	public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
 	protected override IEnumerable<DynamicVar> CanonicalVars => [
 		new DamageVar(12, ValueProp.Move),
@@ -49,13 +49,10 @@ public class Procession : CustomCardModel {
 				this);
 		}
 	}
-
-	public override async Task AfterCardChangedPiles(CardModel card, PileType oldPileType, AbstractModel? source) {
-		if (oldPileType == CustomEnums.ScorePile && !Owner.Deck.Cards.Contains(this)) {
-			EnergyCost.AddThisTurn(-DynamicVars["ReduceVal"].IntValue);
-			AccessTools.Method(typeof(NPlayerHand), "OnCombatStateChanged", [typeof(CombatState)]).Invoke(NRun.Instance.CombatRoom.Ui.Hand, [Owner.Creature.CombatState]);
-		}
-	}
 	
 	protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(3);
+	public async Task AfterTakeCardsFromScore(CardModel card) {
+		EnergyCost.AddThisTurn(-DynamicVars["ReduceVal"].IntValue);
+		AccessTools.Method(typeof(NPlayerHand), "OnCombatStateChanged", [typeof(CombatState)]).Invoke(NRun.Instance.CombatRoom.Ui.Hand, [Owner.Creature.CombatState]);
+	}
 }
