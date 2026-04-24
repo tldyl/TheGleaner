@@ -1,7 +1,7 @@
 {
-  "JERA_NO_LIVING_ALLIES": "哎…？\\n诘拉的队友呢？",
-  "JERA_NOT_ENOUGH_ENERGY": "哎，诘拉的[red]能量[/red]不足。",
-  "JERA_NOT_ENOUGH_STARS": "这是什么？[red]辉星[/red]？",
+  "JERA_NO_LIVING_ALLIES": "诘拉的队友呢？",
+  "JERA_NOT_ENOUGH_ENERGY": "诘拉没那么多[red]能量[/red]。",
+  "JERA_NOT_ENOUGH_STARS": "什么？[red]辉星[/red]？",
   "JERA_UNPLAYABLE": "诘拉打不出这张牌。",
   "JERA_BLOCKED_BY_HOOK": "诘拉被[red]{BlockingHook}[/red]\\n所阻挡。",
   "JERA_NO_DRAW": "诘拉没牌可抽。",

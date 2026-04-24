@@ -12,7 +12,7 @@
   "DEMOMOD-CHRON_XI_V_GLEANER.title": "历十四的拾穗者",
   "DEMOMOD-CHRON_XI_V_GLEANER.description": "在第一回合开始时，额外抽[blue]2[/blue]张牌。\n在第二回合开始时，额外抽[blue]1[/blue]张牌，获得{energyPrefix:energyIcons(1)}。\n在第三回合开始时，额外获得{energyPrefix:energyIcons(2)}。",
   "DEMOMOD-CHRON_XI_V_GLEANER.flavor": "",
-  "SEA_GLASS.DEMOMOD-THE_GLEANER.title": "麦穗玻璃",
+  "SEA_GLASS.DEMOMOD-THE_GLEANER.title": "穗纹玻璃",
   "DEMOMOD-GOLDEN_SILK_POUCH.title": "金丝缎口袋",
   "DEMOMOD-GOLDEN_SILK_POUCH.description": "拾起时，获得1瓶[gold]点金药水[/gold]。\n[gold]点金药水[/gold]：将你的金币翻倍。",
   "DEMOMOD-COCKTAIL.title": "鸡尾酒",
