@@ -1,7 +1,6 @@
 using System;
 using Godot;
 using HarmonyLib;
-using MegaCrit.Sts2.Core.Assets;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Nodes.Cards;
 
@@ -35,6 +34,11 @@ public static class ScoreEntryCardFramePatch
 			}
 		}
 		return null;
+	}
+
+	private static Texture2D? GetScoreFrame()
+	{
+		return _scoreFrame ?? (_scoreFrame = TryLoadTexture("res://TheGleaner/images/packed/sprite_fonts/Score.png", "res://TheGleaner/images/packed/sprite_fonts/score.png", "res://images/packed/sprite_fonts/Score.png", "res://images/packed/sprite_fonts/score.png"));
 	}
 
 	private static TextureRect? FindTextureRectByName(Node root, params string[] names)
@@ -125,15 +129,17 @@ public static class ScoreEntryCardFramePatch
 	private static void ApplyScoreEntryCardStyle(NCard cardNode)
 	{
 		TextureRect frameNode = FindTextureRectByName((Node)(object)cardNode, "%Frame", "Frame");
-		if (frameNode != null) {
-			frameNode.Visible = false;
+		Texture2D scoreFrame = GetScoreFrame();
+		if (frameNode != null)
+		{
+			frameNode.Texture = scoreFrame;
+			frameNode.Material = null;
 		}
 		ClearTextureRect((Node)(object)cardNode, "%EnergyIcon", "EnergyIcon");
 		ClearTextureRect((Node)(object)cardNode, "%CardBanner", "%Banner", "CardBanner", "Banner");
 		ClearTextureRect((Node)(object)cardNode, "%CardPortraitBorder", "%PortraitBorder", "%PortraitFrame", "CardPortraitBorder", "PortraitBorder", "PortraitFrame");
 		HideNodesByNameContains((Node)(object)cardNode, "banner");
 		HideNodesByNameContains((Node)(object)cardNode, "portrait_border_plaque", "portraitborderplaque", "border_plaque", "plaque");
-		cardNode.GetNode<Node2D>("CardContainer/ScoreCardVfx").Visible = true;
 	}
 
 	[HarmonyPostfix]
@@ -160,16 +166,9 @@ public static class ScoreEntryCardFramePatch
 					obj = string.Empty;
 				}
 				string cardId = (string)obj;
-				if (!__instance.HasNode("CardContainer/ScoreCardVfx")) {
-					Node2D scoreCardVfx = PreloadManager.Cache.GetScene("res://TheGleaner/scenes/score_card_vfx.tscn").Instantiate<Node2D>();
-					scoreCardVfx.Position = new Vector2(-158.0f, -211.0f);
-					__instance.GetNode("CardContainer").AddChild(scoreCardVfx);
-					__instance.GetNode("CardContainer").MoveChild(scoreCardVfx, __instance.GetNode("%Frame").GetIndex() + 1);
-				}
-				if (string.Equals(cardId, "DEMOMOD-SCORE_ENTRY_CARD", StringComparison.OrdinalIgnoreCase)) {
+				if (string.Equals(cardId, "DEMOMOD-SCORE_ENTRY_CARD", StringComparison.OrdinalIgnoreCase))
+				{
 					ApplyScoreEntryCardStyle(__instance);
-				} else {
-					__instance.GetNode<Node2D>("CardContainer/ScoreCardVfx").Visible = false;
 				}
 			}
 		}
