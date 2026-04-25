@@ -16,6 +16,11 @@ public class WindsMuse : CustomCardModel {
 	protected override IEnumerable<DynamicVar> CanonicalVars => [new IntVar("Amount", 3)];
 	protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromKeyword(CustomEnums.Glean)];
 
+
+	public override IEnumerable<CardKeyword> CanonicalKeywords => [
+		CardKeyword.Exhaust
+	];
+	
 	public WindsMuse() : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.Self) {
 	}
 
@@ -23,5 +28,7 @@ public class WindsMuse : CustomCardModel {
 		await ScorePileCmd.Glean(Owner, choiceContext, DynamicVars["Amount"].BaseValue, this);
 	}
 
-	protected override void OnUpgrade() => DynamicVars["Amount"].UpgradeValueBy(1);
+	protected override void OnUpgrade() {
+		RemoveKeyword(CardKeyword.Exhaust);
+	}
 }
