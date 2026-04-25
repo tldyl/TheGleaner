@@ -24,7 +24,6 @@ public class JeraFormPower : CustomPowerModel
         new DynamicVar("DissonanceAmount", 1)
     ];
 
-
     public override async Task AfterModifyingPowerAmountReceived(PowerModel power)
     {
         if (power is not JeraFormPower)
@@ -32,23 +31,28 @@ public class JeraFormPower : CustomPowerModel
             return;
         }
 
-        if (Amount > 0) {
+        if (Amount > 0)
+        {
             DynamicVars["DissonanceAmount"].UpgradeValueBy(1);
         }
     }
 
-    public override async Task AfterPlayerTurnStartLate(PlayerChoiceContext choiceContext, Player player) {
-        if (player.Creature != Owner) {
+    public override async Task AfterPlayerTurnStartLate(PlayerChoiceContext choiceContext, Player player)
+    {
+        if (player.Creature != Owner)
+        {
             return;
         }
 
         CardPile pile = CustomPiles.GetCustomPile(player.PlayerCombatState, CustomEnums.ScorePile);
-        if (pile == null || pile.Cards.Count == 0) {
+        if (pile == null || pile.Cards.Count == 0)
+        {
             return;
         }
 
         List<CardModel> selectedCards = [];
-        if (pile.Cards.Count > Amount) {
+        if (pile.Cards.Count > Amount)
+        {
             CardSelectorPrefs prefs = new CardSelectorPrefs(
                 new LocString("powers", "DEMOMOD-JERA_FORM_POWER.selectionScreenPrompt"),
                 Amount
