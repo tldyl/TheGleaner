@@ -1,0 +1,107 @@
+[gd_scene load_steps=10 format=3 uid="uid://bs3x5ywasbtm0"]
+
+[ext_resource type="Script" uid="uid://bardd1u7uehh0" path="res://src/DemoMod/TheGleaner/Nodes/Vfx/NPrismaticRainfallStrikeVfx.cs" id="1_4kl1g"]
+[ext_resource type="Shader" uid="uid://vsolifyu1ywr" path="res://TheGleaner/scenes/vfx/lut_color.gdshader" id="1_g35pr"]
+[ext_resource type="Texture2D" uid="uid://6caxgdo1mjrt" path="res://TheGleaner/images/vfx/prismatic_rainfall_strike_vfx/guangpu_jg_00154.png" id="2_4kl1g"]
+
+[sub_resource type="Gradient" id="Gradient_xpcfn"]
+colors = PackedColorArray(0, 0.5647059, 0.60784316, 1, 1, 0.14509805, 0.10980392, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_eepox"]
+gradient = SubResource("Gradient_xpcfn")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_v0ofo"]
+shader = ExtResource("1_g35pr")
+shader_parameter/lut = SubResource("GradientTexture1D_eepox")
+shader_parameter/blink_alpha = 1.0
+
+[sub_resource type="Animation" id="Animation_g35pr"]
+resource_name = "blink"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Line2D:width")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.033333335, 0.06666667, 0.1, 0.13333334, 0.16666667, 0.2, 0.3, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [10.0, 20.0, 8.0, 16.0, 9.0, 20.0, 5.0, 70.0, 0.0]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.033333335, 0.06666667, 0.1, 0.13333334, 0.16666667, 0.2, 0.2563, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
+"values": [{
+"args": [0.2],
+"method": &"setVfxAlpha"
+}, {
+"args": [1.0],
+"method": &"setVfxAlpha"
+}, {
+"args": [0.3],
+"method": &"setVfxAlpha"
+}, {
+"args": [1.0],
+"method": &"setVfxAlpha"
+}, {
+"args": [0.2],
+"method": &"setVfxAlpha"
+}, {
+"args": [1.0],
+"method": &"setVfxAlpha"
+}, {
+"args": [0.3],
+"method": &"setVfxAlpha"
+}, {
+"args": [1.0],
+"method": &"setVfxAlpha"
+}, {
+"args": [],
+"method": &"queue_free"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_4kl1g"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Line2D:width")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [20.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_xpcfn"]
+_data = {
+&"RESET": SubResource("Animation_4kl1g"),
+&"blink": SubResource("Animation_g35pr")
+}
+
+[node name="PrismaticRainfallStrikeVfx" type="Node2D"]
+script = ExtResource("1_4kl1g")
+
+[node name="Line2D" type="Line2D" parent="."]
+material = SubResource("ShaderMaterial_v0ofo")
+points = PackedVector2Array(300, -200, 700, 1080)
+width = 20.0
+texture = ExtResource("2_4kl1g")
+texture_mode = 2
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_xpcfn")
+}
+autoplay = "blink"

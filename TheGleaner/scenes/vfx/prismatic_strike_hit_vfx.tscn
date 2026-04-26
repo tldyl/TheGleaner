@@ -1,0 +1,83 @@
+[gd_scene load_steps=21 format=3 uid="uid://b7yy00gqep3li"]
+
+[ext_resource type="Texture2D" uid="uid://bof21i3gbic61" path="res://TheGleaner/images/vfx/prismatic_rainfall_strike_hit_vfx/guangpu_sj_00071.png" id="1_k7nky"]
+[ext_resource type="Texture2D" uid="uid://ds88t5o120fmi" path="res://TheGleaner/images/vfx/prismatic_rainfall_strike_hit_vfx/guangpu_sj_00072.png" id="2_5wvw4"]
+[ext_resource type="Texture2D" uid="uid://8qvnx32bn2tj" path="res://TheGleaner/images/vfx/prismatic_rainfall_strike_hit_vfx/guangpu_sj_00073.png" id="3_qmpgm"]
+[ext_resource type="Texture2D" uid="uid://ddcsakb0ri74t" path="res://TheGleaner/images/vfx/prismatic_rainfall_strike_hit_vfx/guangpu_sj_00074.png" id="4_y67se"]
+[ext_resource type="Texture2D" uid="uid://ecjyw5q51vsw" path="res://TheGleaner/images/vfx/prismatic_rainfall_strike_hit_vfx/guangpu_sj_00075.png" id="5_6x5df"]
+[ext_resource type="Texture2D" uid="uid://ckq1j0k2hn17i" path="res://TheGleaner/images/vfx/prismatic_rainfall_strike_hit_vfx/guangpu_sj_00076.png" id="6_3312k"]
+[ext_resource type="Texture2D" uid="uid://brkgetb5qo2yj" path="res://TheGleaner/images/vfx/prismatic_rainfall_strike_hit_vfx/guangpu_sj_00077.png" id="7_2wrpc"]
+[ext_resource type="Texture2D" uid="uid://beaob3bdlwj43" path="res://TheGleaner/images/vfx/prismatic_rainfall_strike_hit_vfx/guangpu_sj_00078.png" id="8_pxld8"]
+[ext_resource type="Texture2D" uid="uid://eapyalehpx12" path="res://TheGleaner/images/vfx/prismatic_rainfall_strike_hit_vfx/guangpu_sj_00079.png" id="9_18lq7"]
+[ext_resource type="Texture2D" uid="uid://ccrk7xqsfp3og" path="res://TheGleaner/images/vfx/prismatic_rainfall_strike_hit_vfx/guangpu_sj_00080.png" id="10_nnagj"]
+[ext_resource type="Texture2D" uid="uid://d0tl6ye21bf2j" path="res://TheGleaner/images/vfx/prismatic_rainfall_strike_hit_vfx/guangpu_sj_00081.png" id="11_o4o4t"]
+[ext_resource type="Texture2D" uid="uid://bctkge74s3ass" path="res://TheGleaner/images/vfx/prismatic_rainfall_strike_hit_vfx/guangpu_sj_00082.png" id="12_hkd1f"]
+[ext_resource type="Texture2D" uid="uid://8eu7ordwhptw" path="res://TheGleaner/images/vfx/prismatic_rainfall_strike_hit_vfx/guangpu_sj_00083.png" id="13_jb4po"]
+[ext_resource type="Texture2D" uid="uid://db883eoyvb1vr" path="res://TheGleaner/images/vfx/prismatic_rainfall_strike_hit_vfx/guangpu_sj_00084.png" id="14_bswex"]
+[ext_resource type="Texture2D" uid="uid://xat42h0najj7" path="res://TheGleaner/images/vfx/prismatic_rainfall_strike_hit_vfx/guangpu_sj_00085.png" id="15_5bpd3"]
+[ext_resource type="Texture2D" uid="uid://dig6hm8l0sceo" path="res://TheGleaner/images/vfx/prismatic_rainfall_strike_hit_vfx/guangpu_sj_00086.png" id="16_k18kq"]
+[ext_resource type="Texture2D" uid="uid://dl3k1txco6mqg" path="res://TheGleaner/images/vfx/prismatic_rainfall_strike_hit_vfx/guangpu_sj_00087.png" id="17_s8622"]
+
+[sub_resource type="Animation" id="Animation_grinm"]
+resource_name = "explode"
+length = 0.5666684
+step = 0.016666668
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Animation:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.033333335, 0.06666667, 0.1, 0.13333334, 0.16666667, 0.2, 0.23371604, 0.26629728, 0.3, 0.33333334, 0.36666667, 0.4, 0.43333334, 0.4670202, 0.5, 0.53333336),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [ExtResource("1_k7nky"), ExtResource("2_5wvw4"), ExtResource("3_qmpgm"), ExtResource("4_y67se"), ExtResource("5_6x5df"), ExtResource("6_3312k"), ExtResource("7_2wrpc"), ExtResource("8_pxld8"), ExtResource("9_18lq7"), ExtResource("10_nnagj"), ExtResource("11_o4o4t"), ExtResource("12_hkd1f"), ExtResource("13_jb4po"), ExtResource("14_bswex"), ExtResource("15_5bpd3"), ExtResource("16_k18kq"), ExtResource("17_s8622")]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.56666666),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"queue_free"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_mabup"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Animation:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("1_k7nky")]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_5c54a"]
+_data = {
+&"RESET": SubResource("Animation_mabup"),
+&"explode": SubResource("Animation_grinm")
+}
+
+[node name="PrismaticStrikeHitVfx" type="Node2D"]
+
+[node name="Animation" type="Sprite2D" parent="."]
+texture = ExtResource("1_k7nky")
+offset = Vector2(-8, -80)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_5c54a")
+}
+autoplay = "explode"

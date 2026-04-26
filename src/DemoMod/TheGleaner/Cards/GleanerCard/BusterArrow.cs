@@ -1,8 +1,10 @@
 using BaseLib.Abstracts;
 using BaseLib.Utils;
 using DemoMod.TheGleaner.Enums;
+using DemoMod.TheGleaner.Nodes.Vfx;
 using DemoMod.TheGleaner.Pools;
 using DemoMod.TheGleaner.Utils;
+using Godot;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Commands.Builders;
 using MegaCrit.Sts2.Core.Entities.Cards;
@@ -32,6 +34,11 @@ public class BusterArrow : CustomCardModel, IArrowCard {
 			GleanerVfxCmd.PlayOnCreature(cardPlay.Target, "res://TheGleaner/scenes/vfx/arrow_attack.tscn", 0.3f);
 			await CreatureCmd.TriggerAnim(Owner.Creature, "Attack", 0.5f);
 			GleanerVfxCmd.PlayOnCreature(cardPlay.Target, "res://TheGleaner/scenes/vfx/arrow_hit_vfx.tscn");
+		} else {
+			NPrismaticRainfallStrikeVfx vfx = NPrismaticRainfallStrikeVfx.Create(cardPlay.Target);
+			GleanerVfxCmd.PlayVfx(new Vector2(), vfx);
+			GleanerVfxCmd.PlayOnCreature(cardPlay.Target, "res://TheGleaner/scenes/vfx/prismatic_strike_hit_vfx.tscn", 0.3f);
+			await Cmd.Wait(0.3f);
 		}
 		await using AttackContext context = await AttackCommand.CreateContextAsync(Owner.Creature.CombatState, this);
 		IEnumerable<DamageResult> damageResults = await CreatureCmd.Damage(choiceContext, cardPlay.Target, DynamicVars.Damage, this);

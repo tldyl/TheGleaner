@@ -2,8 +2,11 @@ using BaseLib.Abstracts;
 using BaseLib.Utils;
 using DemoMod.TheGleaner.Commands;
 using DemoMod.TheGleaner.Enums;
+using DemoMod.TheGleaner.Nodes.Vfx;
 using DemoMod.TheGleaner.Pools;
 using DemoMod.TheGleaner.Utils;
+using Godot;
+using MegaCrit.Sts2.Core.Assets;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Commands.Builders;
 using MegaCrit.Sts2.Core.Entities.Cards;
@@ -29,6 +32,9 @@ public class PrismaticRainfall : CustomCardModel {
 	}
 
 	protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
+		NOpticalFlareVfx opticalFlareVfx = PreloadManager.Cache.GetScene("res://TheGleaner/scenes/vfx/optical_flare_vfx.tscn").Instantiate<NOpticalFlareVfx>();
+		GleanerVfxCmd.PlayVfx(new Vector2(-960, -540), opticalFlareVfx);
+		await CreatureCmd.TriggerAnim(Owner.Creature, "AoEAttack", 0.5f);
 		AttackContext context = await AttackCommand.CreateContextAsync(Owner.Creature.CombatState, this);
 		await using (context) {
 			IEnumerable<DamageResult> damageResults = await CreatureCmd.Damage(choiceContext, Owner.Creature.CombatState.HittableEnemies, DynamicVars.Damage, Owner.Creature, this);
@@ -42,7 +48,8 @@ public class PrismaticRainfall : CustomCardModel {
 			await CardCmd.AutoPlay(choiceContext, card, null);
 		}
 		GleanerVfxCmd.CheckScoreIsEmpty(Owner.PlayerCombatState);
+		opticalFlareVfx.End();
 	}
-
+	
 	protected override void OnUpgrade() => 	DynamicVars.Damage.UpgradeValueBy(3);
 }

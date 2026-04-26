@@ -28,7 +28,7 @@ public class GleanerVfxCmd {
         }
     }
 
-    public static void PlayVfx(Vector2 position, string path, float delay = 0) {
+    public static void PlayVfx(Vector2 position, Node2D vfx, float delay = 0) {
         if (SaveManager.Instance.PrefsSave.FastMode == FastModeType.Fast) {
             delay /= 2.0f;
             delay = Math.Min(delay, 0.25f);
@@ -44,20 +44,23 @@ public class GleanerVfxCmd {
                 NCombatRoom.Instance.CombatVfxContainer.AddChildSafely(timer);
 
                 void Action() {
-                    Node2D node2D = PreloadManager.Cache.GetScene(path).Instantiate<Node2D>();
-                    NCombatRoom.Instance.CombatVfxContainer.AddChildSafely(node2D);
-                    node2D.GlobalPosition = position;
+                    NCombatRoom.Instance.CombatVfxContainer.AddChildSafely(vfx);
+                    vfx.GlobalPosition = position;
                     timer.Timeout -= Action;
                     NCombatRoom.Instance.CombatVfxContainer.RemoveChildSafely(timer);
                 }
 
                 timer.Timeout += Action;
             } else {
-                Node2D node2D = PreloadManager.Cache.GetScene(path).Instantiate<Node2D>();
-                NCombatRoom.Instance.CombatVfxContainer.AddChildSafely(node2D);
-                node2D.GlobalPosition = position;
+                NCombatRoom.Instance.CombatVfxContainer.AddChildSafely(vfx);
+                vfx.GlobalPosition = position;
             }
         }
+    }
+    
+    public static void PlayVfx(Vector2 position, string path, float delay = 0) {
+        Node2D vfx = PreloadManager.Cache.GetScene(path).Instantiate<Node2D>();
+        PlayVfx(position, vfx, delay);
     }
 
     public static void CheckScoreIsEmpty(PlayerCombatState playerCombatState) {
