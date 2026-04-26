@@ -57,7 +57,7 @@ public class TheGleaner : PlaceholderCharacterModel {
     // 人物选择过渡动画。
     // public override string CustomCharacterSelectTransitionPath => "res://materials/transitions/ironclad_transition_mat.tres";
     // 地图上的角色标记图标、表情轮盘上的角色头像
-    // public override string CustomMapMarkerPath => null;
+    public override string CustomMapMarkerPath => "res://TheGleaner/images/map_marker_gleaner.png";
     // 攻击音效
     // public override string CustomAttackSfx => null;
     // 施法音效
