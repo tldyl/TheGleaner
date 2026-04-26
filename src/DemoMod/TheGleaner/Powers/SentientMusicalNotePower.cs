@@ -1,9 +1,9 @@
 using BaseLib.Abstracts;
-using DemoMod.TheGleaner.Cards.GleanerCard;
 using DemoMod.TheGleaner.Utils;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
@@ -33,11 +33,10 @@ public class SentientMusicalNotePower : CustomPowerModel
         {
             for (int _ = 0; _ < Amount; _++)
             {
-                await CardPileCmd.AddGeneratedCardToCombat(
-                    CombatState.CreateCard(ModelDb.Card<RoundAndRound>(), Owner.Player),
-                    PileType.Hand,
-                    true
-                );
+                foreach (Creature creature in Owner.CombatState.HittableEnemies)
+                {
+                    await CreatureCmd.Stun(creature);
+                }
             }
 
             DynamicVars["CardsLeft"].BaseValue = 3M;

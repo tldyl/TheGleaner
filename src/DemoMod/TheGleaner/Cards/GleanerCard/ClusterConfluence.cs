@@ -26,7 +26,7 @@ public class ClusterConfluence : CustomCardModel {
 	protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromCard<StrikeGleaner>(), HoverTipFactory.FromCard<ClusterStrike>(), HoverTipFactory.FromKeyword(CustomEnums.Score)];
 	protected override bool HasEnergyCostX => true;
 
-	public ClusterConfluence() : base(0, CardType.Skill, CardRarity.Uncommon, TargetType.Self) {
+	public ClusterConfluence() : base(0, CardType.Skill, CardRarity.Rare, TargetType.Self) {
 		
 	}
 

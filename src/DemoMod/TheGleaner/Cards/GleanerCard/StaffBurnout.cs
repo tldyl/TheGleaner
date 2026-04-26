@@ -18,12 +18,12 @@ public class StaffBurnout : CustomCardModel {
 	protected override IEnumerable<DynamicVar> CanonicalVars => [new IntVar("Amount", 2)];
 	protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromKeyword(CustomEnums.Glean), HoverTipFactory.FromKeyword(CustomEnums.Score)];
 
-	public StaffBurnout() : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.Self) {
+	public StaffBurnout() : base(1, CardType.Skill, CardRarity.Rare, TargetType.Self) {
 		
 	}
 
 	protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
-		await PowerCmd.Apply<StaffBurnoutPower>(Owner.Creature, 1, Owner.Creature, this);
+		await PowerCmd.Apply<StaffBurnoutPower>(Owner.Creature, 2, Owner.Creature, this);
 		await ScorePileCmd.Glean(Owner, choiceContext, DynamicVars["Amount"].BaseValue, this);
 	}
 	

@@ -16,7 +16,7 @@ public class TheLakeMirror : CustomCardModel {
 	public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
 
 	protected override IEnumerable<DynamicVar> CanonicalVars => [
-		new IntVar("Amount", 1)
+		new IntVar("Amount", 2)
 	];
 
 	protected override IEnumerable<IHoverTip> ExtraHoverTips => [
