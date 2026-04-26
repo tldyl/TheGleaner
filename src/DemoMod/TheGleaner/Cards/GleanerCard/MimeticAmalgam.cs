@@ -16,10 +16,9 @@ namespace DemoMod.TheGleaner.Cards.GleanerCard;
 public class MimeticAmalgam : CustomCardModel {
 	public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
 	protected override IEnumerable<DynamicVar> CanonicalVars => [
-		new IntVar("CardAmount", 10),
+		new IntVar("CardAmount", 7),
 		new IntVar("PlayAmount", 2)
 	];
-	public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
 
 	public MimeticAmalgam() : base(3, CardType.Skill, CardRarity.Rare, TargetType.Self) {
 		
