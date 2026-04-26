@@ -1,6 +1,7 @@
-[gd_scene load_steps=9 format=3 uid="uid://gj2kprccyrsq"]
+[gd_scene load_steps=10 format=3 uid="uid://gj2kprccyrsq"]
 
 [ext_resource type="Texture2D" uid="uid://cvwjw4cm2ijry" path="res://TheGleaner/scenes/Character_Portrait.png" id="1_aqmbe"]
+[ext_resource type="Script" uid="uid://olijjxu0ukvv" path="res://src/DemoMod/TheGleaner/UI/NGleanerSelectScreen.cs" id="1_igmtv"]
 [ext_resource type="Texture2D" uid="uid://b3j40q6vt4k2r" path="res://TheGleaner/scenes/char_select/bg.png" id="2_d2xal"]
 [ext_resource type="Texture2D" uid="uid://c7i1ses01tud1" path="res://TheGleaner/images/vfx/optical_flare_vfx/dot.png" id="3_igmtv"]
 [ext_resource type="SpineSkeletonDataResource" uid="uid://ol6sakjo7psh" path="res://TheGleaner/scenes/char_select/gila_meshed.tres" id="4_qt788"]
@@ -30,6 +31,7 @@ offset_bottom = 137.0
 grow_horizontal = 2
 grow_vertical = 2
 pivot_offset = Vector2(1280, 600)
+script = ExtResource("1_igmtv")
 
 [node name="TextureRect" type="TextureRect" parent="."]
 visible = false
