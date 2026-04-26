@@ -1,0 +1,8 @@
+[gd_resource type="SpineSkeletonDataResource" load_steps=3 format=3 uid="uid://ol6sakjo7psh"]
+
+[ext_resource type="SpineAtlasResource" uid="uid://dr0dm6exb0j0g" path="res://TheGleaner/scenes/char_select/gila_meshed.atlas" id="1_3iu2h"]
+[ext_resource type="SpineSkeletonFileResource" uid="uid://nrk52liu5elj" path="res://TheGleaner/scenes/char_select/gila_meshed.skel" id="2_d2833"]
+
+[resource]
+atlas_res = ExtResource("1_3iu2h")
+skeleton_file_res = ExtResource("2_d2833")
