@@ -1,6 +1,7 @@
 using BaseLib.Abstracts;
 using BaseLib.Utils;
 using DemoMod.TheGleaner.Pools;
+using DemoMod.TheGleaner.Powers;
 using DemoMod.TheGleaner.Rewards;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Commands.Builders;
@@ -36,6 +37,7 @@ public class SightReaping : CustomCardModel {
 				return;
 			}
 			combatRoom.AddExtraReward(Owner, new CardTransformationReward(Owner));
+			await PowerCmd.Apply<SightReapingPower>(Owner.Creature, 1, Owner.Creature, this);
 		}
 	}
 
