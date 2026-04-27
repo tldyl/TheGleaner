@@ -2,6 +2,7 @@ using BaseLib.Abstracts;
 using BaseLib.Utils;
 using DemoMod.TheGleaner.Cards.TokenCards;
 using DemoMod.TheGleaner.Commands;
+using HarmonyLib;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Factories;
@@ -44,5 +45,7 @@ public class TwoCostAttacks : CustomCardModel, IChoosable {
     
     public void addVar(DynamicVar dynamicVar) {
         _dynamicVars.Add(dynamicVar);
+        Dictionary<string, DynamicVar> _vars = (Dictionary<string, DynamicVar>) AccessTools.Field(typeof(DynamicVarSet), "_vars").GetValue(DynamicVars);
+        _vars.TryAdd(dynamicVar.Name, dynamicVar);
     }
 }
