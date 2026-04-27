@@ -6,6 +6,7 @@ using MegaCrit.Sts2.Core.Helpers;
 using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Multiplayer.Messages.Game;
+using MegaCrit.Sts2.Core.Nodes.CommonUi;
 using MegaCrit.Sts2.Core.Rewards;
 using MegaCrit.Sts2.Core.Runs;
 
@@ -25,7 +26,7 @@ public class CardTransformationReward(Player player) : Reward(player) {
         });
         IEnumerable<CardModel> selectedCards = await CardSelectCmd.FromDeckForTransformation(player, new CardSelectorPrefs(new LocString("cards", "DEMOMOD-SIGHT_REAPING.rewardDescription"), 1));
         foreach (CardModel card in selectedCards) {
-            await CardCmd.TransformToRandom(card, player.RunState.Rng.Niche);
+            await CardCmd.TransformToRandom(card, player.RunState.Rng.Niche, CardPreviewStyle.EventLayout);
         }
         return true;
     }
