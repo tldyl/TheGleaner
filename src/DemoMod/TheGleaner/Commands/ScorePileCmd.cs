@@ -109,7 +109,7 @@ public static class ScorePileCmd {
 				pile.AddInternal(card, 0);
 				CardModel bottomCard = pile.Cards.Last();
 				pile.RemoveInternal(bottomCard);
-				PileType destPile = player.Creature.HasPower<StaffBurnoutPower>() ? PileType.Discard : PileType.Hand;
+				PileType destPile = PileType.Discard;
 				await CardPileCmd.Add(bottomCard, destPile);
 				destPile.GetPile(player).InvokeCardAddFinished();
 				if (player.Creature.HasPower<StaffBurnoutPower>()) {

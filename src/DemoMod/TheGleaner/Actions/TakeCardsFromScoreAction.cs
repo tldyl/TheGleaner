@@ -25,11 +25,7 @@ public class TakeCardsFromScoreAction : GameAction {
         ScorePile scorePile = ScorePileCmd.GetOrCreateScorePile(Player.PlayerCombatState);
         List<CardModel> selectedCards = (await ScorePileCmd.ShowScorePileScreen(Player.PlayerCombatState, new GameActionPlayerChoiceContext(this), Player)).ToList();
         if (selectedCards.Count > 0) {
-            int cost = Math.Max(0, selectedCards.Count - scorePile.freeTakeCount);
-            scorePile.freeTakeCount -= Math.Min(scorePile.freeTakeCount, selectedCards.Count);
-            if (cost > 0) {
-                await PlayerCmd.LoseEnergy(cost, Player);
-            }
+            scorePile.freeTakeCount--;
             selectedCards.ForEach(card => scorePile.RemoveInternal(card));
             await CardPileCmd.Add(selectedCards, PileType.Hand);
             foreach (CardModel card in selectedCards) {

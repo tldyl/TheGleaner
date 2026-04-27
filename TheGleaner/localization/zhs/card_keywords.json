@@ -10,6 +10,6 @@
   "DEMOMOD-PHRASE.title": "乐句",
   "DEMOMOD-PHRASE.description": "由[gold]噪声[/gold]转化而来的正面卡牌。",
   "DEMOMOD-SCORE.title": "乐谱",
-  "DEMOMOD-SCORE.description": "你可以随时从[gold]乐谱[/gold]中取出卡牌。\n[gold]乐谱[/gold]的容量上限等同于你卡组的四分之一。\n如果已经达到了上限，溢出的卡牌会被挤入你的手中。"
+  "DEMOMOD-SCORE.description": "每回合一次，你可以从[gold]乐谱[/gold]中取出任意张牌。\n[gold]乐谱[/gold]的容量上限等同于你卡组的四分之一。\n如果已经达到了上限，溢出的卡牌会被挤入弃牌堆中。"
   
 }
