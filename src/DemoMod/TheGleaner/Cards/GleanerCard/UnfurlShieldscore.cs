@@ -18,8 +18,8 @@ namespace DemoMod.TheGleaner.Cards.GleanerCard;
 public class UnfurlShieldscore : CustomCardModel {
     public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new BlockVar(3, ValueProp.Move),
         new IntVar("GleanAmount", 2),
+        new PowerVar<UnfurlShieldscorePower>(3)
     ];
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
         HoverTipFactory.FromPower<DexterityPower>(),
@@ -33,7 +33,7 @@ public class UnfurlShieldscore : CustomCardModel {
     }
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
-        await PowerCmd.Apply<UnfurlShieldscorePower>(Owner.Creature, DynamicVars.Block.PreviewValue, Owner.Creature, this);
+        await PowerCmd.Apply<UnfurlShieldscorePower>(Owner.Creature, DynamicVars["UnfurlShieldscorePower"].BaseValue, Owner.Creature, this);
         await ScorePileCmd.Glean(Owner, choiceContext, DynamicVars["GleanAmount"].BaseValue, this);
     }
     
