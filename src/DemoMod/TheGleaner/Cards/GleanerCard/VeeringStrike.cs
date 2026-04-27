@@ -2,15 +2,13 @@ using BaseLib.Abstracts;
 using BaseLib.Utils;
 using DemoMod.TheGleaner.Enums;
 using DemoMod.TheGleaner.Pools;
+using DemoMod.TheGleaner.Utils;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
-using MegaCrit.Sts2.Core.Commands.Builders;
 using MegaCrit.Sts2.Core.Entities.Cards;
-using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
-using MegaCrit.Sts2.Core.Nodes;
 using MegaCrit.Sts2.Core.ValueProps;
 
 namespace DemoMod.TheGleaner.Cards.GleanerCard;
@@ -47,11 +45,7 @@ public class VeeringStrike : CustomCardModel {
 		}
 
 		await CardCmd.AutoPlay(choiceContext, this, null);
-		if (pile.Cards.Count == 0 && NRun.Instance.CombatRoom.Ui.Hand.ActiveHolders.Any(holder => holder.CardModel is ScoreEntryCard)) {
-			NRun.Instance.CombatRoom.Ui.Hand.Remove(
-				NRun.Instance.CombatRoom.Ui.Hand.ActiveHolders.FirstOrDefault(holder => holder.CardModel is ScoreEntryCard).CardModel
-			);
-		}
+		GleanerVfxCmd.CheckScoreIsEmpty(Owner.PlayerCombatState);
 	}
 
 	protected override void OnUpgrade() {
