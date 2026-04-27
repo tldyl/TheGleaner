@@ -51,7 +51,11 @@ public class Procession : CustomCardModel, IAfterTakeCardsFromScore {
 	}
 	
 	protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(3);
+
 	public async Task AfterTakeCardsFromScore(CardModel card) {
+		if (Owner.Deck.Cards.Contains(this)) {
+			return;
+		}
 		EnergyCost.AddThisTurn(-DynamicVars["ReduceVal"].IntValue);
 		AccessTools.Method(typeof(NPlayerHand), "OnCombatStateChanged", [typeof(CombatState)]).Invoke(NRun.Instance.CombatRoom.Ui.Hand, [Owner.Creature.CombatState]);
 	}
