@@ -207,14 +207,16 @@
   "DEMOMOD-WHEN_THE_GRAIN_FLOWS_GOLD.title": "流金穗时",
   "DEMOMOD-WHEN_THE_GRAIN_FLOWS_GOLD.description": "从[gold]乐谱[/gold]中丢弃任意张牌，然后将[gold]抽牌堆[/gold]顶的卡牌放[gold]乐谱[/gold]直到上限。",
   "DEMOMOD-WHEN_THE_GRAIN_FLOWS_GOLD.selectionScreenPrompt": "选择任意张乐谱中的牌弃置",
-  "DEMOMOD-IMPROVISATION.title": "纺声闪",
-  "DEMOMOD-IMPROVISATION.description": "造成{Damage:diff()}点伤害。\n选择一个耗能值，将{Cards:diff()}张{IfUpgraded:show:升级过的|}其他角色对应耗能攻击牌放入[gold]乐谱[/gold]。",
+  "DEMOMOD-IMPROVISATION.title": "纺声-即兴",
+  "DEMOMOD-IMPROVISATION.description": "选择一个耗能值，将{Cards:diff()}张{IfUpgraded:show:升级过的|}其他角色对应耗能攻击牌放入[gold]乐谱[/gold]。",
+  "DEMOMOD-SONOWEAVE_FLASH.title": "纺声闪",
+  "DEMOMOD-SONOWEAVE_FLASH.description": "造成{Damage:diff()}点伤害。\n选择一个耗能值，将{Cards:diff()}张{IfUpgraded:show:升级过的|}其他角色对应耗能攻击牌放入[gold]乐谱[/gold]。",
   "DEMOMOD-ZERO_COST_ATTACKS.title": "皮亚尼西莫",
-  "DEMOMOD-ZERO_COST_ATTACKS.description": "将3张{IfUpgraded:show:升级过的|}其他角色的耗能0攻击牌放入[gold]乐谱[/gold]。",
+  "DEMOMOD-ZERO_COST_ATTACKS.description": "将{Cards:diff()}张{IfUpgraded:show:升级过的|}其他角色的耗能0攻击牌放入[gold]乐谱[/gold]。",
   "DEMOMOD-ONE_COST_ATTACKS.title": "梅佐皮亚诺",
-  "DEMOMOD-ONE_COST_ATTACKS.description": "将3张{IfUpgraded:show:升级过的|}其他角色的耗能1攻击牌放入[gold]乐谱[/gold]。",
+  "DEMOMOD-ONE_COST_ATTACKS.description": "将{Cards:diff()}张{IfUpgraded:show:升级过的|}其他角色的耗能1攻击牌放入[gold]乐谱[/gold]。",
   "DEMOMOD-TWO_COST_ATTACKS.title": "梅佐弗特",
-  "DEMOMOD-TWO_COST_ATTACKS.description": "将3张{IfUpgraded:show:升级过的|}其他角色的耗能2攻击牌放入[gold]乐谱[/gold]。",
+  "DEMOMOD-TWO_COST_ATTACKS.description": "将{Cards:diff()}张{IfUpgraded:show:升级过的|}其他角色的耗能2攻击牌放入[gold]乐谱[/gold]。",
   "DEMOMOD-THREE_OR_MORE_COST_ATTACKS.title": "弗帝西莫",
-  "DEMOMOD-THREE_OR_MORE_COST_ATTACKS.description": "将3张{IfUpgraded:show:升级过的|}其他角色耗能3+的攻击牌放入[gold]乐谱[/gold]。"
+  "DEMOMOD-THREE_OR_MORE_COST_ATTACKS.description": "将{Cards:diff()}张{IfUpgraded:show:升级过的|}其他角色耗能3+的攻击牌放入[gold]乐谱[/gold]。"
 }
