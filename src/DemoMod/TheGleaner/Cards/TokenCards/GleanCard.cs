@@ -27,4 +27,8 @@ public class GleanCard : CustomCardModel, IChoosable {
     public async Task OnChosen(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
         await ScorePileCmd.Glean(cardPlay.Card.Owner, choiceContext, DynamicVars["Amount"].BaseValue, cardPlay.Card);
     }
+    
+    public void addVar(DynamicVar dynamicVar) {
+        
+    }
 }
