@@ -23,12 +23,16 @@ public class Glissando : CustomCardModel {
 	public override bool GainsBlock => true;
 
 	protected override IEnumerable<DynamicVar> CanonicalVars => [
-		new DamageVar(7, ValueProp.Move),
-		new BlockVar(7, ValueProp.Move),
-		new IntVar("Amount", 1)
+		new IntVar("Amount", 1),
+		new DamageVar(6, ValueProp.Move),
+		new BlockVar(6, ValueProp.Move),
+		new PowerVar<VulnerablePower>(1)
 	];
 
-	protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<VulnerablePower>()];
+	protected override IEnumerable<IHoverTip> ExtraHoverTips => [
+		HoverTipFactory.FromPower<WeakPower>(),
+		HoverTipFactory.FromPower<VulnerablePower>()
+	];
 
 	public Glissando() : base(2, CardType.Attack, CardRarity.Basic, TargetType.AllEnemies) {
 	}
@@ -44,12 +48,25 @@ public class Glissando : CustomCardModel {
 			.TargetingAllOpponents(Owner.Creature.CombatState)
 			.WithNoAttackerAnim()
 			.Execute(choiceContext);
-		await PowerCmd.Apply<VulnerablePower>(
-			CombatState.HittableEnemies,
-			DynamicVars["Amount"].BaseValue,
-			Owner.Creature,
-			this
-		);
+		IEnumerable<DamageResult> damageResults = attackCommand.Results;
+
+		int count = damageResults.Count(result => result.WasTargetKilled);
+
+		if (count == damageResults.Count() - 1) {
+			await PowerCmd.Apply<WeakPower>(
+				CombatState.HittableEnemies,
+				DynamicVars["Amount"].BaseValue,
+				Owner.Creature,
+				this
+			);
+
+			await PowerCmd.Apply<VulnerablePower>(
+				CombatState.HittableEnemies,
+				DynamicVars.Vulnerable.BaseValue,
+				Owner.Creature,
+				this
+			);
+		}
 	}
 
 	protected override void OnUpgrade() {
