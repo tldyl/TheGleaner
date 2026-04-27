@@ -24,8 +24,11 @@ public class Glissando : CustomCardModel {
 
 	protected override IEnumerable<DynamicVar> CanonicalVars => [
 		new DamageVar(7, ValueProp.Move),
-		new BlockVar(7, ValueProp.Move)
+		new BlockVar(7, ValueProp.Move),
+		new IntVar("Amount", 1)
 	];
+
+	protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<VulnerablePower>()];
 
 	public Glissando() : base(2, CardType.Attack, CardRarity.Basic, TargetType.AllEnemies) {
 	}
@@ -41,6 +44,12 @@ public class Glissando : CustomCardModel {
 			.TargetingAllOpponents(Owner.Creature.CombatState)
 			.WithNoAttackerAnim()
 			.Execute(choiceContext);
+		await PowerCmd.Apply<VulnerablePower>(
+			CombatState.HittableEnemies,
+			DynamicVars["Amount"].BaseValue,
+			Owner.Creature,
+			this
+		);
 	}
 
 	protected override void OnUpgrade() {
