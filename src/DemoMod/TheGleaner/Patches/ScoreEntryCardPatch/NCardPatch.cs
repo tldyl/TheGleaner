@@ -9,6 +9,7 @@ using MegaCrit.Sts2.Core.Assets;
 using MegaCrit.Sts2.Core.Context;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Players;
+using MegaCrit.Sts2.Core.Helpers;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Nodes.Cards;
@@ -108,7 +109,7 @@ public class NCardPatch {
     public static class PatchReady {
         public static void Prefix(NCard __instance) {
             if (__instance.GetNode<TextureRect>("%EnergyIcon").HasNode("GleanerResonanceGlowIcon")) {
-                return;
+                __instance.GetNode<TextureRect>("%EnergyIcon").RemoveChild(__instance.GetNode<TextureRect>("%EnergyIcon").GetNode("GleanerResonanceGlowIcon"));
             }
             Node2D gleanerResonanceGlowIcon = PreloadManager.Cache.GetScene("res://TheGleaner/scenes/resonance_glow_icon.tscn").Instantiate<Node2D>();
             TextureRect glowIcon = gleanerResonanceGlowIcon.GetNode<TextureRect>("Icon");
@@ -197,9 +198,7 @@ public class NCardPatch {
             if (__instance.Model == null) {
                 return;
             }
-            if (!__instance.GetNode<TextureRect>("%EnergyIcon").HasNode("GleanerResonanceGlowIcon")) {
-                PatchReady.Prefix(__instance);
-            }
+            PatchReady.Prefix(__instance);
             __instance.GetNode<TextureRect>("%EnergyIcon")
                 .GetNode<Node2D>("GleanerResonanceGlowIcon").Visible = 
                 __instance.Model.Keywords.Contains(CustomEnums.Resonance) && __instance.Model.Pile is {IsCombatPile: true};
