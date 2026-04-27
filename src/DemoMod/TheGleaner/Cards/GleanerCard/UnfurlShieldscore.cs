@@ -16,26 +16,26 @@ namespace DemoMod.TheGleaner.Cards.GleanerCard;
 
 [Pool(typeof(CardPool))]
 public class UnfurlShieldscore : CustomCardModel {
-    public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
-    protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new IntVar("GleanAmount", 2),
-        new PowerVar<UnfurlShieldscorePower>(3)
-    ];
-    protected override IEnumerable<IHoverTip> ExtraHoverTips => [
-        HoverTipFactory.FromPower<DexterityPower>(),
-        HoverTipFactory.FromKeyword(CustomEnums.Glean),
-        HoverTipFactory.Static(StaticHoverTip.Block),
-        HoverTipFactory.FromKeyword(CustomEnums.Score)
-    ];
+	public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
+	protected override IEnumerable<DynamicVar> CanonicalVars => [
+		new IntVar("GleanAmount", 2),
+		new PowerVar<UnfurlShieldscorePower>(2)
+	];
+	protected override IEnumerable<IHoverTip> ExtraHoverTips => [
+		HoverTipFactory.FromPower<DexterityPower>(),
+		HoverTipFactory.FromKeyword(CustomEnums.Glean),
+		HoverTipFactory.Static(StaticHoverTip.Block),
+		HoverTipFactory.FromKeyword(CustomEnums.Score)
+	];
 
-    public UnfurlShieldscore() : base(2, CardType.Power, CardRarity.Uncommon, TargetType.Self) {
-        
-    }
+	public UnfurlShieldscore() : base(2, CardType.Power, CardRarity.Uncommon, TargetType.Self) {
+		
+	}
 
-    protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
-        await PowerCmd.Apply<UnfurlShieldscorePower>(Owner.Creature, DynamicVars["UnfurlShieldscorePower"].BaseValue, Owner.Creature, this);
-        await ScorePileCmd.Glean(Owner, choiceContext, DynamicVars["GleanAmount"].BaseValue, this);
-    }
-    
-    protected override void OnUpgrade() => DynamicVars["GleanAmount"].UpgradeValueBy(2);
+	protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
+		await PowerCmd.Apply<UnfurlShieldscorePower>(Owner.Creature, DynamicVars["UnfurlShieldscorePower"].BaseValue, Owner.Creature, this);
+		await ScorePileCmd.Glean(Owner, choiceContext, DynamicVars["GleanAmount"].BaseValue, this);
+	}
+	
+	protected override void OnUpgrade() => DynamicVars["UnfurlShieldscorePower"].UpgradeValueBy(1);
 }
