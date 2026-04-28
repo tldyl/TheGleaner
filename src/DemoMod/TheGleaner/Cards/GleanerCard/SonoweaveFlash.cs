@@ -38,9 +38,6 @@ public class SonoweaveFlash : CustomCardModel {
 				foreach (CardModel card in optionCards) {
 					card.Owner = Owner;
 					((IChoosable) card).addVar(DynamicVars.Cards);
-					if (IsUpgraded) {
-						CardCmd.Upgrade(card);
-					}
 				}
 			}
 			return optionCards;
@@ -61,6 +58,9 @@ public class SonoweaveFlash : CustomCardModel {
 			await ((IChoosable) chosenCard).OnChosen(choiceContext, cardPlay);
 		}
 	}
-	
-	protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(2);
+
+	protected override void OnUpgrade() {
+		DynamicVars.Damage.UpgradeValueBy(2);
+		DynamicVars.Cards.UpgradeValueBy(1);
+	} 
 }

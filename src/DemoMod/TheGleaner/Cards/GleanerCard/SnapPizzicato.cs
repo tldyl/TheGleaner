@@ -19,9 +19,8 @@ namespace DemoMod.TheGleaner.Cards.GleanerCard;
 public class SnapPizzicato : CustomCardModel {
 	public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
 	protected override IEnumerable<DynamicVar> CanonicalVars => [
-		new DamageVar(6, ValueProp.Move),
-		new EnergyVar(2),
-		new RepeatVar(2)
+		new DamageVar(12, ValueProp.Move),
+		new EnergyVar(2)
 	];
 	protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.ForEnergy(this), HoverTipFactory.FromKeyword(CustomEnums.Score)];
 
@@ -45,7 +44,6 @@ public class SnapPizzicato : CustomCardModel {
 		AttackCommand _ = await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
 			.FromCard(this)
 			.WithNoAttackerAnim()
-			.WithHitCount(DynamicVars.Repeat.IntValue)
 			.Targeting(cardPlay.Target)
 			.Execute(choiceContext);
 		if (ShouldGlowGoldInternal) {
@@ -54,6 +52,6 @@ public class SnapPizzicato : CustomCardModel {
 	}
 
 	protected override void OnUpgrade() {
-		DynamicVars.Damage.UpgradeValueBy(2);
+		DynamicVars.Damage.UpgradeValueBy(4);
 	}
 }

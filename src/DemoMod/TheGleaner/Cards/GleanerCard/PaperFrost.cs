@@ -28,28 +28,29 @@ public class PaperFrost : CustomCardModel {
 		HoverTipFactory.FromKeyword(CustomEnums.Score)
 	];
 
+	public override async Task BeforeCombatStart() {
+		if (!IsInCombat || CombatState == null || Owner.Deck.Cards.Contains(this)) {
+			return;
+		}
+		
+		await ScorePileCmd.AddCards(Owner.PlayerCombatState, Owner, this);
+	}
+	
 	public PaperFrost() : base(0, CardType.Skill, CardRarity.Uncommon, TargetType.AnyEnemy) {
 	}
 
 	protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
 		if (CurrentUpgradeLevel > 0) {
-			await PowerCmd.Apply<PaperFrostPower>(
-				CombatState.HittableEnemies,
-				DynamicVars["Amount"].BaseValue,
-				Owner.Creature,
-				this
-			);
-		} else {
-			await PowerCmd.Apply<PaperFrostPower>(
-				cardPlay.Target,
-				DynamicVars["Amount"].BaseValue,
-				Owner.Creature,
-				this
-			);
+			CardModel cpy = CreateClone();
+			cpy.DowngradeInternal();
+			await ScorePileCmd.AddCards(Owner.PlayerCombatState, Owner, cpy);
+			CardCmd.Preview(cpy);
 		}
-	}
-
-	protected override void OnUpgrade() {
-		AccessTools.Field(typeof(CardModel), "<TargetType>k__BackingField").SetValue(this, TargetType.AllEnemies);
+		await PowerCmd.Apply<PaperFrostPower>(
+			cardPlay.Target,
+			DynamicVars["Amount"].BaseValue,
+			Owner.Creature,
+			this
+		);
 	}
 }

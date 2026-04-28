@@ -25,65 +25,45 @@ using MegaCrit.Sts2.Core.Settings;
 using MegaCrit.Sts2.Core.ValueProps;
 
 namespace DemoMod.TheGleaner.Cards.GleanerCard;
-
 [Pool(typeof(CardPool))]
-public class Bisbigliando : CustomCardModel
-{
-	public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
+public class Bisbigliando : CustomCardModel {
+    public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
 
-	protected override bool ShouldGlowGoldInternal => !HasBeenPlayedThisTurn;
-	
-	protected override IEnumerable<DynamicVar> CanonicalVars => [
-		new DamageVar(3, ValueProp.Move)
-	];
-	protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromKeyword(CustomEnums.Score)];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [
+        new DamageVar(3, ValueProp.Move)
+    ];
 
-	public Bisbigliando() : base(0, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy)
-	{
-	}
+    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromKeyword(CustomEnums.Score)];
 
-	protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
-	{
-		GleanerVfxCmd.PlayOnCreature(cardPlay.Target, "res://TheGleaner/scenes/vfx/arrow_attack.tscn", 0.3f);
-		await CreatureCmd.TriggerAnim(Owner.Creature, "Attack", 0.5f);
-		GleanerVfxCmd.PlayOnCreature(cardPlay.Target, "res://TheGleaner/scenes/vfx/arrow_hit_vfx.tscn");
-		await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
-			.FromCard(this)
-			.WithNoAttackerAnim()
-			.Targeting(cardPlay.Target)
-			.Execute(choiceContext);
+    public Bisbigliando() : base(0, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy) {
+    }
 
-		if (!HasBeenPlayedThisTurn) {
-			await ScorePileCmd.AddCards(Owner.PlayerCombatState, Owner, this);
+    protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
+        GleanerVfxCmd.PlayOnCreature(cardPlay.Target, "res://TheGleaner/scenes/vfx/arrow_attack.tscn", 0.3f);
+        await CreatureCmd.TriggerAnim(Owner.Creature, "Attack", 0.5f);
+        GleanerVfxCmd.PlayOnCreature(cardPlay.Target, "res://TheGleaner/scenes/vfx/arrow_hit_vfx.tscn");
+        await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
+            .FromCard(this)
+            .WithNoAttackerAnim()
+            .Targeting(cardPlay.Target)
+            .Execute(choiceContext);
 
-			NCard cardNode = NCombatRoom.Instance?.Ui.GetCardFromPlayContainer(this);
-			if (cardNode != null) {
-				Tween tween = NCombatRoom.Instance.CreateTween().SetParallel();
-				tween.Parallel().TweenProperty(
-					cardNode,
-					(NodePath)"modulate",
-					StsColors.exhaustGray,
-					SaveManager.Instance.PrefsSave.FastMode == FastModeType.Fast ? 0.2 : 0.3
-				);
-				tween.Chain().TweenCallback(Callable.From(cardNode.QueueFreeSafely));
-			}
-		}
-	}
+        await ScorePileCmd.AddCards(Owner.PlayerCombatState, Owner, this);
 
-	protected override void OnUpgrade()
-	{
-		DynamicVars.Damage.UpgradeValueBy(2);
-	}
+        NCard cardNode = NCombatRoom.Instance?.Ui.GetCardFromPlayContainer(this);
+        if (cardNode != null) {
+            Tween tween = NCombatRoom.Instance.CreateTween().SetParallel();
+            tween.Parallel().TweenProperty(
+                cardNode,
+                (NodePath)"modulate",
+                StsColors.exhaustGray,
+                SaveManager.Instance.PrefsSave.FastMode == FastModeType.Fast ? 0.2 : 0.3
+            );
+            tween.Chain().TweenCallback(Callable.From(cardNode.QueueFreeSafely));
+        }
+    }
 
-	private bool HasBeenPlayedThisTurn
-	{
-		get
-		{
-			return CombatManager.Instance.History.CardPlaysFinished.Any(
-				(CardPlayFinishedEntry e) =>
-					e.CardPlay.Card == this &&
-					e.HappenedThisTurn(CombatState)
-			);
-		}
-	}
+    protected override void OnUpgrade() {
+        DynamicVars.Damage.UpgradeValueBy(2);
+    }
 }

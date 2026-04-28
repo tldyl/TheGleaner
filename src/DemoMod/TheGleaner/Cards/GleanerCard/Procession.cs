@@ -42,12 +42,6 @@ public class Procession : CustomCardModel, IAfterTakeCardsFromScore {
 		IEnumerable<DamageResult> damageResults = await CreatureCmd.Damage(choiceContext, CombatState.HittableEnemies, DynamicVars.Damage, Owner.Creature,
 			this);
 		context.AddHit(damageResults);
-		int count = damageResults.Count(result => result.WasTargetKilled);
-		if (count == damageResults.Count() - 1) {
-			GleanerVfxCmd.PlayVfx(new Vector2(windowSize.X * 0.65f, windowSize.Y * 0.5f), "res://TheGleaner/scenes/vfx/aoe_attack.tscn");
-			IEnumerable<DamageResult> _ = await CreatureCmd.Damage(choiceContext, CombatState.HittableEnemies, DynamicVars.Damage, Owner.Creature,
-				this);
-		}
 	}
 	
 	protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(3);

@@ -1,6 +1,7 @@
 using BaseLib.Abstracts;
 using BaseLib.Utils;
 using MegaCrit.Sts2.Core.Commands;
+using MegaCrit.Sts2.Core.Commands.Builders;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
@@ -18,8 +19,7 @@ public class PulsationOfTheTides : CustomCardModel {
 	public override bool HasBuiltInOverlay => true;
 	public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
 	protected override IEnumerable<DynamicVar> CanonicalVars => [
-		new DamageVar(12, ValueProp.Move),
-		new IntVar("StrMul", 2)
+		new DamageVar(12, ValueProp.Move)
 	];
 	
 	protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<StrengthPower>()];
@@ -31,31 +31,17 @@ public class PulsationOfTheTides : CustomCardModel {
 
 	protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
 		await CreatureCmd.TriggerAnim(Owner.Creature, "Attack", 0.5f);
+		await using AttackContext context = await AttackCommand.CreateContextAsync(Owner.Creature.CombatState, this);
 		IEnumerable<DamageResult> damageResults = await CreatureCmd.Damage(choiceContext, CombatState.HittableEnemies, DynamicVars.Damage, Owner.Creature,
 			this);
+		context.AddHit(damageResults);
 		int count = damageResults.Count(result => result.WasTargetKilled);
 		if (count == damageResults.Count() - 1) {
 			IEnumerable<DamageResult> _ = await CreatureCmd.Damage(choiceContext, CombatState.HittableEnemies, DynamicVars.Damage, Owner.Creature,
 				this);
+			context.AddHit(_);
 		}
-	}
-	
-	public override Decimal ModifyDamageAdditive(
-		Creature? target,
-		Decimal amount,
-		ValueProp props,
-		Creature? dealer,
-		CardModel? cardSource) {
-		if (cardSource == this && !props.HasFlag(ValueProp.Unpowered)) {
-			int strAmount = 0;
-			if (dealer != null && dealer.Powers.Any(p => p is StrengthPower)) {
-				StrengthPower strengthPower = dealer.Powers.First(p => p is StrengthPower) as StrengthPower;
-				strAmount = strengthPower.Amount;
-			}
-			return strAmount * (DynamicVars["StrMul"].BaseValue - 1M);
-		}
-		return 0M;
 	}
 
-	protected override void OnUpgrade() => DynamicVars["StrMul"].UpgradeValueBy(2);
+	protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(4);
 }

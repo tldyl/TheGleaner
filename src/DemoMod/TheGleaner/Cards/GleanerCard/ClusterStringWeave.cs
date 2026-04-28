@@ -36,11 +36,6 @@ public class ClusterStringWeave : CustomCardModel {
 		if (!IsInCombat || CombatState == null || Owner.Deck.Cards.Contains(this)) {
 			return;
 		}
-
-		if (IsUpgraded) {
-			CardModel cpy = CreateClone();
-			await ScorePileCmd.AddCards(Owner.PlayerCombatState, Owner, cpy);
-		}
 		
 		await ScorePileCmd.AddCards(Owner.PlayerCombatState, Owner, this);
 	}
@@ -100,6 +95,12 @@ public class ClusterStringWeave : CustomCardModel {
 			} else {
 				clusterStrike.RemoveFromCurrentPile();
 				await CardPileCmd.Add(clusterStrike, PileType.Hand.GetPile(Owner));
+			}
+			if (IsUpgraded) {
+				CardModel cpy = CreateClone();
+				cpy.DowngradeInternal();
+				await ScorePileCmd.AddCards(Owner.PlayerCombatState, Owner, cpy);
+				CardCmd.Preview(cpy);
 			}
 		}
 	}

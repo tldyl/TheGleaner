@@ -39,9 +39,6 @@ public class Improvisation : CustomCardModel {
                 foreach (CardModel card in optionCards) {
                     card.Owner = Owner;
                     ((IChoosable) card).addVar(DynamicVars.Cards);
-                    if (IsUpgraded) {
-                        CardCmd.Upgrade(card);
-                    }
                 }
             }
             return optionCards;
@@ -57,4 +54,6 @@ public class Improvisation : CustomCardModel {
             await ((IChoosable) chosenCard).OnChosen(choiceContext, cardPlay);
         }
     }
+
+    protected override void OnUpgrade() => DynamicVars.Cards.UpgradeValueBy(1);
 }

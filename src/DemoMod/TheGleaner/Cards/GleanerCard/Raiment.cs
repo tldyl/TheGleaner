@@ -37,7 +37,7 @@ public class Raiment : CustomCardModel {
 	}
 	
 	protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
-		foreach (CardModel allCard in Owner.PlayerCombatState.AllCards) {
+		foreach (CardModel allCard in Owner.PlayerCombatState.AllCards.Where(c => c.Type == CardType.Attack)) {
 			List<EnchantmentModel> enchantments = [ModelDb.Enchantment<Swift>(), ModelDb.Enchantment<Sown>(), ModelDb.Enchantment<Glam>()];
 			Owner.RunState.Rng.Shuffle.Shuffle(enchantments);
 			foreach (EnchantmentModel enchantment in enchantments) {
