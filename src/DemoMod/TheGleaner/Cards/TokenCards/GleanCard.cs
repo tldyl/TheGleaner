@@ -20,7 +20,7 @@ public class GleanCard : CustomCardModel, IChoosable {
         new IntVar("Amount", 1)
     ];
 
-    public GleanCard() : base(-1, CardType.Skill, CardRarity.Token, TargetType.None) {
+    public GleanCard() : base(-1, CardType.Skill, CardRarity.Common, TargetType.None) {
         
     }
 

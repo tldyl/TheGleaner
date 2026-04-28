@@ -15,7 +15,7 @@ public class Shuffle : CustomCardModel, IChoosable {
     public override bool CanBeGeneratedInCombat => false;
     public override int MaxUpgradeLevel => 0;
     
-    public Shuffle() : base(-1, CardType.Skill, CardRarity.Token, TargetType.None) {
+    public Shuffle() : base(-1, CardType.Skill, CardRarity.Common, TargetType.None) {
         
     }
 
