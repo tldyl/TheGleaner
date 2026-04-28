@@ -49,14 +49,6 @@ public class PaperFrost : CustomCardModel {
 		}
 	}
 
-	public override async Task BeforeCombatStart() {
-		if (!IsInCombat || CombatState == null || Owner.Deck.Cards.Contains(this)) {
-			return;
-		}
-
-		await ScorePileCmd.AddCards(Owner.PlayerCombatState, Owner, this);
-	}
-
 	protected override void OnUpgrade() {
 		AccessTools.Field(typeof(CardModel), "<TargetType>k__BackingField").SetValue(this, TargetType.AllEnemies);
 	}

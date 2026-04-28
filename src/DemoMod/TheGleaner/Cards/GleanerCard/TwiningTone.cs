@@ -20,11 +20,11 @@ public class TwiningTone : CustomCardModel {
 
 	protected override IEnumerable<DynamicVar> CanonicalVars => [
 		new DamageVar(7, ValueProp.Move),
-		new ExtraDamageVar(2)
+		new ExtraDamageVar(3)
 	];
 	protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromKeyword(CustomEnums.Score)];
 
-	public TwiningTone() : base(1, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy) {
+	public TwiningTone() : base(1, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy) {
 	}
 
 	protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
@@ -55,6 +55,6 @@ public class TwiningTone : CustomCardModel {
 	}
 
 	protected override void OnUpgrade() {
-		DynamicVars.Damage.UpgradeValueBy(3);	
+		DynamicVars.Damage.UpgradeValueBy(3);
 	}
 }

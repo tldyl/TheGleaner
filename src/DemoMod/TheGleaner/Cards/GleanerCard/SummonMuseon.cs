@@ -1,15 +1,20 @@
 using BaseLib.Abstracts;
 using BaseLib.Utils;
 using DemoMod.TheGleaner.Commands;
+using DemoMod.TheGleaner.Enums;
 using DemoMod.TheGleaner.Pools;
+using DemoMod.TheGleaner.Utils;
+using Godot;
 using MegaCrit.Sts2.Core.CardSelection;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Commands.Builders;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Nodes;
 using MegaCrit.Sts2.Core.ValueProps;
 
 namespace DemoMod.TheGleaner.Cards.GleanerCard;
@@ -17,34 +22,41 @@ namespace DemoMod.TheGleaner.Cards.GleanerCard;
 [Pool(typeof(CardPool))]
 public class SummonMuseon : CustomCardModel {
 	public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
-
 	protected override IEnumerable<DynamicVar> CanonicalVars => [
-		new BlockVar(4, ValueProp.Move),
+		new DamageVar(15, ValueProp.Move),
 		new CardsVar(1)
 	];
+	protected override IEnumerable<IHoverTip> ExtraHoverTips => [
+		HoverTipFactory.FromKeyword(CustomEnums.Score)
+	];
 
-public override bool GainsBlock => true;
-
-	public SummonMuseon() : base(1, CardType.Skill, CardRarity.Common, TargetType.Self) {
+	public SummonMuseon() : base(2, CardType.Attack, CardRarity.Uncommon, TargetType.AllEnemies) {
 		
 	}
 
 	protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
-		await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, cardPlay);
+		Vector2 windowSize = NRun.Instance.CombatRoom.Ui.GetViewport().GetVisibleRect().Size;
+		GleanerVfxCmd.PlayVfx(new Vector2(windowSize.X * 0.65f, windowSize.Y * 0.5f), "res://TheGleaner/scenes/vfx/aoe_attack.tscn", 0.5f);
+		await CreatureCmd.TriggerAnim(Owner.Creature, "AoEAttack", 0.5f);
+		AttackCommand _ = await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
+			.FromCard(this)
+			.TargetingAllOpponents(Owner.Creature.CombatState)
+			.WithNoAttackerAnim()
+			.Execute(choiceContext);
 		
-		CardPile discardPile = PileType.Discard.GetPile(Owner);
-		if (discardPile.Cards.Count == 0) {
+		CardPile drawPile = PileType.Draw.GetPile(Owner);
+		if (drawPile.Cards.Count == 0) {
 			return;
 		}
 
 		CardSelectorPrefs prefs = new CardSelectorPrefs(
-			new LocString("cards", "DEMOMOD-RECLAIMING_THE_STRAY.selectionScreenPrompt"),
+			new LocString("cards", "DEMOMOD-INTROIT.selectionScreenPrompt"),
 			DynamicVars.Cards.IntValue
 		);
 
 		IEnumerable<CardModel> selectedCards = await CardSelectCmd.FromSimpleGrid(
 			choiceContext,
-			discardPile.Cards,
+			drawPile.Cards,
 			Owner,
 			prefs
 		);
@@ -52,8 +64,6 @@ public override bool GainsBlock => true;
 			await ScorePileCmd.AddCards(Owner.PlayerCombatState, Owner, selectedCard);
 		}
 	}
-
-	protected override void OnUpgrade() {
-		DynamicVars.Block.UpgradeValueBy(3);
-	}
+	
+	protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(4);
 }

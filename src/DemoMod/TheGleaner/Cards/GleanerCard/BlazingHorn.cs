@@ -15,36 +15,40 @@ namespace DemoMod.TheGleaner.Cards.GleanerCard;
 [Pool(typeof(CardPool))]
 public class BlazingHorn : CustomCardModel, IConcertoCard
 {
-	public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
+    public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
 
-	protected override IEnumerable<DynamicVar> CanonicalVars => [
-		new CardsVar(4),
-		new EnergyVar("Energy2", 1)
-	];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [
+        new CardsVar(4),
+        new EnergyVar("Energy", 1),
+        new EnergyVar("Energy2", 1)
+    ];
 
-	protected override IEnumerable<IHoverTip> ExtraHoverTips => [
-		HoverTipFactory.ForEnergy(this),
-		HoverTipFactory.FromPower<NoDrawPower>(),
-		HoverTipFactory.FromKeyword(CustomEnums.Concerto)
-	];
+    protected override IEnumerable<IHoverTip> ExtraHoverTips => [
+        HoverTipFactory.ForEnergy(this),
+        HoverTipFactory.FromPower<NoDrawPower>(),
+        HoverTipFactory.FromKeyword(CustomEnums.Concerto)
+    ];
 
-	public BlazingHorn() : base(3, CardType.Skill, CardRarity.Uncommon, TargetType.Self)
-	{
-	}
+    public BlazingHorn() : base(3, CardType.Skill, CardRarity.Uncommon, TargetType.Self)
+    {
+    }
 
-	protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
-	{
-		await CardPileCmd.Draw(choiceContext, DynamicVars.Cards.BaseValue, Owner, false);
-		await PowerCmd.Apply<NoDrawPower>(Owner.Creature, 1, Owner.Creature, this, false);
-	}
+    protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
+    {
+        await PlayerCmd.GainEnergy(DynamicVars["Energy"].BaseValue, Owner);
+        await CardPileCmd.Draw(choiceContext, DynamicVars.Cards.BaseValue, Owner, false);
+        await PowerCmd.Apply<NoDrawPower>(Owner.Creature, 1, Owner.Creature, this, false);
+    }
 
-	public async Task OnConcerto(CombatState combatState, PlayerChoiceContext choiceContext, CardPlay cardPlay)
-	{
-		await PlayerCmd.GainEnergy(DynamicVars["Energy2"].BaseValue, Owner);
-	}
+    public async Task OnConcerto(CombatState combatState, PlayerChoiceContext choiceContext, CardPlay cardPlay)
+    {
+        await PlayerCmd.GainEnergy(DynamicVars["Energy2"].BaseValue, Owner);
+    }
 
-	protected override void OnUpgrade()
-	{
-		DynamicVars.Cards.UpgradeValueBy(2);
-	}
+    protected override void OnUpgrade()
+    {
+        DynamicVars.Cards.UpgradeValueBy(2);
+        DynamicVars["Energy"].UpgradeValueBy(1);
+        DynamicVars["Energy2"].UpgradeValueBy(1);
+    }
 }

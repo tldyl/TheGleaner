@@ -15,7 +15,7 @@ public class SwapPiles : CustomCardModel, IChoosable {
     public override bool CanBeGeneratedInCombat => false;
     public override int MaxUpgradeLevel => 0;
 
-    public SwapPiles() : base(-1, CardType.Skill, CardRarity.Token, TargetType.None) {
+    public SwapPiles() : base(-1, CardType.Skill, CardRarity.Common, TargetType.None) {
         
     }
 
