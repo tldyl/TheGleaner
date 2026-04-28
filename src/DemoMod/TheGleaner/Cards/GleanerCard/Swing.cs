@@ -9,6 +9,7 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models.Powers;
+using MegaCrit.Sts2.Core.ValueProps;
 
 namespace DemoMod.TheGleaner.Cards.GleanerCard;
 
@@ -18,14 +19,16 @@ public class Swing : CustomCardModel, IConcertoCard
     public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new IntVar("VigorVal", 5),
+        new BlockVar(9, ValueProp.Move),
+        new PowerVar<WeakPower>(1),
         new IntVar("VulVal", 2)
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
+        HoverTipFactory.Static(StaticHoverTip.Block),
         HoverTipFactory.FromKeyword(CustomEnums.Concerto),
-        HoverTipFactory.FromPower<VulnerablePower>(),
-        HoverTipFactory.FromPower<VigorPower>()
+        HoverTipFactory.FromPower<WeakPower>(),
+        HoverTipFactory.FromPower<VulnerablePower>()
     ];
 
     public Swing() : base(2, CardType.Skill, CardRarity.Common, TargetType.None)
@@ -34,12 +37,20 @@ public class Swing : CustomCardModel, IConcertoCard
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await PowerCmd.Apply<VigorPower>(Owner.Creature, DynamicVars["VigorVal"].BaseValue, Owner.Creature, this);
+        await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, cardPlay);
+
+        await PowerCmd.Apply<WeakPower>(
+            Owner.Creature.CombatState.HittableEnemies,
+            DynamicVars["WeakPower"].BaseValue,
+            Owner.Creature,
+            this
+        );
     }
 
     protected override void OnUpgrade()
     {
-        DynamicVars["VigorVal"].UpgradeValueBy(2);
+        DynamicVars.Block.UpgradeValueBy(1);
+        DynamicVars["WeakPower"].UpgradeValueBy(1);
     }
 
     public async Task OnConcerto(CombatState combatState, PlayerChoiceContext choiceContext, CardPlay cardPlay)
