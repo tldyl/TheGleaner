@@ -25,7 +25,7 @@ public class VeeringStrike : CustomCardModel {
 		HoverTipFactory.FromKeyword(CustomEnums.Score)
 	];
 
-	public VeeringStrike() : base(2, CardType.Attack, CardRarity.Common, TargetType.RandomEnemy) {
+	public VeeringStrike() : base(2, CardType.Attack, CardRarity.Uncommon, TargetType.RandomEnemy) {
 	}
 
 	protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
