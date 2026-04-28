@@ -218,5 +218,7 @@
   "DEMOMOD-TWO_COST_ATTACKS.title": "梅佐弗特",
   "DEMOMOD-TWO_COST_ATTACKS.description": "将{Cards:diff()}张{IfUpgraded:show:升级过的|}其他角色的耗能2攻击牌放入[gold]乐谱[/gold]。",
   "DEMOMOD-THREE_OR_MORE_COST_ATTACKS.title": "弗帝西莫",
-  "DEMOMOD-THREE_OR_MORE_COST_ATTACKS.description": "将{Cards:diff()}张{IfUpgraded:show:升级过的|}其他角色耗能3+的攻击牌放入[gold]乐谱[/gold]。"
+  "DEMOMOD-THREE_OR_MORE_COST_ATTACKS.description": "将{Cards:diff()}张{IfUpgraded:show:升级过的|}其他角色耗能3+的攻击牌放入[gold]乐谱[/gold]。",
+  "DEMOMOD-TEST_ATTACK.title": "测试攻击",
+  "DEMOMOD-TEST_ATTACK.description": "造成{Damage:diff()}伤害。"
 }

@@ -19,7 +19,7 @@ public class ThreeOrMoreCostAttacks : CustomCardModel, IChoosable {
     public override bool CanBeGeneratedInCombat => false;
     private List<DynamicVar> _dynamicVars = [];
 
-    public ThreeOrMoreCostAttacks() : base(-1, CardType.Skill, CardRarity.Token, TargetType.None) {
+    public ThreeOrMoreCostAttacks() : base(-1, CardType.Skill, CardRarity.Common, TargetType.None) {
         
     }
 

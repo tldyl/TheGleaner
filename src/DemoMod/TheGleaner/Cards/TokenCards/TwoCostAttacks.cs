@@ -19,7 +19,7 @@ public class TwoCostAttacks : CustomCardModel, IChoosable {
     public override bool CanBeGeneratedInCombat => false;
     private List<DynamicVar> _dynamicVars = [];
 
-    public TwoCostAttacks() : base(-1, CardType.Skill, CardRarity.Token, TargetType.None) {
+    public TwoCostAttacks() : base(-1, CardType.Skill, CardRarity.Common, TargetType.None) {
         
     }
 

@@ -18,7 +18,7 @@ public class ZeroCostAttacks : CustomCardModel, IChoosable {
     public override bool CanBeGeneratedInCombat => false;
     private List<DynamicVar> _dynamicVars = [];
 
-    public ZeroCostAttacks() : base(-1, CardType.Skill, CardRarity.Token, TargetType.None) {
+    public ZeroCostAttacks() : base(-1, CardType.Skill, CardRarity.Common, TargetType.None) {
         
     }
 
