@@ -25,7 +25,7 @@ public class EchoingArrow : CustomCardModel, IArrowCard {
 	];
 	protected override HashSet<CardTag> CanonicalTags => [CustomEnums.Arrow];
 
-	public EchoingArrow() : base(1, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy) {
+	public EchoingArrow() : base(1, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy) {
 		
 	}
 
