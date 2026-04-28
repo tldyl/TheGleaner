@@ -1,0 +1,75 @@
+[gd_scene load_steps=10 format=3 uid="uid://buw2q56mlble6"]
+
+[ext_resource type="Texture2D" uid="uid://cft0r3trylxb2" path="res://TheGleaner/images/vfx/cluster_strike_vfx/arrow1/jian1_00000.png" id="1_kb5c2"]
+[ext_resource type="Texture2D" uid="uid://chjxk3nem5ahq" path="res://TheGleaner/images/vfx/cluster_strike_vfx/arrow2/jian2_00003.png" id="2_j38dd"]
+[ext_resource type="Texture2D" uid="uid://ca5gd0e3kyslo" path="res://TheGleaner/images/vfx/cluster_strike_vfx/arrow2/jian2_00004.png" id="3_mrv5a"]
+[ext_resource type="Texture2D" uid="uid://ce88kxopf6ok4" path="res://TheGleaner/images/vfx/cluster_strike_vfx/arrow2/jian2_00005.png" id="4_iqkqh"]
+[ext_resource type="Texture2D" uid="uid://bps17dqlnnib8" path="res://TheGleaner/images/vfx/cluster_strike_vfx/arrow2/jian2_00006.png" id="5_ojtk3"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_nqd07"]
+blend_mode = 1
+
+[sub_resource type="Animation" id="Animation_bltsi"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("1_kb5c2")]
+}
+
+[sub_resource type="Animation" id="Animation_g5nui"]
+resource_name = "new_animation"
+length = 0.13333501
+step = 0.016666668
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.033333335, 0.06666667, 0.10000001),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [ExtResource("2_j38dd"), ExtResource("3_mrv5a"), ExtResource("4_iqkqh"), ExtResource("5_ojtk3")]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.13333334),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"queue_free"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_qydfw"]
+_data = {
+&"RESET": SubResource("Animation_bltsi"),
+&"new_animation": SubResource("Animation_g5nui")
+}
+
+[node name="Arrow1" type="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+material = SubResource("CanvasItemMaterial_nqd07")
+position = Vector2(-150, -186)
+texture = ExtResource("1_kb5c2")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_qydfw")
+}
+autoplay = "new_animation"

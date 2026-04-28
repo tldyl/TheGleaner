@@ -79,12 +79,22 @@ public class ClusterStrike : CustomCardModel, IAppendDescriptionCard {
 				arrowCard.onMerge(this);
 			}
 
-			if (card is ClusterStrike) {
+			if (card is ClusterStrike clusterStrike) {
 				hitCount += card.DynamicVars["HitCount"].IntValue;
 
 				if (card.IsUpgraded && !IsUpgraded) {
 					UpgradeInternal();
 					FinalizeUpgradeInternal();
+				}
+
+				foreach (CardModel card1 in clusterStrike.cards) {
+					if (!this.cards.Any(c => c.Id.Equals(card1.Id))) {
+						this.cards.Add(card1);
+					}
+
+					if (card1 is IArrowCard arrowCard1) {
+						arrowCard1.onMerge(this);
+					}
 				}
 			} else {
 				hitCount++;
