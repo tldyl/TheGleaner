@@ -55,6 +55,6 @@ public class TwiningTone : CustomCardModel {
 	}
 
 	protected override void OnUpgrade() {
-		DynamicVars.Damage.UpgradeValueBy(2);	
+		DynamicVars.Damage.UpgradeValueBy(3);
 	}
 }
