@@ -22,7 +22,10 @@ public class SentientMusicalNote : CustomCardModel {
 	protected override IEnumerable<IHoverTip> ExtraHoverTips => [
 		HoverTipFactory.ForEnergy(this),
 		HoverTipFactory.FromKeyword(CustomEnums.Phrase),
-		HoverTipFactory.FromKeyword(CustomEnums.Dissonance)
+		HoverTipFactory.FromKeyword(CustomEnums.Dissonance),
+		HoverTipFactory.FromCard<DirgeOfFarewell>(),
+		HoverTipFactory.FromCard<ShriekOfDread>(),
+		HoverTipFactory.FromCard<HowlOfWrath>()
 	];
 
 	public SentientMusicalNote() : base(0, CardType.Power, CardRarity.Rare, TargetType.Self) {

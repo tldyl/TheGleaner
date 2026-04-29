@@ -17,64 +17,67 @@ namespace DemoMod.TheGleaner.Cards.GleanerCard;
 [Pool(typeof(CardPool))]
 public class NoLeaveToWither : CustomCardModel
 {
-    public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
+	public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
 
-    protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new IntVar("Amount", 1)
-    ];
+	protected override IEnumerable<DynamicVar> CanonicalVars => [
+		new IntVar("Amount", 1)
+	];
 
-    protected override IEnumerable<IHoverTip> ExtraHoverTips => [
-        HoverTipFactory.FromKeyword(CustomEnums.Dissonance),
-        HoverTipFactory.FromPower<DoomPower>(),
-        HoverTipFactory.Static(StaticHoverTip.Block)
-    ];
+	protected override IEnumerable<IHoverTip> ExtraHoverTips => [
+		HoverTipFactory.FromKeyword(CustomEnums.Dissonance),
+		HoverTipFactory.FromPower<DoomPower>(),
+		HoverTipFactory.Static(StaticHoverTip.Block),
+		HoverTipFactory.FromCard<DirgeOfFarewell>(),
+		HoverTipFactory.FromCard<ShriekOfDread>(),
+		HoverTipFactory.FromCard<HowlOfWrath>()
+	];
 
-    public override IEnumerable<CardKeyword> CanonicalKeywords => [
-        CardKeyword.Exhaust
-    ];
+	public override IEnumerable<CardKeyword> CanonicalKeywords => [
+		CardKeyword.Exhaust
+	];
 
-    public NoLeaveToWither() : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.Self)
-    {
-    }
+	public NoLeaveToWither() : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.Self)
+	{
+	}
 
-    protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
-    {
-        await PowerCmd.Apply<NoLeaveToWitherPower>(
-            Owner.Creature,
-            1,
-            Owner.Creature,
-            this
-        );
+	protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
+	{
+		await PowerCmd.Apply<NoLeaveToWitherPower>(
+			Owner.Creature,
+			1,
+			Owner.Creature,
+			this
+		);
 
-        List<CardModel> cards = RandomDissonanceCard.getRandomDissonanceCards(
-            DynamicVars["Amount"].IntValue,
-            Owner.RunState.Rng.CombatCardGeneration
-        );
+		List<CardModel> cards = RandomDissonanceCard.getRandomDissonanceCards(
+			DynamicVars["Amount"].IntValue,
+			Owner.RunState.Rng.CombatCardGeneration
+		);
 
-        foreach (CardModel card in cards)
-        {
-            PileType targetPile =
-                Owner.RunState.Rng.CombatCardGeneration.NextInt(2) == 0
-                    ? PileType.Draw
-                    : PileType.Discard;
+		foreach (CardModel card in cards)
+		{
+			PileType targetPile =
+				Owner.RunState.Rng.CombatCardGeneration.NextInt(2) == 0
+					? PileType.Draw
+					: PileType.Discard;
 
-            IReadOnlyList<CardPileAddResult> results = await CardPileCmd.AddGeneratedCardsToCombat(
-                [CombatState.CreateCard(card, Owner)],
-                targetPile,
-                true,
-                CardPilePosition.Random
-            );
+			IReadOnlyList<CardPileAddResult> results = await CardPileCmd.AddGeneratedCardsToCombat(
+				[CombatState.CreateCard(card, Owner)],
+				targetPile,
+				true,
+				CardPilePosition.Random
+			);
 
-            CardCmd.PreviewCardPileAdd(
-                results,
-                1.2f,
-                MegaCrit.Sts2.Core.Nodes.CommonUi.CardPreviewStyle.HorizontalLayout
-            );
-        }
-    }
+			CardCmd.PreviewCardPileAdd(
+				results,
+				1.2f,
+				MegaCrit.Sts2.Core.Nodes.CommonUi.CardPreviewStyle.HorizontalLayout
+			);
+		}
+	}
 
-    protected override void OnUpgrade()
-    {
-        EnergyCost.UpgradeBy(-1);
-    }
+	protected override void OnUpgrade()
+	{
+		EnergyCost.UpgradeBy(-1);
+	}
 }

@@ -23,7 +23,10 @@ public class Clamor : CustomCardModel
 
 	protected override IEnumerable<IHoverTip> ExtraHoverTips => [
 		HoverTipFactory.FromKeyword(CustomEnums.Dissonance),
-		HoverTipFactory.ForEnergy(this)
+		HoverTipFactory.ForEnergy(this),
+		HoverTipFactory.FromCard<DirgeOfFarewell>(),
+		HoverTipFactory.FromCard<ShriekOfDread>(),
+		HoverTipFactory.FromCard<HowlOfWrath>()
 	];
 
   public override IEnumerable<CardKeyword> CanonicalKeywords => [

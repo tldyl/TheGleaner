@@ -12,61 +12,61 @@ namespace DemoMod.TheGleaner.Cards.GleanerCard;
 
 [Pool(typeof(CardPool))]
 public class Instrumentation : CustomCardModel {
-    public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
-    private List<IHoverTip> _hoverTips = new List<IHoverTip>();
-    protected override IEnumerable<IHoverTip> ExtraHoverTips {
-        get {
-            if (_hoverTips.Count == 0) {
-                _hoverTips.Add(HoverTipFactory.FromKeyword(CustomEnums.Concerto));
-                _hoverTips.Add(HoverTipFactory.FromKeyword(CustomEnums.Resonance));
-                _hoverTips.Add(HoverTipFactory.FromCard<ClusterStringWeave>());
-                _hoverTips.Add(HoverTipFactory.FromCard<StringAndPillar>());
-            }
-            return _hoverTips;
-        }
-    }
-    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
+	public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
+	private List<IHoverTip> _hoverTips = new List<IHoverTip>();
+	protected override IEnumerable<IHoverTip> ExtraHoverTips {
+		get {
+			if (_hoverTips.Count == 0) {
+				_hoverTips.Add(HoverTipFactory.FromKeyword(CustomEnums.Concerto));
+				_hoverTips.Add(HoverTipFactory.FromKeyword(CustomEnums.Resonance));
+				_hoverTips.Add(HoverTipFactory.FromCard<ClusterStringWeave>());
+				_hoverTips.Add(HoverTipFactory.FromCard<StringAndPillar>());
+			}
+			return _hoverTips;
+		}
+	}
+	public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
 
-    private List<CardModel> OptionCards {
-        get {
-            List<CardModel> ret = [];
-            List<CardModel> commonCards = ModelDb.CardPool<CardPool>().AllCards.Where(c => c.Rarity == CardRarity.Common).ToList();
-            List<CardModel> concertoCards = ModelDb.CardPool<CardPool>().AllCards.Where(c => c is IConcertoCard).ToList();
-            CardModel commonCard = commonCards[Owner.RunState.Rng.CombatCardGeneration.NextInt(commonCards.Count)].ToMutable();
-            CardModel concertoCard = concertoCards[Owner.RunState.Rng.CombatCardGeneration.NextInt(concertoCards.Count)].ToMutable();
-            CardModel clusterStringWeaveCard = ModelDb.Card<ClusterStringWeave>().ToMutable();
-            CardModel resonanceCard = ModelDb.Card<StringAndPillar>().ToMutable();
-            if (CurrentUpgradeLevel > 0) {
-                commonCard.UpgradeInternal();
-                commonCard.FinalizeUpgradeInternal();
-                concertoCard.UpgradeInternal();
-                concertoCard.FinalizeUpgradeInternal();
-                clusterStringWeaveCard.UpgradeInternal();
-                clusterStringWeaveCard.FinalizeUpgradeInternal();
-                resonanceCard.UpgradeInternal();
-                resonanceCard.FinalizeUpgradeInternal();
-            }
-            CombatState.AddCard(commonCard, Owner);
-            CombatState.AddCard(concertoCard, Owner);
-            CombatState.AddCard(clusterStringWeaveCard, Owner);
-            CombatState.AddCard(resonanceCard, Owner);
-            ret.Add(commonCard);
-            ret.Add(concertoCard);
-            ret.Add(clusterStringWeaveCard);
-            ret.Add(resonanceCard);
-            return ret;
-        }
-    }
+	private List<CardModel> OptionCards {
+		get {
+			List<CardModel> ret = [];
+			List<CardModel> commonCards = ModelDb.CardPool<CardPool>().AllCards.Where(c => c.Rarity == CardRarity.Common).ToList();
+			List<CardModel> concertoCards = ModelDb.CardPool<CardPool>().AllCards.Where(c => c is IConcertoCard).ToList();
+			CardModel commonCard = commonCards[Owner.RunState.Rng.CombatCardGeneration.NextInt(commonCards.Count)].ToMutable();
+			CardModel concertoCard = concertoCards[Owner.RunState.Rng.CombatCardGeneration.NextInt(concertoCards.Count)].ToMutable();
+			CardModel clusterStringWeaveCard = ModelDb.Card<ClusterStringWeave>().ToMutable();
+			CardModel resonanceCard = ModelDb.Card<StringAndPillar>().ToMutable();
+			if (CurrentUpgradeLevel > 0) {
+				commonCard.UpgradeInternal();
+				commonCard.FinalizeUpgradeInternal();
+				concertoCard.UpgradeInternal();
+				concertoCard.FinalizeUpgradeInternal();
+				clusterStringWeaveCard.UpgradeInternal();
+				clusterStringWeaveCard.FinalizeUpgradeInternal();
+				resonanceCard.UpgradeInternal();
+				resonanceCard.FinalizeUpgradeInternal();
+			}
+			CombatState.AddCard(commonCard, Owner);
+			CombatState.AddCard(concertoCard, Owner);
+			CombatState.AddCard(clusterStringWeaveCard, Owner);
+			CombatState.AddCard(resonanceCard, Owner);
+			ret.Add(commonCard);
+			ret.Add(concertoCard);
+			ret.Add(clusterStringWeaveCard);
+			ret.Add(resonanceCard);
+			return ret;
+		}
+	}
 
-    public Instrumentation() : base(0, CardType.Skill, CardRarity.Uncommon, TargetType.Self) {
-        
-    }
+	public Instrumentation() : base(0, CardType.Skill, CardRarity.Uncommon, TargetType.Self) {
+		
+	}
 
-    protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
-        CardModel chosenCard = await CardSelectCmd.FromChooseACardScreen(choiceContext, OptionCards, Owner);
-        if (chosenCard == null) {
-            return;
-        }
-        await CardPileCmd.AddGeneratedCardToCombat(chosenCard, PileType.Hand, true);
-    }
+	protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
+		CardModel chosenCard = await CardSelectCmd.FromChooseACardScreen(choiceContext, OptionCards, Owner);
+		if (chosenCard == null) {
+			return;
+		}
+		await CardPileCmd.AddGeneratedCardToCombat(chosenCard, PileType.Hand, true);
+	}
 }
