@@ -19,8 +19,8 @@ public class Instrumentation : CustomCardModel {
             if (_hoverTips.Count == 0) {
                 _hoverTips.Add(HoverTipFactory.FromKeyword(CustomEnums.Concerto));
                 _hoverTips.Add(HoverTipFactory.FromKeyword(CustomEnums.Resonance));
-                _hoverTips.Add(HoverTipFactory.FromCard<ClusterStringWeave>());
-                _hoverTips.Add(HoverTipFactory.FromCard<StringAndPillar>());
+                _hoverTips.Add(HoverTipFactory.FromCard<ClusterStringWeave>(IsUpgraded));
+                _hoverTips.Add(HoverTipFactory.FromCard<StringAndPillar>(IsUpgraded));
             }
             return _hoverTips;
         }

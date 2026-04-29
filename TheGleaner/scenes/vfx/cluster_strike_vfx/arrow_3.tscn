@@ -65,8 +65,9 @@ _data = {
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 material = SubResource("CanvasItemMaterial_nqd07")
-position = Vector2(-1, -199)
+rotation = -0.74351025
 texture = ExtResource("1_0qwwn")
+offset = Vector2(-1, -199)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {

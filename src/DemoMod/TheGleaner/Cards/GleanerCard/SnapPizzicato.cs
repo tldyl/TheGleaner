@@ -5,6 +5,7 @@ using DemoMod.TheGleaner.Commands;
 using DemoMod.TheGleaner.Enums;
 using DemoMod.TheGleaner.Pools;
 using DemoMod.TheGleaner.Utils;
+using Godot;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Commands.Builders;
 using MegaCrit.Sts2.Core.Entities.Cards;
@@ -37,9 +38,9 @@ public class SnapPizzicato : CustomCardModel {
 
 	protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
 		if (!cardPlay.IsAutoPlay) {
-			GleanerVfxCmd.PlayOnCreature(cardPlay.Target, "res://TheGleaner/scenes/vfx/arrow_attack.tscn", 0.3f);
+			GleanerVfxCmd.PlayOnCreature<Node2D>(cardPlay.Target, "res://TheGleaner/scenes/vfx/arrow_attack.tscn", 0.3f);
 			await CreatureCmd.TriggerAnim(Owner.Creature, "Attack", 0.5f);
-			GleanerVfxCmd.PlayOnCreature(cardPlay.Target, "res://TheGleaner/scenes/vfx/arrow_hit_vfx.tscn");
+			GleanerVfxCmd.PlayOnCreature<Node2D>(cardPlay.Target, "res://TheGleaner/scenes/vfx/arrow_hit_vfx.tscn");
 		}
 		AttackCommand _ = await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
 			.FromCard(this)

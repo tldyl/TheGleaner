@@ -1,12 +1,15 @@
 using BaseLib.Abstracts;
 using BaseLib.Utils;
+using DemoMod.TheGleaner.Nodes.Vfx;
 using DemoMod.TheGleaner.Utils;
+using Godot;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Commands.Builders;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
+using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.CardPools;
@@ -113,8 +116,12 @@ public class ClusterStrike : CustomCardModel, IAppendDescriptionCard {
 		await using AttackContext context = await AttackCommand.CreateContextAsync(Owner.Creature.CombatState, this);
 
 		List<string> sfxGroup = HitSfxGroup.nextGroup("harp", DynamicVars["HitCount"].IntValue);
-		
+
+		NClusterStrikeVfxOrb orbVfx = GleanerVfxCmd.PlayOnCreature<NClusterStrikeVfxOrb>(cardPlay.Target, "res://TheGleaner/scenes/vfx/cluster_strike_vfx/orb.tscn");
+		await Cmd.Wait(0.6f);
 		for (int i = 0; i < DynamicVars["HitCount"].IntValue; i++) {
+			GleanerVfxCmd.PlayOnCreature<Node2D>(cardPlay.Target, $"res://TheGleaner/scenes/vfx/cluster_strike_vfx/arrow_{GD.RandRange(1, 3)}.tscn");
+			await Cmd.Wait(0.0667f);
 			IEnumerable<DamageResult> damageResults = await CreatureCmd.Damage(choiceContext, cardPlay.Target, DynamicVars.Damage, this);
 			context.AddHit(damageResults);
 			SfxCmd.Play(sfxGroup[0]);
@@ -127,6 +134,7 @@ public class ClusterStrike : CustomCardModel, IAppendDescriptionCard {
 				}
 			}
 		}
+		orbVfx.end();
 	}
 
 	public override decimal ModifyDamageAdditive(
@@ -160,8 +168,8 @@ public class ClusterStrike : CustomCardModel, IAppendDescriptionCard {
 		List<string> descriptions = [];
 		descriptions.AddRange(cards
 			.Where(card => card is IArrowCard)
-			.Select(card => ((IArrowCard)card).getArrowName().GetFormattedText()));
+			.Select(card => "[gold]" + ((IArrowCard)card).getArrowName().GetFormattedText() + "[/gold]" + new LocString("cards", "DEMOMOD-CLUSTER_STRIKE.period").GetFormattedText() + "\n"));
 
-		return "[gold]" + string.Join("[/gold]\n[gold]", descriptions) + "[/gold]";
+		return string.Join("", descriptions);
 	}
 }

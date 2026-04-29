@@ -28,7 +28,7 @@ public class ScoreEntryCard : CustomCardModel {
         }
     }
 
-    protected override bool ShouldGlowRedInternal => Owner.Creature.HasPower<StaffBurnoutPower>();
+    protected override bool ShouldGlowRedInternal => Owner.Creature.HasPower<StaffBurnoutPower>() || ScorePileCmd.GetOrCreateScorePile(Owner.PlayerCombatState).freeTakeCount == 0;
     
     public ScoreEntryCard() : base(0, CardType.Status, CardRarity.Event, TargetType.Self) {
     }

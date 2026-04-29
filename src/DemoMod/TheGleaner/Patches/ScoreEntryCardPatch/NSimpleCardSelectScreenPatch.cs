@@ -25,10 +25,11 @@ public class NSimpleCardSelectScreenPatch {
             if (!ScorePileCmd.openingScorePileAndTakeCardsToHand) {
                 return true;
             }
+            HashSet<CardModel> _selectedCards = (HashSet<CardModel>) AccessTools.Field(typeof(NSimpleCardSelectScreen), "_selectedCards").GetValue(__instance);
             RunState runState = (RunState) AccessTools.PropertyGetter(typeof(RunManager), "State").Invoke(RunManager.Instance, []);
             Player player = LocalContext.GetMe(runState.Players);
             ScorePile scorePile = ScorePileCmd.GetOrCreateScorePile(player.PlayerCombatState);
-            if (scorePile.freeTakeCount <= 0 || player.Creature.HasPower<StaffBurnoutPower>()) {
+            if (scorePile.freeTakeCount <= 0 || player.Creature.HasPower<StaffBurnoutPower>() || _selectedCards.Count + player.PlayerCombatState.Hand.Cards.Count >= 9) {
                 NCardGrid grid = AccessTools.Field(typeof(NCardGridSelectionScreen), "_grid").GetValue(__instance) as NCardGrid;
                 NCard nCard = grid.GetCardNode(card);
                 WiggleAnimationWrapper animationWrapper = new WiggleAnimationWrapper {

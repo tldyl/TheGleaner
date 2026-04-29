@@ -41,7 +41,7 @@ public class Glissando : CustomCardModel {
 		Glissando card = this;
 		Decimal _ = await CreatureCmd.GainBlock(card.Owner.Creature, card.DynamicVars.Block, cardPlay);
 		Vector2 windowSize = NRun.Instance.CombatRoom.Ui.GetViewport().GetVisibleRect().Size;
-		GleanerVfxCmd.PlayVfx(new Vector2(windowSize.X * 0.65f, windowSize.Y * 0.5f), "res://TheGleaner/scenes/vfx/aoe_attack.tscn", 0.5f);
+		GleanerVfxCmd.PlayVfx<Node2D>(new Vector2(windowSize.X * 0.65f, windowSize.Y * 0.5f), "res://TheGleaner/scenes/vfx/aoe_attack.tscn", 0.5f);
 		await CreatureCmd.TriggerAnim(Owner.Creature, "AoEAttack", 0.5f);
 		AttackCommand attackCommand = await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
 			.FromCard(this)

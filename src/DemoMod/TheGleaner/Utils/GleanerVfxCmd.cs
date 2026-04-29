@@ -19,16 +19,18 @@ using MegaCrit.Sts2.Core.TestSupport;
 namespace DemoMod.TheGleaner.Utils;
 
 public class GleanerVfxCmd {
-    public static void PlayOnCreature(Creature target, string path, float delay = 0) {
+    public static T PlayOnCreature<T>(Creature target, string path, float delay = 0) where T : Node2D {
+        T vfx = null;
         if (!TestMode.IsOn && NCombatRoom.Instance != null && !target.IsDead) {
             NCreature creatureNode = NCombatRoom.Instance.GetCreatureNode(target);
             if (creatureNode != null) {
-                PlayVfx(creatureNode.Visuals.GetNode<Marker2D>("%CenterPos").GlobalPosition, path, delay);
+                vfx = PlayVfx<T>(creatureNode.Visuals.GetNode<Marker2D>("%CenterPos").GlobalPosition, path, delay);
             }
         }
+        return vfx;
     }
 
-    public static void PlayVfx(Vector2 position, Node2D vfx, float delay = 0) {
+    public static void PlayVfx<T>(Vector2 position, T vfx, float delay = 0) where T : Node2D {
         if (SaveManager.Instance.PrefsSave.FastMode == FastModeType.Fast) {
             delay /= 2.0f;
             delay = Math.Min(delay, 0.25f);
@@ -58,9 +60,10 @@ public class GleanerVfxCmd {
         }
     }
     
-    public static void PlayVfx(Vector2 position, string path, float delay = 0) {
-        Node2D vfx = PreloadManager.Cache.GetScene(path).Instantiate<Node2D>();
+    public static T PlayVfx<T>(Vector2 position, string path, float delay = 0) where T : Node2D {
+        T vfx = PreloadManager.Cache.GetScene(path).Instantiate<T>();
         PlayVfx(position, vfx, delay);
+        return vfx;
     }
 
     public static void CheckScoreIsEmpty(PlayerCombatState playerCombatState) {
