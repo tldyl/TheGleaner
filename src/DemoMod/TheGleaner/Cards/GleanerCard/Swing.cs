@@ -19,7 +19,7 @@ public class Swing : CustomCardModel, IConcertoCard
 	public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
 
 	protected override IEnumerable<DynamicVar> CanonicalVars => [
-		new BlockVar(10, ValueProp.Move),
+		new IntVar("VigorVal", 7),
 		new PowerVar<WeakPower>(1),
 		new IntVar("VulVal", 1)
 	];
@@ -28,7 +28,8 @@ public class Swing : CustomCardModel, IConcertoCard
 		HoverTipFactory.Static(StaticHoverTip.Block),
 		HoverTipFactory.FromKeyword(CustomEnums.Concerto),
 		HoverTipFactory.FromPower<WeakPower>(),
-		HoverTipFactory.FromPower<VulnerablePower>()
+		HoverTipFactory.FromPower<VulnerablePower>(),
+		HoverTipFactory.FromPower<VigorPower>()
 	];
 
 	public Swing() : base(2, CardType.Skill, CardRarity.Common, TargetType.None)
@@ -37,7 +38,7 @@ public class Swing : CustomCardModel, IConcertoCard
 
 	protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
 	{
-		await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, cardPlay);
+		await PowerCmd.Apply<VigorPower>(Owner.Creature, DynamicVars["VigorVal"].BaseValue, Owner.Creature, this);
 
 		await PowerCmd.Apply<WeakPower>(
 			Owner.Creature.CombatState.HittableEnemies,

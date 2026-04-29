@@ -18,7 +18,7 @@ namespace DemoMod.TheGleaner.Cards.GleanerCard;
 [Pool(typeof(CardPool))]
 public class AutonomousTamb : CustomCardModel, IConcertoCard {
 	public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
-	protected override IEnumerable<DynamicVar> CanonicalVars => [new PowerVar<StrengthPower>(2)];
+	protected override IEnumerable<DynamicVar> CanonicalVars => [new PowerVar<StrengthPower>(3)];
 	protected override IEnumerable<IHoverTip> ExtraHoverTips => [
 		HoverTipFactory.FromKeyword(CustomEnums.Concerto),
 		HoverTipFactory.FromPower<StrengthPower>()
@@ -49,6 +49,6 @@ public class AutonomousTamb : CustomCardModel, IConcertoCard {
 	}
 	
 	protected override void OnUpgrade() {
-		DynamicVars.Strength.UpgradeValueBy(1);
+		DynamicVars.Strength.UpgradeValueBy(2);
 	}
 }

@@ -30,7 +30,7 @@ public class SwiftArrow : CustomCardModel, IArrowCard {
 	protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<StrengthPower>(), HoverTipFactory.Static(StaticHoverTip.Block)];
 	protected override HashSet<CardTag> CanonicalTags => [CustomEnums.Arrow];
 
-	public SwiftArrow() : base(0, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy) {
+	public SwiftArrow() : base(0, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy) {
 		
 	}
 

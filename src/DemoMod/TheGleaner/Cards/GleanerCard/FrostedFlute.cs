@@ -24,7 +24,7 @@ public class FrostedFlute : CustomCardModel, IConcertoCard {
 	];
 	protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromKeyword(CustomEnums.Concerto), HoverTipFactory.FromPower<StrengthPower>()];
 
-	public FrostedFlute() : base(2, CardType.Attack, CardRarity.Common, TargetType.AllEnemies) {
+	public FrostedFlute() : base(2, CardType.Attack, CardRarity.Uncommon, TargetType.AllEnemies) {
 		
 	}
 

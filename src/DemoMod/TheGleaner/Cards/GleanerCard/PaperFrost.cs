@@ -40,7 +40,7 @@ public class PaperFrost : CustomCardModel {
 		await ScorePileCmd.AddCards(Owner.PlayerCombatState, Owner, this);
 	}
 	
-	public PaperFrost() : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.AnyEnemy) {
+	public PaperFrost() : base(1, CardType.Skill, CardRarity.Common, TargetType.AnyEnemy) {
 	}
 
 	protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
