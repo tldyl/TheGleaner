@@ -17,7 +17,7 @@ public class BrandMark : CustomCardModel {
 	public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
 	
 	protected override IEnumerable<DynamicVar> CanonicalVars => [
-		new DamageVar(2, ValueProp.Move),
+		new DamageVar(6, ValueProp.Move),
 		new IntVar("Times", 6),
 		new IntVar("BlockGained", 2)
 	];
