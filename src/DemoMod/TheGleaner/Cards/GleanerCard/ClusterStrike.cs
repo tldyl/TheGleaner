@@ -133,6 +133,9 @@ public class ClusterStrike : CustomCardModel, IAppendDescriptionCard {
 					await arrowCard.arrowEffect(choiceContext, cardPlay, damageResultsList, this, context);
 				}
 			}
+			if (!cardPlay.Target.IsAlive) {
+				break;
+			}
 		}
 		orbVfx.end();
 	}
