@@ -121,7 +121,7 @@ public class ClusterStrike : CustomCardModel, IAppendDescriptionCard {
 		await Cmd.Wait(0.6f);
 		for (int i = 0; i < DynamicVars["HitCount"].IntValue; i++) {
 			GleanerVfxCmd.PlayOnCreature<Node2D>(cardPlay.Target, $"res://TheGleaner/scenes/vfx/cluster_strike_vfx/arrow_{GD.RandRange(1, 3)}.tscn");
-			await Cmd.Wait(0.0667f);
+			await Cmd.Wait(0.0333f);
 			IEnumerable<DamageResult> damageResults = await CreatureCmd.Damage(choiceContext, cardPlay.Target, DynamicVars.Damage, this);
 			context.AddHit(damageResults);
 			SfxCmd.Play(sfxGroup[0]);
