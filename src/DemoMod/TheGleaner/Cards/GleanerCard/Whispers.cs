@@ -24,7 +24,12 @@ public class Whispers : CustomCardModel {
 		CardKeyword.Exhaust
 	];
 
-	protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromKeyword(CustomEnums.Dissonance)];
+	protected override IEnumerable<IHoverTip> ExtraHoverTips => [
+		HoverTipFactory.FromKeyword(CustomEnums.Dissonance),
+		HoverTipFactory.FromCard<DirgeOfFarewell>(),
+		HoverTipFactory.FromCard<ShriekOfDread>(),
+		HoverTipFactory.FromCard<HowlOfWrath>()
+	];
 
 	public Whispers() : base(0, CardType.Skill, CardRarity.Uncommon, TargetType.Self) {
 		

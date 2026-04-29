@@ -52,21 +52,7 @@ public class EarthedBell : CustomCardModel, IConcertoCard {
 		}
 		return 0M;
 	}
-	
-	public override async Task BeforeTurnEnd(PlayerChoiceContext choiceContext, CombatSide side) {
-		// 1. 确保只在玩家回合结束时触发
-		if (side != CombatSide.Player) {
-			return;
-		}
 
-		// 2. 检查卡牌是否仍在手牌中
-		if (Owner.PlayerCombatState.Hand.Cards.Contains(this)) {
-			// 3. 执行移动动作：将此卡(this)移入计分堆
-			CardCmd.Preview(this);
-			await ScorePileCmd.AddCards(Owner.PlayerCombatState, Owner, this);
-		}
-	}
-	
 	protected override void OnUpgrade() {
 		DynamicVars.Block.UpgradeValueBy(3);
 	}

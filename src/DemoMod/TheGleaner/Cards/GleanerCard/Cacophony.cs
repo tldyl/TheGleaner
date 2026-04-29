@@ -31,7 +31,10 @@ public class Cacophony : CustomCardModel
 
 	protected override IEnumerable<IHoverTip> ExtraHoverTips => [
 		HoverTipFactory.FromKeyword(CustomEnums.Dissonance),
-		HoverTipFactory.FromPower<WeakPower>()
+		HoverTipFactory.FromPower<WeakPower>(),
+		HoverTipFactory.FromCard<DirgeOfFarewell>(),
+		HoverTipFactory.FromCard<ShriekOfDread>(),
+		HoverTipFactory.FromCard<HowlOfWrath>()
 	];
 
 	public Cacophony() : base(1, CardType.Attack, CardRarity.Common, TargetType.AllEnemies)
@@ -85,6 +88,7 @@ public class Cacophony : CustomCardModel
 
 	protected override void OnUpgrade()
 	{
-		DynamicVars.Damage.UpgradeValueBy(3);
+		DynamicVars.Damage.UpgradeValueBy(2);
+		DynamicVars["WeakPower"].UpgradeValueBy(1);
 	}
 }

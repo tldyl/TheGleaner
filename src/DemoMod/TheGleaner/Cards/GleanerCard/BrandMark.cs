@@ -17,9 +17,9 @@ public class BrandMark : CustomCardModel {
 	public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
 	
 	protected override IEnumerable<DynamicVar> CanonicalVars => [
-		new DamageVar(3, ValueProp.Move),
-		new IntVar("Times", 4),
-		new IntVar("BlockGained", 3)
+		new DamageVar(6, ValueProp.Move),
+		new IntVar("Times", 6),
+		new IntVar("BlockGained", 2)
 	];
 
 	protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.Static(StaticHoverTip.Block)];
@@ -36,5 +36,5 @@ public class BrandMark : CustomCardModel {
 		await PowerCmd.Apply<BrandMarkPower>(cardPlay.Target, DynamicVars["Times"].BaseValue, Owner.Creature, this);
 	}
 
-	protected override void OnUpgrade() => DynamicVars["Times"].UpgradeValueBy(2);
+	protected override void OnUpgrade() => DynamicVars["Times"].UpgradeValueBy(3);
 }

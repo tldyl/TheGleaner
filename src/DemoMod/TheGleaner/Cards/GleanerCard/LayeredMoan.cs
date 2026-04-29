@@ -22,7 +22,10 @@ public class LayeredMoan : CustomCardModel {
 	protected override IEnumerable<IHoverTip> ExtraHoverTips =>
 	[
 		HoverTipFactory.FromKeyword(CardKeyword.Exhaust),
-		HoverTipFactory.FromKeyword(CustomEnums.Dissonance)
+		HoverTipFactory.FromKeyword(CustomEnums.Dissonance),
+		HoverTipFactory.FromCard<DirgeOfFarewell>(),
+		HoverTipFactory.FromCard<ShriekOfDread>(),
+		HoverTipFactory.FromCard<HowlOfWrath>()
 	];
 
 	protected override IEnumerable<DynamicVar> CanonicalVars =>

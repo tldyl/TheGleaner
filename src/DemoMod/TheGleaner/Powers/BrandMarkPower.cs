@@ -9,20 +9,20 @@ using MegaCrit.Sts2.Core.ValueProps;
 namespace DemoMod.TheGleaner.Powers;
 
 public class BrandMarkPower : CustomPowerModel {
-    public override PowerType Type => PowerType.Debuff;
-    public override PowerStackType StackType => PowerStackType.Counter;
+	public override PowerType Type => PowerType.Debuff;
+	public override PowerStackType StackType => PowerStackType.Counter;
 
-    public override async Task BeforeDamageReceived(
-        PlayerChoiceContext choiceContext,
-        Creature target,
-        Decimal amount,
-        ValueProp props,
-        Creature? dealer,
-        CardModel? cardSource) {
-        if (target == Owner && !props.HasFlag(ValueProp.Unpowered) && dealer != null) {
-            Flash();
-            await CreatureCmd.GainBlock(dealer, 3, ValueProp.Unpowered, null);
-            await PowerCmd.Decrement(this);
-        }
-    }
+	public override async Task BeforeDamageReceived(
+		PlayerChoiceContext choiceContext,
+		Creature target,
+		Decimal amount,
+		ValueProp props,
+		Creature? dealer,
+		CardModel? cardSource) {
+		if (target == Owner && !props.HasFlag(ValueProp.Unpowered) && dealer != null) {
+			Flash();
+			await CreatureCmd.GainBlock(dealer, 2, ValueProp.Unpowered, null);
+			await PowerCmd.Decrement(this);
+		}
+	}
 }
