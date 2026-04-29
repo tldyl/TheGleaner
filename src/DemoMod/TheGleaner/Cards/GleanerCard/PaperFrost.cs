@@ -19,8 +19,12 @@ namespace DemoMod.TheGleaner.Cards.GleanerCard;
 public class PaperFrost : CustomCardModel {
 	public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
 
+	public override IEnumerable<CardKeyword> CanonicalKeywords => [
+		CardKeyword.Exhaust
+	];
+
 	protected override IEnumerable<DynamicVar> CanonicalVars => [
-		new IntVar("Amount", 3)
+		new IntVar("Amount", 4)
 	];
 
 	protected override IEnumerable<IHoverTip> ExtraHoverTips => [
@@ -36,7 +40,7 @@ public class PaperFrost : CustomCardModel {
 		await ScorePileCmd.AddCards(Owner.PlayerCombatState, Owner, this);
 	}
 	
-	public PaperFrost() : base(0, CardType.Skill, CardRarity.Uncommon, TargetType.AnyEnemy) {
+	public PaperFrost() : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.AnyEnemy) {
 	}
 
 	protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {

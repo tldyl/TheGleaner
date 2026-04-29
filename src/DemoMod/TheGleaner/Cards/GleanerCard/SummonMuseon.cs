@@ -23,7 +23,7 @@ namespace DemoMod.TheGleaner.Cards.GleanerCard;
 public class SummonMuseon : CustomCardModel {
 	public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
 	protected override IEnumerable<DynamicVar> CanonicalVars => [
-		new DamageVar(15, ValueProp.Move),
+		new DamageVar(12, ValueProp.Move),
 		new CardsVar(1)
 	];
 	protected override IEnumerable<IHoverTip> ExtraHoverTips => [
@@ -65,5 +65,5 @@ public class SummonMuseon : CustomCardModel {
 		}
 	}
 	
-	protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(4);
+	protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(3);
 }

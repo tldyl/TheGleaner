@@ -85,6 +85,7 @@ public class Cacophony : CustomCardModel
 
 	protected override void OnUpgrade()
 	{
-		DynamicVars.Damage.UpgradeValueBy(3);
+		DynamicVars.Damage.UpgradeValueBy(2);
+		DynamicVars["WeakPower"].UpgradeValueBy(1);
 	}
 }
