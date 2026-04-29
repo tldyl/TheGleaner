@@ -29,19 +29,21 @@ public class NSimpleCardSelectScreenPatch {
             RunState runState = (RunState) AccessTools.PropertyGetter(typeof(RunManager), "State").Invoke(RunManager.Instance, []);
             Player player = LocalContext.GetMe(runState.Players);
             ScorePile scorePile = ScorePileCmd.GetOrCreateScorePile(player.PlayerCombatState);
-            if (scorePile.freeTakeCount <= 0 || player.Creature.HasPower<StaffBurnoutPower>() || _selectedCards.Count + player.PlayerCombatState.Hand.Cards.Count >= 9) {
-                NCardGrid grid = AccessTools.Field(typeof(NCardGridSelectionScreen), "_grid").GetValue(__instance) as NCardGrid;
-                NCard nCard = grid.GetCardNode(card);
-                WiggleAnimationWrapper animationWrapper = new WiggleAnimationWrapper {
-                    animatedCard = nCard,
-                    originalVisualPosition = nCard.Position.X
-                };
-                nCard.PlayPileTween?.Kill();
-                Tween? tween = nCard.CreateTween().SetParallel();
-                tween.TweenMethod(Callable.From(new Action<float>(animationWrapper.WiggleAnimation)), 0.0f, 2f, 0.3).SetEase(Tween.EaseType.Out)
-                    .SetTrans(Tween.TransitionType.Quad);
-                nCard.PlayPileTween = tween;
-                return false;
+            if (!_selectedCards.Contains(card)) {
+                if (scorePile.freeTakeCount <= 0 || player.Creature.HasPower<StaffBurnoutPower>() || _selectedCards.Count + player.PlayerCombatState.Hand.Cards.Count >= 10) {
+                    NCardGrid grid = AccessTools.Field(typeof(NCardGridSelectionScreen), "_grid").GetValue(__instance) as NCardGrid;
+                    NCard nCard = grid.GetCardNode(card);
+                    WiggleAnimationWrapper animationWrapper = new WiggleAnimationWrapper {
+                        animatedCard = nCard,
+                        originalVisualPosition = nCard.Position.X
+                    };
+                    nCard.PlayPileTween?.Kill();
+                    Tween? tween = nCard.CreateTween().SetParallel();
+                    tween.TweenMethod(Callable.From(new Action<float>(animationWrapper.WiggleAnimation)), 0.0f, 2f, 0.3).SetEase(Tween.EaseType.Out)
+                        .SetTrans(Tween.TransitionType.Quad);
+                    nCard.PlayPileTween = tween;
+                    return false;
+                }
             }
             return true;
         }
