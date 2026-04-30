@@ -35,6 +35,10 @@ public class BrandMark : CustomCardModel {
 			.Execute(choiceContext);
 		await PowerCmd.Apply<BrandMarkPower>(cardPlay.Target, DynamicVars["Times"].BaseValue, Owner.Creature, this);
 	}
+		protected override void OnUpgrade()
+	{
+		DynamicVars.Damage.UpgradeValueBy(2);
+		DynamicVars["Times"].UpgradeValueBy(3);
+	}
 
-	protected override void OnUpgrade() => DynamicVars["Times"].UpgradeValueBy(3);
 }

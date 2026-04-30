@@ -21,7 +21,7 @@ public class ThreshersAxe : CustomCardModel, IConcertoCard {
 	public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
 	protected override IEnumerable<DynamicVar> CanonicalVars => [
 		new IntVar("Amount", 4),
-		new DamageVar(20, ValueProp.Move)
+		new DamageVar(15, ValueProp.Move)
 	];
 	protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<StrengthPower>(), HoverTipFactory.FromKeyword(CustomEnums.Concerto), HoverTipFactory.FromKeyword(CardKeyword.Ethereal)];
 	
