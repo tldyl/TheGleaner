@@ -9,6 +9,8 @@ using MegaCrit.Sts2.Core.Models.Powers;
 namespace DemoMod.TheGleaner.Powers;
 
 public class PreventStrengthIncreasePower : CustomPowerModel {
+    public override string CustomPackedIconPath => $"res://TheGleaner/images/powers/{Id.Entry.ToLowerInvariant()}.png";
+    public override string CustomBigIconPath => $"res://TheGleaner/images/powers/{Id.Entry.ToLowerInvariant()}.png";
     public override PowerType Type => PowerType.Debuff;
     public override PowerStackType StackType => PowerStackType.Single;
     
