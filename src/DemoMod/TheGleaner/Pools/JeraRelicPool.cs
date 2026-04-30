@@ -6,7 +6,7 @@ using MegaCrit.Sts2.Core.Models;
 namespace DemoMod.TheGleaner.Pools;
 
 public class JeraRelicPool : RelicPoolModel {
-    public override string EnergyColorName => "ironclad";
+    public override string EnergyColorName => "gleaner";
     public override Color LabOutlineColor => Colors.White;
 
     protected override IEnumerable<RelicModel> GenerateAllRelics() {

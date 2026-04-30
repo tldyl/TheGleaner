@@ -1,6 +1,6 @@
 {
   "DEMOMOD-JERA.title": "往复的项链",
-  "DEMOMOD-JERA.description": "第一回合开始时，额外抽[blue]{Draws}[/blue]张牌。\n第二回合开始时，额外获得{energyPrefix:energyIcons(1)}。",
+  "DEMOMOD-JERA.description": "第一回合开始时，额外抽[blue]{Draws}[/blue]张牌。\n第二回合开始时，额外获得{Energy:energyIcons()}。",
   "DEMOMOD-JERA.flavor": "周往而复始，不是吗？。",
   "DEMOMOD-JERA.selectionScreenPrompt": "选择任意张牌(每回合首张以外的牌需要花费一点额外费用)。",
   "DEMOMOD-GREEN_APPLE_SCENTED_VESSEL.title": "“青苹果气味的液体容器”",
@@ -16,13 +16,13 @@
   "DEMOMOD-GOLDEN_SILK_POUCH.title": "金丝缎口袋",
   "DEMOMOD-GOLDEN_SILK_POUCH.description": "拾起时，获得1瓶[gold]点金药水[/gold]。\n[gold]点金药水[/gold]：将你的金币翻倍。",
   "DEMOMOD-COCKTAIL.title": "鸡尾酒",
-"DEMOMOD-COCKTAIL.description": "所有打击和防御附魔[gold]艾黎的碎霜[/gold]。",
-"DEMOMOD-HANDKERCHIEF.title": "手帕",
-"DEMOMOD-HANDKERCHIEF.description": "你在商店中移除卡牌的费用始终为50。",
-"DEMOMOD-ICED_BLUEBERRY.title": "冰中蓝莓",
-"DEMOMOD-ICED_BLUEBERRY.description": "每个回合开始时，获得1点能量。\n在你受到伤害后，休眠2个回合。",
-"DEMOMOD-TELESCOPE.title": "望星镜",
-"DEMOMOD-TELESCOPE.description": "你可以在休息处进行[gold]观星[/gold]。\n[gold]观星[/gold]：变化2张牌。",
-"DEMOMOD-BRITTLE_STAR.title": "脆星",
-"DEMOMOD-BRITTLE_STAR.description": "在战斗奖励中，如果你在本场战斗未受到伤害，则额外获得一个遗物。"
+  "DEMOMOD-COCKTAIL.description": "所有打击和防御附魔[gold]艾黎的碎霜[/gold]。",
+  "DEMOMOD-HANDKERCHIEF.title": "手帕",
+  "DEMOMOD-HANDKERCHIEF.description": "你在商店中移除卡牌的费用始终为50。",
+  "DEMOMOD-ICED_BLUEBERRY.title": "冰中蓝莓",
+  "DEMOMOD-ICED_BLUEBERRY.description": "每个回合开始时，获得1点能量。\n在你受到伤害后，休眠2个回合。",
+  "DEMOMOD-TELESCOPE.title": "望星镜",
+  "DEMOMOD-TELESCOPE.description": "你可以在休息处进行[gold]观星[/gold]。\n[gold]观星[/gold]：变化2张牌。",
+  "DEMOMOD-BRITTLE_STAR.title": "脆星",
+  "DEMOMOD-BRITTLE_STAR.description": "在战斗奖励中，如果你在本场战斗未受到伤害，则额外获得一个遗物。"
 }

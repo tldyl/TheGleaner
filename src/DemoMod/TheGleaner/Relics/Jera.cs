@@ -24,7 +24,10 @@ public class Jera : CustomRelicModel
     public override bool ShowCounter => _showCounter;
     public override int DisplayAmount => counter;
 
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new IntVar("Draws", 1)];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [
+        new IntVar("Draws", 1),
+        new EnergyVar(1)
+    ];
 
     public override async Task BeforeCombatStart()
     {
@@ -63,7 +66,7 @@ public class Jera : CustomRelicModel
     {
         if (counter == 2 && player == Owner)
         {
-            await PlayerCmd.GainEnergy(1, Owner);
+            await PlayerCmd.GainEnergy(DynamicVars.Energy.BaseValue, Owner);
         }
     }
 
