@@ -1,0 +1,11 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://t7sikg1bhgiw"]
+
+[ext_resource type="Shader" uid="uid://d3jdsbomytpuk" path="res://TheGleaner/images/vfx/ghostGlitchShader/ghostGlitchShader.gdshader" id="1_dnqp3"]
+
+[resource]
+shader = ExtResource("1_dnqp3")
+shader_parameter/ghost_color = Color(0, 0.6, 1, 1)
+shader_parameter/transparency = 0.6
+shader_parameter/glitch_intensity = 0.02
+shader_parameter/flicker_speed = 15.0
+shader_parameter/hdr_boost = 2.5

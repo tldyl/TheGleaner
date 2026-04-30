@@ -4,11 +4,13 @@ using DemoMod.TheGleaner.Commands;
 using DemoMod.TheGleaner.Pools;
 using DemoMod.TheGleaner.Utils;
 using Godot;
+using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Context;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Helpers;
+using MegaCrit.Sts2.Core.Hooks;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Logging;
 using MegaCrit.Sts2.Core.Models;
@@ -111,7 +113,11 @@ public class ClusterStringWeave : CustomCardModel {
 		})).SetDelay(2.8f);
 		await Cmd.Wait(2.7f);
 		clusterStrike.RemoveFromCurrentPile();
-		await CardPileCmd.Add(clusterStrike, PileType.Hand.GetPile(Owner));
+		PileType destPile = PileType.Discard;
+		if (!Hook.ShouldFlush(Owner.Creature.CombatState, Owner)) {
+			destPile = PileType.Hand;
+		}
+		await CardPileCmd.Add(clusterStrike, (CombatManager.Instance.IsEnemyTurnStarted ? destPile : PileType.Hand).GetPile(Owner));
 	}
 	protected override void OnUpgrade() {
 		EnergyCost.UpgradeBy(-1);

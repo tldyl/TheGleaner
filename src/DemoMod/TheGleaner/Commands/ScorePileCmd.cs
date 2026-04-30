@@ -3,6 +3,7 @@ using BaseLib.Patches.Content;
 using BaseLib.Utils;
 using DemoMod.TheGleaner.CardPiles;
 using DemoMod.TheGleaner.Cards.GleanerCard;
+using DemoMod.TheGleaner.Hooks;
 using DemoMod.TheGleaner.Powers;
 using Godot;
 using HarmonyLib;
@@ -14,6 +15,7 @@ using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Helpers;
+using MegaCrit.Sts2.Core.Hooks;
 using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Logging;
 using MegaCrit.Sts2.Core.Models;
@@ -102,6 +104,7 @@ public static class ScorePileCmd {
 		int capacity = GetCapacity(player);
 		foreach (CardModel card in cards) {
 			card.RemoveFromCurrentPile();
+			PileType oldPile = card.Pile?.Type ?? PileType.None;
 			if (NRun.Instance.CombatRoom.Ui.Hand.GetCardHolder(card) != null) {
 				NRun.Instance.CombatRoom.Ui.Hand.Remove(card);
 			}
@@ -115,13 +118,16 @@ public static class ScorePileCmd {
 				if (player.Creature.HasPower<StaffBurnoutPower>()) {
 					await player.Creature.GetPower<StaffBurnoutPower>().AfterCardChangedPiles(bottomCard, CustomEnums.ScorePile, null);
 				}
-				//await Hook.AfterCardChangedPiles(player.RunState, player.Creature.CombatState, bottomCard, CustomEnums.ScorePile, bottomCard);
+				if (bottomCard is Phantasm) {
+					await ((IAfterTakeCardsFromScore)bottomCard).AfterTakeCardsFromScore(bottomCard);
+				}
 			} else {
 				pile.AddInternal(card, 0);
 			}
 			if (card is IDissonanceCard dissonanceCard) {
 				dissonanceCard.OnEnterScorePile(combatState, player);
 			}
+			await Hook.AfterCardChangedPiles(player.RunState, player.Creature.CombatState, card, oldPile, null);
 		}
 		if (cards.Length > 0) {
 			pile.cardsAddedToScoreThisTurn = true;
@@ -158,12 +164,14 @@ public static class ScorePileCmd {
 		}
 	}
 	
-	public static async Task Glean(Player player, PlayerChoiceContext choiceContext, decimal baseValue, CardModel cardSource) {
+	public static async Task<List<CardModel>> Glean(Player player, PlayerChoiceContext choiceContext, decimal baseValue, CardModel cardSource) {
 		CardSelectorPrefs prefs = new CardSelectorPrefs(new LocString("cards", "DEMOMOD-WINDS_MUSE.selectionScreenPrompt"), 0, (int) baseValue);
+		List<CardModel> gleanedCards = [];
 		IEnumerable<CardModel> selectedCards = await CardSelectCmd.FromHand(choiceContext, player, prefs, _ => true, cardSource);
 		foreach (CardModel card in selectedCards.Where(c => c is not IDissonanceCard)) {
 			CardCmd.Preview(card);
 		}
+		gleanedCards.AddRange(selectedCards);
 		await AddCards(player.PlayerCombatState, player, selectedCards.ToArray());
 		if (selectedCards.Count() < baseValue) {
 			int amount = (int) baseValue - selectedCards.Count();
@@ -190,7 +198,9 @@ public static class ScorePileCmd {
 				}
 			}
 			await AddCards(player.PlayerCombatState, player, cards.ToArray());
+			gleanedCards.AddRange(cards);
 		}
+		return gleanedCards;
 	}
 
 	public static ScorePile GetOrCreateScorePile(PlayerCombatState combatState) {

@@ -11,11 +11,18 @@ using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.ValueProps;
 using CustomEnums = DemoMod.TheGleaner.Enums.CustomEnums;
 using BaseLib.Patches.Content;
+using DemoMod.TheGleaner.CardPiles;
+using DemoMod.TheGleaner.Hooks;
+using Godot;
+using MegaCrit.Sts2.Core.Bindings.MegaSpine;
+using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Nodes.Combat;
+using MegaCrit.Sts2.Core.Nodes.Rooms;
 
 namespace DemoMod.TheGleaner.Cards.GleanerCard;
 
 [Pool(typeof(CardPool))]
-public class Phantasm : CustomCardModel {
+public class Phantasm : CustomCardModel, IAfterTakeCardsFromScore {
 	public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
 	public override bool GainsBlock => true;
 
@@ -55,10 +62,49 @@ public class Phantasm : CustomCardModel {
 		if (Owner.PlayerCombatState.Hand.Cards.Contains(this)) {
 			CardCmd.Preview(this);
 			await ScorePileCmd.AddCards(Owner.PlayerCombatState, Owner, this);
+			NCreature creatureNode = NCombatRoom.Instance.GetCreatureNode(Owner.Creature);
+			if (creatureNode != null) {
+				Node2D spineNode = creatureNode.Visuals.GetNode<Node2D>("%GhostVisuals");
+				MegaSprite sprite = new MegaSprite(spineNode);
+				MegaTrackEntry track = sprite.GetAnimationState().SetAnimation("idle_loop");
+				creatureNode.Visuals.GetNode<SubViewportContainer>("SubViewportContainer").Visible = true;
+			}
 		}
 	}
 
 	protected override void OnUpgrade() {
 		  DynamicVars.Block.UpgradeValueBy(2);
+	}
+
+	public override async Task AfterCardChangedPiles(
+		CardModel card,
+		PileType oldPileType,
+		AbstractModel? source) {
+		if (card != this) {
+			return;
+		}
+		if (card.Pile is ScorePile) {
+			NCreature creatureNode = NCombatRoom.Instance.GetCreatureNode(Owner.Creature);
+			if (creatureNode != null) {
+				Node2D spineNode = creatureNode.Visuals.GetNode<Node2D>("%GhostVisuals");
+				MegaSprite sprite = new MegaSprite(spineNode);
+				MegaTrackEntry track = sprite.GetAnimationState().SetAnimation("idle_loop");
+				creatureNode.Visuals.GetNode<SubViewportContainer>("SubViewportContainer").Visible = true;
+			}
+		}
+	}
+	
+	public async Task AfterTakeCardsFromScore(CardModel card) {
+		if (card != this) {
+			return;
+		}
+		ScorePile scorePile = ScorePileCmd.GetOrCreateScorePile(Owner.PlayerCombatState);
+		if (scorePile.Cards.Any(c => c is Phantasm)) { //如果乐谱中还有其他的罔象
+			return;
+		}
+		NCreature creatureNode = NCombatRoom.Instance.GetCreatureNode(Owner.Creature);
+		if (creatureNode != null) {
+			creatureNode.Visuals.GetNode<SubViewportContainer>("SubViewportContainer").Visible = false;
+		}
 	}
 }

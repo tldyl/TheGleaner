@@ -40,7 +40,7 @@ public class PaperFrost : CustomCardModel {
 		await ScorePileCmd.AddCards(Owner.PlayerCombatState, Owner, this);
 	}
 	
-	public PaperFrost() : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.AnyEnemy) {
+	public PaperFrost() : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.AllEnemies) {
 	}
 
 	protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
@@ -51,7 +51,7 @@ public class PaperFrost : CustomCardModel {
 			CardCmd.Preview(cpy);
 		}
 		await PowerCmd.Apply<PaperFrostPower>(
-			cardPlay.Target,
+			Owner.Creature.CombatState.HittableEnemies,
 			DynamicVars["Amount"].BaseValue,
 			Owner.Creature,
 			this
