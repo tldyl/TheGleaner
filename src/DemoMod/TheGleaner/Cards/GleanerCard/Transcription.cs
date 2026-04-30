@@ -16,30 +16,30 @@ namespace DemoMod.TheGleaner.Cards.GleanerCard;
 
 [Pool(typeof(CardPool))]
 public class Transcription : CustomCardModel {
-    public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new IntVar("Amount", 1)];
-    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromKeyword(CustomEnums.Score)];
+	public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
+	protected override IEnumerable<DynamicVar> CanonicalVars => [new IntVar("Amount", 1)];
+	protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromKeyword(CustomEnums.Score)];
 
-    public Transcription() : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.Self) {
-    }
+	public Transcription() : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.Self) {
+	}
 
-    protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
-        CardPile scorePile = CustomPiles.GetCustomPile(Owner.PlayerCombatState, CustomEnums.ScorePile);
-        if (scorePile == null || scorePile.Cards.Count == 0) {
-            return;
-        }
+	protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
+		CardPile scorePile = CustomPiles.GetCustomPile(Owner.PlayerCombatState, CustomEnums.ScorePile);
+		if (scorePile == null || scorePile.Cards.Count == 0) {
+			return;
+		}
 
-        CardSelectorPrefs prefs = new CardSelectorPrefs(new LocString("cards", "DEMOMOD-TRANSCRIPTION.selectionScreenPrompt"), 1);
-        CardModel selectedCard = (await CardSelectCmd.FromSimpleGrid(choiceContext, scorePile.Cards, Owner, prefs)).FirstOrDefault();
-        if (selectedCard == null) {
-            return;
-        }
+		CardSelectorPrefs prefs = new CardSelectorPrefs(new LocString("cards", "DEMOMOD-TRANSCRIPTION.selectionScreenPrompt"), 1);
+		CardModel selectedCard = (await CardSelectCmd.FromSimpleGrid(choiceContext, scorePile.Cards, Owner, prefs)).FirstOrDefault();
+		if (selectedCard == null) {
+			return;
+		}
 
-        for (int i = 0; i < DynamicVars["Amount"].IntValue; i++) {
-            CardModel copy = selectedCard.CreateClone();
-            await CardPileCmd.AddGeneratedCardToCombat(copy, PileType.Hand, true);
-        }
-    }
+		for (int i = 0; i < DynamicVars["Amount"].IntValue; i++) {
+			CardModel copy = selectedCard.CreateClone();
+			await CardPileCmd.AddGeneratedCardToCombat(copy, PileType.Hand, true);
+		}
+	}
 
-    protected override void OnUpgrade() => DynamicVars["Amount"].UpgradeValueBy(1);
+	protected override void OnUpgrade() => EnergyCost.UpgradeBy(-1);
 }

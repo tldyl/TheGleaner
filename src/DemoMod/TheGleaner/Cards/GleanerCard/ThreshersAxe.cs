@@ -22,7 +22,7 @@ public class ThreshersAxe : CustomCardModel, IConcertoCard {
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new IntVar("Amount", 4),
-        new DamageVar(20, ValueProp.Move)
+        new DamageVar(15, ValueProp.Move)
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<StrengthPower>(), HoverTipFactory.FromKeyword(CustomEnums.Concerto), HoverTipFactory.FromKeyword(CardKeyword.Ethereal)];

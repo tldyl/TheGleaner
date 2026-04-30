@@ -27,7 +27,7 @@ public class QuenchedArrow : CustomCardModel, IArrowCard {
 	];
 	protected override HashSet<CardTag> CanonicalTags => [CustomEnums.Arrow];
 
-	public QuenchedArrow() : base(2, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy) {
+	public QuenchedArrow() : base(2, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy) {
 	}
 
 	protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {

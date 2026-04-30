@@ -16,7 +16,7 @@ namespace DemoMod.TheGleaner.Cards.GleanerCard;
 public class SentinelShaft : CustomCardModel {
 	public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
 	protected override IEnumerable<DynamicVar> CanonicalVars => [
-		new BlockVar(7, ValueProp.Move)
+		new BlockVar(6, ValueProp.Move)
 	];
 
 	public override bool GainsBlock => true;

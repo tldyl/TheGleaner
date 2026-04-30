@@ -13,27 +13,26 @@ namespace DemoMod.TheGleaner.Cards.GleanerCard;
 
 [Pool(typeof(CardPool))]
 public class Nocturne : CustomCardModel {
-    public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
-    public override bool GainsBlock => true;
+	public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
+	public override bool GainsBlock => true;
 
-    protected override IEnumerable<DynamicVar> CanonicalVars =>
-    [
-        new IntVar("DexAmount", 3),
-        new IntVar("StrAmount", 2)
-    ];
+	protected override IEnumerable<DynamicVar> CanonicalVars =>
+	[
+		new IntVar("DexAmount", 3),
+		new IntVar("StrAmount", 1)
+	];
 
-    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<StrengthPower>(), HoverTipFactory.FromPower<DexterityPower>()];
+	protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<StrengthPower>(), HoverTipFactory.FromPower<DexterityPower>()];
 
-    public Nocturne() : base(1, CardType.Power, CardRarity.Uncommon, TargetType.Self) {
-    }
+	public Nocturne() : base(1, CardType.Power, CardRarity.Uncommon, TargetType.Self) {
+	}
 
-    protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
-        await PowerCmd.Apply<NocturnePower>(Owner.Creature, DynamicVars["StrAmount"].BaseValue, Owner.Creature, null);
-        await PowerCmd.Apply<DemoTempDexterityPower>(Owner.Creature, DynamicVars["DexAmount"].BaseValue, Owner.Creature, null);
-    }
+	protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
+		await PowerCmd.Apply<NocturnePower>(Owner.Creature, DynamicVars["StrAmount"].BaseValue, Owner.Creature, null);
+		await PowerCmd.Apply<DemoTempDexterityPower>(Owner.Creature, DynamicVars["DexAmount"].BaseValue, Owner.Creature, null);
+	}
 
-    protected override void OnUpgrade() {
-        DynamicVars["DexAmount"].UpgradeValueBy(1);
-        DynamicVars["StrAmount"].UpgradeValueBy(1);
-    }
+	protected override void OnUpgrade() {
+		DynamicVars["DexAmount"].UpgradeValueBy(2);
+	}
 }
