@@ -1,14 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://cc0nntvd1av7y"]
+[gd_scene load_steps=4 format=3 uid="uid://cc0nntvd1av7y"]
 
 [ext_resource type="Shader" uid="uid://d3jdsbomytpuk" path="res://TheGleaner/images/vfx/ghostGlitchShader/ghostGlitchShader.gdshader" id="2_gocbe"]
 [ext_resource type="SpineSkeletonDataResource" uid="uid://cc14xylic3ujv" path="res://TheGleaner/scenes/char/TheGleaner/Q/combat/Q.tres" id="2_u67jw"]
-
-[sub_resource type="Environment" id="Environment_u67jw"]
-background_mode = 3
-glow_enabled = true
-glow_levels/4 = 1.0
-glow_intensity = 1.14
-glow_bloom = 0.5
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_rxql5"]
 shader = ExtResource("2_gocbe")
@@ -51,9 +44,6 @@ position = Vector2(0, -320)
 [node name="CenterPos" type="Marker2D" parent="."]
 unique_name_in_owner = true
 position = Vector2(0, -128)
-
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource("Environment_u67jw")
 
 [node name="SubViewportContainer" type="SubViewportContainer" parent="."]
 visible = false

@@ -50,9 +50,9 @@ public class PaperFrost : CustomCardModel {
 			await ScorePileCmd.AddCards(Owner.PlayerCombatState, Owner, cpy);
 			CardCmd.Preview(cpy);
 		}
-		await PowerCmd.Apply<PaperFrostPower>(
+		await PowerCmd.Apply<DemoTempLoseStrengthPower>(
 			Owner.Creature.CombatState.HittableEnemies,
-			DynamicVars["Amount"].BaseValue,
+			-DynamicVars["Amount"].BaseValue,
 			Owner.Creature,
 			this
 		);

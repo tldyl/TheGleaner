@@ -8,6 +8,8 @@ using MegaCrit.Sts2.Core.ValueProps;
 namespace DemoMod.TheGleaner.Powers;
 
 public class SforzandoPower : CustomPowerModel {
+    public override string CustomPackedIconPath => $"res://TheGleaner/images/powers/{Id.Entry.ToLowerInvariant()}.png";
+    public override string CustomBigIconPath => $"res://TheGleaner/images/powers/{Id.Entry.ToLowerInvariant()}.png";
     public override PowerType Type => PowerType.Buff;
     public override PowerStackType StackType => PowerStackType.Counter;
 

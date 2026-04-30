@@ -43,7 +43,7 @@ public class OneWingedViolin : CustomCardModel, IConcertoCard
 
 	public async Task OnConcerto(CombatState combatState, PlayerChoiceContext choiceContext, CardPlay cardPlay)
 	{
-		await PowerCmd.Apply<SpeedPotionPower>(
+		await PowerCmd.Apply<DemoTempDexterityPower>(
 			Owner.Creature,
 			DynamicVars["Amount"].BaseValue,
 			Owner.Creature,

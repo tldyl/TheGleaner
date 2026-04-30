@@ -10,9 +10,9 @@ using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 
 namespace DemoMod.TheGleaner.Powers;
-
-public class SentientMusicalNotePower : CustomPowerModel
-{
+public class SentientMusicalNotePower : CustomPowerModel {
+    public override string CustomPackedIconPath => $"res://TheGleaner/images/powers/{Id.Entry.ToLowerInvariant()}.png";
+    public override string CustomBigIconPath => $"res://TheGleaner/images/powers/{Id.Entry.ToLowerInvariant()}.png";
     public override PowerType Type => PowerType.Buff;
     public override PowerStackType StackType => PowerStackType.Counter;
     public override int DisplayAmount => DynamicVars["CardsLeft"].IntValue;
@@ -22,19 +22,15 @@ public class SentientMusicalNotePower : CustomPowerModel
         new DynamicVar("CardsLeft", 3M)
     ];
 
-    public override async Task AfterCardPlayed(PlayerChoiceContext context, CardPlay cardPlay)
-    {
-        if (RandomDissonanceCard.transformedDissonanceCards().Any(c => c.Id.Equals(cardPlay.Card.Id)))
-        {
+    public override async Task AfterCardPlayed(PlayerChoiceContext context, CardPlay cardPlay) {
+        if (RandomDissonanceCard.transformedDissonanceCards().Any(c => c.Id.Equals(cardPlay.Card.Id))) {
             DynamicVars["CardsLeft"].BaseValue--;
+            InvokeDisplayAmountChanged();
         }
 
-        if (DynamicVars["CardsLeft"].IntValue <= 0)
-        {
-            for (int _ = 0; _ < Amount; _++)
-            {
-                foreach (Creature creature in Owner.CombatState.HittableEnemies)
-                {
+        if (DynamicVars["CardsLeft"].IntValue <= 0) {
+            for (int _ = 0; _ < Amount; _++) {
+                foreach (Creature creature in Owner.CombatState.HittableEnemies) {
                     await CreatureCmd.Stun(creature);
                 }
             }
@@ -44,10 +40,8 @@ public class SentientMusicalNotePower : CustomPowerModel
         }
     }
 
-    public override async Task AfterTurnEnd(PlayerChoiceContext choiceContext, CombatSide side)
-    {
-        if (side != Owner.Side)
-        {
+    public override async Task AfterTurnEnd(PlayerChoiceContext choiceContext, CombatSide side) {
+        if (side != Owner.Side) {
             return;
         }
 
@@ -56,8 +50,7 @@ public class SentientMusicalNotePower : CustomPowerModel
             Owner.Player.RunState.Rng.CombatCardGeneration
         );
 
-        foreach (CardModel card in cards)
-        {
+        foreach (CardModel card in cards) {
             PileType targetPile =
                 Owner.Player.RunState.Rng.CombatCardGeneration.NextInt(2) == 0
                     ? PileType.Draw

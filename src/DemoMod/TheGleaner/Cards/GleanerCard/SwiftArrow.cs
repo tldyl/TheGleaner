@@ -52,7 +52,7 @@ public class SwiftArrow : CustomCardModel, IArrowCard {
 			.Execute(choiceContext);
 		foreach (DamageResult damageResult in attackCommand.Results) {
 			if (damageResult.Receiver == cardPlay.Target && !damageResult.WasFullyBlocked) {
-				await PowerCmd.Apply<SwiftArrowPower>(cardPlay.Target, DynamicVars["Amount"].BaseValue, Owner.Creature, this);
+				await PowerCmd.Apply<DemoTempLoseStrengthPower>(cardPlay.Target, -DynamicVars["Amount"].BaseValue, Owner.Creature, this);
 			}
 		}
 	}
@@ -70,7 +70,7 @@ public class SwiftArrow : CustomCardModel, IArrowCard {
 	public async Task arrowEffect(PlayerChoiceContext choiceContext, CardPlay cardPlay, List<DamageResult> damageResults, CardModel clusterCard, AttackContext context) {
 		foreach (DamageResult damageResult in damageResults) {
 			if (!damageResult.WasFullyBlocked) {
-				await PowerCmd.Apply<SwiftArrowPower>(damageResult.Receiver, DynamicVars["Amount"].BaseValue, Owner.Creature, clusterCard);
+				await PowerCmd.Apply<DemoTempLoseStrengthPower>(damageResult.Receiver, -DynamicVars["Amount"].BaseValue, Owner.Creature, clusterCard);
 			}
 		}
 	}

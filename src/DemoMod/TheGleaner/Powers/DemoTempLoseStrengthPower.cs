@@ -13,7 +13,7 @@ using MegaCrit.Sts2.Core.Entities.Powers;
 
 namespace DemoMod.TheGleaner.Powers;
 
-public class DemoTempStrengthPower : CustomPowerModel {
+public class DemoTempLoseStrengthPower : CustomPowerModel {
     private bool _shouldIgnoreNextInstance;
     public override string CustomPackedIconPath => $"res://TheGleaner/images/powers/{Id.Entry.ToLowerInvariant()}.png";
     public override string CustomBigIconPath => $"res://TheGleaner/images/powers/{Id.Entry.ToLowerInvariant()}.png";
