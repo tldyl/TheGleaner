@@ -43,7 +43,7 @@ public class SonoweaveFlash : CustomCardModel {
 		}
 	}
 
-	public SonoweaveFlash() : base(1, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy) {
+	public SonoweaveFlash() : base(1, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy) {
 		
 	}
 
