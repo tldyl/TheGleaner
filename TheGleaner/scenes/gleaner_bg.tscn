@@ -1,10 +1,9 @@
-[gd_scene load_steps=10 format=3 uid="uid://gj2kprccyrsq"]
+[gd_scene load_steps=5 format=3 uid="uid://c253hd4hxntof"]
 
-[ext_resource type="Texture2D" uid="uid://cvwjw4cm2ijry" path="res://TheGleaner/scenes/Character_Portrait.png" id="1_aqmbe"]
+[ext_resource type="SpineAtlasResource" uid="uid://dfaduhwvxtb3r" path="res://TheGleaner/scenes/char_select/gila_meshed.autoSway_loop.atlas" id="1_xqwpu"]
 [ext_resource type="Script" uid="uid://olijjxu0ukvv" path="res://src/DemoMod/TheGleaner/UI/NGleanerSelectScreen.cs" id="1_igmtv"]
-[ext_resource type="Texture2D" uid="uid://b3j40q6vt4k2r" path="res://TheGleaner/scenes/char_select/bg.png" id="2_d2xal"]
 [ext_resource type="Texture2D" uid="uid://c7i1ses01tud1" path="res://TheGleaner/images/vfx/optical_flare_vfx/dot.png" id="3_igmtv"]
-[ext_resource type="SpineSkeletonDataResource" uid="uid://ol6sakjo7psh" path="res://TheGleaner/scenes/char_select/gila_meshed.tres" id="4_qt788"]
+[ext_resource type="SpineSkeletonFileResource" uid="uid://blnvh3ws6vo3m" path="res://TheGleaner/scenes/char_select/gila_meshed.autoSway_loop.skel" id="2_qbgdq"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_x81qw"]
 blend_mode = 2
@@ -12,6 +11,10 @@ blend_mode = 2
 [sub_resource type="Gradient" id="Gradient_5n7bm"]
 offsets = PackedFloat32Array(0, 0.26198083, 0.58785945)
 colors = PackedColorArray(0.6914247, 0.21573591, 0.859907, 1, 0.18177077, 0.6026928, 0.925701, 1, 0.19859174, 0.15759161, 0.610012, 1)
+
+[sub_resource type="SpineSkeletonDataResource" id="SpineSkeletonDataResource_rdqe7"]
+atlas_res = ExtResource("1_xqwpu")
+skeleton_file_res = ExtResource("2_qbgdq")
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_j3bg0"]
 blend_mode = 1
@@ -22,42 +25,19 @@ colors = PackedColorArray(1, 0, 0.56078434, 1, 0.8627451, 0.45490196, 0, 1, 1, 0
 
 [node name="GleanerBg" type="Control"]
 layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = 17.0
-offset_right = 640.0
-offset_bottom = 137.0
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -960.0
+offset_top = -521.0
+offset_right = 1600.0
+offset_bottom = 679.0
 grow_horizontal = 2
 grow_vertical = 2
 pivot_offset = Vector2(1280, 600)
 script = ExtResource("1_igmtv")
-
-[node name="TextureRect" type="TextureRect" parent="."]
-visible = false
-layout_mode = 1
-anchors_preset = -1
-anchor_left = -0.05
-anchor_top = -0.10700001
-anchor_right = 1.0500001
-anchor_bottom = 1.115
-offset_left = 136.0
-offset_top = 99.560005
-offset_right = -56.000122
-offset_bottom = -20.199951
-pivot_offset = Vector2(960, 600)
-texture = ExtResource("1_aqmbe")
-stretch_mode = 5
-
-[node name="TextureRect2" type="TextureRect" parent="."]
-layout_mode = 0
-offset_left = -792.0
-offset_top = -137.0
-offset_right = 2808.0
-offset_bottom = 1363.0
-texture = ExtResource("2_d2xal")
-expand_mode = 1
-stretch_mode = 5
 
 [node name="Ash2" type="CPUParticles2D" parent="."]
 material = SubResource("CanvasItemMaterial_x81qw")
@@ -79,14 +59,13 @@ color = Color(1, 0.49803922, 0.49803922, 1)
 color_ramp = SubResource("Gradient_5n7bm")
 
 [node name="SpineSprite" type="SpineSprite" parent="."]
-skeleton_data_res = ExtResource("4_qt788")
-update_mode = 1
-preview_skin = "default"
-preview_animation = "animation2"
+skeleton_data_res = SubResource("SpineSkeletonDataResource_rdqe7")
+preview_skin = "Default"
+preview_animation = "idle"
 preview_frame = false
 preview_time = 0.0
-position = Vector2(860, 560)
-scale = Vector2(0.55, 0.55)
+position = Vector2(792.0001, 525.00006)
+scale = Vector2(0.4324057, 0.4324057)
 
 [node name="Ash" type="CPUParticles2D" parent="."]
 material = SubResource("CanvasItemMaterial_j3bg0")

@@ -9,6 +9,6 @@ public partial class NGleanerSelectScreen : Control {
     public override void _Ready() {
         spineNode = GetNode<Node2D>("SpineSprite");
         MegaSprite sprite = new MegaSprite(spineNode);
-        MegaTrackEntry track = sprite.GetAnimationState().SetAnimation("animation");
+        MegaTrackEntry track = sprite.GetAnimationState().SetAnimation("idle");
     }
 }

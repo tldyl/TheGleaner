@@ -40,6 +40,7 @@ public class Collapse : CustomCardModel
 		AttackCommand _ = await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
 			.FromCard(this)
 			.TargetingRandomOpponents(Owner.Creature.CombatState)
+			.WithHitFx("vfx/vfx_heavy_blunt", tmpSfx: "heavy_attack.mp3")
 			.WithHitCount(Owner.Creature.CombatState.HittableEnemies.Count + 1)
 			.Execute(choiceContext);
 
