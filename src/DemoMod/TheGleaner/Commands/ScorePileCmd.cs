@@ -101,47 +101,50 @@ public static class ScorePileCmd {
 			}
 		}
 
-		int capacity = GetCapacity(player);
 		foreach (CardModel card in cards) {
 			card.RemoveFromCurrentPile();
 			PileType oldPile = card.Pile?.Type ?? PileType.None;
 			if (NRun.Instance.CombatRoom.Ui.Hand.GetCardHolder(card) != null) {
 				NRun.Instance.CombatRoom.Ui.Hand.Remove(card);
 			}
-			if (pile.Cards.Count >= capacity) {
-				pile.AddInternal(card, 0);
-				CardModel bottomCard = pile.Cards.Last();
-				pile.RemoveInternal(bottomCard);
-				PileType destPile = PileType.Discard;
-				await CardPileCmd.Add(bottomCard, destPile);
-				destPile.GetPile(player).InvokeCardAddFinished();
-				if (player.Creature.HasPower<StaffBurnoutPower>()) {
-					await player.Creature.GetPower<StaffBurnoutPower>().AfterCardChangedPiles(bottomCard, CustomEnums.ScorePile, null);
-				}
-				if (bottomCard is Phantasm) {
-					await ((IAfterTakeCardsFromScore)bottomCard).AfterTakeCardsFromScore(bottomCard);
-				}
-			} else {
-				pile.AddInternal(card, 0);
-			}
+			pile.AddInternal(card, 0);
 			if (card is IDissonanceCard dissonanceCard) {
 				dissonanceCard.OnEnterScorePile(combatState, player);
 			}
 			await Hook.AfterCardChangedPiles(player.RunState, player.Creature.CombatState, card, oldPile, null);
 		}
+		await RefreshScorePileStatus(player);
 		if (cards.Length > 0) {
 			pile.cardsAddedToScoreThisTurn = true;
+		}
+	}
+
+	public static async Task RefreshScorePileStatus(Player player) {
+		ScorePile pile = GetOrCreateScorePile(player.PlayerCombatState);
+		int capacity = GetCapacity(player);
+		while (pile.Cards.Count > capacity) {
+			CardModel bottomCard = pile.Cards.Last();
+			pile.RemoveInternal(bottomCard);
+			PileType destPile = PileType.Discard;
+			await CardPileCmd.Add(bottomCard, destPile);
+			destPile.GetPile(player).InvokeCardAddFinished();
+			if (player.Creature.HasPower<StaffBurnoutPower>()) {
+				await player.Creature.GetPower<StaffBurnoutPower>().AfterCardChangedPiles(bottomCard, CustomEnums.ScorePile, null);
+			}
+			if (bottomCard is Phantasm) {
+				await ((IAfterTakeCardsFromScore)bottomCard).AfterTakeCardsFromScore(bottomCard);
+			}
 		}
 		if (pile.Cards.Count > 0 && !hasScoreEntryCard.Get(player)) {
 			CardModel scoreEntryCard = ModelDb.Card<ScoreEntryCard>().ToMutable();
 			scoreEntryCard.Owner = player;
 			if (LocalContext.IsMe(player) && !NRun.Instance.CombatRoom.Ui.Hand.ActiveHolders.Any(holder => holder.CardModel is ScoreEntryCard)) {
-                NCard nCard = NCard.Create(scoreEntryCard);
-                NCombatRoom.Instance.Ui.AddChildSafely(nCard);
-                nCard.Position = PileType.Hand.GetTargetPosition(nCard);
-                NHandCardHolder holder = NRun.Instance.CombatRoom.Ui.Hand.Add(nCard, 0);
-                holder.Hitbox.Size = new Vector2(770, 620);
-                holder.Hitbox.Position = new Vector2(-350, -311);
+				NCard nCard = NCard.Create(scoreEntryCard);
+				NCombatRoom.Instance.Ui.AddChildSafely(nCard);
+				nCard.Position = PileType.Hand.GetTargetPosition(nCard);
+				NHandCardHolder holder = NRun.Instance.CombatRoom.Ui.Hand.Add(nCard, 0);
+				holder.Hitbox.Size = new Vector2(770, 620);
+				holder.Hitbox.Position = new Vector2(-350, -311);
 			}
 			Log.Info($"Create Score entry card for player {player.NetId}.");
 			NetCombatCardDb.Instance.IdCardForTesting(scoreEntryCard);
@@ -156,7 +159,7 @@ public static class ScorePileCmd {
 			NCombatRoom.Instance.GetCreatureNode(player.Creature).GetNode<Node2D>("ScoreOpenVfx").Visible = true;
 		}
 	}
-
+	
 	public static void RemoveCardsFromScoreOnly(PlayerCombatState combatState, Player player, IEnumerable<CardModel> cards) {
 		ScorePile pile = GetOrCreateScorePile(combatState);
 		foreach (CardModel card in cards) {
