@@ -27,43 +27,43 @@ using MegaCrit.Sts2.Core.ValueProps;
 namespace DemoMod.TheGleaner.Cards.GleanerCard;
 [Pool(typeof(CardPool))]
 public class Bisbigliando : CustomCardModel {
-    public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
+	public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
 
-    protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new DamageVar(2, ValueProp.Move)
-    ];
+	protected override IEnumerable<DynamicVar> CanonicalVars => [
+		new DamageVar(7, ValueProp.Move)
+	];
 
-    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromKeyword(CustomEnums.Score)];
+	protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromKeyword(CustomEnums.Score)];
 
-    public Bisbigliando() : base(0, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy) {
-    }
+	public Bisbigliando() : base(0, CardType.Attack, CardRarity.Rare, TargetType.AnyEnemy) {
+	}
 
-    protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
-        GleanerVfxCmd.PlayOnCreature<Node2D>(cardPlay.Target, "res://TheGleaner/scenes/vfx/arrow_attack.tscn", 0.3f);
-        await CreatureCmd.TriggerAnim(Owner.Creature, "Attack", 0.5f);
-        GleanerVfxCmd.PlayOnCreature<Node2D>(cardPlay.Target, "res://TheGleaner/scenes/vfx/arrow_hit_vfx.tscn");
-        await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
-            .FromCard(this)
-            .WithNoAttackerAnim()
-            .Targeting(cardPlay.Target)
-            .Execute(choiceContext);
+	protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
+		GleanerVfxCmd.PlayOnCreature<Node2D>(cardPlay.Target, "res://TheGleaner/scenes/vfx/arrow_attack.tscn", 0.3f);
+		await CreatureCmd.TriggerAnim(Owner.Creature, "Attack", 0.5f);
+		GleanerVfxCmd.PlayOnCreature<Node2D>(cardPlay.Target, "res://TheGleaner/scenes/vfx/arrow_hit_vfx.tscn");
+		await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
+			.FromCard(this)
+			.WithNoAttackerAnim()
+			.Targeting(cardPlay.Target)
+			.Execute(choiceContext);
 
-        await ScorePileCmd.AddCards(Owner.PlayerCombatState, Owner, this);
+		await ScorePileCmd.AddCards(Owner.PlayerCombatState, Owner, this);
 
-        NCard cardNode = NCombatRoom.Instance?.Ui.GetCardFromPlayContainer(this);
-        if (cardNode != null) {
-            Tween tween = NCombatRoom.Instance.CreateTween().SetParallel();
-            tween.Parallel().TweenProperty(
-                cardNode,
-                (NodePath)"modulate",
-                StsColors.exhaustGray,
-                SaveManager.Instance.PrefsSave.FastMode == FastModeType.Fast ? 0.2 : 0.3
-            );
-            tween.Chain().TweenCallback(Callable.From(cardNode.QueueFreeSafely));
-        }
-    }
+		NCard cardNode = NCombatRoom.Instance?.Ui.GetCardFromPlayContainer(this);
+		if (cardNode != null) {
+			Tween tween = NCombatRoom.Instance.CreateTween().SetParallel();
+			tween.Parallel().TweenProperty(
+				cardNode,
+				(NodePath)"modulate",
+				StsColors.exhaustGray,
+				SaveManager.Instance.PrefsSave.FastMode == FastModeType.Fast ? 0.2 : 0.3
+			);
+			tween.Chain().TweenCallback(Callable.From(cardNode.QueueFreeSafely));
+		}
+	}
 
-    protected override void OnUpgrade() {
-        DynamicVars.Damage.UpgradeValueBy(2);
-    }
+	protected override void OnUpgrade() {
+		DynamicVars.Damage.UpgradeValueBy(3);
+	}
 }
