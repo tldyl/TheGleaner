@@ -20,8 +20,8 @@ public class Swing : CustomCardModel, IConcertoCard
 
 	protected override IEnumerable<DynamicVar> CanonicalVars => [
 		new IntVar("VigorVal", 5),
-		new PowerVar<WeakPower>(2),
-		new IntVar("VulVal", 2)
+		new PowerVar<VulnerablePower>(2),
+		new IntVar("WeakVal", 2)
 	];
 
 	protected override IEnumerable<IHoverTip> ExtraHoverTips => [
@@ -40,9 +40,9 @@ public class Swing : CustomCardModel, IConcertoCard
 	{
 		await PowerCmd.Apply<VigorPower>(Owner.Creature, DynamicVars["VigorVal"].BaseValue, Owner.Creature, this);
 
-		await PowerCmd.Apply<WeakPower>(
+		await PowerCmd.Apply<VulnerablePower>(
 			Owner.Creature.CombatState.HittableEnemies,
-			DynamicVars["WeakPower"].BaseValue,
+			DynamicVars["VulnerablePower"].BaseValue,
 			Owner.Creature,
 			this
 		);
@@ -55,9 +55,9 @@ public class Swing : CustomCardModel, IConcertoCard
 
 	public async Task OnConcerto(CombatState combatState, PlayerChoiceContext choiceContext, CardPlay cardPlay)
 	{
-		await PowerCmd.Apply<VulnerablePower>(
+		await PowerCmd.Apply<WeakPower>(
 			Owner.Creature.CombatState.HittableEnemies,
-			DynamicVars["VulVal"].BaseValue,
+			DynamicVars["WeakVal"].BaseValue,
 			Owner.Creature,
 			this
 		);
