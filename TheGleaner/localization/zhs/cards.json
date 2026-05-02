@@ -103,7 +103,7 @@
   "DEMOMOD-BOTTOMLESS_QUIVER.title": "无底箭袋",
   "DEMOMOD-BOTTOMLESS_QUIVER.description": "每回合一次，\n打出[gold]箭镞[/gold]牌后，将其放入[gold]乐谱[/gold]并获得{Energy:energyIcons()}。",
   "DEMOMOD-COLLAPSE.title": "坍塌",
-  "DEMOMOD-COLLAPSE.description": "随机对敌人造成{Damage:diff()}点伤害。\n当前每有一名敌人，\n此牌就额外造成一次伤害。\n将一张[gold]噪声[/gold]放入随机[gold]牌堆[/gold]。",
+  "DEMOMOD-COLLAPSE.description": "随机对敌人造成{Damage:diff()}点伤害。\n当前每有一名敌人，\n此牌就额外造成两次伤害。\n将两张[gold]噪声[/gold]放入随机[gold]牌堆[/gold]。",
   "DEMOMOD-LAYERED_MOAN.title": "梦重魇",
   "DEMOMOD-LAYERED_MOAN.description": "对所有敌人造成{Damage:diff()}点伤害。\n本场战斗中每有一张[gold]噪声[/gold]被[gold]消耗[/gold]或[gold]变化[/gold]，\n此牌就额外造成一次伤害。\n将一张[gold]噪声[/gold]放入随机[gold]牌堆[/gold]。{InCombat:\n（命中[green]{Repeat}[/green]次。）|}",
   "DEMOMOD-SFORZANDO.title": "斯弗尔暂多",
