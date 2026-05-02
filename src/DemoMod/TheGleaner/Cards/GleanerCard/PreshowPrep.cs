@@ -20,7 +20,7 @@ public class PreshowPrep : CustomCardModel {
 
 	protected override IEnumerable<DynamicVar> CanonicalVars => [
 		new BlockVar(7, ValueProp.Move),
-		new IntVar("GleanAmount", 2),
+		new IntVar("GleanAmount", 1),
 		new EnergyVar("EnergyAmount", 1)
 	];
 
@@ -47,6 +47,7 @@ public class PreshowPrep : CustomCardModel {
 	}
 
 	protected override void OnUpgrade() {
-		DynamicVars.Block.UpgradeValueBy(4);
+		DynamicVars.Block.UpgradeValueBy(2);
+		DynamicVars["GleanAmount"].UpgradeValueBy(1);
 	}
 }

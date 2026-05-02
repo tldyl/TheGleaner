@@ -29,6 +29,6 @@ public class WindsMuse : CustomCardModel {
 	}
 
 	protected override void OnUpgrade() {
-		RemoveKeyword(CardKeyword.Exhaust);
+		DynamicVars["Amount"].UpgradeValueBy(1);
 	}
 }

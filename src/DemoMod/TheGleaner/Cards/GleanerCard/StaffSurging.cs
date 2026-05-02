@@ -15,23 +15,22 @@ namespace DemoMod.TheGleaner.Cards.GleanerCard;
 
 [Pool(typeof(CardPool))]
 public class StaffSurging : CustomCardModel {
-    public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
+	public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
 
-    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromKeyword(CustomEnums.Glean)];
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new IntVar("Draw", 1)];
+	protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromKeyword(CustomEnums.Glean)];
+	protected override IEnumerable<DynamicVar> CanonicalVars => [new IntVar("Amount", 2)];
 
-    public StaffSurging() : base(1, CardType.Skill, CardRarity.Common, TargetType.None) {
-        
-    }
+	public StaffSurging() : base(1, CardType.Skill, CardRarity.Common, TargetType.None) {
+		
+	}
 
-    protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
-        await CardPileCmd.Draw(choiceContext, DynamicVars["Draw"].BaseValue, Owner);
-        List<CardModel> cards = await ScorePileCmd.Glean(Owner, choiceContext, DynamicVars["Draw"].BaseValue, this);
-        foreach (CardModel card in cards) {
-            if (card is IDissonanceCard dissonanceCard) {
-                dissonanceCard.TransformFollowupAction = c => CardCmd.Upgrade(c);
-            }
-        }
-        CardCmd.Upgrade(IsUpgraded ? ScorePileCmd.GetOrCreateScorePile(Owner.PlayerCombatState).Cards : cards, CardPreviewStyle.HorizontalLayout);
-    }
+	protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
+		List<CardModel> cards = await ScorePileCmd.Glean(Owner, choiceContext, DynamicVars["Amount"].BaseValue, this);
+		foreach (CardModel card in cards) {
+			if (card is IDissonanceCard dissonanceCard) {
+				dissonanceCard.TransformFollowupAction = c => CardCmd.Upgrade(c);
+			}
+		}
+		CardCmd.Upgrade(IsUpgraded ? ScorePileCmd.GetOrCreateScorePile(Owner.PlayerCombatState).Cards : cards, CardPreviewStyle.HorizontalLayout);
+	}
 }
