@@ -37,5 +37,5 @@ public class UnfurlShieldscore : CustomCardModel {
 		await ScorePileCmd.Glean(Owner, choiceContext, DynamicVars["GleanAmount"].BaseValue, this);
 	}
 	
-	protected override void OnUpgrade() => DynamicVars["UnfurlShieldscorePower"].UpgradeValueBy(1);
+	protected override void OnUpgrade() => DynamicVars["GleanAmount"].UpgradeValueBy(1);
 }
