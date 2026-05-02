@@ -55,5 +55,5 @@ public class CrescendoTempo : CustomCardModel {
 		return 0;
 	}
 	
-	protected override void OnUpgrade() => DynamicVars["Increase"].UpgradeValueBy(6);
+	protected override void OnUpgrade() => DynamicVars["Increase"].UpgradeValueBy(2);
 }
