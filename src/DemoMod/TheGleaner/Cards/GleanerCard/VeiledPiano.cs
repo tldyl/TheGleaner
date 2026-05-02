@@ -11,6 +11,10 @@ using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.ValueProps;
+using Godot; 
+using MegaCrit.Sts2.Core.Nodes; 
+using DemoMod.TheGleaner.Utils;
+using MegaCrit.Sts2.Core.Commands.Builders;
 
 namespace DemoMod.TheGleaner.Cards.GleanerCard;
 
@@ -20,7 +24,7 @@ public class VeiledPiano : CustomCardModel, IConcertoCard
 	public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
 
 	protected override IEnumerable<DynamicVar> CanonicalVars => [
-		new DamageVar(7, ValueProp.Move),
+		new DamageVar(5, ValueProp.Move),
 		new ExtraDamageVar(2),
 		new CardsVar(1)
 	];
@@ -35,13 +39,14 @@ public class VeiledPiano : CustomCardModel, IConcertoCard
 
 	protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
 	{
-			await CreatureCmd.Damage(
-			choiceContext,
-			CombatState.HittableEnemies,
-			DynamicVars.Damage,
-			Owner.Creature,
-			this
-		);
+		Vector2 windowSize = NRun.Instance.CombatRoom.Ui.GetViewport().GetVisibleRect().Size;
+		GleanerVfxCmd.PlayVfx<Node2D>(new Vector2(windowSize.X * 0.65f, windowSize.Y * 0.5f), "res://TheGleaner/scenes/vfx/aoe_attack.tscn", 0.5f);
+		await CreatureCmd.TriggerAnim(Owner.Creature, "AoEAttack", 0.5f);
+		AttackCommand _ = await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
+			.FromCard(this)
+			.TargetingAllOpponents(Owner.Creature.CombatState)
+			.WithNoAttackerAnim()
+			.Execute(choiceContext);
 	}
 
 	public override decimal ModifyDamageAdditive(
@@ -71,6 +76,7 @@ public class VeiledPiano : CustomCardModel, IConcertoCard
 
 	protected override void OnUpgrade()
 	{
+		DynamicVars.Damage.UpgradeValueBy(2);
 		DynamicVars.ExtraDamage.UpgradeValueBy(1);
 	}
 }
