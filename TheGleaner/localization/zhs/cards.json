@@ -207,7 +207,7 @@
   "DEMOMOD-PHANTASM.description": "获得{Block:diff()}点[gold]格挡[/gold]两次。\n回合结束时如果这张牌在你的[gold]手牌[/gold]中，则放入[gold]乐谱[/gold]；\n若已在[gold]乐谱[/gold]中，则直到下次打出前耗能降低1{Energy:energyIcons()}。",
   "DEMOMOD-RUBATO.title": "散板",
   "DEMOMOD-RUBATO.description": "战斗开始时，放入[gold]乐谱[/gold]。\n获得{VulAmount}层[gold]易伤[/gold]。\n获得{Energy:energyIcons()}。{IfUpgraded:show:\n将1张此牌的降级复制品放入[gold]乐谱[/gold]。|}",
-  "DEMOMOD-STAFF_SURGING.title": "谱面跃动",
+  "DEMOMOD-STAFF_SURGING.title": "幻琴",
   "DEMOMOD-STAFF_SURGING.description": "[gold]拾录[/gold]{Amount}张牌并{IfUpgraded:show:升级[gold]乐谱[/gold]中的所有牌|将其升级}。",
   "DEMOMOD-PAPER_FROST.title": "霜纸花",
   "DEMOMOD-PAPER_FROST.description": "战斗开始时，放入[gold]乐谱[/gold]。\n所有敌人在本回合失去{Amount}点[gold]力量[/gold]。{IfUpgraded:show:\n将1张此牌的降级复制品放入[gold]乐谱[/gold]。|}",
