@@ -18,7 +18,7 @@ public class StaffBurnout : CustomCardModel {
 	protected override IEnumerable<DynamicVar> CanonicalVars => [new IntVar("Amount", 2)];
 	protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromKeyword(CustomEnums.Glean), HoverTipFactory.FromKeyword(CustomEnums.Score)];
 
-	public StaffBurnout() : base(1, CardType.Skill, CardRarity.Rare, TargetType.Self) {
+	public StaffBurnout() : base(2, CardType.Skill, CardRarity.Rare, TargetType.Self) {
 		
 	}
 
