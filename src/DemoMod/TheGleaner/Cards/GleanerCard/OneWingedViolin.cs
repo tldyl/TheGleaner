@@ -27,7 +27,7 @@ public class OneWingedViolin : CustomCardModel, IConcertoCard
 		HoverTipFactory.FromKeyword(CustomEnums.Concerto)
 	];
 
-	public OneWingedViolin() : base(2, CardType.Skill, CardRarity.Rare, TargetType.Self)
+	public OneWingedViolin() : base(3, CardType.Skill, CardRarity.Rare, TargetType.Self)
 	{
 	}
 

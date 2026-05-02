@@ -24,7 +24,7 @@ public class VeiledPiano : CustomCardModel, IConcertoCard
 	public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
 
 	protected override IEnumerable<DynamicVar> CanonicalVars => [
-		new DamageVar(5, ValueProp.Move),
+		new DamageVar(7, ValueProp.Move),
 		new ExtraDamageVar(2),
 		new CardsVar(1)
 	];
@@ -33,7 +33,7 @@ public class VeiledPiano : CustomCardModel, IConcertoCard
 		HoverTipFactory.FromKeyword(CustomEnums.Concerto)
 	];
 
-	public VeiledPiano() : base(2, CardType.Attack, CardRarity.Uncommon, TargetType.AllEnemies)
+	public VeiledPiano() : base(3, CardType.Attack, CardRarity.Uncommon, TargetType.AllEnemies)
 	{
 	}
 
