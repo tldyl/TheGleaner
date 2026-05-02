@@ -27,7 +27,7 @@ public class ShriekOfDread : CustomCardModel, IDissonanceCard {
 	protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<VulnerablePower>(), HoverTipFactory.FromCard<NightingaleAtTheAbyss>()];
 	public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Ethereal, CardKeyword.Exhaust, CustomEnums.Dissonance];
 
-	public ShriekOfDread() : base(0, CardType.Status, CardRarity.Status, TargetType.AllEnemies) {
+	public ShriekOfDread() : base(1, CardType.Status, CardRarity.Status, TargetType.AllEnemies) {
 		
 	}
 	
