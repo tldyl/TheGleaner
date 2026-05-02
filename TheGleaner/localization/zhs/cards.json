@@ -99,7 +99,7 @@
   "DEMOMOD-TUTTI.title": "大全奏",
   "DEMOMOD-TUTTI.description": "从最早放入[gold]乐谱[/gold]的牌开始，依次打出[gold]乐谱[/gold]中的所有牌。",
   "DEMOMOD-INSTRUMENTATION.title": "配器",
-  "DEMOMOD-INSTRUMENTATION.description": "从{IfUpgraded:show:升级过的|}[gold]普通[/gold]牌、[gold]协奏[/gold]牌、和[gold]集束弦织[/gold]中，选择一张放入你的[gold]手牌[/gold]。",
+  "DEMOMOD-INSTRUMENTATION.description": "从{IfUpgraded:show:升级过的|}[gold]普通[/gold]牌、[gold]协奏[/gold]牌和[gold]集束弦织[/gold]中，选择一张放入你的[gold]手牌[/gold]。",
   "DEMOMOD-BOTTOMLESS_QUIVER.title": "无底箭袋",
   "DEMOMOD-BOTTOMLESS_QUIVER.description": "每回合一次，\n打出[gold]箭镞[/gold]牌后，将其放入[gold]乐谱[/gold]并获得{Energy:energyIcons()}。",
   "DEMOMOD-COLLAPSE.title": "坍塌",
