@@ -29,16 +29,19 @@ public class VeiledPiano : CustomCardModel, IConcertoCard
 		HoverTipFactory.FromKeyword(CustomEnums.Concerto)
 	];
 
-	public VeiledPiano() : base(2, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy)
+	public VeiledPiano() : base(2, CardType.Attack, CardRarity.Uncommon, TargetType.AllEnemies)
 	{
 	}
 
 	protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
 	{
-	await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
-			.FromCard(this)
-			.Targeting(cardPlay.Target)
-			.Execute(choiceContext);
+			await CreatureCmd.Damage(
+			choiceContext,
+			CombatState.HittableEnemies,
+			DynamicVars.Damage,
+			Owner.Creature,
+			this
+		);
 	}
 
 	public override decimal ModifyDamageAdditive(
@@ -68,7 +71,6 @@ public class VeiledPiano : CustomCardModel, IConcertoCard
 
 	protected override void OnUpgrade()
 	{
-		DynamicVars.Damage.UpgradeValueBy(2);
 		DynamicVars.ExtraDamage.UpgradeValueBy(1);
 	}
 }

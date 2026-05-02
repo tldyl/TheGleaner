@@ -19,48 +19,51 @@ namespace DemoMod.TheGleaner.Cards.GleanerCard;
 
 [Pool(typeof(CardPool))]
 public class Introit : CustomCardModel {
-    public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
-    protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new DamageVar(15, ValueProp.Move),
-        new IntVar("TakeAmount", 3),
-        new CardsVar(1)
-    ];
-    protected override IEnumerable<IHoverTip> ExtraHoverTips => [
-        HoverTipFactory.FromKeyword(CustomEnums.Score)
-    ];
+	public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
+	protected override IEnumerable<DynamicVar> CanonicalVars => [
+		new DamageVar(15, ValueProp.Move),
+		new IntVar("TakeAmount", 3),
+		new CardsVar(1)
+	];
+	protected override IEnumerable<IHoverTip> ExtraHoverTips => [
+		HoverTipFactory.FromKeyword(CustomEnums.Score)
+	];
 
-    public Introit() : base(2, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy) {
-        
-    }
+	public Introit() : base(2, CardType.Attack, CardRarity.Common, TargetType.AllEnemies) {
+		
+	}
 
-    protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
-        AttackCommand _ = await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
-            .FromCard(this)
-            .Targeting(cardPlay.Target)
-            .Execute(choiceContext);
-        
-        CardPile drawPile = PileType.Draw.GetPile(Owner);
-        if (drawPile.Cards.Count == 0) {
-            return;
-        }
+	protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
+		await CreatureCmd.Damage(
+			choiceContext,
+			CombatState.HittableEnemies,
+			DynamicVars.Damage,
+			Owner.Creature,
+			this
+		);
+		
+		CardPile drawPile = PileType.Draw.GetPile(Owner);
+		if (drawPile.Cards.Count == 0) {
+			return;
+		}
 
-        CardSelectorPrefs prefs = new CardSelectorPrefs(
-            new LocString("cards", "DEMOMOD-INTROIT.selectionScreenPrompt"),
-            DynamicVars.Cards.IntValue
-        );
+		CardSelectorPrefs prefs = new CardSelectorPrefs(
+			new LocString("cards", "DEMOMOD-INTROIT.selectionScreenPrompt"),
+			DynamicVars.Cards.IntValue
+		);
 
-        IEnumerable<CardModel> selectedCards = await CardSelectCmd.FromSimpleGrid(
-            choiceContext,
-            PileType.Draw.GetPile(Owner).Cards
-                .ToList().StableShuffle(Owner.RunState.Rng.CombatCardSelection).Take(DynamicVars["TakeAmount"].IntValue).ToList(),
-            Owner,
-            prefs
-        );
-        foreach (CardModel selectedCard in selectedCards) {
-            await ScorePileCmd.AddCards(Owner.PlayerCombatState, Owner, selectedCard);
-            CardCmd.Preview(selectedCard);
-        }
-    }
-    
-    protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(4);
+		IEnumerable<CardModel> selectedCards = await CardSelectCmd.FromSimpleGrid(
+			choiceContext,
+			PileType.Draw.GetPile(Owner).Cards
+				.ToList().StableShuffle(Owner.RunState.Rng.CombatCardSelection).Take(DynamicVars["TakeAmount"].IntValue).ToList(),
+			Owner,
+			prefs
+		);
+		foreach (CardModel selectedCard in selectedCards) {
+			await ScorePileCmd.AddCards(Owner.PlayerCombatState, Owner, selectedCard);
+			CardCmd.Preview(selectedCard);
+		}
+	}
+	
+	protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(4);
 }
