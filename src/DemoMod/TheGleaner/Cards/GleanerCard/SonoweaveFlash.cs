@@ -20,7 +20,7 @@ public class SonoweaveFlash : CustomCardModel {
 	
 	protected override IEnumerable<DynamicVar> CanonicalVars => [
 		new CardsVar(1),
-		new DamageVar(7, ValueProp.Move)
+		new DamageVar(13, ValueProp.Move)
 	];
 	
 	protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromKeyword(CustomEnums.Score)];
@@ -43,7 +43,7 @@ public class SonoweaveFlash : CustomCardModel {
 		}
 	}
 
-	public SonoweaveFlash() : base(1, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy) {
+	public SonoweaveFlash() : base(2, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy) {
 		
 	}
 
