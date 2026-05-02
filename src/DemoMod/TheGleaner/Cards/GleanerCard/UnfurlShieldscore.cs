@@ -18,7 +18,7 @@ namespace DemoMod.TheGleaner.Cards.GleanerCard;
 public class UnfurlShieldscore : CustomCardModel {
 	public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
 	protected override IEnumerable<DynamicVar> CanonicalVars => [
-		new IntVar("GleanAmount", 2),
+		new IntVar("GleanAmount", 1),
 		new PowerVar<UnfurlShieldscorePower>(2)
 	];
 	protected override IEnumerable<IHoverTip> ExtraHoverTips => [
