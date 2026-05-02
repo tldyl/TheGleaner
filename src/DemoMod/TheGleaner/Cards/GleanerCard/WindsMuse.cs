@@ -16,10 +16,6 @@ public class WindsMuse : CustomCardModel {
 	protected override IEnumerable<DynamicVar> CanonicalVars => [new IntVar("Amount", 3)];
 	protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromKeyword(CustomEnums.Glean)];
 
-
-	public override IEnumerable<CardKeyword> CanonicalKeywords => [
-		CardKeyword.Exhaust
-	];
 	
 	public WindsMuse() : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.Self) {
 	}
