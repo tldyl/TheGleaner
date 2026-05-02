@@ -37,6 +37,7 @@ public class PaperFrost : CustomCardModel {
 			return;
 		}
 		
+		CardCmd.Preview(this);
 		await ScorePileCmd.AddCards(Owner.PlayerCombatState, Owner, this);
 	}
 	

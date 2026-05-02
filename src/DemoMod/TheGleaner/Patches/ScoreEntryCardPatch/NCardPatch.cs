@@ -73,11 +73,29 @@ public class NCardPatch {
                 PatchReady.refreshResonanceGlowIcon(__instance);
             }
             __instance.GetNode<TextureRect>("%EnergyIcon")
-                    .GetNode<Node2D>("GleanerResonanceGlowIcon").Visible = 
+                    .GetNode<Node2D>("GleanerResonanceGlowIcon").GetNode<TextureRect>("OrbitVfx").Visible = 
                 __instance.Model.Keywords.Contains(CustomEnums.Resonance) && __instance.Model.Pile is {IsCombatPile: true};
+            __instance.GetNode<TextureRect>("%EnergyIcon")
+                .GetNode<Node2D>("GleanerResonanceGlowIcon").GetNode<TextureRect>("HintOrbitVfx").Visible = 
+                __instance.Model.Pile is {Type: PileType.Hand} && shouldShowHintIcon(__instance.Model);
             return true;
         }
 
+        public static bool shouldShowHintIcon(CardModel card) {
+            if (card.EnergyCost.GetResolved() < 2 || card.EnergyCost.CostsX || card.Keywords.Contains(CustomEnums.Resonance)) {
+                return false;
+            }
+            foreach (CardModel c in card.Owner.PlayerCombatState.Hand.Cards) {
+                if (c == card) {
+                    continue;
+                }
+                if (c.Type != card.Type && c.Keywords.Contains(CustomEnums.Resonance)) {
+                    return true;
+                }
+            }
+            return false;
+        }
+        
         private static string getScoreCardIconPath(CardModel? card) {
             if (card == null) {
                 return "res://TheGleaner/images/score_card_icon/empty.png";
@@ -114,14 +132,18 @@ public class NCardPatch {
             Node2D gleanerResonanceGlowIcon = PreloadManager.Cache.GetScene("res://TheGleaner/scenes/resonance_glow_icon.tscn").Instantiate<Node2D>();
             TextureRect glowIcon = gleanerResonanceGlowIcon.GetNode<TextureRect>("Icon");
             TextureRect orbitVfx = gleanerResonanceGlowIcon.GetNode<TextureRect>("OrbitVfx");
-            glowIcon.Texture = PreloadManager.Cache.GetTexture2D(getResonanceGlowIconPath(__instance.Model, glowIcon));
+            TextureRect hintOrbitVfx = gleanerResonanceGlowIcon.GetNode<TextureRect>("HintOrbitVfx");
+            //glowIcon.Texture = PreloadManager.Cache.GetTexture2D(getResonanceGlowIconPath(__instance.Model, glowIcon));
             string? orbitVfxPath = getResonanceGlowIconOrbitVfxPath(__instance.Model, orbitVfx);
+            string? hintOrbitVfxPath = getResonanceGlowIconHintOrbitVfxPath(__instance.Model, hintOrbitVfx);
             if (orbitVfxPath != null) {
                 orbitVfx.Texture = PreloadManager.Cache.GetTexture2D(orbitVfxPath);
             }
+            if (hintOrbitVfxPath != null) {
+                hintOrbitVfx.Texture = PreloadManager.Cache.GetTexture2D(hintOrbitVfxPath);
+            }
             __instance.GetNode<TextureRect>("%EnergyIcon").AddChild(gleanerResonanceGlowIcon);
             gleanerResonanceGlowIcon.GetParent().MoveChild(gleanerResonanceGlowIcon, 0);
-            gleanerResonanceGlowIcon.Visible = false;
         }
 
         public static void refreshResonanceGlowIcon(NCard nCard) {
@@ -129,10 +151,15 @@ public class NCardPatch {
                 .GetNode<Node2D>("GleanerResonanceGlowIcon");
             TextureRect glowIcon = gleanerResonanceGlowIcon.GetNode<TextureRect>("Icon");
             TextureRect orbitVfx = gleanerResonanceGlowIcon.GetNode<TextureRect>("OrbitVfx");
-            glowIcon.Texture = PreloadManager.Cache.GetTexture2D(getResonanceGlowIconPath(nCard.Model, glowIcon));
+            TextureRect hintOrbitVfx = gleanerResonanceGlowIcon.GetNode<TextureRect>("HintOrbitVfx");
+            //glowIcon.Texture = PreloadManager.Cache.GetTexture2D(getResonanceGlowIconPath(nCard.Model, glowIcon));
             string? orbitVfxPath = getResonanceGlowIconOrbitVfxPath(nCard.Model, orbitVfx);
+            string? hintOrbitVfxPath = getResonanceGlowIconHintOrbitVfxPath(nCard.Model, hintOrbitVfx);
             if (orbitVfxPath != null) {
                 orbitVfx.Texture = PreloadManager.Cache.GetTexture2D(orbitVfxPath);
+            }
+            if (hintOrbitVfxPath != null) {
+                hintOrbitVfx.Texture = PreloadManager.Cache.GetTexture2D(hintOrbitVfxPath);
             }
         }
         
@@ -190,6 +217,33 @@ public class NCardPatch {
                     return null;
             }
         }
+
+        private static string? getResonanceGlowIconHintOrbitVfxPath(CardModel? cardModel, TextureRect glowIcon) {
+            Player player = LocalContext.GetMe(RunManager.Instance.DebugOnlyGetState());
+            if (player == null || cardModel == null) {
+                glowIcon.Modulate = Color.FromHtml("26e532c8");
+                return null;
+            }
+            switch (player.Character) {
+                case Characters.TheGleaner:
+                    switch (cardModel.Type) {
+                        case CardType.Attack:
+                            return "res://TheGleaner/images/resonance_energy_icon/R_A.png";
+                        case CardType.Skill:
+                            return "res://TheGleaner/images/resonance_energy_icon/B_A.png";
+                        case CardType.Power:
+                            return "res://TheGleaner/images/resonance_energy_icon/Y_A.png";
+                        case CardType.None:
+                        case CardType.Status:
+                        case CardType.Curse:
+                        case CardType.Quest:
+                        default:
+                            return "res://TheGleaner/images/resonance_energy_icon/BLACK_A.png";
+                    }
+                default:
+                    return null;
+            }
+        }
     }
     
     [HarmonyPatch(typeof(NCard), "Reload")]
@@ -200,8 +254,11 @@ public class NCardPatch {
             }
             PatchReady.Prefix(__instance);
             __instance.GetNode<TextureRect>("%EnergyIcon")
-                .GetNode<Node2D>("GleanerResonanceGlowIcon").Visible = 
+                .GetNode<Node2D>("GleanerResonanceGlowIcon").GetNode<TextureRect>("OrbitVfx").Visible = 
                 __instance.Model.Keywords.Contains(CustomEnums.Resonance) && __instance.Model.Pile is {IsCombatPile: true};
+            __instance.GetNode<TextureRect>("%EnergyIcon")
+                    .GetNode<Node2D>("GleanerResonanceGlowIcon").GetNode<TextureRect>("HintOrbitVfx").Visible = 
+                __instance.Model.Pile is {Type: PileType.Hand} && PatchUpdateVisuals.shouldShowHintIcon(__instance.Model);
         }
     }
 }

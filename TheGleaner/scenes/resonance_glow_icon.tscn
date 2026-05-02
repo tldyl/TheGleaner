@@ -6,36 +6,6 @@ blend_mode = 1
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_b4h8v"]
 blend_mode = 1
 
-[sub_resource type="Animation" id="Animation_b4h8v"]
-resource_name = "rotate"
-length = 10.0
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("OrbitVfx:rotation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 10),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [0.0, 6.283185307179586]
-}
-tracks/1/type = "method"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("AnimationPlayer")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(10),
-"transitions": PackedFloat32Array(1),
-"values": [{
-"args": [&"rotate", -1, 1.0, false],
-"method": &"play"
-}]
-}
-
 [sub_resource type="Animation" id="Animation_wxcld"]
 length = 0.001
 tracks/0/type = "value"
@@ -51,6 +21,35 @@ tracks/0/keys = {
 "values": [0.0]
 }
 
+[sub_resource type="Animation" id="Animation_b4h8v"]
+resource_name = "rotate"
+length = 10.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("OrbitVfx:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 10),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 6.283185307179586]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("HintOrbitVfx:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 10),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 6.283185307179586]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_crq76"]
 _data = {
 &"RESET": SubResource("Animation_wxcld"),
@@ -59,7 +58,19 @@ _data = {
 
 [node name="GleanerResonanceGlowIcon" type="Node2D"]
 
+[node name="HintOrbitVfx" type="TextureRect" parent="."]
+visible = false
+material = SubResource("CanvasItemMaterial_wxcld")
+offset_left = -96.0
+offset_top = -96.0
+offset_right = 160.0
+offset_bottom = 160.0
+pivot_offset = Vector2(128, 128)
+expand_mode = 1
+stretch_mode = 5
+
 [node name="OrbitVfx" type="TextureRect" parent="."]
+visible = false
 material = SubResource("CanvasItemMaterial_wxcld")
 offset_left = -96.0
 offset_top = -96.0
@@ -70,6 +81,7 @@ expand_mode = 1
 stretch_mode = 5
 
 [node name="Icon" type="TextureRect" parent="."]
+visible = false
 material = SubResource("CanvasItemMaterial_b4h8v")
 offset_left = -96.0
 offset_top = -96.0

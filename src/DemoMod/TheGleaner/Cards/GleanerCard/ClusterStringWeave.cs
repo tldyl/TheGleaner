@@ -38,7 +38,8 @@ public class ClusterStringWeave : CustomCardModel {
 		if (!IsInCombat || CombatState == null || Owner.Deck.Cards.Contains(this)) {
 			return;
 		}
-		
+
+		CardCmd.Preview(this);
 		await ScorePileCmd.AddCards(Owner.PlayerCombatState, Owner, this);
 	}
 

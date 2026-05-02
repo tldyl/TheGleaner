@@ -128,6 +128,7 @@ public static class ScorePileCmd {
 			PileType destPile = PileType.Discard;
 			await CardPileCmd.Add(bottomCard, destPile);
 			destPile.GetPile(player).InvokeCardAddFinished();
+			CardCmd.Preview(bottomCard);
 			if (player.Creature.HasPower<StaffBurnoutPower>()) {
 				await player.Creature.GetPower<StaffBurnoutPower>().AfterCardChangedPiles(bottomCard, CustomEnums.ScorePile, null);
 			}

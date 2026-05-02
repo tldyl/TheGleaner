@@ -48,6 +48,7 @@ public class StoreAndRelease : CustomCardModel {
 			return;
 		}
 
+		CardCmd.Preview(this);
 		await ScorePileCmd.AddCards(Owner.PlayerCombatState, Owner, this);
 	}
 	

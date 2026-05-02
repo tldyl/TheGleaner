@@ -153,7 +153,7 @@
   "DEMOMOD-WHISPERS.description": "将[gold]抽牌堆[/gold]中的一张牌变化为[gold]噪声[/gold]。",
   "DEMOMOD-WHISPERS.selectionScreenPrompt": "选择一张牌变化为[gold]噪声[/gold]。",
   "DEMOMOD-INTROIT.title": "序祭",
-  "DEMOMOD-INTROIT.description": "对所有敌人造成{Damage:diff()}点伤害。\n从抽牌堆选择{Cards}张牌放入[gold]乐谱[/gold]。",
+  "DEMOMOD-INTROIT.description": "造成{Damage:diff()}点伤害。\n从抽牌堆选择{Cards}张牌放入[gold]乐谱[/gold]。",
   "DEMOMOD-INTROIT.selectionScreenPrompt": "从抽牌堆选择{Amount}张牌放入[gold]乐谱[/gold]。",
   "DEMOMOD-IRIDESCENCE.title": "虹彩",
   "DEMOMOD-IRIDESCENCE.description": "只有在你的[gold]乐谱[/gold]拥有大于等于7张牌时才能被打出。\n对所有敌人造成{Damage:diff()}点伤害{Repeat}次。\n丢弃你[gold]乐谱[/gold]中的所有牌。",
