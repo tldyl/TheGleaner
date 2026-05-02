@@ -21,7 +21,7 @@ namespace DemoMod.TheGleaner.Cards.GleanerCard;
 public class Introit : CustomCardModel {
 	public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
 	protected override IEnumerable<DynamicVar> CanonicalVars => [
-		new DamageVar(15, ValueProp.Move),
+		new DamageVar(10, ValueProp.Move),
 		new IntVar("TakeAmount", 3),
 		new CardsVar(1)
 	];
@@ -65,5 +65,5 @@ public class Introit : CustomCardModel {
 		}
 	}
 	
-	protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(4);
+	protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(3);
 }
