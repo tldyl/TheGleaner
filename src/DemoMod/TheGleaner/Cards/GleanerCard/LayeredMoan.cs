@@ -30,11 +30,11 @@ public class LayeredMoan : CustomCardModel {
 
 	protected override IEnumerable<DynamicVar> CanonicalVars =>
 	[
-		new DamageVar(11, ValueProp.Move),
+		new DamageVar(7, ValueProp.Move),
 		new RepeatVar(1)
 	];
 
-	public LayeredMoan() : base(2, CardType.Attack, CardRarity.Rare, TargetType.AllEnemies) {
+	public LayeredMoan() : base(2, CardType.Attack, CardRarity.Uncommon, TargetType.AllEnemies) {
 	}
 
 	public override async Task AfterCardExhausted(

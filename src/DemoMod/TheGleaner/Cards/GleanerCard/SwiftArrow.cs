@@ -25,12 +25,12 @@ public class SwiftArrow : CustomCardModel, IArrowCard {
 	public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
 	protected override IEnumerable<DynamicVar> CanonicalVars => [
 		new IntVar("Amount", 2),
-		new DamageVar(4, ValueProp.Move)
+		new DamageVar(3, ValueProp.Move)
 	];
 	protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<StrengthPower>(), HoverTipFactory.Static(StaticHoverTip.Block)];
 	protected override HashSet<CardTag> CanonicalTags => [CustomEnums.Arrow];
 
-	public SwiftArrow() : base(0, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy) {
+	public SwiftArrow() : base(0, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy) {
 		
 	}
 
