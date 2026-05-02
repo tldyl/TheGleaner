@@ -36,7 +36,7 @@ public class NoLeaveToWither : CustomCardModel
 		CardKeyword.Exhaust
 	];
 
-	public NoLeaveToWither() : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.Self)
+	public NoLeaveToWither() : base(1, CardType.Skill, CardRarity.Rare, TargetType.Self)
 	{
 	}
 
