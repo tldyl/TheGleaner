@@ -1,4 +1,5 @@
 using BaseLib.Patches.Content;
+using DemoMod.TheGleaner.Commands;
 using DemoMod.TheGleaner.Utils;
 using HarmonyLib;
 using MegaCrit.Sts2.Core.Context;
@@ -15,6 +16,8 @@ public class RunManagerPatch {
             if (player.PlayerCombatState != null) {
                 CustomPiles.Piles.Set(player.PlayerCombatState, null);
             }
+            ScorePileCmd.openingScorePileAndTakeCardsToHand = false;
+            ScorePileCmd.gleanCard = false;
         }
 
         public static void Postfix(RunManager __instance, bool graceful) {

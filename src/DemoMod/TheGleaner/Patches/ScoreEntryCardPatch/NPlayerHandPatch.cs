@@ -1,5 +1,12 @@
 using DemoMod.TheGleaner.Cards.GleanerCard;
+using DemoMod.TheGleaner.Commands;
 using HarmonyLib;
+using MegaCrit.Sts2.addons.mega_text;
+using MegaCrit.Sts2.Core.CardSelection;
+using MegaCrit.Sts2.Core.Localization;
+using MegaCrit.Sts2.Core.Localization.DynamicVars;
+using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Nodes.Cards;
 using MegaCrit.Sts2.Core.Nodes.Cards.Holders;
 using MegaCrit.Sts2.Core.Nodes.Combat;
 using System.Reflection;
@@ -55,6 +62,34 @@ public class NPlayerHandPatch {
                 codeList.InsertRange(foundIndex, insertInstructions);
             }
             return codeList;
+        }
+    }
+
+    [HarmonyPatch(typeof(NPlayerHand), "SelectCardInSimpleMode")]
+    public static class PatchSelectCardInSimpleMode {
+        public static void Postfix(NPlayerHand __instance, NHandCardHolder? holder) {
+            if (ScorePileCmd.gleanCard) {
+                List<CardModel> _selectedCards = AccessTools.Field(typeof(NPlayerHand), "_selectedCards").GetValue(__instance) as List<CardModel>;
+                CardSelectorPrefs prefs = (CardSelectorPrefs) AccessTools.Field(typeof(NPlayerHand), "_prefs").GetValue(__instance);
+                MegaRichTextLabel _selectionHeader = AccessTools.Field(typeof(NPlayerHand), "_selectionHeader").GetValue(__instance) as MegaRichTextLabel;
+                if (_selectedCards.Count == 0) {
+                    AccessTools.Field(typeof(LocString), "<locEntryKey>P").SetValue(prefs.Prompt, "DEMOMOD-WINDS_MUSE.selectionScreenPromptDrawPileOnly");
+                } else if (_selectedCards.Count == prefs.MaxSelect) {
+                    AccessTools.Field(typeof(LocString), "<locEntryKey>P").SetValue(prefs.Prompt, "DEMOMOD-WINDS_MUSE.selectionScreenPromptHandOnly");
+                } else {
+                    AccessTools.Field(typeof(LocString), "<locEntryKey>P").SetValue(prefs.Prompt, "DEMOMOD-WINDS_MUSE.selectionScreenPromptDrawPileAndHand");
+                }
+                ((IntVar) prefs.Prompt.Variables["HandAmount"]).BaseValue = _selectedCards.Count;
+                ((IntVar) prefs.Prompt.Variables["DrawAmount"]).BaseValue = prefs.MaxSelect - _selectedCards.Count;
+                _selectionHeader.Text = "[center]" + prefs.Prompt.GetFormattedText() + "[/center]";
+            }
+        }
+    }
+
+    [HarmonyPatch(typeof(NPlayerHand), "DeselectCard")]
+    public static class PatchDeselectCard {
+        public static void Postfix(NPlayerHand __instance, NCard card) {
+            PatchSelectCardInSimpleMode.Postfix(__instance, null);
         }
     }
 }

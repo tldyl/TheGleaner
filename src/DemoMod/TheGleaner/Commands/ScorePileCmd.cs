@@ -17,6 +17,7 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Helpers;
 using MegaCrit.Sts2.Core.Hooks;
 using MegaCrit.Sts2.Core.Localization;
+using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Logging;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Nodes;
@@ -30,6 +31,7 @@ namespace DemoMod.TheGleaner.Commands;
 
 public static class ScorePileCmd {
 	public static bool openingScorePileAndTakeCardsToHand;
+	public static bool gleanCard;
 	private static readonly Dictionary<PlayerCombatState, int> CombatStartDeckCounts = new();
 	public static readonly SpireField<Player, bool> hasScoreEntryCard = new SpireField<Player, bool>(() => false);
 
@@ -169,9 +171,13 @@ public static class ScorePileCmd {
 	}
 	
 	public static async Task<List<CardModel>> Glean(Player player, PlayerChoiceContext choiceContext, decimal baseValue, CardModel cardSource) {
-		CardSelectorPrefs prefs = new CardSelectorPrefs(new LocString("cards", "DEMOMOD-WINDS_MUSE.selectionScreenPrompt"), 0, (int) baseValue);
+		CardSelectorPrefs prefs = new CardSelectorPrefs(new LocString("cards", "DEMOMOD-WINDS_MUSE.selectionScreenPromptDrawPileOnly"), 0, (int) baseValue);
+		prefs.Prompt.Add(new IntVar("DrawAmount", baseValue));
+		prefs.Prompt.Add(new IntVar("HandAmount", 0));
 		List<CardModel> gleanedCards = [];
+		gleanCard = true;
 		IEnumerable<CardModel> selectedCards = await CardSelectCmd.FromHand(choiceContext, player, prefs, _ => true, cardSource);
+		gleanCard = false;
 		foreach (CardModel card in selectedCards.Where(c => c is not IDissonanceCard)) {
 			CardCmd.Preview(card);
 		}
