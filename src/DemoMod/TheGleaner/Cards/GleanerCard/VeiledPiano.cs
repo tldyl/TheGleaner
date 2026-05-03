@@ -11,6 +11,10 @@ using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.ValueProps;
+using Godot; 
+using MegaCrit.Sts2.Core.Nodes; 
+using DemoMod.TheGleaner.Utils;
+using MegaCrit.Sts2.Core.Commands.Builders;
 
 namespace DemoMod.TheGleaner.Cards.GleanerCard;
 
@@ -29,15 +33,19 @@ public class VeiledPiano : CustomCardModel, IConcertoCard
 		HoverTipFactory.FromKeyword(CustomEnums.Concerto)
 	];
 
-	public VeiledPiano() : base(2, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy)
+	public VeiledPiano() : base(3, CardType.Attack, CardRarity.Uncommon, TargetType.AllEnemies)
 	{
 	}
 
 	protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
 	{
-	await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
+		Vector2 windowSize = NRun.Instance.CombatRoom.Ui.GetViewport().GetVisibleRect().Size;
+		GleanerVfxCmd.PlayVfx<Node2D>(new Vector2(windowSize.X * 0.65f, windowSize.Y * 0.5f), "res://TheGleaner/scenes/vfx/aoe_attack.tscn", 0.5f);
+		await CreatureCmd.TriggerAnim(Owner.Creature, "AoEAttack", 0.5f);
+		AttackCommand _ = await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
 			.FromCard(this)
-			.Targeting(cardPlay.Target)
+			.TargetingAllOpponents(Owner.Creature.CombatState)
+			.WithNoAttackerAnim()
 			.Execute(choiceContext);
 	}
 

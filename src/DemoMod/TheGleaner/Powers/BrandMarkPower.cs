@@ -23,7 +23,7 @@ public class BrandMarkPower : CustomPowerModel {
 		CardModel? cardSource) {
 		if (target == Owner && !props.HasFlag(ValueProp.Unpowered) && dealer != null) {
 			Flash();
-			await CreatureCmd.GainBlock(dealer, 2, ValueProp.Unpowered, null);
+			await CreatureCmd.GainBlock(dealer, 3, ValueProp.Unpowered, null);
 			await PowerCmd.Decrement(this);
 		}
 	}
