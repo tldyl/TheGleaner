@@ -20,13 +20,11 @@ namespace DemoMod.TheGleaner.Cards.GleanerCard;
 public class Windmill : CustomCardModel {
 	public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
 	protected override IEnumerable<DynamicVar> CanonicalVars => [
-		new BlockVar(10, ValueProp.Move),
-		new DamageVar(5, ValueProp.Move),
+		new DamageVar(6, ValueProp.Move),
 		new RepeatVar(4),
 		new IntVar("Debuff", 1)
 	];
 	protected override IEnumerable<IHoverTip> ExtraHoverTips => [
-		HoverTipFactory.Static(StaticHoverTip.Block),
 		HoverTipFactory.FromPower<WeakPower>(),
 		HoverTipFactory.FromPower<VulnerablePower>()
 	];
@@ -36,7 +34,6 @@ public class Windmill : CustomCardModel {
 	}
 
 	protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
-		await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, cardPlay);
 		Vector2 windowSize = NRun.Instance.CombatRoom.Ui.GetViewport().GetVisibleRect().Size;
 		await CreatureCmd.TriggerAnim(Owner.Creature, "AoEAttack", 0.5f);
 		await using AttackContext context = await AttackCommand.CreateContextAsync(Owner.Creature.CombatState, this);

@@ -3,6 +3,7 @@ using BaseLib.Utils;
 using DemoMod.TheGleaner.Commands;
 using DemoMod.TheGleaner.Enums;
 using DemoMod.TheGleaner.Pools;
+using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
@@ -13,32 +14,29 @@ using MegaCrit.Sts2.Core.ValueProps;
 namespace DemoMod.TheGleaner.Cards.GleanerCard;
 
 [Pool(typeof(CardPool))]
-public class SoundboardThump : CustomCardModel {
+public class Reverberation : CustomCardModel {
 	public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
+	public override bool GainsBlock => true;
 
 	protected override IEnumerable<DynamicVar> CanonicalVars => [
-		new IntVar("Amount", 1),
-		new DamageVar(8, ValueProp.Move)
+		new BlockVar(6, ValueProp.Move),
+		new IntVar("Amount", 1)
 	];
 
 	protected override IEnumerable<IHoverTip> ExtraHoverTips => [
 		HoverTipFactory.FromKeyword(CustomEnums.Glean)
 	];
 
-	public SoundboardThump() : base(1, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy) {
+	public Reverberation() : base(1, CardType.Skill, CardRarity.Common, TargetType.Self) {
 	}
 
 	protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
-		await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
-			.FromCard(this)
-			.Targeting(cardPlay.Target)
-			.Execute(choiceContext);
-
+		await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, cardPlay);
 		await ScorePileCmd.Glean(Owner, choiceContext, DynamicVars["Amount"].BaseValue, this);
 	}
 
 	protected override void OnUpgrade() {
-		DynamicVars.Damage.UpgradeValueBy(2);
+		DynamicVars.Block.UpgradeValueBy(1);
 		DynamicVars["Amount"].UpgradeValueBy(1);
 	}
 }

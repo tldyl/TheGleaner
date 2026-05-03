@@ -14,6 +14,12 @@ using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.ValueProps;
 using CustomEnums = DemoMod.TheGleaner.Enums.CustomEnums;
 using BaseLib.Patches.Content;
+using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Nodes;
+using MegaCrit.Sts2.Core.ValueProps;
+using Godot;
+using MegaCrit.Sts2.Core.Commands.Builders;
+using DemoMod.TheGleaner.Utils;
 
 namespace DemoMod.TheGleaner.Cards.GleanerCard;
 
@@ -22,22 +28,25 @@ public class EarthedBell : CustomCardModel, IConcertoCard {
 	public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
 	protected override IEnumerable<DynamicVar> CanonicalVars => [
 		new DamageVar(0, ValueProp.Move),
-		new BlockVar(6, ValueProp.Move)
+		new BlockVar(5, ValueProp.Move)
 	];
 	protected override IEnumerable<IHoverTip> ExtraHoverTips => [
 		HoverTipFactory.FromKeyword(CustomEnums.Concerto)
 	];
 	public override bool GainsBlock => true;
 
-	public EarthedBell() : base(2, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy) {
+	public EarthedBell() : base(3, CardType.Attack, CardRarity.Uncommon, TargetType.AllEnemies) {
 		
 	}
 
 	protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
-		await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
+		Vector2 windowSize = NRun.Instance.CombatRoom.Ui.GetViewport().GetVisibleRect().Size;
+		GleanerVfxCmd.PlayVfx<Node2D>(new Vector2(windowSize.X * 0.65f, windowSize.Y * 0.5f), "res://TheGleaner/scenes/vfx/aoe_attack.tscn", 0.5f);
+		await CreatureCmd.TriggerAnim(Owner.Creature, "AoEAttack", 0.5f);
+		AttackCommand _ = await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
 			.FromCard(this)
-			.Targeting(cardPlay.Target)
-			.WithHitFx("vfx/vfx_attack_blunt", tmpSfx: "blunt_attack.mp3")
+			.TargetingAllOpponents(Owner.Creature.CombatState)
+			.WithNoAttackerAnim()
 			.Execute(choiceContext);
 	}
 	

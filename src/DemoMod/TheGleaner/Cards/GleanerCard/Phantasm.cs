@@ -32,8 +32,7 @@ public class Phantasm : CustomCardModel, IAfterTakeCardsFromScore {
 	];
 
 	protected override IEnumerable<DynamicVar> CanonicalVars => [
-		new BlockVar(5, ValueProp.Move),
-		new IntVar("Times", 2),
+		new BlockVar(11, ValueProp.Move),
 		new EnergyVar(1)
 	];
 
@@ -41,10 +40,7 @@ public class Phantasm : CustomCardModel, IAfterTakeCardsFromScore {
 	}
 
 	protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
-		int times = DynamicVars["Times"].IntValue;
-		for (int i = 0; i < times; i++) {
 			await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, cardPlay);
-		}
 	}
 
 	public override async Task BeforeTurnEnd(PlayerChoiceContext choiceContext, CombatSide side) {
@@ -73,7 +69,7 @@ public class Phantasm : CustomCardModel, IAfterTakeCardsFromScore {
 	}
 
 	protected override void OnUpgrade() {
-		  DynamicVars.Block.UpgradeValueBy(2);
+		  DynamicVars.Block.UpgradeValueBy(4);
 	}
 
 	public override async Task AfterCardChangedPiles(

@@ -47,6 +47,6 @@ public class PreshowPrep : CustomCardModel {
 	}
 
 	protected override void OnUpgrade() {
-		DynamicVars.Block.UpgradeValueBy(2);
+		DynamicVars.Block.UpgradeValueBy(3);
 	}
 }

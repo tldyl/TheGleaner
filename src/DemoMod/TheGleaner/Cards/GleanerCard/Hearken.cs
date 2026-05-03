@@ -20,7 +20,8 @@ namespace DemoMod.TheGleaner.Cards.GleanerCard;
 public class Hearken : CustomCardModel {
 	public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
 	protected override IEnumerable<DynamicVar> CanonicalVars => [
-		new BlockVar(11, ValueProp.Move),
+		new BlockVar(5, ValueProp.Move),
+		new IntVar("Times", 2),
 		new IntVar("TakeAmount", 3),
 		new CardsVar(1)
 	];
@@ -34,7 +35,10 @@ public class Hearken : CustomCardModel {
 	}
 
 	protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
-		await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, cardPlay);
+		int times = DynamicVars["Times"].IntValue;
+		for (int i = 0; i < times; i++) {
+			await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, cardPlay);
+		}
 		CardPile drawPile = PileType.Draw.GetPile(Owner);
 		if (drawPile.Cards.Count == 0) {
 			return;
@@ -72,5 +76,9 @@ public class Hearken : CustomCardModel {
 		}
 	}
 
-	protected override void OnUpgrade() => DynamicVars.Block.UpgradeValueBy(4);
+		protected override void OnUpgrade()
+	{
+		DynamicVars.Block.UpgradeValueBy(1);
+		DynamicVars["TakeAmount"].UpgradeValueBy(1);
+	}
 }
