@@ -41,5 +41,5 @@ public class SentinelShaft : CustomCardModel {
 		CardCmd.Preview(list2[0]);
 	}
 	
-	protected override void OnUpgrade() => DynamicVars.Block.UpgradeValueBy(2);
+	protected override void OnUpgrade() => DynamicVars.Block.UpgradeValueBy(1);
 }

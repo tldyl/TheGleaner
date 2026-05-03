@@ -25,8 +25,8 @@ public class Cacophony : CustomCardModel
 	public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
 
 	protected override IEnumerable<DynamicVar> CanonicalVars => [
-		new DamageVar(8, ValueProp.Move),
-		new PowerVar<WeakPower>(1)
+		new DamageVar(7, ValueProp.Move),
+		new PowerVar<WeakPower>(2)
 	];
 
 	protected override IEnumerable<IHoverTip> ExtraHoverTips => [

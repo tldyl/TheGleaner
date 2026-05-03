@@ -25,7 +25,7 @@ namespace DemoMod.TheGleaner.Cards.GleanerCard;
 public class Procession : CustomCardModel, IAfterTakeCardsFromScore {
 	public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
 	protected override IEnumerable<DynamicVar> CanonicalVars => [
-		new DamageVar(12, ValueProp.Move),
+		new DamageVar(14, ValueProp.Move),
 		new IntVar("ReduceVal", 1)
 	];
 	protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.ForEnergy(this), HoverTipFactory.FromKeyword(CustomEnums.Score)];

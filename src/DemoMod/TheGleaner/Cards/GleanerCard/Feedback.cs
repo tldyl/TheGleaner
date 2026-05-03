@@ -16,46 +16,46 @@ namespace DemoMod.TheGleaner.Cards.GleanerCard;
 
 [Pool(typeof(CardPool))]
 public class Feedback : CustomCardModel {
-    public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
-    protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new DamageVar(8, ValueProp.Move),
-        new RepeatVar(2),
-        new CardsVar(1)
-    ];
-    protected override IEnumerable<IHoverTip> ExtraHoverTips => [
-        HoverTipFactory.FromKeyword(CustomEnums.Dissonance)
-    ];
+	public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
+	protected override IEnumerable<DynamicVar> CanonicalVars => [
+		new DamageVar(9, ValueProp.Move),
+		new RepeatVar(2),
+		new CardsVar(1)
+	];
+	protected override IEnumerable<IHoverTip> ExtraHoverTips => [
+		HoverTipFactory.FromKeyword(CustomEnums.Dissonance)
+	];
 
-    public Feedback() : base(2, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy) {
-        
-    }
+	public Feedback() : base(2, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy) {
+		
+	}
 
-    protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
-        AttackCommand _ = await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
-            .FromCard(this)
-            .Targeting(cardPlay.Target)
-            .WithHitCount(DynamicVars.Repeat.IntValue)
-            .Execute(choiceContext);
-        List<CardModel> cards = RandomDissonanceCard.getRandomDissonanceCards(
-            DynamicVars.Cards.IntValue,
-            Owner.RunState.Rng.CombatCardGeneration
-        );
+	protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
+		AttackCommand _ = await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
+			.FromCard(this)
+			.Targeting(cardPlay.Target)
+			.WithHitCount(DynamicVars.Repeat.IntValue)
+			.Execute(choiceContext);
+		List<CardModel> cards = RandomDissonanceCard.getRandomDissonanceCards(
+			DynamicVars.Cards.IntValue,
+			Owner.RunState.Rng.CombatCardGeneration
+		);
 
-        foreach (CardModel card in cards) {
-            PileType targetPile =
-                Owner.RunState.Rng.CombatCardGeneration.NextInt(2) == 0
-                    ? PileType.Draw
-                    : PileType.Discard;
+		foreach (CardModel card in cards) {
+			PileType targetPile =
+				Owner.RunState.Rng.CombatCardGeneration.NextInt(2) == 0
+					? PileType.Draw
+					: PileType.Discard;
 
-            CardCmd.PreviewCardPileAdd(
-                await CardPileCmd.AddGeneratedCardToCombat(
-                    CombatState.CreateCard(card, Owner),
-                    targetPile,
-                    true
-                )
-            );
-        }
-    }
-    
-    protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(2);
+			CardCmd.PreviewCardPileAdd(
+				await CardPileCmd.AddGeneratedCardToCombat(
+					CombatState.CreateCard(card, Owner),
+					targetPile,
+					true
+				)
+			);
+		}
+	}
+	
+	protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(2);
 }
