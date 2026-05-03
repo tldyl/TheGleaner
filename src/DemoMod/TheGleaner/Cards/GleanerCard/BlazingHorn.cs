@@ -25,7 +25,6 @@ public class BlazingHorn : CustomCardModel, IConcertoCard
 
 	protected override IEnumerable<IHoverTip> ExtraHoverTips => [
 		HoverTipFactory.ForEnergy(this),
-		HoverTipFactory.FromPower<NoDrawPower>(),
 		HoverTipFactory.FromKeyword(CustomEnums.Concerto)
 	];
 
@@ -37,7 +36,6 @@ public class BlazingHorn : CustomCardModel, IConcertoCard
 	{
 		await PlayerCmd.GainEnergy(DynamicVars["Energy"].BaseValue, Owner);
 		await CardPileCmd.Draw(choiceContext, DynamicVars.Cards.BaseValue, Owner, false);
-		await PowerCmd.Apply<NoDrawPower>(Owner.Creature, 1, Owner.Creature, this, false);
 	}
 
 	public async Task OnConcerto(CombatState combatState, PlayerChoiceContext choiceContext, CardPlay cardPlay)
