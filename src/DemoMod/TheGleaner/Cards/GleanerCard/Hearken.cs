@@ -20,9 +20,8 @@ namespace DemoMod.TheGleaner.Cards.GleanerCard;
 public class Hearken : CustomCardModel {
 	public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
 	protected override IEnumerable<DynamicVar> CanonicalVars => [
-		new BlockVar(5, ValueProp.Move),
-		new IntVar("Times", 2),
-		new IntVar("TakeAmount", 3),
+		new BlockVar(9, ValueProp.Move),
+		new IntVar("TakeAmount", 4),
 		new CardsVar(1)
 	];
 	protected override IEnumerable<IHoverTip> ExtraHoverTips => [
@@ -35,18 +34,14 @@ public class Hearken : CustomCardModel {
 	}
 
 	protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
-		int times = DynamicVars["Times"].IntValue;
-		for (int i = 0; i < times; i++) {
 			await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, cardPlay);
-		}
 		CardPile drawPile = PileType.Draw.GetPile(Owner);
 		if (drawPile.Cards.Count == 0) {
 			return;
 		}
 
 		CardSelectorPrefs prefs = new CardSelectorPrefs(
-			new LocString("cards", "DEMOMOD-HEARKEN.selectionScreenPromptDraw"),
-			0,
+			new LocString("cards", "DEMOMOD-HEARKEN.selectionScreenPrompt"),
 			DynamicVars.Cards.IntValue
 		);
 
@@ -57,19 +52,6 @@ public class Hearken : CustomCardModel {
 			Owner,
 			prefs
 		);
-		if (!selectedCards.Any()) {
-			prefs = new CardSelectorPrefs(
-				new LocString("cards", "DEMOMOD-HEARKEN.selectionScreenPromptDiscard"),
-				DynamicVars.Cards.IntValue
-			);
-			selectedCards = await CardSelectCmd.FromSimpleGrid(
-				choiceContext,
-				PileType.Discard.GetPile(Owner).Cards
-					.ToList().StableShuffle(Owner.RunState.Rng.CombatCardSelection).Take(DynamicVars["TakeAmount"].IntValue).ToList(),
-				Owner,
-				prefs
-			);
-		}
 		foreach (CardModel selectedCard in selectedCards) {
 			await ScorePileCmd.AddCards(Owner.PlayerCombatState, Owner, selectedCard);
 			CardCmd.Preview(selectedCard);
@@ -78,7 +60,6 @@ public class Hearken : CustomCardModel {
 
 		protected override void OnUpgrade()
 	{
-		DynamicVars.Block.UpgradeValueBy(1);
-		DynamicVars["TakeAmount"].UpgradeValueBy(1);
+		DynamicVars.Block.UpgradeValueBy(3);
 	}
 }

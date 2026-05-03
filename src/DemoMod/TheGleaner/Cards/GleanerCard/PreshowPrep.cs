@@ -10,16 +10,16 @@ using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.ValueProps;
+using MegaCrit.Sts2.Core.Commands.Builders;
 
 namespace DemoMod.TheGleaner.Cards.GleanerCard;
 
 [Pool(typeof(CardPool))]
 public class PreshowPrep : CustomCardModel {
 	public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
-	public override bool GainsBlock => true;
 
 	protected override IEnumerable<DynamicVar> CanonicalVars => [
-		new BlockVar(7, ValueProp.Move),
+		new DamageVar(10, ValueProp.Move),
 		new IntVar("GleanAmount", 2),
 		new EnergyVar("EnergyAmount", 1)
 	];
@@ -29,11 +29,14 @@ public class PreshowPrep : CustomCardModel {
 		HoverTipFactory.ForEnergy(this)
 	];
 
-	public PreshowPrep() : base(2, CardType.Skill, CardRarity.Common, TargetType.Self) {
+	public PreshowPrep() : base(2, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy) {
 	}
 
 	protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
-		await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, cardPlay);
+				AttackCommand _ = await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
+			.FromCard(this)
+			.Targeting(cardPlay.Target)
+			.Execute(choiceContext);
 
 		// ✅ 改这里
 		await ScorePileCmd.Glean(Owner, choiceContext, DynamicVars["GleanAmount"].BaseValue, this);
@@ -47,6 +50,6 @@ public class PreshowPrep : CustomCardModel {
 	}
 
 	protected override void OnUpgrade() {
-		DynamicVars.Block.UpgradeValueBy(3);
+		DynamicVars.Damage.UpgradeValueBy(4);
 	}
 }
