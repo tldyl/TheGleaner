@@ -18,7 +18,7 @@ namespace DemoMod.TheGleaner.Cards.GleanerCard;
 public class Feedback : CustomCardModel {
 	public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
 	protected override IEnumerable<DynamicVar> CanonicalVars => [
-		new DamageVar(9, ValueProp.Move),
+		new DamageVar(8, ValueProp.Move),
 		new RepeatVar(2),
 		new CardsVar(1)
 	];
