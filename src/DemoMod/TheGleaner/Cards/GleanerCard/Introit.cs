@@ -9,6 +9,7 @@ using MegaCrit.Sts2.Core.CardSelection;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Commands.Builders;
 using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.Extensions;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization;
@@ -24,6 +25,7 @@ public class Introit : CustomCardModel {
 	public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
 	protected override IEnumerable<DynamicVar> CanonicalVars => [
 		new DamageVar(12, ValueProp.Move),
+		new IntVar("TakeAmount", 3),
 		new CardsVar(1)
 	];
 	protected override IEnumerable<IHoverTip> ExtraHoverTips => [
@@ -43,27 +45,45 @@ public class Introit : CustomCardModel {
 			.TargetingAllOpponents(Owner.Creature.CombatState)
 			.WithNoAttackerAnim()
 			.Execute(choiceContext);
-		
-		CardPile drawPile = PileType.Draw.GetPile(Owner);
-		if (drawPile.Cards.Count == 0) {
-			return;
-		}
 
 		CardSelectorPrefs prefs = new CardSelectorPrefs(
-			new LocString("cards", "DEMOMOD-INTROIT.selectionScreenPrompt"),
+			new LocString("cards", "DEMOMOD-INTROIT.selectionScreenPromptDraw"),
+			0,
 			DynamicVars.Cards.IntValue
 		);
 
 		IEnumerable<CardModel> selectedCards = await CardSelectCmd.FromSimpleGrid(
 			choiceContext,
-			drawPile.Cards,
+			PileType.Draw.GetPile(Owner).Cards
+				.ToList().StableShuffle(Owner.RunState.Rng.CombatCardSelection).Take(DynamicVars["TakeAmount"].IntValue).ToList(),
 			Owner,
 			prefs
 		);
 		foreach (CardModel selectedCard in selectedCards) {
 			await ScorePileCmd.AddCards(Owner.PlayerCombatState, Owner, selectedCard);
+			CardCmd.Preview(selectedCard);
+		}
+		
+		prefs = new CardSelectorPrefs(
+			new LocString("cards", "DEMOMOD-INTROIT.selectionScreenPromptDiscard"),
+			0,
+			DynamicVars.Cards.IntValue
+		);
+		selectedCards = await CardSelectCmd.FromSimpleGrid(
+			choiceContext,
+			PileType.Discard.GetPile(Owner).Cards
+				.ToList().StableShuffle(Owner.RunState.Rng.CombatCardSelection).Take(DynamicVars["TakeAmount"].IntValue).ToList(),
+			Owner,
+			prefs
+		);
+		foreach (CardModel selectedCard in selectedCards) {
+			await ScorePileCmd.AddCards(Owner.PlayerCombatState, Owner, selectedCard);
+			CardCmd.Preview(selectedCard);
 		}
 	}
-	
-	protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(4);
+
+	protected override void OnUpgrade() {
+		DynamicVars.Damage.UpgradeValueBy(4);
+		DynamicVars["TakeAmount"].UpgradeValueBy(1);
+	} 
 }

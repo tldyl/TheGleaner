@@ -11,7 +11,6 @@ using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Commands.Builders;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
-using MegaCrit.Sts2.Core.Hooks;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
@@ -27,7 +26,8 @@ public class SnapPizzicato : CustomCardModel
 	public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
 
 	protected override IEnumerable<DynamicVar> CanonicalVars => [
-		new DamageVar(10, ValueProp.Move),
+		new DamageVar(9, ValueProp.Move),
+		new CardsVar(2),
 		new PowerVar<VulnerablePower>(1)
 	];
 
@@ -35,12 +35,12 @@ public class SnapPizzicato : CustomCardModel
 		HoverTipFactory.FromPower<VulnerablePower>(), HoverTipFactory.FromKeyword(CustomEnums.Score)
 	];
 
-	public SnapPizzicato() : base(1, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy)
-	{
+	public SnapPizzicato() : base(1, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy) {
 	}
 
 	protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
 	{
+		//TODO 效果改动
 		if (!cardPlay.IsAutoPlay) {
 			GleanerVfxCmd.PlayOnCreature<Node2D>(cardPlay.Target, "res://TheGleaner/scenes/vfx/arrow_attack.tscn", 0.3f);
 			await CreatureCmd.TriggerAnim(Owner.Creature, "Attack", 0.5f);
@@ -55,7 +55,8 @@ public class SnapPizzicato : CustomCardModel
 		CardPile pile = ScorePileCmd.GetOrCreateScorePile(Owner.PlayerCombatState);
 		CardSelectorPrefs prefs = new CardSelectorPrefs(
 			new LocString("cards", "DEMOMOD-SnapPizzicato.selectionScreenPrompt"),
-			1
+			0,
+			DynamicVars.Cards.IntValue
 		);
 
 		IEnumerable<CardModel> selected = await CardSelectCmd.FromSimpleGrid(
@@ -66,8 +67,7 @@ public class SnapPizzicato : CustomCardModel
 		);
 
 		List<CardModel> selectedCards = selected.ToList();
-		if (selectedCards.Count == 0)
-		{
+		if (selectedCards.Count == 0) {
 			return;
 		}
 
@@ -81,16 +81,12 @@ public class SnapPizzicato : CustomCardModel
 
 		await PowerCmd.Apply<VulnerablePower>(
 			cardPlay.Target,
-			DynamicVars["VulnerablePower"].BaseValue,
+			DynamicVars["VulnerablePower"].BaseValue * selectedCards.Count,
 			Owner.Creature,
 			this
 		);
 		GleanerVfxCmd.CheckScoreIsEmpty(Owner.PlayerCombatState);
 	}
 
-	protected override void OnUpgrade()
-	{
-		DynamicVars.Damage.UpgradeValueBy(2);
-		DynamicVars["VulnerablePower"].UpgradeValueBy(1);
-	}
+	protected override void OnUpgrade() => DynamicVars.Cards.UpgradeValueBy(1);
 }

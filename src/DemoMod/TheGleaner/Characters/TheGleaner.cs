@@ -116,6 +116,8 @@ public class TheGleaner : PlaceholderCharacterModel {
                 }
             }
         }
+        ScorePileCmd.openingScorePileAndTakeCardsToHand = false;
+        ScorePileCmd.gleanCard = false;
     }
     
     public override CreatureAnimator GenerateAnimator(MegaSprite controller) {
