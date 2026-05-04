@@ -24,23 +24,21 @@ namespace DemoMod.TheGleaner.Cards.GleanerCard;
 public class Introit : CustomCardModel {
 	public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
 	protected override IEnumerable<DynamicVar> CanonicalVars => [
-		new DamageVar(12, ValueProp.Move),
-		new IntVar("TakeAmount", 3),
+		new BlockVar(7, ValueProp.Move),
+		new IntVar("TakeAmount", 4),
 		new CardsVar(1)
 	];
 	protected override IEnumerable<IHoverTip> ExtraHoverTips => [
 		HoverTipFactory.FromKeyword(CustomEnums.Score)
 	];
-
-	public Introit() : base(2, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy) {
+	public override bool GainsBlock => true;
+	
+	public Introit() : base(2, CardType.Skill, CardRarity.Uncommon, TargetType.Self) {
 		
 	}
 
 	protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
-		await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
-			.FromCard(this)
-			.Targeting(cardPlay.Target)
-			.Execute(choiceContext);
+		await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, cardPlay);
 
 		CardSelectorPrefs prefs = new CardSelectorPrefs(
 			new LocString("cards", "DEMOMOD-INTROIT.selectionScreenPromptDraw"),
@@ -79,7 +77,6 @@ public class Introit : CustomCardModel {
 	}
 
 	protected override void OnUpgrade() {
-		DynamicVars.Damage.UpgradeValueBy(4);
-		DynamicVars["TakeAmount"].UpgradeValueBy(1);
+		DynamicVars.Block.UpgradeValueBy(3);
 	} 
 }

@@ -26,7 +26,7 @@ public class SnapPizzicato : CustomCardModel
 	public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
 
 	protected override IEnumerable<DynamicVar> CanonicalVars => [
-		new DamageVar(9, ValueProp.Move),
+		new DamageVar(8, ValueProp.Move),
 		new CardsVar(2),
 		new PowerVar<VulnerablePower>(1)
 	];
@@ -88,5 +88,8 @@ public class SnapPizzicato : CustomCardModel
 		GleanerVfxCmd.CheckScoreIsEmpty(Owner.PlayerCombatState);
 	}
 
-	protected override void OnUpgrade() => DynamicVars.Cards.UpgradeValueBy(1);
+	protected override void OnUpgrade() {
+		DynamicVars.Damage.UpgradeValueBy(2);
+		DynamicVars.Cards.UpgradeValueBy(1);
+	} 
 }
