@@ -32,7 +32,7 @@ public class OneCostAttacks : CustomCardModel, IChoosable {
             list1.Remove(Owner.Character.CardPool);
         }
         IEnumerable<CardModel> cards = from c in list1.SelectMany(c => c.GetUnlockedCards(Owner.UnlockState, Owner.RunState.CardMultiplayerConstraint))
-            where c.Type == CardType.Attack && c.EnergyCost.Canonical == 1
+            where c.Type == CardType.Attack && c.EnergyCost.Canonical == 1 && !c.HasStarCostX && !c.Tags.Contains(CardTag.OstyAttack)
             select c;
         List<CardModel> list2 = CardFactory.GetDistinctForCombat(Owner, cards, addAmount, Owner.RunState.Rng.CombatCardGeneration).ToList();
         if (IsUpgraded) {
