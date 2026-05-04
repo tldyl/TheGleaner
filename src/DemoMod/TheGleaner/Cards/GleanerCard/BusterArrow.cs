@@ -21,7 +21,7 @@ namespace DemoMod.TheGleaner.Cards.GleanerCard;
 public class BusterArrow : CustomCardModel, IArrowCard {
 	public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
 	protected override IEnumerable<DynamicVar> CanonicalVars => [
-		new DamageVar(20, ValueProp.Move)
+		new DamageVar(17, ValueProp.Move)
 	];
 	protected override HashSet<CardTag> CanonicalTags => [CustomEnums.Arrow];
 

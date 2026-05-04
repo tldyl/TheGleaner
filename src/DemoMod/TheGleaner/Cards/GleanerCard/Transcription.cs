@@ -22,10 +22,6 @@ public class Transcription : CustomCardModel {
 
 	public Transcription() : base(0, CardType.Skill, CardRarity.Rare, TargetType.Self) {
 	}
-	
-	public override IEnumerable<CardKeyword> CanonicalKeywords => [
-		CardKeyword.Exhaust
-	];
 
 	protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
 		CardPile scorePile = CustomPiles.GetCustomPile(Owner.PlayerCombatState, CustomEnums.ScorePile);
@@ -46,6 +42,6 @@ public class Transcription : CustomCardModel {
 	}
 
 		protected override void OnUpgrade() {
-		RemoveKeyword(CardKeyword.Exhaust);
+		DynamicVars["Amount"].UpgradeValueBy(1);
 	}
 }
