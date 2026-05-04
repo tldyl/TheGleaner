@@ -3,53 +3,39 @@ using BaseLib.Utils;
 using DemoMod.TheGleaner.Commands;
 using DemoMod.TheGleaner.Enums;
 using DemoMod.TheGleaner.Pools;
+using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
-using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.ValueProps;
-using MegaCrit.Sts2.Core.Commands.Builders;
 
 namespace DemoMod.TheGleaner.Cards.GleanerCard;
 
 [Pool(typeof(CardPool))]
 public class PreshowPrep : CustomCardModel {
 	public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
+	public override bool GainsBlock => true;
 
 	protected override IEnumerable<DynamicVar> CanonicalVars => [
-		new DamageVar(10, ValueProp.Move),
-		new IntVar("GleanAmount", 2),
-		new EnergyVar("EnergyAmount", 1)
+		new BlockVar(7, ValueProp.Move),
+		new IntVar("Amount", 2)
 	];
 
 	protected override IEnumerable<IHoverTip> ExtraHoverTips => [
-		HoverTipFactory.FromKeyword(CustomEnums.Glean),
-		HoverTipFactory.ForEnergy(this)
+		HoverTipFactory.FromKeyword(CustomEnums.Glean)
 	];
 
-	public PreshowPrep() : base(2, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy) {
+	public PreshowPrep() : base(2, CardType.Skill, CardRarity.Common, TargetType.Self) {
 	}
 
 	protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
-				AttackCommand _ = await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
-			.FromCard(this)
-			.Targeting(cardPlay.Target)
-			.Execute(choiceContext);
-
-		// ✅ 改这里
-		await ScorePileCmd.Glean(Owner, choiceContext, DynamicVars["GleanAmount"].BaseValue, this);
-
-		await PowerCmd.Apply<EnergyNextTurnPower>(
-			Owner.Creature,
-			DynamicVars["EnergyAmount"].BaseValue,
-			Owner.Creature,
-			this
-		);
+		await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, cardPlay);
+		await ScorePileCmd.Glean(Owner, choiceContext, DynamicVars["Amount"].BaseValue, this);
 	}
 
 	protected override void OnUpgrade() {
-		DynamicVars.Damage.UpgradeValueBy(4);
+		DynamicVars.Block.UpgradeValueBy(3);
 	}
 }

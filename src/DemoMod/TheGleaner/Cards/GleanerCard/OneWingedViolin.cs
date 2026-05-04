@@ -19,9 +19,9 @@ public class OneWingedViolin : CustomCardModel, IConcertoCard
 	public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
 
 	protected override IEnumerable<DynamicVar> CanonicalVars => [
-		new IntVar("VigorVal", 7),
+		new IntVar("VigorVal", 4),
 		new PowerVar<VulnerablePower>(2),
-		new IntVar("WeakVal", 2)
+		new IntVar("WeakVal", 1)
 	];
 
 	protected override IEnumerable<IHoverTip> ExtraHoverTips => [
@@ -32,7 +32,7 @@ public class OneWingedViolin : CustomCardModel, IConcertoCard
 		HoverTipFactory.FromPower<VigorPower>()
 	];
 
-	public OneWingedViolin() : base(3, CardType.Skill, CardRarity.Uncommon, TargetType.None)
+	public OneWingedViolin() : base(2, CardType.Skill, CardRarity.Common, TargetType.None)
 	{
 	}
 
@@ -51,7 +51,7 @@ public class OneWingedViolin : CustomCardModel, IConcertoCard
 	protected override void OnUpgrade()
 	{
 		DynamicVars["VigorVal"].UpgradeValueBy(3);
-		DynamicVars["VulnerablePower"].UpgradeValueBy(1);
+		DynamicVars["WeakVal"].UpgradeValueBy(1);
 	}
 
 	public async Task OnConcerto(CombatState combatState, PlayerChoiceContext choiceContext, CardPlay cardPlay)
