@@ -19,7 +19,7 @@ public class TwiningTone : CustomCardModel {
 	public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
 
 	protected override IEnumerable<DynamicVar> CanonicalVars => [
-		new DamageVar(7, ValueProp.Move),
+		new DamageVar(9, ValueProp.Move),
 		new ExtraDamageVar(2)
 	];
 	protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromKeyword(CustomEnums.Score)];
@@ -55,6 +55,6 @@ public class TwiningTone : CustomCardModel {
 	}
 
 	protected override void OnUpgrade() {
-		DynamicVars.Damage.UpgradeValueBy(3);
+		DynamicVars.ExtraDamage.UpgradeValueBy(1);
 	}
 }

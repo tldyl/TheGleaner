@@ -32,18 +32,14 @@ public class Introit : CustomCardModel {
 		HoverTipFactory.FromKeyword(CustomEnums.Score)
 	];
 
-	public Introit() : base(2, CardType.Attack, CardRarity.Uncommon, TargetType.AllEnemies) {
+	public Introit() : base(2, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy) {
 		
 	}
 
 	protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
-		Vector2 windowSize = NRun.Instance.CombatRoom.Ui.GetViewport().GetVisibleRect().Size;
-		GleanerVfxCmd.PlayVfx<Node2D>(new Vector2(windowSize.X * 0.65f, windowSize.Y * 0.5f), "res://TheGleaner/scenes/vfx/aoe_attack.tscn", 0.5f);
-		await CreatureCmd.TriggerAnim(Owner.Creature, "AoEAttack", 0.5f);
-		AttackCommand _ = await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
+		await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
 			.FromCard(this)
-			.TargetingAllOpponents(Owner.Creature.CombatState)
-			.WithNoAttackerAnim()
+			.Targeting(cardPlay.Target)
 			.Execute(choiceContext);
 
 		CardSelectorPrefs prefs = new CardSelectorPrefs(

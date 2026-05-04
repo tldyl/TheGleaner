@@ -22,6 +22,10 @@ public class Improvisation : CustomCardModel {
 	protected override IEnumerable<DynamicVar> CanonicalVars => [
 		new CardsVar(3)
 	];
+	
+		public override IEnumerable<CardKeyword> CanonicalKeywords => [
+		CardKeyword.Exhaust
+	];
 
 	protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromKeyword(CustomEnums.Score)];
 	private List<CardModel> OptionCards {

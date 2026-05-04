@@ -3,12 +3,12 @@ using BaseLib.Utils;
 using DemoMod.TheGleaner.Commands;
 using DemoMod.TheGleaner.Enums;
 using DemoMod.TheGleaner.Pools;
+using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
-using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.ValueProps;
 
 namespace DemoMod.TheGleaner.Cards.GleanerCard;
@@ -20,13 +20,11 @@ public class PreshowPrep : CustomCardModel {
 
 	protected override IEnumerable<DynamicVar> CanonicalVars => [
 		new BlockVar(7, ValueProp.Move),
-		new IntVar("GleanAmount", 2),
-		new EnergyVar("EnergyAmount", 1)
+		new IntVar("Amount", 2)
 	];
 
 	protected override IEnumerable<IHoverTip> ExtraHoverTips => [
-		HoverTipFactory.FromKeyword(CustomEnums.Glean),
-		HoverTipFactory.ForEnergy(this)
+		HoverTipFactory.FromKeyword(CustomEnums.Glean)
 	];
 
 	public PreshowPrep() : base(2, CardType.Skill, CardRarity.Common, TargetType.Self) {
@@ -34,16 +32,7 @@ public class PreshowPrep : CustomCardModel {
 
 	protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
 		await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, cardPlay);
-
-		// ✅ 改这里
-		await ScorePileCmd.Glean(Owner, choiceContext, DynamicVars["GleanAmount"].BaseValue, this);
-
-		await PowerCmd.Apply<EnergyNextTurnPower>(
-			Owner.Creature,
-			DynamicVars["EnergyAmount"].BaseValue,
-			Owner.Creature,
-			this
-		);
+		await ScorePileCmd.Glean(Owner, choiceContext, DynamicVars["Amount"].BaseValue, this);
 	}
 
 	protected override void OnUpgrade() {
