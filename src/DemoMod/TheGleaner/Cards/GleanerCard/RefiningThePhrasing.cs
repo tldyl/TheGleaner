@@ -30,7 +30,7 @@ public class RefiningThePhrasing : CustomCardModel {
 	protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
 		List<CardModel> selectedCards = (await ScorePileCmd.ShowScorePileScreen(Owner.PlayerCombatState, choiceContext, Owner, true)).ToList();
 		if (selectedCards.Count > 0) {
-			int gleanAmount = selectedCards.Count + (CurrentUpgradeLevel > 0 ? 1 : 0);
+			int gleanAmount = selectedCards.Count + (CurrentUpgradeLevel > 0 ? 1 : 0) + 1;
 			await CardCmd.Discard(choiceContext, selectedCards);
 			foreach (CardModel card in selectedCards) {
 				if (Owner.Creature.HasPower<StaffBurnoutPower>()) {

@@ -54,7 +54,7 @@ public class SnapPizzicato : CustomCardModel
 
 		CardPile pile = ScorePileCmd.GetOrCreateScorePile(Owner.PlayerCombatState);
 		CardSelectorPrefs prefs = new CardSelectorPrefs(
-			new LocString("cards", "DEMOMOD-SnapPizzicato.selectionScreenPrompt"),
+			new LocString("cards", "DEMOMOD-SNAP_PIZZICATO.selectionScreenPrompt"),
 			0,
 			DynamicVars.Cards.IntValue
 		);
