@@ -43,6 +43,7 @@ public class EarthedBell : CustomCardModel, IConcertoCard {
 		Vector2 windowSize = NRun.Instance.CombatRoom.Ui.GetViewport().GetVisibleRect().Size;
 		GleanerVfxCmd.PlayVfx<Node2D>(new Vector2(windowSize.X * 0.65f, windowSize.Y * 0.5f), "res://TheGleaner/scenes/vfx/aoe_attack.tscn", 0.5f);
 		await CreatureCmd.TriggerAnim(Owner.Creature, "AoEAttack", 0.5f);
+		SoundManager.Instance.PlaySound(SoundKeys.GetSoundResourcePath("BELL_" + new Random().Next(1, 4) + "_ATTACK"), 1.0f);
 		AttackCommand _ = await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
 			.FromCard(this)
 			.TargetingAllOpponents(Owner.Creature.CombatState)
@@ -67,6 +68,7 @@ public class EarthedBell : CustomCardModel, IConcertoCard {
 	}
 
 	public async Task OnConcerto(CombatState combatState, PlayerChoiceContext choiceContext, CardPlay cardPlay) {
+		SoundManager.Instance.PlaySound(SoundKeys.GetSoundResourcePath("BELL_" + new Random().Next(1, 4) + "_CONCERTO"), 1.0f);
 		await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, cardPlay);
 	}
 }

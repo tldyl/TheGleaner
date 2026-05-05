@@ -2,6 +2,7 @@ using BaseLib.Abstracts;
 using BaseLib.Utils;
 using DemoMod.TheGleaner.Enums;
 using DemoMod.TheGleaner.Pools;
+using DemoMod.TheGleaner.Utils;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
@@ -40,6 +41,7 @@ public class BlazingHorn : CustomCardModel, IConcertoCard
 
 	public async Task OnConcerto(CombatState combatState, PlayerChoiceContext choiceContext, CardPlay cardPlay)
 	{
+		SoundManager.Instance.PlaySound(SoundKeys.GetSoundResourcePath("HORN_" + new Random().Next(1, 5)), 1.0f);
 		await PlayerCmd.GainEnergy(DynamicVars["Energy2"].BaseValue, Owner);
 	}
 
