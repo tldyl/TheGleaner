@@ -56,7 +56,7 @@ public override IEnumerable<CardKeyword> CanonicalKeywords => [
 				prefs
 			);
 			foreach (CardModel selectedCard in selectedCards) {
-				await ScorePileCmd.AddCards(Owner.PlayerCombatState, Owner, selectedCard);
+				CardPileCmd.Add(selectedCard, PileType.Hand, CardPilePosition.Bottom, null, false);
 				CardCmd.Preview(selectedCard);
 			}
 		} else {

@@ -9,6 +9,7 @@ using MegaCrit.Sts2.Core.CardSelection;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Commands.Builders;
 using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.Extensions;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization;
@@ -23,43 +24,59 @@ namespace DemoMod.TheGleaner.Cards.GleanerCard;
 public class Hearken : CustomCardModel {
 	public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
 	protected override IEnumerable<DynamicVar> CanonicalVars => [
-		new DamageVar(9, ValueProp.Move),
+		new BlockVar(7, ValueProp.Move),
+		new IntVar("TakeAmount", 4),
 		new CardsVar(1)
 	];
 	protected override IEnumerable<IHoverTip> ExtraHoverTips => [
 		HoverTipFactory.FromKeyword(CustomEnums.Score)
 	];
-
-	public Hearken() : base(2, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy) {
+	public override bool GainsBlock => true;
+	
+	public Hearken() : base(2, CardType.Skill, CardRarity.Uncommon, TargetType.Self) {
 		
 	}
 
 	protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
-			AttackCommand _ = await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
-			.FromCard(this)
-			.Targeting(cardPlay.Target)
-			.Execute(choiceContext);
-		
-		CardPile drawPile = PileType.Draw.GetPile(Owner);
-		if (drawPile.Cards.Count == 0) {
-			return;
-		}
+		await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, cardPlay);
 
 		CardSelectorPrefs prefs = new CardSelectorPrefs(
-			new LocString("cards", "DEMOMOD-HEARKEN.selectionScreenPrompt"),
+			new LocString("cards", "DEMOMOD-HEARKEN.selectionScreenPromptDraw"),
+			0,
 			DynamicVars.Cards.IntValue
 		);
 
 		IEnumerable<CardModel> selectedCards = await CardSelectCmd.FromSimpleGrid(
 			choiceContext,
-			drawPile.Cards,
+			PileType.Draw.GetPile(Owner).Cards
+				.ToList().StableShuffle(Owner.RunState.Rng.CombatCardSelection).Take(DynamicVars["TakeAmount"].IntValue).ToList(),
 			Owner,
 			prefs
 		);
 		foreach (CardModel selectedCard in selectedCards) {
 			await ScorePileCmd.AddCards(Owner.PlayerCombatState, Owner, selectedCard);
+			CardCmd.Preview(selectedCard);
+		}
+		
+		prefs = new CardSelectorPrefs(
+			new LocString("cards", "DEMOMOD-HEARKEN.selectionScreenPromptDiscard"),
+			0,
+			DynamicVars.Cards.IntValue
+		);
+		selectedCards = await CardSelectCmd.FromSimpleGrid(
+			choiceContext,
+			PileType.Discard.GetPile(Owner).Cards
+				.ToList().StableShuffle(Owner.RunState.Rng.CombatCardSelection).Take(DynamicVars["TakeAmount"].IntValue).ToList(),
+			Owner,
+			prefs
+		);
+		foreach (CardModel selectedCard in selectedCards) {
+			await ScorePileCmd.AddCards(Owner.PlayerCombatState, Owner, selectedCard);
+			CardCmd.Preview(selectedCard);
 		}
 	}
-	
-	protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(3);
+
+	protected override void OnUpgrade() {
+		DynamicVars.Block.UpgradeValueBy(3);
+	} 
 }
