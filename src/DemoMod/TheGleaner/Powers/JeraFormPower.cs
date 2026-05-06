@@ -90,6 +90,7 @@ public class JeraFormPower : CustomPowerModel {
             player.RunState.Rng.CombatCardGeneration
         );
 
+        SoundManager.Instance.PlaySound(SoundKeys.HEART_BEAT);
         foreach (CardModel card in cards) {
             PileType targetPile =
                 player.RunState.Rng.CombatCardGeneration.NextInt(2) == 0

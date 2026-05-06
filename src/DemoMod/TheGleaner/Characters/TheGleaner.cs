@@ -2,6 +2,7 @@ using BaseLib.Abstracts;
 using DemoMod.TheGleaner.CardPiles;
 using DemoMod.TheGleaner.Cards.GleanerCard;
 using DemoMod.TheGleaner.Commands;
+using DemoMod.TheGleaner.Nodes.Vfx;
 using Godot;
 using MegaCrit.Sts2.Core.Entities.Characters;
 using MegaCrit.Sts2.Core.Models;
@@ -118,6 +119,7 @@ public class TheGleaner : PlaceholderCharacterModel {
         }
         ScorePileCmd.openingScorePileAndTakeCardsToHand = false;
         ScorePileCmd.gleanCard = false;
+        NGrayGradientVfxPostProcessor.Instance.ToggleBlackAndWhite(false);
     }
     
     public override CreatureAnimator GenerateAnimator(MegaSprite controller) {

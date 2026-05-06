@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://b4uuhl844mkxr"]
+
+[ext_resource type="Script" uid="uid://bouvvnmdw2aob" path="res://src/DemoMod/TheGleaner/Nodes/Vfx/NGrayGradientVfxPostProcessor.cs" id="1_0y7se"]
+[ext_resource type="Material" uid="uid://dphmb4xm80wa3" path="res://TheGleaner/images/vfx/gray_gradient_shader/gray_gradient.tres" id="1_s1ps6"]
+
+[node name="GrayGradientVfxPostProcessor" type="CanvasLayer"]
+script = ExtResource("1_0y7se")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+material = ExtResource("1_s1ps6")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2

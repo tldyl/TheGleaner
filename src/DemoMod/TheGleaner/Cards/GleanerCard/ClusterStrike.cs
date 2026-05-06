@@ -175,4 +175,11 @@ public class ClusterStrike : CustomCardModel, IAppendDescriptionCard {
 
 		return string.Join("", descriptions);
 	}
+
+	protected override void DeepCloneFields() {
+		base.DeepCloneFields();
+		List<CardModel> _cards = [];
+		_cards.AddRange(cards);
+		cards = _cards;
+	}
 }

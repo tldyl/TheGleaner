@@ -50,6 +50,7 @@ public class SentientMusicalNotePower : CustomPowerModel {
             Owner.Player.RunState.Rng.CombatCardGeneration
         );
 
+        SoundManager.Instance.PlaySound(SoundKeys.HEART_BEAT);
         foreach (CardModel card in cards) {
             PileType targetPile =
                 Owner.Player.RunState.Rng.CombatCardGeneration.NextInt(2) == 0

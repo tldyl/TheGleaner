@@ -1,0 +1,7 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://dphmb4xm80wa3"]
+
+[ext_resource type="Shader" uid="uid://be82n44exc06w" path="res://TheGleaner/images/vfx/gray_gradient_shader/gray_gradient.gdshader" id="1_0ro6h"]
+
+[resource]
+shader = ExtResource("1_0ro6h")
+shader_parameter/intensity = 1.0

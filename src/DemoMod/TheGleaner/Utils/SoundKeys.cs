@@ -17,6 +17,7 @@ public class SoundKeys {
     public static string BELL_1_ATTACK = "res://TheGleaner/audio/sfx/bell1_attack.wav";
     public static string BELL_2_ATTACK = "res://TheGleaner/audio/sfx/bell2_attack.wav";
     public static string BELL_3_ATTACK = "res://TheGleaner/audio/sfx/bell3_attack.wav";
+    public static string HEART_BEAT = "res://TheGleaner/audio/sfx/heart_beat.wav";
     
     private static Dictionary<string, string> soundKeyMap = new Dictionary<string, string>();
 

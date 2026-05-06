@@ -52,6 +52,7 @@ public class Whispers : CustomCardModel {
 			Owner,
 			prefs
 		);
+		SoundManager.Instance.PlaySound(SoundKeys.HEART_BEAT);
 		foreach (CardModel selectedCard in selectedCards) {
 			CardModel card = Owner.Creature.CombatState.CreateCard(RandomDissonanceCard.getRandomDissonanceCards(1, Owner.RunState.Rng.CombatCardGeneration)[0], Owner);
 			await CardCmd.Transform(selectedCard, card);

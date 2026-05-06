@@ -1,5 +1,6 @@
 using BaseLib.Patches.Content;
 using DemoMod.TheGleaner.Commands;
+using DemoMod.TheGleaner.Nodes.Vfx;
 using DemoMod.TheGleaner.Utils;
 using HarmonyLib;
 using MegaCrit.Sts2.Core.Context;
@@ -23,6 +24,7 @@ public class RunManagerPatch {
         public static void Postfix(RunManager __instance, bool graceful) {
             RandomDissonanceCard.initPool();
             CustomPiles.CustomPileProviders.Remove(CustomEnums.ScorePile);
+            NGrayGradientVfxPostProcessor.Instance.ToggleBlackAndWhite(false);
         }
     }
 }

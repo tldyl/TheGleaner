@@ -49,6 +49,7 @@ public class Collapse : CustomCardModel
 			Owner.RunState.Rng.CombatCardGeneration
 		);
 
+		SoundManager.Instance.PlaySound(SoundKeys.HEART_BEAT);
 		foreach (CardModel card in cards)
 		{
 			PileType targetPile =
