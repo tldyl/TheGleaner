@@ -30,7 +30,7 @@ public class WeavememoryBlade : CustomCardModel {
 		HoverTipFactory.FromKeyword(CustomEnums.Score)
 	];
 
-	public WeavememoryBlade() : base(0, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy) {
+	public WeavememoryBlade() : base(0, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy) {
 		
 	}
 
@@ -56,15 +56,13 @@ public override IEnumerable<CardKeyword> CanonicalKeywords => [
 				prefs
 			);
 			foreach (CardModel selectedCard in selectedCards) {
-				CardPileCmd.Add(selectedCard, PileType.Hand, CardPilePosition.Bottom, null, false);
-				CardCmd.Preview(selectedCard);
+				await CardPileCmd.Add(selectedCard, PileType.Hand, CardPilePosition.Bottom, null, false);
 			}
 		} else {
 			IEnumerable<CardModel> selectedCards = PileType.Discard.GetPile(Owner).Cards.Where(c => c.Keywords.Contains(CustomEnums.Resonance))
 				.ToList().StableShuffle(Owner.RunState.Rng.CombatCardSelection).Take(DynamicVars.Cards.IntValue);
 			foreach (CardModel selectedCard in selectedCards) {
-				await ScorePileCmd.AddCards(Owner.PlayerCombatState, Owner, selectedCard);
-				CardCmd.Preview(selectedCard);
+				await CardPileCmd.Add(selectedCard, PileType.Hand, CardPilePosition.Bottom, null, false);
 			}
 		}
 	}

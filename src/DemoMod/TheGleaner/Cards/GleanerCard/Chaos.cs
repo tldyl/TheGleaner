@@ -24,7 +24,7 @@ public class Chaos : CustomCardModel {
 	];
 	protected override bool HasEnergyCostX => true;
 
-	public Chaos() : base(0, CardType.Skill, CardRarity.Rare, TargetType.AnyEnemy) {
+	public Chaos() : base(0, CardType.Skill, CardRarity.Uncommon, TargetType.AnyEnemy) {
 		
 	}
 
