@@ -177,7 +177,7 @@
   "DEMOMOD-LAW_OF_EROSION.title": "蚀律",
   "DEMOMOD-LAW_OF_EROSION.description": "去除敌人身上所有的[gold]格挡[/gold]、[gold]滑溜[/gold]和[gold]无实体[/gold]。获得等同于去除量的[gold]格挡[/gold]。\n给予{VulnerablePower}层[gold]易伤[/gold]。{InCombat:\n(获得{Block:diff()}点[gold]格挡[/gold])|}",
   "DEMOMOD-ORNAMENTS.title": "声蛊",
-  "DEMOMOD-ORNAMENTS.description": "造成{Damage:diff()}点伤害。\n从[gold]乐谱[/gold]中丢弃至多{Cards:diff()}张牌，每丢弃一张，就给予目标{WeakPower:diff()}层[gold]虚弱[/gold]。",
+  "DEMOMOD-ORNAMENTS.description": "造成{Damage:diff()}点伤害。\n从[gold]乐谱[/gold]中丢弃至多{Cards:diff()}张牌，每丢弃一张，就给予目标{VulnerablePower:diff()}层[gold]易伤[/gold]。",
   "DEMOMOD-ORNAMENTS.selectionScreenPrompt": "从乐谱中丢弃至多{Cards}张牌。",
   "DEMOMOD-WEAVEMEMORY_BLADE.title": "织忆刀",
   "DEMOMOD-WEAVEMEMORY_BLADE.description": "造成{Damage:diff()}点伤害。\n{IfUpgraded:show:|随机}将[gold]弃牌堆[/gold]中的一张[gold]共鸣[/gold]牌放入[gold]手牌[/gold]。",
