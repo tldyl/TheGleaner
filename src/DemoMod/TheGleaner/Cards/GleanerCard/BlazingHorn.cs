@@ -19,8 +19,7 @@ public class BlazingHorn : CustomCardModel, IConcertoCard
 	public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
 
 	protected override IEnumerable<DynamicVar> CanonicalVars => [
-		new CardsVar(2),
-		new EnergyVar("Energy", 1),
+		new CardsVar(3),
 		new EnergyVar("Energy2", 1)
 	];
 
@@ -35,7 +34,6 @@ public class BlazingHorn : CustomCardModel, IConcertoCard
 
 	protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
 	{
-		await PlayerCmd.GainEnergy(DynamicVars["Energy"].BaseValue, Owner);
 		await CardPileCmd.Draw(choiceContext, DynamicVars.Cards.BaseValue, Owner, false);
 	}
 

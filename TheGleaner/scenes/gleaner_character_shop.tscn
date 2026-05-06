@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://cjcp1avm5xus0"]
 
 [ext_resource type="SpineSkeletonDataResource" uid="uid://cc14xylic3ujv" path="res://TheGleaner/scenes/char/TheGleaner/Q/combat/Q.tres" id="1_igo4b"]
-[ext_resource type="Script" uid="uid://enrfsyanxdwb" path="res://src/DemoMod/TheGleaner/UI/NGleanerMerchantCharacter.cs" id="1_w4guc"]
+[ext_resource type="Script" uid="uid://dqx6wus0ff8gb" path="res://src/DemoMod/TheGleaner/UI/NGleanerMerchantCharacter.cs" id="1_w4guc"]
 
 [node name="GleanerCharacter" type="Node2D"]
 script = ExtResource("1_w4guc")
@@ -13,7 +13,7 @@ preview_animation = "idle_loop"
 preview_frame = false
 preview_time = 0.0
 unique_name_in_owner = true
-scale = Vector2(0.3, 0.3)
+scale = Vector2(0.235, 0.235)
 
 [node name="Bounds" type="Control" parent="."]
 unique_name_in_owner = true
