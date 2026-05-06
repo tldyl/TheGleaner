@@ -30,7 +30,7 @@ public class WeavememoryBlade : CustomCardModel {
 		HoverTipFactory.FromKeyword(CustomEnums.Score)
 	];
 
-	public WeavememoryBlade() : base(0, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy) {
+	public WeavememoryBlade() : base(0, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy) {
 		
 	}
 

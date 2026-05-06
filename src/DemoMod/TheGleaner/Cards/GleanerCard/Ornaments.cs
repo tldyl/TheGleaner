@@ -35,7 +35,7 @@ public class Ornaments : CustomCardModel
 		HoverTipFactory.FromPower<VulnerablePower>(), HoverTipFactory.FromKeyword(CustomEnums.Score)
 	];
 
-	public Ornaments() : base(1, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy) {
+	public Ornaments() : base(1, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy) {
 	}
 
 	protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
