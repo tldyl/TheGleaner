@@ -23,7 +23,10 @@ public class Feedback : CustomCardModel {
 		new CardsVar(1)
 	];
 	protected override IEnumerable<IHoverTip> ExtraHoverTips => [
-		HoverTipFactory.FromKeyword(CustomEnums.Dissonance)
+		HoverTipFactory.FromKeyword(CustomEnums.Dissonance),
+		HoverTipFactory.FromCard<DirgeOfFarewell>(),
+		HoverTipFactory.FromCard<ShriekOfDread>(),
+		HoverTipFactory.FromCard<HowlOfWrath>()
 	];
 
 	public Feedback() : base(2, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy) {

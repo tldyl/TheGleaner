@@ -19,7 +19,7 @@ public class BlazingHorn : CustomCardModel, IConcertoCard
 	public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
 
 	protected override IEnumerable<DynamicVar> CanonicalVars => [
-		new CardsVar(3),
+		new CardsVar(2),
 		new EnergyVar("Energy2", 1)
 	];
 

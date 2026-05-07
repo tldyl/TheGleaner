@@ -28,11 +28,11 @@ public class Ornaments : CustomCardModel
 	protected override IEnumerable<DynamicVar> CanonicalVars => [
 		new DamageVar(10, ValueProp.Move),
 		new CardsVar(2),
-		new PowerVar<WeakPower>(1)
+		new PowerVar<VulnerablePower>(1)
 	];
 
 	protected override IEnumerable<IHoverTip> ExtraHoverTips => [
-		HoverTipFactory.FromPower<WeakPower>(), HoverTipFactory.FromKeyword(CustomEnums.Score)
+		HoverTipFactory.FromPower<VulnerablePower>(), HoverTipFactory.FromKeyword(CustomEnums.Score)
 	];
 
 	public Ornaments() : base(1, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy) {
@@ -79,17 +79,14 @@ public class Ornaments : CustomCardModel
 			}
 		}
 
-		await PowerCmd.Apply<WeakPower>(
+		await PowerCmd.Apply<VulnerablePower>(
 			cardPlay.Target,
-			DynamicVars["WeakPower"].BaseValue * selectedCards.Count,
+			DynamicVars["VulnerablePower"].BaseValue * selectedCards.Count,
 			Owner.Creature,
 			this
 		);
 		GleanerVfxCmd.CheckScoreIsEmpty(Owner.PlayerCombatState);
 	}
 
-	protected override void OnUpgrade() {
-		DynamicVars.Damage.UpgradeValueBy(2);
-		DynamicVars.Cards.UpgradeValueBy(1);
-	} 
+	protected override void OnUpgrade() => DynamicVars.Cards.UpgradeValueBy(1);
 }

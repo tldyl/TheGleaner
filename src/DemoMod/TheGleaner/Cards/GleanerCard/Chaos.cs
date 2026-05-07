@@ -24,13 +24,16 @@ public class Chaos : CustomCardModel {
 	];
 	protected override bool HasEnergyCostX => true;
 
-	public Chaos() : base(0, CardType.Skill, CardRarity.Rare, TargetType.AnyEnemy) {
+	public Chaos() : base(0, CardType.Skill, CardRarity.Uncommon, TargetType.RandomEnemy) {
 		
 	}
 
 	protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
-		await PowerCmd.Apply<WeakPower>(cardPlay.Target, ResolveEnergyXValue() + CurrentUpgradeLevel, Owner.Creature, this);
-		await PowerCmd.Apply<VulnerablePower>(cardPlay.Target, ResolveEnergyXValue() + CurrentUpgradeLevel, Owner.Creature, this);
+		for (int _ = 0; _ < ResolveEnergyXValue() + CurrentUpgradeLevel; _++) {
+			PowerModel debuffModel = Owner.Creature.CombatState.RunState.Rng.CombatTargets.NextBool() ? ModelDb.Power<WeakPower>() : ModelDb.Power<VulnerablePower>();
+			debuffModel = debuffModel.ToMutable();
+			await PowerCmd.Apply(debuffModel, cardPlay.Target, 1, Owner.Creature, this);
+		}
 		for (int _ = 0; _ < ResolveEnergyXValue() + CurrentUpgradeLevel; _++) {
 			PowerModel powerModel = Owner.Creature.CombatState.RunState.Rng.CombatTargets.NextBool() ? ModelDb.Power<StrengthPower>() : ModelDb.Power<DexterityPower>();
 			powerModel = powerModel.ToMutable();

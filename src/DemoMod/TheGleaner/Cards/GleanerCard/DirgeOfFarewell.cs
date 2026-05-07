@@ -20,7 +20,7 @@ public class DirgeOfFarewell : CustomCardModel, IDissonanceCard {
 	public override bool HasBuiltInOverlay => true;
 	public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
 	protected override IEnumerable<DynamicVar> CanonicalVars => [
-		new DamageVar(12, ValueProp.Unpowered)
+		new DamageVar(10, ValueProp.Unpowered)
 	];
 	protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromCard<PulsationOfTheTides>()];
 	public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Ethereal, CardKeyword.Exhaust, CustomEnums.Dissonance];

@@ -19,15 +19,19 @@ public class ReclaimingTheStray : CustomCardModel {
 	public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
 
 	protected override IEnumerable<DynamicVar> CanonicalVars => [
-		new BlockVar(6, ValueProp.Move),
+		new BlockVar(2, ValueProp.Move),
 		new CardsVar(1)
 	];
 
 public override bool GainsBlock => true;
 
-	public ReclaimingTheStray() : base(1, CardType.Skill, CardRarity.Common, TargetType.Self) {
+	public ReclaimingTheStray() : base(0, CardType.Skill, CardRarity.Common, TargetType.Self) {
 		
 	}
+
+public override IEnumerable<CardKeyword> CanonicalKeywords => [
+		CardKeyword.Exhaust
+	];
 
 	protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
 		await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, cardPlay);
@@ -54,6 +58,7 @@ public override bool GainsBlock => true;
 	}
 
 	protected override void OnUpgrade() {
-		DynamicVars.Block.UpgradeValueBy(3);
+		DynamicVars.Block.UpgradeValueBy(2);
+		RemoveKeyword(CardKeyword.Exhaust);
 	}
 }
