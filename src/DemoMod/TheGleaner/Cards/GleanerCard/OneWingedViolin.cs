@@ -19,20 +19,19 @@ public class OneWingedViolin : CustomCardModel, IConcertoCard
 	public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
 
 	protected override IEnumerable<DynamicVar> CanonicalVars => [
-		new IntVar("VigorVal", 4),
-		new PowerVar<VulnerablePower>(2),
-		new IntVar("WeakVal", 1)
+		new IntVar("VigorVal", 5),
+		new PowerVar<WeakPower>(2),
+		new IntVar("VulVal", 1)
 	];
 
 	protected override IEnumerable<IHoverTip> ExtraHoverTips => [
-		HoverTipFactory.Static(StaticHoverTip.Block),
 		HoverTipFactory.FromKeyword(CustomEnums.Concerto),
 		HoverTipFactory.FromPower<WeakPower>(),
 		HoverTipFactory.FromPower<VulnerablePower>(),
 		HoverTipFactory.FromPower<VigorPower>()
 	];
 
-	public OneWingedViolin() : base(2, CardType.Skill, CardRarity.Common, TargetType.None)
+	public OneWingedViolin() : base(2, CardType.Skill, CardRarity.Common, TargetType.AnyEnemy)
 	{
 	}
 
@@ -40,25 +39,20 @@ public class OneWingedViolin : CustomCardModel, IConcertoCard
 	{
 		await PowerCmd.Apply<VigorPower>(Owner.Creature, DynamicVars["VigorVal"].BaseValue, Owner.Creature, this);
 
-		await PowerCmd.Apply<VulnerablePower>(
-			Owner.Creature.CombatState.HittableEnemies,
-			DynamicVars["VulnerablePower"].BaseValue,
-			Owner.Creature,
-			this
-		);
+		await PowerCmd.Apply<WeakPower>(cardPlay.Target, DynamicVars["WeakPower"].BaseValue, Owner.Creature, this);
 	}
 
 	protected override void OnUpgrade()
 	{
 		DynamicVars["VigorVal"].UpgradeValueBy(3);
-		DynamicVars["WeakVal"].UpgradeValueBy(1);
+		DynamicVars["VulVal"].UpgradeValueBy(1);
 	}
 
 	public async Task OnConcerto(CombatState combatState, PlayerChoiceContext choiceContext, CardPlay cardPlay)
 	{
-		await PowerCmd.Apply<WeakPower>(
+		await PowerCmd.Apply<VulnerablePower>(
 			Owner.Creature.CombatState.HittableEnemies,
-			DynamicVars["WeakVal"].BaseValue,
+			DynamicVars["VulVal"].BaseValue,
 			Owner.Creature,
 			this
 		);

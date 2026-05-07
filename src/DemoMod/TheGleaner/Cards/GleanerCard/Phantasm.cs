@@ -32,7 +32,7 @@ public class Phantasm : CustomCardModel, IAfterTakeCardsFromScore {
 	];
 
 	protected override IEnumerable<DynamicVar> CanonicalVars => [
-		new BlockVar(11, ValueProp.Move),
+		new BlockVar(10, ValueProp.Move),
 		new EnergyVar(1)
 	];
 
