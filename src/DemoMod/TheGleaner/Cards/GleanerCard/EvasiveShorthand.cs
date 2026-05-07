@@ -19,7 +19,7 @@ public class EvasiveShorthand : CustomCardModel {
 	public override bool GainsBlock => true;
 
 	protected override IEnumerable<DynamicVar> CanonicalVars => [
-		new BlockVar(2, ValueProp.Move),
+		new BlockVar(5, ValueProp.Move),
 		new IntVar("Amount", 1)
 	];
 
@@ -27,7 +27,7 @@ public class EvasiveShorthand : CustomCardModel {
 		HoverTipFactory.FromKeyword(CustomEnums.Glean)
 	];
 
-	public EvasiveShorthand() : base(0, CardType.Skill, CardRarity.Common, TargetType.Self) {
+	public EvasiveShorthand() : base(1, CardType.Skill, CardRarity.Common, TargetType.Self) {
 	}
 
 	protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
@@ -36,6 +36,6 @@ public class EvasiveShorthand : CustomCardModel {
 	}
 
 	protected override void OnUpgrade() {
-		DynamicVars.Block.UpgradeValueBy(2);
+		DynamicVars.Block.UpgradeValueBy(3);
 	}
 }

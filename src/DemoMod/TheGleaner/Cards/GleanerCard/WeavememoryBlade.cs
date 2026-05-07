@@ -30,13 +30,9 @@ public class WeavememoryBlade : CustomCardModel {
 		HoverTipFactory.FromKeyword(CustomEnums.Score)
 	];
 
-	public WeavememoryBlade() : base(0, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy) {
+	public WeavememoryBlade() : base(0, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy) {
 		
 	}
-
-public override IEnumerable<CardKeyword> CanonicalKeywords => [
-		CardKeyword.Exhaust
-	];
 
 	protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
 		AttackCommand _ = await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
