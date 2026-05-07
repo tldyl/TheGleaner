@@ -54,9 +54,8 @@ public class Castle : CustomMonsterModel {
             .WithHitFx("vfx/vfx_attack_slash")
             .Execute(null);
 
-        foreach (Creature creature in CombatState.Creatures.Where(creature => creature.IsAlive && creature != Creature)) {
+        foreach (Creature creature in CombatState.Creatures.Where(creature => creature.IsAlive && creature.IsMonster && creature != Creature)) {
             await CreatureCmd.GainBlock(creature, IronCurtainBlock, ValueProp.Move, null);
         }
     }
 }
-
