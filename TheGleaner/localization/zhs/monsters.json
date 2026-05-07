@@ -1,0 +1,15 @@
+{
+  "DEMOMOD-PAWN.name": "士兵",
+  "DEMOMOD-PAWN.moves.ADVANCE_MOVE.title": "前进",
+  "DEMOMOD-PAWN.moves.DETERRENCE_MOVE.title": "威慑",
+  "DEMOMOD-CASTLE.name": "城堡",
+  "DEMOMOD-CASTLE.moves.IRON_CURTAIN_BAPTISM_MOVE.title": "铁幕洗礼",
+  "DEMOMOD-IVORY_BISHOP.name": "象牙主教",
+  "DEMOMOD-IVORY_BISHOP.moves.LIGHT_CROSS_MOVE.title": "光十字",
+  "DEMOMOD-IVORY_BISHOP.moves.CONVICTION_MOVE.title": "定罪",
+  "DEMOMOD-IVORY_BISHOP.moves.SANCTUARY_MOVE.title": "庇护",
+  "DEMOMOD-EBONY_BISHOP.name": "黑檀主教",
+  "DEMOMOD-EBONY_BISHOP.moves.PIN_DOWN_MOVE.title": "牵制",
+  "DEMOMOD-EBONY_BISHOP.moves.PROFANATION_MOVE.title": "亵渎",
+  "DEMOMOD-EBONY_BISHOP.moves.DARK_CROSS_MOVE.title": "暗十字"
+}
