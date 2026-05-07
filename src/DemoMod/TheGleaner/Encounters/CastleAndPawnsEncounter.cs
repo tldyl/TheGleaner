@@ -8,7 +8,7 @@ using MegaCrit.Sts2.Core.Rooms;
 namespace DemoMod.TheGleaner.Encounters;
 
 public class CastleAndPawnsEncounter : CustomEncounterModel {
-    public CastleAndPawnsEncounter() : base(RoomType.Monster, false) {
+    public CastleAndPawnsEncounter() : base(RoomType.Monster) {
         
     }
     

@@ -8,7 +8,7 @@ using MegaCrit.Sts2.Core.Rooms;
 namespace DemoMod.TheGleaner.Encounters;
 
 public class IvoryAndEbonyEncounter : CustomEncounterModel {
-    public IvoryAndEbonyEncounter() : base(RoomType.Elite, false) {
+    public IvoryAndEbonyEncounter() : base(RoomType.Elite) {
         
     }
     
