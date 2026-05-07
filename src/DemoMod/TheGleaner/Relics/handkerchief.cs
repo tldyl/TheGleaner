@@ -11,6 +11,9 @@ namespace DemoMod.TheGleaner.Relics;
 [Pool(typeof(JeraRelicPool))]
 public sealed class Handkerchief : CustomRelicModel
 {
+    public override string PackedIconPath => $"res://TheGleaner/images/relics/{Id.Entry.ToLowerInvariant()}.png";
+    protected override string PackedIconOutlinePath => $"res://TheGleaner/images/relics/{Id.Entry.ToLowerInvariant()}.png";
+    protected override string BigIconPath => $"res://TheGleaner/images/relics/{Id.Entry.ToLowerInvariant()}.png";
     public Handkerchief()
     {
     }

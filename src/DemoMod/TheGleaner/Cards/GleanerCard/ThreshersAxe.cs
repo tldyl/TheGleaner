@@ -2,6 +2,8 @@ using BaseLib.Abstracts;
 using BaseLib.Utils;
 using DemoMod.TheGleaner.Enums;
 using DemoMod.TheGleaner.Pools;
+using DemoMod.TheGleaner.Utils;
+using Godot;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Commands.Builders;
@@ -31,9 +33,14 @@ public class ThreshersAxe : CustomCardModel, IConcertoCard {
     }
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
+        Creature target = Owner.RunState.Rng.CombatTargets.NextItem(Owner.Creature.CombatState.HittableEnemies);
+        GleanerVfxCmd.PlayOnCreature<Node2D>(target, "res://TheGleaner/scenes/vfx/threshers_axe_vfx.tscn");
+        await Cmd.Wait(0.2f);
+        GleanerVfxCmd.PlayOnCreature<Node2D>(target, "res://TheGleaner/scenes/vfx/threshers_axe_hit_vfx.tscn");
         AttackCommand _ = await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
             .FromCard(this)
-            .TargetingRandomOpponents(Owner.Creature.CombatState)
+            .WithNoAttackerAnim()
+            .Targeting(target)
             .Execute(choiceContext);
         if (Owner.Creature.CombatState.HittableEnemies.Count == 0 && cardPlay.IsAutoPlay) {
             await CombatManager.Instance.CheckWinCondition();

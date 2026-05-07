@@ -1,0 +1,122 @@
+[gd_scene load_steps=12 format=3 uid="uid://bkvwlhh32rk7o"]
+
+[ext_resource type="Shader" uid="uid://ch7s134yiyacs" path="res://TheGleaner/scenes/vfx/vfx_flipbook_shader.gdshader" id="1_1k3lf"]
+[ext_resource type="Texture2D" uid="uid://de0i1ljfixtct" path="res://TheGleaner/images/vfx/guitar.png" id="2_xhqjl"]
+
+[sub_resource type="Curve" id="Curve_5bjxo"]
+_data = [Vector2(0, 0), 0.0, 1.0020877, 0, 0, Vector2(1, 1), 0.99486184, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_gu17n"]
+curve = SubResource("Curve_5bjxo")
+
+[sub_resource type="Gradient" id="Gradient_7ylpk"]
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_n8vd3"]
+gradient = SubResource("Gradient_7ylpk")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_l36n7"]
+shader = ExtResource("1_1k3lf")
+shader_parameter/pivot_offset = Vector2(0.25, -0.25)
+shader_parameter/lut = SubResource("GradientTexture1D_n8vd3")
+shader_parameter/frame_count = 25.0
+shader_parameter/flipbook_size = Vector2(5, 5)
+shader_parameter/flipbook_curve = SubResource("CurveTexture_gu17n")
+shader_parameter/use_erosion_texture = 0.0
+shader_parameter/erosion_offset = 0.1
+shader_parameter/use_hue_shift = 0.0
+shader_parameter/final_vfx_mix = 0.0
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_1ec6e"]
+particle_flag_disable_z = true
+spread = 0.0
+gravity = Vector3(0, 0, 0)
+damping_min = 200.00002
+damping_max = 200.00002
+
+[sub_resource type="Animation" id="Animation_qywam"]
+resource_name = "new_animation"
+length = 0.41666836
+step = 0.016666668
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("GPUParticles2D:position:y")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.15, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [0.0, -192.0, 0.0]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("GPUParticles2D")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [false],
+"method": &"restart"
+}]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.41666666),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"queue_free"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_b7hcu"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("GPUParticles2D:position:y")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_funai"]
+_data = {
+&"RESET": SubResource("Animation_b7hcu"),
+&"new_animation": SubResource("Animation_qywam")
+}
+
+[node name="ThreshersAxeVfx" type="Node2D"]
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+material = SubResource("ShaderMaterial_l36n7")
+position = Vector2(-192, 0)
+scale = Vector2(0.1, 0.1)
+emitting = false
+amount = 1
+texture = ExtResource("2_xhqjl")
+lifetime = 0.42
+one_shot = true
+fixed_fps = 60
+local_coords = true
+process_material = SubResource("ParticleProcessMaterial_1ec6e")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_funai")
+}
+autoplay = "new_animation"

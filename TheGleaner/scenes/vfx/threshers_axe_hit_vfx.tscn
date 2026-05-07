@@ -1,0 +1,96 @@
+[gd_scene load_steps=11 format=3 uid="uid://b8cigeeuj8cuc"]
+
+[ext_resource type="Shader" uid="uid://ch7s134yiyacs" path="res://TheGleaner/scenes/vfx/vfx_flipbook_shader.gdshader" id="1_1foij"]
+[ext_resource type="Texture2D" uid="uid://dx6bo01r5kvgg" path="res://TheGleaner/images/vfx/guitar_hit_vfx.png" id="2_je1b0"]
+
+[sub_resource type="Curve" id="Curve_heqn0"]
+_data = [Vector2(0, 0), 0.0, 0.9950307, 0, 0, Vector2(1, 1), 0.997927, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_rsh0x"]
+curve = SubResource("Curve_heqn0")
+
+[sub_resource type="Gradient" id="Gradient_0nx5y"]
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_44i01"]
+gradient = SubResource("Gradient_0nx5y")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_co2rl"]
+shader = ExtResource("1_1foij")
+shader_parameter/pivot_offset = Vector2(0.01, -0.2)
+shader_parameter/lut = SubResource("GradientTexture1D_44i01")
+shader_parameter/frame_count = 15.0
+shader_parameter/flipbook_size = Vector2(3, 5)
+shader_parameter/flipbook_curve = SubResource("CurveTexture_rsh0x")
+shader_parameter/use_erosion_texture = 0.0
+shader_parameter/erosion_offset = 0.1
+shader_parameter/use_hue_shift = 0.0
+shader_parameter/final_vfx_mix = 0.0
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_dmeri"]
+particle_flag_disable_z = true
+direction = Vector3(0, 0, 0)
+spread = 0.0
+gravity = Vector3(0, 0, 0)
+damping_min = 200.00002
+damping_max = 200.00002
+
+[sub_resource type="Animation" id="Animation_peiui"]
+resource_name = "new_animation"
+length = 0.25000167
+step = 0.016666668
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("GPUParticles2D")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [false],
+"method": &"restart"
+}]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.25),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"queue_free"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_jucij"]
+_data = {
+&"new_animation": SubResource("Animation_peiui")
+}
+
+[node name="ThreshersAxeHitVfx" type="Node2D"]
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+material = SubResource("ShaderMaterial_co2rl")
+scale = Vector2(0.18, 0.135)
+emitting = false
+amount = 2
+texture = ExtResource("2_je1b0")
+lifetime = 0.25
+one_shot = true
+use_fixed_seed = true
+seed = 2418298839
+fixed_fps = 60
+local_coords = true
+process_material = SubResource("ParticleProcessMaterial_dmeri")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_jucij")
+}
+autoplay = "new_animation"

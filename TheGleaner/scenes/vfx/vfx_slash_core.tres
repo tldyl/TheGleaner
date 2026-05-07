@@ -1,6 +1,6 @@
 [gd_resource type="ShaderMaterial" load_steps=6 format=3 uid="uid://bv65ynxelwmfn"]
 
-[ext_resource type="Shader" uid="uid://ch7s134yiyacs" path="res://TheGleaner/scenes/vfx/vfx_flipbook_shader.gdshader" id="1_t3we3"]
+[ext_resource type="Shader" uid="uid://2jpa4qr377lu" path="res://TheGleaner/scenes/vfx/vfx_slash_core.gdshader" id="1_t3we3"]
 
 [sub_resource type="Curve" id="Curve_7kh7m"]
 _data = [Vector2(0, 0), 0.0, 1.1632283, 0, 0, Vector2(1, 1), 1.3092614, 0.0, 0, 0]
@@ -27,3 +27,4 @@ shader_parameter/flipbook_curve = SubResource("CurveTexture_i7fxg")
 shader_parameter/use_erosion_texture = 0.0
 shader_parameter/erosion_offset = 0.1
 shader_parameter/use_hue_shift = 0.0
+shader_parameter/final_vfx_mix = 1.0

@@ -41,9 +41,12 @@ public class EarthedBell : CustomCardModel, IConcertoCard {
 
 	protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
 		Vector2 windowSize = NRun.Instance.CombatRoom.Ui.GetViewport().GetVisibleRect().Size;
-		GleanerVfxCmd.PlayVfx<Node2D>(new Vector2(windowSize.X * 0.65f, windowSize.Y * 0.5f), "res://TheGleaner/scenes/vfx/aoe_attack.tscn", 0.5f);
+		GleanerVfxCmd.PlayVfx<Node2D>(new Vector2(windowSize.X * 0.65f, windowSize.Y * 0.5f), "res://TheGleaner/scenes/vfx/erathed_bell_vfx.tscn", 0.333f);
 		await CreatureCmd.TriggerAnim(Owner.Creature, "AoEAttack", 0.5f);
 		SoundManager.Instance.PlaySound(SoundKeys.GetSoundResourcePath("BELL_" + new Random().Next(1, 4) + "_ATTACK"), 1.0f);
+		foreach (Creature target in Owner.Creature.CombatState.HittableEnemies) {
+			GleanerVfxCmd.PlayOnCreature<Node2D>(target, "res://TheGleaner/scenes/vfx/prismatic_strike_hit_vfx.tscn");
+		}
 		AttackCommand _ = await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
 			.FromCard(this)
 			.TargetingAllOpponents(Owner.Creature.CombatState)

@@ -15,6 +15,7 @@ uniform sampler2D erosion_curve : hint_default_black;
 uniform float erosion_offset = 0.1;
 
 uniform float use_hue_shift = 0.0;
+uniform float final_vfx_mix = 1.0;
 uniform sampler2D hue_shift_curve : repeat_disable, hint_default_black;
 
 varying float lifetime;
@@ -77,8 +78,9 @@ void fragment() {
 
 	float hue_shift_val = texture(hue_shift_curve, flipbook_texture_color.rr).r;
 	vec4 shifted_color = shift_hue(initial_color, hue_shift_val);
-	
+
     vec4 final_color = mix(initial_color, shifted_color, use_hue_shift);
+    final_color = mix(flipbook_texture_color, final_color, final_vfx_mix);
 
 	COLOR = vec4(final_color.rgb, alpha);
 }
