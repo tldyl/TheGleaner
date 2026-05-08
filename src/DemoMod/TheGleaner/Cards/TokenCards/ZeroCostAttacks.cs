@@ -43,7 +43,7 @@ public class ZeroCostAttacks : CustomCardModel, IChoosable {
 			await ScorePileCmd.AddCards(Owner.PlayerCombatState, Owner, c);
 		}
 		foreach (CardModel c in list2) {
-				if (!c.Keywords.Contains(CardKeyword.Ethereal)) {
+			if (!c.Keywords.Contains(CardKeyword.Ethereal)) {
 				c.AddKeyword(CardKeyword.Ethereal);
 			}
 			CardCmd.Preview(c);
