@@ -12,7 +12,7 @@ using MegaCrit.Sts2.Core.ValueProps;
 namespace DemoMod.TheGleaner.Powers;
 
 public class FanaticPower : CustomPowerModel {
-    private const string PowerIconPath = "res://TheGleaner/images/powers/demomod-rendezvous_with_doom_power.png";
+    private const string PowerIconPath = "res://TheGleaner/images/powers/demomod-fanatic_power.png";
     public override string CustomPackedIconPath => PowerIconPath;
     public override string CustomBigIconPath => PowerIconPath;
     public override PowerType Type => PowerType.Buff;

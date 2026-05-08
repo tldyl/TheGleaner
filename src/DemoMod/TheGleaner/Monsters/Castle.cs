@@ -1,4 +1,5 @@
 using BaseLib.Abstracts;
+using DemoMod.TheGleaner.Powers;
 using MegaCrit.Sts2.Core.Audio;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Creatures;
@@ -6,7 +7,6 @@ using MegaCrit.Sts2.Core.Helpers;
 using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.MonsterMoves.Intents;
 using MegaCrit.Sts2.Core.MonsterMoves.MonsterMoveStateMachine;
-using MegaCrit.Sts2.Core.ValueProps;
 
 namespace DemoMod.TheGleaner.Monsters;
 public class Castle : CustomMonsterModel {
@@ -14,7 +14,7 @@ public class Castle : CustomMonsterModel {
 
     private const int InitialHp = 70;
     private const int IronCurtainDamage = 15;
-    private const int IronCurtainBlock = 10;
+    private const int CastleBlock = 10;
     private const string LivingShieldAttackSfx = "event:/sfx/enemy/enemy_attacks/living_shield/living_shield_attack";
 
     public override int MinInitialHp => InitialHp;
@@ -32,14 +32,14 @@ public class Castle : CustomMonsterModel {
     public override async Task AfterAddedToRoom() {
         await base.AfterAddedToRoom();
         await PowerCmd.Apply<MinionPower>(Creature, 1m, Creature, null);
+        await PowerCmd.Apply<CastlePower>(Creature, CastleBlock, Creature, null);
     }
 
     protected override MonsterMoveStateMachine GenerateMoveStateMachine() {
         MoveState ironCurtainBaptism = new(
             IronCurtainBaptismMoveId,
             IronCurtainBaptismMove,
-            new SingleAttackIntent(IronCurtainDamage),
-            new DefendIntent());
+            new SingleAttackIntent(IronCurtainDamage));
 
         ironCurtainBaptism.FollowUpState = ironCurtainBaptism;
         return new MonsterMoveStateMachine([ironCurtainBaptism], ironCurtainBaptism);
@@ -53,9 +53,5 @@ public class Castle : CustomMonsterModel {
             .WithAttackerFx(null, CustomAttackSfx)
             .WithHitFx("vfx/vfx_attack_slash")
             .Execute(null);
-
-        foreach (Creature creature in CombatState.Creatures.Where(creature => creature.IsAlive && creature.IsMonster && creature != Creature)) {
-            await CreatureCmd.GainBlock(creature, IronCurtainBlock, ValueProp.Move, null);
-        }
     }
 }

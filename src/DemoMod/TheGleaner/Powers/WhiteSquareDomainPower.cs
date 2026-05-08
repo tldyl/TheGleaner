@@ -10,7 +10,7 @@ using MegaCrit.Sts2.Core.Models.Powers;
 namespace DemoMod.TheGleaner.Powers;
 
 public class WhiteSquareDomainPower : CustomPowerModel {
-    private const string PowerIconPath = "res://TheGleaner/images/powers/demomod-the_lake_mirror_power.png";
+    private const string PowerIconPath = "res://TheGleaner/images/powers/demomod-white_square_domain_power.png";
     public override string CustomPackedIconPath => PowerIconPath;
     public override string CustomBigIconPath => PowerIconPath;
     public override PowerType Type => PowerType.Buff;

@@ -10,7 +10,7 @@ using MegaCrit.Sts2.Core.Models.Powers;
 namespace DemoMod.TheGleaner.Powers;
 
 public class StrengthDecayPower : CustomPowerModel {
-    private const string PowerIconPath = "res://TheGleaner/images/powers/demomod-demo_temp_strength_power.png";
+    private const string PowerIconPath = "res://TheGleaner/images/powers/demomod-strength_decay_power.png";
     public override string CustomPackedIconPath => PowerIconPath;
     public override string CustomBigIconPath => PowerIconPath;
     public override PowerType Type => PowerType.Debuff;
