@@ -4,11 +4,14 @@ using DemoMod.TheGleaner.Actions;
 using DemoMod.TheGleaner.CardPiles;
 using DemoMod.TheGleaner.Cards.GleanerCard;
 using DemoMod.TheGleaner.Commands;
+using DemoMod.TheGleaner.Nodes.Vfx;
 using DemoMod.TheGleaner.Utils;
 using Godot;
 using MegaCrit.Sts2.Core.Combat;
+using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Context;
 using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Helpers;
@@ -16,6 +19,7 @@ using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Nodes;
 using MegaCrit.Sts2.Core.Nodes.Cards;
 using MegaCrit.Sts2.Core.Nodes.Cards.Holders;
+using MegaCrit.Sts2.Core.Nodes.Combat;
 using MegaCrit.Sts2.Core.Nodes.Rooms;
 using MegaCrit.Sts2.Core.Rooms;
 using MegaCrit.Sts2.Core.Runs;
@@ -41,6 +45,12 @@ public class HookListenerModel() : CustomSingletonModel(true, true) {
             ScorePile scorePile = ScorePileCmd.GetOrCreateScorePile(LocalContext.GetMe(combatState.Players).PlayerCombatState);
             scorePile.freeTakeCount = 1;
             scorePile.cardsAddedToScoreThisTurn = false;
+        }
+    }
+    
+    public override async Task BeforeCardPlayed(CardPlay cardPlay) {
+        if (cardPlay.Card.Owner.Character is global::DemoMod.TheGleaner.Characters.TheGleaner && cardPlay.Card.Type == CardType.Power) {
+            await CreatureCmd.TriggerAnim(cardPlay.Card.Owner.Creature, "Cast", cardPlay.Card.Owner.Character.CastAnimDelay);
         }
     }
     
@@ -82,6 +92,17 @@ public class HookListenerModel() : CustomSingletonModel(true, true) {
             ScorePileCmd.hasScoreEntryCard.Set(player, false);
         }
         CustomPiles.CustomPileProviders.Remove(CustomEnums.ScorePile);
+        foreach (Creature creature in room.CombatState.PlayerCreatures) {
+            if (creature.Player.Character is global::DemoMod.TheGleaner.Characters.TheGleaner) {
+                NCreature creatureNode = NCombatRoom.Instance.GetCreatureNode(creature);
+                if (creatureNode != null) {
+                    creatureNode.Visuals.GetNode<SubViewportContainer>("SubViewportContainer").Visible = false;
+                }
+            }
+        }
+        ScorePileCmd.openingScorePileAndTakeCardsToHand = false;
+        ScorePileCmd.gleanCard = false;
+        NGrayGradientVfxPostProcessor.Instance.ToggleBlackAndWhite(false);
     }
 
     public override async Task AfterTurnEnd(PlayerChoiceContext choiceContext, CombatSide side) {

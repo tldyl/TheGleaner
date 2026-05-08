@@ -1,8 +1,5 @@
 using BaseLib.Abstracts;
-using DemoMod.TheGleaner.CardPiles;
 using DemoMod.TheGleaner.Cards.GleanerCard;
-using DemoMod.TheGleaner.Commands;
-using DemoMod.TheGleaner.Nodes.Vfx;
 using Godot;
 using MegaCrit.Sts2.Core.Entities.Characters;
 using MegaCrit.Sts2.Core.Models;
@@ -10,15 +7,6 @@ using DemoMod.TheGleaner.Pools;
 using DemoMod.TheGleaner.Relics;
 using MegaCrit.Sts2.Core.Animation;
 using MegaCrit.Sts2.Core.Bindings.MegaSpine;
-using MegaCrit.Sts2.Core.Commands;
-using MegaCrit.Sts2.Core.Context;
-using MegaCrit.Sts2.Core.Entities.Cards;
-using MegaCrit.Sts2.Core.Entities.Creatures;
-using MegaCrit.Sts2.Core.Entities.Players;
-using MegaCrit.Sts2.Core.Nodes.Combat;
-using MegaCrit.Sts2.Core.Nodes.Rooms;
-using MegaCrit.Sts2.Core.Rooms;
-using MegaCrit.Sts2.Core.Runs;
 
 namespace DemoMod.TheGleaner.Characters;
 
@@ -101,26 +89,6 @@ public class TheGleaner : PlaceholderCharacterModel {
         "vfx/vfx_bloody_impact",
         "vfx/vfx_rock_shatter"
     ];
-    
-    public override async Task BeforeCardPlayed(CardPlay cardPlay) {
-        if (cardPlay.Card.Owner.Character == this && cardPlay.Card.Type == CardType.Power) {
-            await CreatureCmd.TriggerAnim(cardPlay.Card.Owner.Creature, "Cast", cardPlay.Card.Owner.Character.CastAnimDelay);
-        }
-    }
-
-    public override async Task AfterCombatVictory(CombatRoom room) {
-        foreach (Creature creature in room.CombatState.PlayerCreatures) {
-            if (creature.Player.Character is TheGleaner) {
-                NCreature creatureNode = NCombatRoom.Instance.GetCreatureNode(creature);
-                if (creatureNode != null) {
-                    creatureNode.Visuals.GetNode<SubViewportContainer>("SubViewportContainer").Visible = false;
-                }
-            }
-        }
-        ScorePileCmd.openingScorePileAndTakeCardsToHand = false;
-        ScorePileCmd.gleanCard = false;
-        NGrayGradientVfxPostProcessor.Instance.ToggleBlackAndWhite(false);
-    }
     
     public override CreatureAnimator GenerateAnimator(MegaSprite controller) {
         AnimState animState = new AnimState("idle_loop", true);
