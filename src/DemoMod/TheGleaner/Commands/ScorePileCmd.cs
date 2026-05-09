@@ -50,7 +50,7 @@ public static class ScorePileCmd {
 			combatStartDeckCount = snapshotDeckCount;
 		}
 
-		return Math.Min(combatStartDeckCount / 4, 10);
+		return 7;
 	}
 
 	public static void InitializeCapacityFromCurrentDeck(Player player) {
