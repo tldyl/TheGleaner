@@ -11,5 +11,10 @@
   "DEMOMOD-EBONY_BISHOP.name": "黑檀主教",
   "DEMOMOD-EBONY_BISHOP.moves.PIN_DOWN_MOVE.title": "牵制",
   "DEMOMOD-EBONY_BISHOP.moves.PROFANATION_MOVE.title": "亵渎",
-  "DEMOMOD-EBONY_BISHOP.moves.DARK_CROSS_MOVE.title": "暗十字"
+  "DEMOMOD-EBONY_BISHOP.moves.DARK_CROSS_MOVE.title": "暗十字",
+  "DEMOMOD-SUN.name": "太阳",
+  "DEMOMOD-SUN.moves.PROMINENCE_MOVE.title": "日珥",
+  "DEMOMOD-SUN.moves.SOLAR_FOCUS_MOVE.title": "聚焦",
+  "DEMOMOD-SUN.moves.SUNSTORM_MOVE.title": "太阳风暴",
+  "DEMOMOD-SUN.moves.LINGERING_HEAT_MOVE.title": "余热"
 }
