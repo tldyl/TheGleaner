@@ -70,7 +70,7 @@ public class TheGleaner : PlaceholderCharacterModel {
 		ModelDb.Card<StrikeGleaner>(),
 		ModelDb.Card<StrikeGleaner>(),
 		ModelDb.Card<StrikeGleaner>(),
-		ModelDb.Card<DefendGleaner>(),
+		ModelDb.Card<StrikeGleaner>(),
 		ModelDb.Card<DefendGleaner>(),
 		ModelDb.Card<DefendGleaner>(),
 		ModelDb.Card<DefendGleaner>(),
