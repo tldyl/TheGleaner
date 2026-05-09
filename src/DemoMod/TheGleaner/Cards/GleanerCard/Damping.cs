@@ -18,21 +18,20 @@ public class Damping : CustomCardModel {
 	public override bool GainsBlock => true;
 	protected override IEnumerable<DynamicVar> CanonicalVars => [
 		new DynamicVar("StrengthLoss", 2),
-		new BlockVar(4, ValueProp.Move)
+		new BlockVar(7, ValueProp.Move)
 	];
 	protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<StrengthPower>()];
 
-	public Damping() : base(2, CardType.Skill, CardRarity.Common, TargetType.AnyEnemy) {
+	public Damping() : base(2, CardType.Skill, CardRarity.Basic, TargetType.AnyEnemy) {
 	}
 
 	protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
 		await PowerCmd.Apply<DampingPower>(cardPlay.Target, DynamicVars["StrengthLoss"].BaseValue, Owner.Creature, this);
 		await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, cardPlay);
-		await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, cardPlay);
 	}
 
 	protected override void OnUpgrade() {
 		DynamicVars["StrengthLoss"].UpgradeValueBy(1);
-		DynamicVars.Block.UpgradeValueBy(1);
+		DynamicVars.Block.UpgradeValueBy(2);
 	}
 }
