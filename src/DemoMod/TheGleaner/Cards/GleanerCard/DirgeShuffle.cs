@@ -1,4 +1,6 @@
 using BaseLib.Abstracts;
+using BaseLib.Utils;
+using DemoMod.TheGleaner.Pools;
 using DemoMod.TheGleaner.Powers;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
@@ -10,6 +12,7 @@ using MegaCrit.Sts2.Core.Models.Powers;
 
 namespace DemoMod.TheGleaner.Cards.GleanerCard;
 
+[Pool(typeof(CardPool))]
 public class DirgeShuffle : CustomCardModel {
     //public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
     protected override IEnumerable<DynamicVar> CanonicalVars => [

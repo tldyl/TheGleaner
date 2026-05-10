@@ -23,7 +23,6 @@ public class StringAndPillar : CustomCardModel {
 	}
 
 	protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
-
 		if (IsUpgraded) {
 			CardModel cpy = CreateClone();
 			CardCmd.Downgrade(cpy);
