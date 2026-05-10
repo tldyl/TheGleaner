@@ -102,5 +102,8 @@
   "DEMOMOD-BAKING_POWER.smartDescription": "当玩家完全格挡[gold]灼伤[/gold]的伤害后，使所有[gold]灼伤[/gold]伤害+1。\n当前额外伤害：[blue]{BonusDamage}[/blue]。",
   "DEMOMOD-SEARING_SCALDS_POWER.title": "剧痛灼伤",
   "DEMOMOD-SEARING_SCALDS_POWER.description": "每当玩家受到未被格挡的伤害时，将1张灼伤洗入玩家的弃牌堆。",
-  "DEMOMOD-SEARING_SCALDS_POWER.smartDescription": "每当玩家受到未被[gold]格挡[/gold]的伤害时，将[blue]1[/blue]张[gold]灼伤[/gold]洗入玩家的弃牌堆。"
+  "DEMOMOD-SEARING_SCALDS_POWER.smartDescription": "每当玩家受到未被[gold]格挡[/gold]的伤害时，将[blue]1[/blue]张[gold]灼伤[/gold]洗入玩家的弃牌堆。",
+  "DEMOMOD-ETCH_POWER.title": "刻蚀",
+  "DEMOMOD-ETCH_POWER.description": "目标受到攻击时，触发一次[gold]中毒[/gold]的结算效果。",
+  "DEMOMOD-ETCH_POWER.smartDescription": "目标下[blue]{Amount}[/blue]次受到攻击时，触发一次[gold]中毒[/gold]的结算效果。"
 }
