@@ -51,7 +51,7 @@ public class Instrumentation : CustomCardModel {
 		}
 	}
 
-	public Instrumentation() : base(0, CardType.Skill, CardRarity.Uncommon, TargetType.Self) {
+	public Instrumentation() : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.Self) {
 		
 	}
 

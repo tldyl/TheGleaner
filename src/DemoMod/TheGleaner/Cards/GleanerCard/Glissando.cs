@@ -20,12 +20,9 @@ namespace DemoMod.TheGleaner.Cards.GleanerCard;
 public class Glissando : CustomCardModel {
 	public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
 
-	public override bool GainsBlock => true;
-
 	protected override IEnumerable<DynamicVar> CanonicalVars => [
 		new IntVar("Amount", 1),
-		new DamageVar(5, ValueProp.Move),
-		new BlockVar(5, ValueProp.Move),
+		new DamageVar(8, ValueProp.Move),
 		new PowerVar<VulnerablePower>(1)
 	];
 
@@ -38,8 +35,6 @@ public class Glissando : CustomCardModel {
 	}
 
 	protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
-		Glissando card = this;
-		Decimal _ = await CreatureCmd.GainBlock(card.Owner.Creature, card.DynamicVars.Block, cardPlay);
 		Vector2 windowSize = NRun.Instance.CombatRoom.Ui.GetViewport().GetVisibleRect().Size;
 		GleanerVfxCmd.PlayVfx<Node2D>(new Vector2(windowSize.X * 0.65f, windowSize.Y * 0.5f), "res://TheGleaner/scenes/vfx/aoe_attack.tscn", 0.5f);
 		await CreatureCmd.TriggerAnim(Owner.Creature, "AoEAttack", 0.5f);
@@ -70,7 +65,6 @@ public class Glissando : CustomCardModel {
 	}
 
 	protected override void OnUpgrade() {
-		DynamicVars.Damage.UpgradeValueBy(3);
-		DynamicVars.Block.UpgradeValueBy(3);
+		DynamicVars.Damage.UpgradeValueBy(4);
 	}
 }
