@@ -11,24 +11,26 @@ using MegaCrit.Sts2.Core.ValueProps;
 namespace DemoMod.TheGleaner.Powers;
 
 public class EtchPower : CustomPowerModel {
-    public override PowerType Type => PowerType.Debuff;
-    public override PowerStackType StackType => PowerStackType.Counter;
-    protected override IEnumerable<IHoverTip> ExtraHoverTips => [
-        HoverTipFactory.FromPower<PoisonPower>()
-    ];
+	public override string CustomPackedIconPath => $"res://TheGleaner/images/powers/{Id.Entry.ToLowerInvariant()}.png";
+	public override string CustomBigIconPath => $"res://TheGleaner/images/powers/{Id.Entry.ToLowerInvariant()}.png";
+	public override PowerType Type => PowerType.Debuff;
+	public override PowerStackType StackType => PowerStackType.Counter;
+	protected override IEnumerable<IHoverTip> ExtraHoverTips => [
+		HoverTipFactory.FromPower<PoisonPower>()
+	];
 
-    public override async Task AfterDamageReceived(
-        PlayerChoiceContext choiceContext,
-        Creature target,
-        DamageResult result,
-        ValueProp props,
-        Creature? dealer,
-        CardModel? cardSource) {
-        if (target == Owner && !props.HasFlag(ValueProp.Unpowered) && dealer != null && Owner.HasPower<PoisonPower>()) {
-            Flash();
-            PoisonPower poisonPower = Owner.GetPower<PoisonPower>();
-            await poisonPower.AfterSideTurnStart(Owner.Side, Owner.CombatState);
-            await PowerCmd.Decrement(this);
-        }
-    }
+	public override async Task AfterDamageReceived(
+		PlayerChoiceContext choiceContext,
+		Creature target,
+		DamageResult result,
+		ValueProp props,
+		Creature? dealer,
+		CardModel? cardSource) {
+		if (target == Owner && !props.HasFlag(ValueProp.Unpowered) && dealer != null && Owner.HasPower<PoisonPower>()) {
+			Flash();
+			PoisonPower poisonPower = Owner.GetPower<PoisonPower>();
+			await poisonPower.AfterSideTurnStart(Owner.Side, Owner.CombatState);
+			await PowerCmd.Decrement(this);
+		}
+	}
 }
