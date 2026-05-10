@@ -10,6 +10,7 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.ValueProps;
 
 namespace DemoMod.TheGleaner.Cards.GleanerCard;
@@ -18,11 +19,11 @@ namespace DemoMod.TheGleaner.Cards.GleanerCard;
 public class Feedback : CustomCardModel {
 	public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
 	protected override IEnumerable<DynamicVar> CanonicalVars => [
-		new DamageVar(8, ValueProp.Move),
-		new RepeatVar(2),
+		new DamageVar(7, ValueProp.Move),
 		new CardsVar(1)
 	];
 	protected override IEnumerable<IHoverTip> ExtraHoverTips => [
+		HoverTipFactory.FromPower<PoisonPower>(),
 		HoverTipFactory.FromKeyword(CustomEnums.Dissonance),
 		HoverTipFactory.FromCard<DirgeOfFarewell>(),
 		HoverTipFactory.FromCard<ShriekOfDread>(),
@@ -37,8 +38,10 @@ public class Feedback : CustomCardModel {
 		AttackCommand _ = await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
 			.FromCard(this)
 			.Targeting(cardPlay.Target)
-			.WithHitCount(DynamicVars.Repeat.IntValue)
 			.Execute(choiceContext);
+		if (cardPlay.Target != null) {
+			await PowerCmd.Apply<PoisonPower>(cardPlay.Target, _.Results.FirstOrDefault().TotalDamage, Owner.Creature, this);
+		}
 		List<CardModel> cards = RandomDissonanceCard.getRandomDissonanceCards(
 			DynamicVars.Cards.IntValue,
 			Owner.RunState.Rng.CombatCardGeneration

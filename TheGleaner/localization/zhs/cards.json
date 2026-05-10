@@ -173,7 +173,7 @@
   "DEMOMOD-HEARKEN.selectionScreenPromptDraw": "从抽牌堆选择{Amount}张牌放入[gold]乐谱[/gold]。",
   "DEMOMOD-HEARKEN.selectionScreenPromptDiscard": "从弃牌堆选择{Amount}张牌放入[gold]乐谱[/gold]。",
   "DEMOMOD-FEEDBACK.title": "嘈杂",
-  "DEMOMOD-FEEDBACK.description": "造成{Damage:diff()}点伤害两次。\n将一张[gold]噪声[/gold]放入随机[gold]牌堆[/gold]。",
+  "DEMOMOD-FEEDBACK.description": "造成{Damage:diff()}点伤害。\n给予等同于所造成伤害的[gold]中毒[/gold]。\n将一张[gold]噪声[/gold]放入随机[gold]牌堆[/gold]。",
   "DEMOMOD-LAW_OF_EROSION.title": "蚀律",
   "DEMOMOD-LAW_OF_EROSION.description": "去除敌人身上所有的[gold]格挡[/gold]、[gold]滑溜[/gold]和[gold]无实体[/gold]。获得等同于去除量的[gold]格挡[/gold]。\n给予{VulnerablePower}层[gold]易伤[/gold]。{InCombat:\n(获得{Block:diff()}点[gold]格挡[/gold])|}",
   "DEMOMOD-ORNAMENTS.title": "声蛊",
@@ -245,5 +245,11 @@
   "DEMOMOD-CRASHING_DOWN.title": "震落",
   "DEMOMOD-CRASHING_DOWN.description": "造成{Damage:diff()}点伤害。",
   "DEMOMOD-TEST_ATTACK.title": "测试攻击",
-  "DEMOMOD-TEST_ATTACK.description": "造成{Damage:diff()}伤害。"
+  "DEMOMOD-TEST_ATTACK.description": "造成{Damage:diff()}伤害。",
+  "DEMOMOD-WOVEN_EMBRACE.title": "缠身",
+  "DEMOMOD-WOVEN_EMBRACE.description": "获得{Block:diff()}点[gold]格挡[/gold]。\n你在这回合每受到一次攻击，都会给予攻击者{PoisonPower}层[gold]中毒[/gold]。",
+  "DEMOMOD-GERMINATION.title": "萌发",
+  "DEMOMOD-GERMINATION.description": "在你的回合开始时，给予所有敌人{NoxiousFumesPower}层[gold]中毒[/gold]和{EtchPower}层[gold]刻蚀[/gold]。",
+  "DEMOMOD-DIRGE_SHUFFLE.title": "安息碎步",
+  "DEMOMOD-DIRGE_SHUFFLE.description": "给予{PoisonPower}层[gold]中毒[/gold]。\n给予{EtchPower}层[gold]刻蚀[/gold]。\n将这张牌置于抽牌堆顶部。"
 }
