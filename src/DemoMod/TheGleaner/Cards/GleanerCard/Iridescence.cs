@@ -22,12 +22,12 @@ public class Iridescence : CustomCardModel {
 	public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
 
 	protected override IEnumerable<DynamicVar> CanonicalVars => [
-		new DamageVar(6, ValueProp.Move),
-		new RepeatVar(6)
+		new DamageVar(7, ValueProp.Move),
+		new RepeatVar(7)
 	];
 	
 	protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromKeyword(CustomEnums.Score)];
-	protected override bool IsPlayable => ScorePileCmd.GetOrCreateScorePile(Owner.PlayerCombatState).Cards.Count >= 6;
+	protected override bool IsPlayable => ScorePileCmd.GetOrCreateScorePile(Owner.PlayerCombatState).Cards.Count >= 7;
 	protected override bool ShouldGlowGoldInternal => IsPlayable;
 
 	public Iridescence() : base(1, CardType.Attack, CardRarity.Rare, TargetType.AllEnemies) {
