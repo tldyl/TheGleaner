@@ -24,12 +24,10 @@ public class EtchPower : CustomPowerModel {
         ValueProp props,
         Creature? dealer,
         CardModel? cardSource) {
-        if (target == Owner && !props.HasFlag(ValueProp.Unpowered) && dealer != null) {
+        if (target == Owner && !props.HasFlag(ValueProp.Unpowered) && dealer != null && Owner.HasPower<PoisonPower>()) {
             Flash();
-            if (Owner.HasPower<PoisonPower>()) {
-                PoisonPower poisonPower = Owner.GetPower<PoisonPower>();
-                await poisonPower.AfterSideTurnStart(Owner.Side, Owner.CombatState);
-            }
+            PoisonPower poisonPower = Owner.GetPower<PoisonPower>();
+            await poisonPower.AfterSideTurnStart(Owner.Side, Owner.CombatState);
             await PowerCmd.Decrement(this);
         }
     }
