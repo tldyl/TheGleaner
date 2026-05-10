@@ -17,10 +17,10 @@ public class EtchPower : CustomPowerModel {
         HoverTipFactory.FromPower<PoisonPower>()
     ];
 
-    public override async Task BeforeDamageReceived(
+    public override async Task AfterDamageReceived(
         PlayerChoiceContext choiceContext,
         Creature target,
-        Decimal amount,
+        DamageResult result,
         ValueProp props,
         Creature? dealer,
         CardModel? cardSource) {
