@@ -10,7 +10,7 @@ namespace DemoMod.TheGleaner.Encounters;
 public class KnightOfWarsEndBoss : CustomEncounterModel {
     public override IEnumerable<MonsterModel> AllPossibleMonsters => [ModelDb.Monster<KnightOfWarsEnd>()];
     public override string BossNodePath {
-        get => "res://images/map/placeholder/test_subject_boss_icon.png";
+        get => "res://images/map/placeholder/test_subject_boss_icon";
     }
     
     public KnightOfWarsEndBoss() : base(RoomType.Boss) {
