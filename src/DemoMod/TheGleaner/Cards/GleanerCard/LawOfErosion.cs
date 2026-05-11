@@ -52,7 +52,7 @@ public class LawOfErosion : CustomCardModel {
         ValueProp props,
         CardModel? cardSource,
         CardPlay? cardPlay) {
-        if (cardPlay.Target != null && cardPlay.Card == this) {
+        if (cardPlay is {Target: not null} && cardPlay.Card == this) {
             int artifactAmount = 0;
             if (cardPlay.Target.HasPower<SlipperyPower>()) {
                 artifactAmount += cardPlay.Target.GetPower<SlipperyPower>().Amount;

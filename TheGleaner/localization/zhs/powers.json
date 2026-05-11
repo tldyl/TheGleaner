@@ -111,5 +111,17 @@
   "DEMOMOD-WOVEN_EMBRACE_POWER.smartDescription": "你在这回合每受到一次攻击，都会给予攻击者[blue]{Amount}[/blue]层[gold]中毒[/gold]。",
   "DEMOMOD-GERMINATION_POWER.title": "萌发",
   "DEMOMOD-GERMINATION_POWER.description": "在你的回合开始时，给予所有敌人[blue]1[/blue]层[gold]刻蚀[/gold]。",
-  "DEMOMOD-GERMINATION_POWER.smartDescription": "在你的回合开始时，给予所有敌人[blue]{Amount}[/blue]层[gold]刻蚀[/gold]。"
+  "DEMOMOD-GERMINATION_POWER.smartDescription": "在你的回合开始时，给予所有敌人[blue]{Amount}[/blue]层[gold]刻蚀[/gold]。",
+  "DEMOMOD-CLEAR_DECLARATION_OF_THE_END_POWER.title": "死之炎",
+  "DEMOMOD-CLEAR_DECLARATION_OF_THE_END_POWER.description": "你每打出[blue]12[/blue]张带有[gold]死之炎[/gold]的牌时，将所有敌人身上的[gold]终焉宣告[/gold]层数变为[blue]0[/blue]。",
+  "DEMOMOD-CLEAR_DECLARATION_OF_THE_END_POWER.smartDescription": "你每打出[blue]12[/blue]张带有[gold]死之炎[/gold]的牌时，将所有敌人身上的[gold]终焉宣告[/gold]层数变为[blue]0[/blue]。\n(已打出[blue]{DisplayAmount}[/blue]张)",
+  "DEMOMOD-LIGHT_OF_LIFE_POWER.title": "生之光",
+  "DEMOMOD-LIGHT_OF_LIFE_POWER.description": "打出带有[gold]生之光[/gold]侵蚀的卡牌时，所有带有[gold]终焉宣告[/gold]的敌人本回合失去[blue]1[/blue]点[gold]力量[/gold]；你在本回合获得[blue]1[/blue]点[gold]力量[/gold]。",
+  "DEMOMOD-LIGHT_OF_LIFE_POWER.smartDescription": "打出带有[gold]生之光[/gold]侵蚀的卡牌时，所有带有[gold]终焉宣告[/gold]的敌人本回合失去[blue]{Amount}[/blue]点[gold]力量[/gold]；你在本回合获得[blue]{Amount}[/blue]点[gold]力量[/gold]。",
+  "DEMOMOD-DECLARATION_OF_THE_END_POWER.title": "终焉宣告",
+  "DEMOMOD-DECLARATION_OF_THE_END_POWER.description": "回合结束时，层数增加[blue]1[/blue]。\n当层数到达[blue]3[/blue]及以上时，这名敌人将会使用强力攻击。",
+  "DEMOMOD-DECLARATION_OF_THE_END_POWER.smartDescription": "回合结束时，层数增加[blue]1[/blue]。\n当层数到达[blue]3[/blue]及以上时，这名敌人将会使用强力攻击。",
+  "DEMOMOD-ARBITER_OF_LIFE_AND_DEATH_POWER.title": "生死执掌",
+  "DEMOMOD-ARBITER_OF_LIFE_AND_DEATH_POWER.description": "你每抽到一张牌，为这张牌施加侵蚀[gold]生之光[/gold]或[gold]死之炎[/gold]。",
+  "DEMOMOD-ARBITER_OF_LIFE_AND_DEATH_POWER.smartDescription": "你每抽到一张牌，为这张牌施加侵蚀[gold]生之光[/gold]或[gold]死之炎[/gold]。"
 }

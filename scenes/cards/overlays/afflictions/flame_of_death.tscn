@@ -1,0 +1,21 @@
+[gd_scene load_steps=3 format=3 uid="uid://c5q2tcogqxaba"]
+
+[ext_resource type="Texture2D" uid="uid://b4o2mv5yimrtt" path="res://TheGleaner/images/card_afflictions/affliction_flame_of_death.png" id="1_bvoep"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_rekbk"]
+blend_mode = 4
+
+[node name="FlameOfDeath" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VisualLayer" type="Sprite2D" parent="."]
+self_modulate = Color(1, 0.06666667, 0.06666667, 1)
+material = SubResource("CanvasItemMaterial_rekbk")
+position = Vector2(-2.5, -8)
+scale = Vector2(0.474, 0.472)
+texture = ExtResource("1_bvoep")
