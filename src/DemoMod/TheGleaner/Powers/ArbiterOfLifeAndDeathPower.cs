@@ -11,6 +11,7 @@ using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Runs;
 using MegaCrit.Sts2.Core.ValueProps;
 using DemoMod.TheGleaner.Monsters;
+using MegaCrit.Sts2.Core.Combat;
 
 namespace DemoMod.TheGleaner.Powers;
 
@@ -49,7 +50,24 @@ public class ArbiterOfLifeAndDeathPower : CustomPowerModel {
         bool fromHandDraw) {
         AfflictionModel affliction = GetInternalData<Data>().NextAffliction();
         CardCmd.ClearAffliction(card);
-        await CardCmd.Afflict(affliction, card, 1);
+        await CardCmd.Afflict(affliction, card, affliction is FlameOfDeath ? 1 - Owner.CombatState.RoundNumber % 2 : Owner.CombatState.RoundNumber % 2);
+    }
+
+    public override async Task AfterSideTurnStart(CombatSide side, CombatState combatState) {
+        if (side != Owner.Side) {
+            foreach (Creature creature in combatState.Allies) {
+                if (creature.IsPlayer) {
+                    foreach (CardModel card in creature.Player.PlayerCombatState.AllCards) {
+                        AfflictionModel affliction = card.Affliction;
+                        if (affliction is FlameOfDeath) {
+                            affliction.Amount = 1 - combatState.RoundNumber % 2;
+                        } else if (affliction is LightOfLife) {
+                            affliction.Amount = combatState.RoundNumber % 2;
+                        }
+                    }
+                }
+            }
+        }
     }
 
     public override async Task AfterCardPlayed(PlayerChoiceContext context, CardPlay cardPlay) {

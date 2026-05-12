@@ -147,14 +147,14 @@ public class KnightOfWarsEnd : CustomMonsterModel {
         Creature.GetPower<ArbiterOfLifeAndDeathPower>()?.DoRevive();
         
         ExtraMultiClawCount = 0;
+        await Revive(300);
+        await PowerCmd.Remove<ArbiterOfLifeAndDeathPower>(Creature);
         List<CardModel> _allCards = (List<CardModel>) AccessTools.Field(typeof(CombatState), "_allCards").GetValue(Creature.CombatState);
         foreach (CardModel card in _allCards) {
             if (card.Affliction is LightOfLife or FlameOfDeath) {
-                card.Affliction.Amount = 2;
+                card.Affliction.Amount = 3;
             }
         }
-        await Revive(300);
-        await PowerCmd.Remove<ArbiterOfLifeAndDeathPower>(Creature);
         await PowerCmd.Apply<DeclarationOfTheEndPower>(Creature, 1, Creature, null);
         await PowerCmd.Apply<ClearDeclarationOfTheEndPower>(targets, 1, Creature, null);
         await PowerCmd.Apply<LightOfLifePower>(targets, 1, Creature, null);
