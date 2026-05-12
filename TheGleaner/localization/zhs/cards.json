@@ -257,5 +257,7 @@
   "DEMOMOD-COLOSSAL_BLOOM.title": "庞然绽放",
   "DEMOMOD-COLOSSAL_BLOOM.description": "给予所有敌人{PoisonPower:diff()}层[gold]中毒[/gold]和{EtchPower:diff()}层[gold]刻蚀[/gold]。\n如果仅剩一个敌人，\n再给予1层[gold]刻蚀[/gold]。",
   "DEMOMOD-DIRGE_SHUFFLE.title": "安息碎步",
-  "DEMOMOD-DIRGE_SHUFFLE.description": "给予{PoisonPower:diff()}层[gold]中毒[/gold]。\n给予{EtchPower}层[gold]刻蚀[/gold]。\n将此牌置于[gold]抽牌堆[/gold]顶部。"
+  "DEMOMOD-DIRGE_SHUFFLE.description": "给予{PoisonPower:diff()}层[gold]中毒[/gold]。\n给予{EtchPower}层[gold]刻蚀[/gold]。\n将此牌置于[gold]抽牌堆[/gold]顶部。",
+  "DEMOMOD-ROAMING_THE_WEAVE.title": "魔网漫行",
+  "DEMOMOD-ROAMING_THE_WEAVE.description": "每当在回合内获得{Energy:energyIcons()}时，额外获得{Energy:energyIcons()}。"
 }

@@ -123,5 +123,8 @@
   "DEMOMOD-DECLARATION_OF_THE_END_POWER.smartDescription": "回合结束时，层数增加[blue]1[/blue]。\n当层数到达[blue]3[/blue]及以上时，这名敌人将会使用强力攻击。",
   "DEMOMOD-ARBITER_OF_LIFE_AND_DEATH_POWER.title": "生死执掌",
   "DEMOMOD-ARBITER_OF_LIFE_AND_DEATH_POWER.description": "你每抽到一张牌，为这张牌施加侵蚀[gold]生之光[/gold]或[gold]死之炎[/gold]。",
-  "DEMOMOD-ARBITER_OF_LIFE_AND_DEATH_POWER.smartDescription": "你每抽到一张牌，为这张牌施加侵蚀[gold]生之光[/gold]或[gold]死之炎[/gold]。"
+  "DEMOMOD-ARBITER_OF_LIFE_AND_DEATH_POWER.smartDescription": "你每抽到一张牌，为这张牌施加侵蚀[gold]生之光[/gold]或[gold]死之炎[/gold]。",
+  "DEMOMOD-ROAMING_THE_WEAVE_POWER.title": "魔网漫行",
+  "DEMOMOD-ROAMING_THE_WEAVE_POWER.description": "每当在回合内获得能量时，额外获得[blue]1[/blue]点能量。",
+  "DEMOMOD-ROAMING_THE_WEAVE_POWER.smartDescription": "每当在回合内获得能量时，额外获得[blue]{Amount}[/blue]点能量。"
 }
