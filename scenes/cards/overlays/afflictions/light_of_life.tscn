@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://vc1j27b83h03"]
 
-[ext_resource type="Texture2D" uid="uid://b4o2mv5yimrtt" path="res://TheGleaner/images/card_afflictions/affliction_flame_of_death.png" id="1_rrxed"]
+[ext_resource type="Texture2D" uid="uid://cofl5tib6yi5a" path="res://TheGleaner/images/card_afflictions/affliction_light_of_life.png" id="1_rrxed"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_rekbk"]
 blend_mode = 1
@@ -17,5 +17,5 @@ grow_vertical = 2
 self_modulate = Color(0.8627451, 0.8509804, 0.5058824, 1)
 material = SubResource("CanvasItemMaterial_rekbk")
 position = Vector2(-2.5, -8)
-scale = Vector2(0.474, 0.472)
+scale = Vector2(0.574, 0.572)
 texture = ExtResource("1_rrxed")
