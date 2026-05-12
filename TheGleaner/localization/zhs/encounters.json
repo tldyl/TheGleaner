@@ -4,5 +4,9 @@
   "DEMOMOD-IVORY_AND_EBONY_ENCOUNTER.title": "象牙与黑檀",
   "DEMOMOD-IVORY_AND_EBONY_ENCOUNTER.loss": "你被交错的白格与黑格吞没。",
   "DEMOMOD-SUN_ENCOUNTER.title": "烈阳",
-  "DEMOMOD-SUN_ENCOUNTER.loss": "阳炎缠身，你被焚烧殆尽。"
+  "DEMOMOD-SUN_ENCOUNTER.loss": "阳炎缠身，你被焚烧殆尽。",
+  "DEMOMOD-CROWS_AND_SLEEPY_SCARECROW_ENCOUNTER.title": "乌鸦与草间人",
+  "DEMOMOD-CROWS_AND_SLEEPY_SCARECROW_ENCOUNTER.loss": "你倒在枯草中陷入长眠。很快，乌鸦们有了新的栖息地。",
+  "DEMOMOD-CROWS_AND_SLEEPY_SCARECROW_WEAK_ENCOUNTER.title": "乌鸦与草间人",
+  "DEMOMOD-CROWS_AND_SLEEPY_SCARECROW_WEAK_ENCOUNTER.loss": "你倒在枯草中陷入长眠。很快，乌鸦们有了新的栖息地。"
 }
