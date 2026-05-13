@@ -16,6 +16,8 @@ using MegaCrit.Sts2.Core.Combat;
 namespace DemoMod.TheGleaner.Powers;
 
 public class ArbiterOfLifeAndDeathPower : CustomPowerModel {
+    public override string CustomPackedIconPath => $"res://TheGleaner/images/powers/{Id.Entry.ToLowerInvariant()}.png";
+    public override string CustomBigIconPath => $"res://TheGleaner/images/powers/{Id.Entry.ToLowerInvariant()}.png";
     public override PowerType Type => PowerType.Buff;
     public override PowerStackType StackType => PowerStackType.Single;
     protected override object InitInternalData() => new Data();
@@ -66,6 +68,13 @@ public class ArbiterOfLifeAndDeathPower : CustomPowerModel {
                         }
                     }
                 }
+            }
+            if (combatState.RoundNumber % 2 == 0) {
+                await PowerCmd.Remove<LightPolarPower>(Owner);
+                await PowerCmd.Apply<FlamePolarPower>(Owner, 1, Owner, null);
+            } else {
+                await PowerCmd.Remove<FlamePolarPower>(Owner);
+                await PowerCmd.Apply<LightPolarPower>(Owner, 1, Owner, null);
             }
         }
     }

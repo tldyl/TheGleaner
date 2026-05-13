@@ -1,13 +1,41 @@
+using DemoMod.TheGleaner.Hooks;
 using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models;
 
 namespace DemoMod.TheGleaner.Afflictions;
 
-public class FlameOfDeath : AfflictionModel {
+public class FlameOfDeath : AfflictionModel, IAfterTakeCardsFromScore {
     public override bool HasExtraCardText => true;
     private List<CardModel> siblingCards = [];
 
-    private void RefreshSibling(AbstractModel _this) {
+    public override async Task AfterCardPlayed(PlayerChoiceContext context, CardPlay cardPlay) {
+        RefreshSibling();
+    }
+
+    public override async Task AfterCardDrawn(PlayerChoiceContext choiceContext, CardModel card, bool fromHandDraw) {
+        RefreshSibling();
+    }
+
+    public override async Task AfterCardDiscarded(PlayerChoiceContext choiceContext, CardModel card) {
+        RefreshSibling();
+    }
+
+    public override async Task AfterCardExhausted(PlayerChoiceContext choiceContext, CardModel card, bool causedByEthereal) {
+        RefreshSibling();
+    }
+    
+    public async Task AfterTakeCardsFromScore(CardModel card) {
+        RefreshSibling();
+    }
+    
+    public override async Task AfterCardChangedPiles(CardModel card, PileType oldPileType, AbstractModel? source) {
+        if (card.Pile?.Type == PileType.Hand) {
+            RefreshSibling();
+        }
+    }
+
+    private void RefreshSibling() {
         if (Card.Pile?.Type == PileType.Hand) {
             siblingCards.Clear();
             List<CardModel> hand = Card.Pile.Cards.ToList();
@@ -30,9 +58,4 @@ public class FlameOfDeath : AfflictionModel {
         _siblingCards.AddRange(siblingCards);
         siblingCards = _siblingCards;
     }
-    
-    protected override void AfterCloned() {
-        base.AfterCloned();
-        ExecutionFinished += RefreshSibling;
-    } 
 }

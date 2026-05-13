@@ -116,8 +116,8 @@
   "DEMOMOD-GERMINATION_POWER.description": "在你的回合开始时，给予所有敌人[blue]1[/blue]层[gold]刻蚀[/gold]。",
   "DEMOMOD-GERMINATION_POWER.smartDescription": "在你的回合开始时，给予所有敌人[blue]{Amount}[/blue]层[gold]刻蚀[/gold]。",
   "DEMOMOD-CLEAR_DECLARATION_OF_THE_END_POWER.title": "死之炎",
-  "DEMOMOD-CLEAR_DECLARATION_OF_THE_END_POWER.description": "你每打出[blue]12[/blue]张带有[gold]死之炎[/gold]的牌时，将所有敌人身上的[gold]终焉宣告[/gold]层数变为[blue]0[/blue]。",
-  "DEMOMOD-CLEAR_DECLARATION_OF_THE_END_POWER.smartDescription": "你每打出[blue]12[/blue]张带有[gold]死之炎[/gold]的牌时，将所有敌人身上的[gold]终焉宣告[/gold]层数变为[blue]0[/blue]。\n(已打出[blue]{DisplayAmount}[/blue]张)",
+  "DEMOMOD-CLEAR_DECLARATION_OF_THE_END_POWER.description": "你每打出[blue]10[/blue]张带有[gold]死之炎[/gold]的牌时，将所有敌人身上的[gold]终焉宣告[/gold]层数变为[blue]0[/blue]。",
+  "DEMOMOD-CLEAR_DECLARATION_OF_THE_END_POWER.smartDescription": "你每打出[blue]10[/blue]张带有[gold]死之炎[/gold]的牌时，将所有敌人身上的[gold]终焉宣告[/gold]层数变为[blue]0[/blue]。\n(已打出[blue]{DisplayAmount}[/blue]张)",
   "DEMOMOD-LIGHT_OF_LIFE_POWER.title": "生之光",
   "DEMOMOD-LIGHT_OF_LIFE_POWER.description": "打出带有[gold]生之光[/gold]侵蚀的卡牌时，所有带有[gold]终焉宣告[/gold]的敌人本回合失去[blue]1[/blue]点[gold]力量[/gold]；你在本回合获得[blue]1[/blue]点[gold]力量[/gold]。",
   "DEMOMOD-LIGHT_OF_LIFE_POWER.smartDescription": "打出带有[gold]生之光[/gold]侵蚀的卡牌时，所有带有[gold]终焉宣告[/gold]的敌人本回合失去[blue]{Amount}[/blue]点[gold]力量[/gold]；你在本回合获得[blue]{Amount}[/blue]点[gold]力量[/gold]。",
@@ -129,5 +129,11 @@
   "DEMOMOD-ARBITER_OF_LIFE_AND_DEATH_POWER.smartDescription": "你每抽到一张牌，为这张牌施加侵蚀[gold]生之光[/gold]或[gold]死之炎[/gold]。",
   "DEMOMOD-ROAMING_THE_WEAVE_POWER.title": "魔网漫行",
   "DEMOMOD-ROAMING_THE_WEAVE_POWER.description": "每当在回合内获得能量时，额外获得[blue]1[/blue]点能量。",
-  "DEMOMOD-ROAMING_THE_WEAVE_POWER.smartDescription": "每当在回合内获得能量时，额外获得[blue]{Amount}[/blue]点能量。"
+  "DEMOMOD-ROAMING_THE_WEAVE_POWER.smartDescription": "每当在回合内获得能量时，额外获得[blue]{Amount}[/blue]点能量。",
+  "DEMOMOD-LIGHT_POLAR_POWER.title": "光极性",
+  "DEMOMOD-LIGHT_POLAR_POWER.description": "当你在本回合打出带有[gold]生之光[/gold]侵蚀的卡牌时，[gold]终战骑士[/gold]回复5点生命并在本回合获得1点[gold]力量[/gold]。",
+  "DEMOMOD-LIGHT_POLAR_POWER.smartDescription": "当你在本回合打出带有[gold]生之光[/gold]侵蚀的卡牌时，[gold]终战骑士[/gold]回复5点生命并在本回合获得1点[gold]力量[/gold]。",
+  "DEMOMOD-FLAME_POLAR_POWER.title": "炎极性",
+  "DEMOMOD-FLAME_POLAR_POWER.description": "当你在本回合打出带有[gold]死之炎[/gold]侵蚀的卡牌时，失去2点生命并在本回合失去1点[gold]力量[/gold]。",
+  "DEMOMOD-FLAME_POLAR_POWER.smartDescription": "当你在本回合打出带有[gold]死之炎[/gold]侵蚀的卡牌时，失去2点生命并在本回合失去1点[gold]力量[/gold]。"
 }
