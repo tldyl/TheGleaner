@@ -18,7 +18,7 @@ public class Standoff : CustomCardModel {
 	public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
 
 	protected override IEnumerable<DynamicVar> CanonicalVars =>
-		new List<DynamicVar> { new DamageVar(15, ValueProp.Move) };
+		new List<DynamicVar> { new DamageVar(19, ValueProp.Move) };
 
 	public Standoff() : base(2, CardType.Attack, CardRarity.Uncommon, TargetType.AllEnemies, true, true) {
 	}
@@ -38,6 +38,6 @@ public class Standoff : CustomCardModel {
 	}
 
 	protected override void OnUpgrade() {
-		DynamicVars.Damage.UpgradeValueBy(4);
+		DynamicVars.Damage.UpgradeValueBy(5);
 	}
 }

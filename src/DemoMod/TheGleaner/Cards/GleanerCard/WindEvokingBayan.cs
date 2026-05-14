@@ -26,7 +26,7 @@ public class WindEvokingBayan : CustomCardModel {
 	public override bool GainsBlock => true;
 	public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
 	
-	public WindEvokingBayan() : base(1, CardType.Skill, CardRarity.Common, TargetType.Self) {
+	public WindEvokingBayan() : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.Self) {
 	}
 	
 	public override IEnumerable<CardKeyword> CanonicalKeywords => [CustomEnums.Resonance];
