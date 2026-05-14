@@ -29,7 +29,7 @@ public class PreshowPrep : CustomCardModel {
 		HoverTipFactory.ForEnergy(this)
 	];
 
-	public PreshowPrep() : base(2, CardType.Skill, CardRarity.Common, TargetType.Self) {
+	public PreshowPrep() : base(2, CardType.Skill, CardRarity.Uncommon, TargetType.Self) {
 	}
 
 	protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {

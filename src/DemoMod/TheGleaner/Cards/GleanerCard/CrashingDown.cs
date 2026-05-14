@@ -6,6 +6,7 @@ using DemoMod.TheGleaner.Pools;
 using DemoMod.TheGleaner.Powers;
 using DemoMod.TheGleaner.Utils;
 using Godot;
+using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.CardSelection;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Commands.Builders;
@@ -26,10 +27,11 @@ public class CrashingDown : CustomCardModel
 	public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
 
 	protected override IEnumerable<DynamicVar> CanonicalVars => [
-		new DamageVar(30, ValueProp.Move),
+		new DamageVar(36, ValueProp.Move),
+		new IntVar("powerVal", 1)
 	];
 
-	public CrashingDown() : base(3, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy) {
+	public CrashingDown() : base(4, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy) {
 	}
 
 	protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
@@ -39,7 +41,22 @@ public class CrashingDown : CustomCardModel
 			.WithNoAttackerAnim()
 			.Targeting(cardPlay.Target)
 			.Execute(choiceContext);
+		await PowerCmd.Apply<WeakPower>(
+			Owner.Creature.CombatState.HittableEnemies,
+			DynamicVars["powerVal"].BaseValue,
+			Owner.Creature,
+			this
+		);
+		await PowerCmd.Apply<VulnerablePower>(
+			Owner.Creature.CombatState.HittableEnemies,
+			DynamicVars["powerVal"].BaseValue,
+			Owner.Creature,
+			this
+		);
 	}
 
-	protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(10);
+	protected override void OnUpgrade(){
+		DynamicVars.Damage.UpgradeValueBy(8);
+		DynamicVars["powerVal"].UpgradeValueBy(1);
+	} 
 }

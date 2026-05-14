@@ -24,12 +24,7 @@ public class NoLeaveToWither : CustomCardModel
 	];
 
 	protected override IEnumerable<IHoverTip> ExtraHoverTips => [
-		HoverTipFactory.FromKeyword(CustomEnums.Dissonance),
-		HoverTipFactory.FromPower<DoomPower>(),
-		HoverTipFactory.Static(StaticHoverTip.Block),
-		HoverTipFactory.FromCard<DirgeOfFarewell>(),
-		HoverTipFactory.FromCard<ShriekOfDread>(),
-		HoverTipFactory.FromCard<HowlOfWrath>()
+		HoverTipFactory.FromPower<DoomPower>()
 	];
 
 	public override IEnumerable<CardKeyword> CanonicalKeywords => [
@@ -48,33 +43,6 @@ public class NoLeaveToWither : CustomCardModel
 			Owner.Creature,
 			this
 		);
-
-		List<CardModel> cards = RandomDissonanceCard.getRandomDissonanceCards(
-			DynamicVars["Amount"].IntValue,
-			Owner.RunState.Rng.CombatCardGeneration
-		);
-
-		SoundManager.Instance.PlaySound(SoundKeys.HEART_BEAT);
-		foreach (CardModel card in cards)
-		{
-			PileType targetPile =
-				Owner.RunState.Rng.CombatCardGeneration.NextInt(2) == 0
-					? PileType.Draw
-					: PileType.Discard;
-
-			IReadOnlyList<CardPileAddResult> results = await CardPileCmd.AddGeneratedCardsToCombat(
-				[CombatState.CreateCard(card, Owner)],
-				targetPile,
-				true,
-				CardPilePosition.Random
-			);
-
-			CardCmd.PreviewCardPileAdd(
-				results,
-				1.2f,
-				MegaCrit.Sts2.Core.Nodes.CommonUi.CardPreviewStyle.HorizontalLayout
-			);
-		}
 	}
 
 	protected override void OnUpgrade()

@@ -28,7 +28,7 @@ public class EarthedBell : CustomCardModel, IConcertoCard {
 	public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
 	protected override IEnumerable<DynamicVar> CanonicalVars => [
 		new DamageVar(0, ValueProp.Move),
-		new BlockVar(5, ValueProp.Move)
+		new BlockVar(6, ValueProp.Move)
 	];
 	protected override IEnumerable<IHoverTip> ExtraHoverTips => [
 		HoverTipFactory.FromKeyword(CustomEnums.Concerto)

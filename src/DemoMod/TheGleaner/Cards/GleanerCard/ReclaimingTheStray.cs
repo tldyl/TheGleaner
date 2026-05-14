@@ -25,7 +25,7 @@ public class ReclaimingTheStray : CustomCardModel {
 
 public override bool GainsBlock => true;
 
-	public ReclaimingTheStray() : base(0, CardType.Skill, CardRarity.Common, TargetType.Self) {
+	public ReclaimingTheStray() : base(0, CardType.Skill, CardRarity.Uncommon, TargetType.Self) {
 		
 	}
 
@@ -58,7 +58,6 @@ public override IEnumerable<CardKeyword> CanonicalKeywords => [
 	}
 
 	protected override void OnUpgrade() {
-		DynamicVars.Block.UpgradeValueBy(1);
-		RemoveKeyword(CardKeyword.Exhaust);
+		DynamicVars.Block.UpgradeValueBy(2);
 	}
 }
