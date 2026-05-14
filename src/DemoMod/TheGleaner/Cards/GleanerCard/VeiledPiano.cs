@@ -19,7 +19,7 @@ public class VeiledPiano : CustomCardModel, IConcertoCard
 	public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
 	public override bool GainsBlock => true;
 	protected override IEnumerable<DynamicVar> CanonicalVars => [
-		new BlockVar(7, ValueProp.Move),
+		new BlockVar(6, ValueProp.Move),
 		new IntVar("VigorVal", 3),
 		new IntVar("VulVal", 1)
 	];
