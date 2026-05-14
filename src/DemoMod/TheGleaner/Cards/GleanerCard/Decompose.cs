@@ -15,13 +15,15 @@ using DemoMod.TheGleaner.Powers;
 namespace DemoMod.TheGleaner.Cards.GleanerCard;
 
 [Pool(typeof(CardPool))]
-public class SmutExtract : CustomCardModel
+public class Decompose : CustomCardModel
 {
 	public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
 
 	protected override IEnumerable<DynamicVar> CanonicalVars => [
 		new PowerVar<PoisonPower>(4),
-		new PowerVar<EtchPower>(1)
+		new PowerVar<EtchPower>(3),
+		new PowerVar<VulnerablePower>(2),
+		new PowerVar<WeakPower>(1)
 	];
 
 	protected override IEnumerable<IHoverTip> ExtraHoverTips => [
@@ -29,20 +31,24 @@ public class SmutExtract : CustomCardModel
 		HoverTipFactory.FromPower<PoisonPower>()
 	];
 
-	public SmutExtract() : base(1, CardType.Skill, CardRarity.Common, TargetType.AnyEnemy)
+	public Decompose() : base(2, CardType.Skill, CardRarity.Uncommon, TargetType.AnyEnemy)
 	{
 	}
-
+	
 	protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
 	{
 		await PowerCmd.Apply<PoisonPower>(cardPlay.Target, DynamicVars["PoisonPower"].BaseValue, Owner.Creature, this);
 		await PowerCmd.Apply<EtchPower>(cardPlay.Target, DynamicVars["EtchPower"].BaseValue, Owner.Creature, this);
+		await PowerCmd.Apply<VulnerablePower>(cardPlay.Target, DynamicVars["VulnerablePower"].BaseValue, Owner.Creature, this);
+		await PowerCmd.Apply<WeakPower>(cardPlay.Target, DynamicVars["WeakPower"].BaseValue, Owner.Creature, this);
 	}
 
 	protected override void OnUpgrade()
 	{
 		DynamicVars["PoisonPower"].UpgradeValueBy(1);
 		DynamicVars["EtchPower"].UpgradeValueBy(1);
+		DynamicVars["VulnerablePower"].UpgradeValueBy(1);
+		DynamicVars["WeakPower"].UpgradeValueBy(1);
 	}
 
 }

@@ -18,10 +18,9 @@ namespace DemoMod.TheGleaner.Cards.GleanerCard;
 public class Whispers : CustomCardModel {
 	public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
 	protected override IEnumerable<DynamicVar> CanonicalVars => [
-		new CardsVar(1)
-	];
-	public override IEnumerable<CardKeyword> CanonicalKeywords => [
-		CardKeyword.Exhaust
+		new CardsVar(1),
+		new IntVar("Draw", 2)
+		
 	];
 
 	protected override IEnumerable<IHoverTip> ExtraHoverTips => [
@@ -31,9 +30,13 @@ public class Whispers : CustomCardModel {
 		HoverTipFactory.FromCard<HowlOfWrath>()
 	];
 
-	public Whispers() : base(0, CardType.Skill, CardRarity.Uncommon, TargetType.Self) {
+	public Whispers() : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.Self) {
 		
 	}
+
+	public override IEnumerable<CardKeyword> CanonicalKeywords => [
+		CardKeyword.Ethereal
+	];
 
 	protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
 		CardPile drawPile = PileType.Draw.GetPile(Owner);
@@ -57,10 +60,11 @@ public class Whispers : CustomCardModel {
 			CardModel card = Owner.Creature.CombatState.CreateCard(RandomDissonanceCard.getRandomDissonanceCards(1, Owner.RunState.Rng.CombatCardGeneration)[0], Owner);
 			await CardCmd.Transform(selectedCard, card);
 		}
+		await CardPileCmd.Draw(choiceContext, DynamicVars["Draw"].BaseValue, Owner, false);
 	}
 
-	protected override void OnUpgrade() {
-		RemoveKeyword(CardKeyword.Exhaust);
-		AddKeyword(CardKeyword.Ethereal);
+		protected override void OnUpgrade()
+	{
+		EnergyCost.UpgradeBy(-1);
 	}
 }

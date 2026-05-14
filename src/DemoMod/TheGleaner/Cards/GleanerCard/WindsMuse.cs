@@ -20,11 +20,15 @@ public class WindsMuse : CustomCardModel {
 	public WindsMuse() : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.Self) {
 	}
 
+	public override IEnumerable<CardKeyword> CanonicalKeywords => [
+		CardKeyword.Exhaust
+	];
+
 	protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
 		await ScorePileCmd.Glean(Owner, choiceContext, DynamicVars["Amount"].BaseValue, this);
 	}
 
 	protected override void OnUpgrade() {
-		DynamicVars["Amount"].UpgradeValueBy(1);
+		RemoveKeyword(CardKeyword.Exhaust);
 	}
 }

@@ -17,12 +17,11 @@ namespace DemoMod.TheGleaner.Cards.GleanerCard;
 [Pool(typeof(CardPool))]
 public class ColossalBloom : CustomCardModel
 {
-	//public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
+	public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
 
 	protected override IEnumerable<DynamicVar> CanonicalVars => [
 		new PowerVar<PoisonPower>(11),
-		new PowerVar<EtchPower>(2),
-		new IntVar("Etch", 1)
+		new PowerVar<EtchPower>(3)
 	];
 
 	protected override IEnumerable<IHoverTip> ExtraHoverTips => [
@@ -30,7 +29,7 @@ public class ColossalBloom : CustomCardModel
 		HoverTipFactory.FromPower<PoisonPower>()
 	];
 
-	public ColossalBloom() : base(3, CardType.Skill, CardRarity.Uncommon, TargetType.AllEnemies)
+	public ColossalBloom() : base(4, CardType.Skill, CardRarity.Uncommon, TargetType.AllEnemies)
 	{
 	}
 
@@ -38,9 +37,6 @@ public class ColossalBloom : CustomCardModel
 	{
 		await PowerCmd.Apply<PoisonPower>(Owner.Creature.CombatState.HittableEnemies, DynamicVars["PoisonPower"].BaseValue, Owner.Creature, this);
 		await PowerCmd.Apply<EtchPower>(Owner.Creature.CombatState.HittableEnemies, DynamicVars["EtchPower"].BaseValue, Owner.Creature, this);
-				if (Owner.Creature.CombatState.HittableEnemies.Count == 1) {
-		await PowerCmd.Apply<EtchPower>(Owner.Creature.CombatState.HittableEnemies, DynamicVars["Etch"].BaseValue, Owner.Creature, this);
-		}
 	}
 
 	protected override void OnUpgrade()

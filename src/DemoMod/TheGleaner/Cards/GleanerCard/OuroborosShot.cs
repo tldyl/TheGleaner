@@ -23,58 +23,56 @@ using MegaCrit.Sts2.Core.ValueProps;
 namespace DemoMod.TheGleaner.Cards.GleanerCard;
 [Pool(typeof(CardPool))]
 public class OuroborosShot : CustomCardModel {
-    public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
+	public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
 
-    protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new DamageVar(6, ValueProp.Move),
-        new IntVar("Amount", 1)
-    ];
+	protected override IEnumerable<DynamicVar> CanonicalVars => [
+		new DamageVar(11, ValueProp.Move),
+		new IntVar("Amount", 1)
+	];
 
-    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromKeyword(CustomEnums.Glean)];
+	protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromKeyword(CustomEnums.Glean)];
 
-    public OuroborosShot() : base(1, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy) {
-    }
+	public OuroborosShot() : base(0, CardType.Attack, CardRarity.Rare, TargetType.AnyEnemy) {
+	}
 
-    public override IEnumerable<CardKeyword> CanonicalKeywords =>
-    [
-        CardKeyword.Exhaust
-    ];
+	public override IEnumerable<CardKeyword> CanonicalKeywords =>
+	[
+		CardKeyword.Exhaust
+	];
 
-    private List<CardModel> optionCards;
+	private List<CardModel> optionCards;
 
-    private List<CardModel> OptionCards {
-        get {
-            if (optionCards == null) {
-                optionCards = [ModelDb.Card<Shuffle>().ToMutable(), ModelDb.Card<SwapPiles>().ToMutable(), ModelDb.Card<GleanCard>().ToMutable()];
-                foreach (CardModel card in optionCards) {
-                    card.Owner = Owner;
-                }
-            }
-            return optionCards;
-        }
-    }
+	private List<CardModel> OptionCards {
+		get {
+			if (optionCards == null) {
+				optionCards = [ModelDb.Card<Shuffle>().ToMutable(), ModelDb.Card<SwapPiles>().ToMutable(), ModelDb.Card<GleanCard>().ToMutable()];
+				foreach (CardModel card in optionCards) {
+					card.Owner = Owner;
+				}
+			}
+			return optionCards;
+		}
+	}
 
-    protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
-        AttackCommand _ = await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
-            .FromCard(this)
-            .Targeting(cardPlay.Target)
-            .Execute(choiceContext);
-        CardModel chosenCard = await CardSelectCmd.FromChooseACardScreen(choiceContext, OptionCards, Owner);
-        if (chosenCard != null) {
-            await ((IChoosable)chosenCard).OnChosen(choiceContext, cardPlay);
-        }
-    }
+	protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
+		AttackCommand _ = await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
+			.FromCard(this)
+			.Targeting(cardPlay.Target)
+			.Execute(choiceContext);
+		CardModel chosenCard = await CardSelectCmd.FromChooseACardScreen(choiceContext, OptionCards, Owner);
+		if (chosenCard != null) {
+			await ((IChoosable)chosenCard).OnChosen(choiceContext, cardPlay);
+		}
+	}
 
-    public override async Task BeforeCombatStart() {
-        if (!IsInCombat || CombatState == null || Owner.Deck.Cards.Contains(this)) {
-            return;
-        }
+	public override async Task BeforeCombatStart() {
+		if (!IsInCombat || CombatState == null || Owner.Deck.Cards.Contains(this)) {
+			return;
+		}
 
-        CardCmd.Preview(this);
-        await ScorePileCmd.AddCards(Owner.PlayerCombatState, Owner, this);
-    }
+		CardCmd.Preview(this);
+		await ScorePileCmd.AddCards(Owner.PlayerCombatState, Owner, this);
+	}
 
-    protected override void OnUpgrade() {
-        EnergyCost.UpgradeBy(-1);
-    }
+	protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(4);
 }

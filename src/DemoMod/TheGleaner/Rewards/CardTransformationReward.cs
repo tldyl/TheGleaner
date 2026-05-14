@@ -12,26 +12,26 @@ using MegaCrit.Sts2.Core.Runs;
 
 namespace DemoMod.TheGleaner.Rewards;
 public class CardTransformationReward(Player player) : Reward(player) {
-    protected override RewardType RewardType => RewardType.RemoveCard;
-    public override int RewardsSetIndex => 7;
-    protected override string IconPath => ImageHelper.GetImagePath("ui/reward_screen/reward_icon_card_removal.png");
-    public override LocString Description => new LocString("cards", "DEMOMOD-SIGHT_REAPING.rewardDescription");
-    public override bool IsPopulated => true;
-    
-    public override Task Populate() => Task.CompletedTask;
+	protected override RewardType RewardType => RewardType.RemoveCard;
+	public override int RewardsSetIndex => 7;
+	protected override string IconPath => ImageHelper.GetImagePath("ui/reward_screen/reward_icon_card_removal.png");
+	public override LocString Description => new LocString("cards", "DEMOMOD-SIGHT_REAPING.rewardDescription");
+	public override bool IsPopulated => true;
+	
+	public override Task Populate() => Task.CompletedTask;
 
-    protected override async Task<bool> OnSelect() {
-        RunManager.Instance.NetService.SendMessage(new CardRemovedMessage {
-            Location = RunManager.Instance.RunLocationTargetedBuffer.CurrentLocation
-        });
-        IEnumerable<CardModel> selectedCards = await CardSelectCmd.FromDeckForTransformation(player, new CardSelectorPrefs(new LocString("cards", "DEMOMOD-SIGHT_REAPING.rewardDescription"), 1));
-        foreach (CardModel card in selectedCards) {
-            await CardCmd.TransformToRandom(card, player.RunState.Rng.Niche, CardPreviewStyle.EventLayout);
-        }
-        return true;
-    }
+	protected override async Task<bool> OnSelect() {
+		RunManager.Instance.NetService.SendMessage(new CardRemovedMessage {
+			Location = RunManager.Instance.RunLocationTargetedBuffer.CurrentLocation
+		});
+		IEnumerable<CardModel> selectedCards = await CardSelectCmd.FromDeckForTransformation(player, new CardSelectorPrefs(new LocString("cards", "DEMOMOD-SIGHT_REAPING.rewardDescription"), 1));
+		foreach (CardModel card in selectedCards) {
+			await CardCmd.TransformToRandom(card, player.RunState.Rng.Niche, CardPreviewStyle.EventLayout);
+		}
+		return true;
+	}
 
-    public override void MarkContentAsSeen() {
+	public override void MarkContentAsSeen() {
 
-    }
+	}
 }

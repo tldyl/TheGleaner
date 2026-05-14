@@ -29,13 +29,13 @@ public class Clamor : CustomCardModel
 		HoverTipFactory.FromCard<HowlOfWrath>()
 	];
 
-  public override IEnumerable<CardKeyword> CanonicalKeywords => [
-		CardKeyword.Exhaust
-	];
-
 	public Clamor() : base(0, CardType.Skill, CardRarity.Common, TargetType.Self)
 	{
 	}
+
+	public override IEnumerable<CardKeyword> CanonicalKeywords => [
+		CardKeyword.Exhaust
+	];
 
 	protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
 	{

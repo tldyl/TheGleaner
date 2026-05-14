@@ -13,24 +13,24 @@ namespace DemoMod.TheGleaner.Cards.GleanerCard;
 
 [Pool(typeof(CardPool))]
 public class Germination : CustomCardModel {
-    //public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
-    protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new PowerVar<NoxiousFumesPower>(3),
-        new PowerVar<EtchPower>(1)
-    ];
-    protected override IEnumerable<IHoverTip> ExtraHoverTips => [
-        HoverTipFactory.FromPower<PoisonPower>(),
-        HoverTipFactory.FromPower<EtchPower>()
-    ];
+	public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
+	protected override IEnumerable<DynamicVar> CanonicalVars => [
+		new PowerVar<NoxiousFumesPower>(1),
+		new PowerVar<EtchPower>(1)
+	];
+	protected override IEnumerable<IHoverTip> ExtraHoverTips => [
+		HoverTipFactory.FromPower<PoisonPower>(),
+		HoverTipFactory.FromPower<EtchPower>()
+	];
 
-    public Germination() : base(2, CardType.Power, CardRarity.Uncommon, TargetType.Self) {
-        
-    }
+	public Germination() : base(1, CardType.Power, CardRarity.Uncommon, TargetType.Self) {
+		
+	}
 
-    protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
-        await PowerCmd.Apply<NoxiousFumesPower>(Owner.Creature, DynamicVars["NoxiousFumesPower"].BaseValue, Owner.Creature, this);
-        await PowerCmd.Apply<GerminationPower>(Owner.Creature, DynamicVars["EtchPower"].BaseValue, Owner.Creature, this);
-    }
-    
-    protected override void OnUpgrade() => DynamicVars["NoxiousFumesPower"].UpgradeValueBy(1);
+	protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
+		await PowerCmd.Apply<NoxiousFumesPower>(Owner.Creature, DynamicVars["NoxiousFumesPower"].BaseValue, Owner.Creature, this);
+		await PowerCmd.Apply<GerminationPower>(Owner.Creature, DynamicVars["EtchPower"].BaseValue, Owner.Creature, this);
+	}
+	
+	protected override void OnUpgrade() => DynamicVars["NoxiousFumesPower"].UpgradeValueBy(1);
 }

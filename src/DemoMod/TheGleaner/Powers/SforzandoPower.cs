@@ -8,25 +8,19 @@ using MegaCrit.Sts2.Core.ValueProps;
 namespace DemoMod.TheGleaner.Powers;
 
 public class SforzandoPower : CustomPowerModel {
-    public override string CustomPackedIconPath => $"res://TheGleaner/images/powers/{Id.Entry.ToLowerInvariant()}.png";
-    public override string CustomBigIconPath => $"res://TheGleaner/images/powers/{Id.Entry.ToLowerInvariant()}.png";
-    public override PowerType Type => PowerType.Buff;
-    public override PowerStackType StackType => PowerStackType.Counter;
+	public override string CustomPackedIconPath => $"res://TheGleaner/images/powers/{Id.Entry.ToLowerInvariant()}.png";
+	public override string CustomBigIconPath => $"res://TheGleaner/images/powers/{Id.Entry.ToLowerInvariant()}.png";
+	public override PowerType Type => PowerType.Buff;
+	public override PowerStackType StackType => PowerStackType.Counter;
 
-    public override async Task AfterAttack(AttackCommand command) {
-        if (command.Attacker != Owner) {
-            return;
-        }
-        int blockSum = command.Results.Sum(damageResult => damageResult.BlockedDamage + damageResult.UnblockedDamage + damageResult.OverkillDamage);
-        Flash();
-        await CreatureCmd.GainBlock(Owner, blockSum, ValueProp.Unpowered, null);
-        await PowerCmd.Decrement(this);
-    }
-    
-    public override async Task AfterBlockCleared(Creature creature) {
-        if (creature != Owner) {
-            return;
-        }
-        await PowerCmd.Remove(this);
-    }
+	public override async Task AfterAttack(AttackCommand command) {
+		if (command.Attacker != Owner) {
+			return;
+		}
+		int blockSum = command.Results.Sum(damageResult => damageResult.BlockedDamage + damageResult.UnblockedDamage + damageResult.OverkillDamage);
+		Flash();
+		await CreatureCmd.GainBlock(Owner, blockSum, ValueProp.Unpowered, null);
+		await PowerCmd.Decrement(this);
+	}
+	
 }

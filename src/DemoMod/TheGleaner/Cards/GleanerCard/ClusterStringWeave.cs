@@ -34,6 +34,15 @@ public class ClusterStringWeave : CustomCardModel {
 	public ClusterStringWeave() : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.Self) {
 	}
 
+	public override async Task BeforeCombatStart() {
+		if (!IsInCombat || CombatState == null || Owner.Deck.Cards.Contains(this)) {
+			return;
+		}
+
+		CardCmd.Preview(this);
+		await ScorePileCmd.AddCards(Owner.PlayerCombatState, Owner, this);
+	}
+
 	protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
 		List<CardModel> mergedCards = PileType.Hand.GetPile(Owner).Cards
 			.Where(c => c.Tags.Contains(CardTag.Strike) || c.Tags.Contains(CustomEnums.Arrow))
