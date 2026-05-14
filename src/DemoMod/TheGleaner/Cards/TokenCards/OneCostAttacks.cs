@@ -41,9 +41,6 @@ public class OneCostAttacks : CustomCardModel, IChoosable {
 			}
 		}
 		foreach (CardModel c in list2) {
-			if (!c.Keywords.Contains(CardKeyword.Ethereal)) {
-				c.AddKeyword(CardKeyword.Ethereal);
-			}
 			CardCmd.Preview(c);
 			await ScorePileCmd.AddCards(Owner.PlayerCombatState, Owner, c);
 		}

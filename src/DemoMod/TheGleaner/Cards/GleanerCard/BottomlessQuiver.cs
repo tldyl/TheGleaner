@@ -29,9 +29,9 @@ public class BottomlessQuiver : CustomCardModel
 
 
 
-    public BottomlessQuiver() : base(1, CardType.Power, CardRarity.Uncommon, TargetType.Self)
-    {
-    }
+	public BottomlessQuiver() : base(1, CardType.Power, CardRarity.Uncommon, TargetType.Self)
+	{
+	}
 
 	protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
 	{

@@ -16,7 +16,7 @@ namespace DemoMod.TheGleaner.Cards.GleanerCard;
 [Pool(typeof(CardPool))]
 public class StringAndPillar : CustomCardModel {
 	public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
-	protected override IEnumerable<DynamicVar> CanonicalVars => [new EnergyVar(1)];
+	protected override IEnumerable<DynamicVar> CanonicalVars => [new IntVar("Amount", 1), new EnergyVar(1)];
 	public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Innate, CardKeyword.Retain, CustomEnums.Resonance];
 
 	public StringAndPillar() : base(4, CardType.Power, CardRarity.Basic, TargetType.Self) {
@@ -26,7 +26,7 @@ public class StringAndPillar : CustomCardModel {
 		if (IsUpgraded) {
 			CardModel cpy = CreateClone();
 			CardCmd.Downgrade(cpy);
-			AccessTools.Field(typeof(CardModel), "_energyCost").SetValue(cpy, new CardEnergyCost(cpy, 5, false));
+			AccessTools.Field(typeof(CardModel), "_energyCost").SetValue(cpy, new CardEnergyCost(cpy, 4, false));
 			await CardPileCmd.AddGeneratedCardToCombat(cpy, PileType.Hand, true);
 		}
 	}

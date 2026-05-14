@@ -30,10 +30,6 @@ public class ClusterConfluence : CustomCardModel {
 		
 	}
 
-	public override IEnumerable<CardKeyword> CanonicalKeywords => [
-		CardKeyword.Exhaust
-	];
-
 	protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
 		for (int _ = 0; _ < ResolveEnergyXValue() + CurrentUpgradeLevel; _++) {
 			CardModel strike = ModelDb.Card<StrikeGleaner>().ToMutable();

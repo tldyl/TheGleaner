@@ -20,61 +20,65 @@ namespace DemoMod.TheGleaner.Cards.GleanerCard;
 
 [Pool(typeof(CardPool))]
 public class ThreshersAxe : CustomCardModel, IConcertoCard {
-    public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
+	public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
 
-    protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new IntVar("Amount", 4),
-        new DamageVar(15, ValueProp.Move)
-    ];
+	protected override IEnumerable<DynamicVar> CanonicalVars => [
+		new IntVar("Amount", 4),
+		new DamageVar(15, ValueProp.Move)
+	];
 
-    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<StrengthPower>(), HoverTipFactory.FromKeyword(CustomEnums.Concerto), HoverTipFactory.FromKeyword(CardKeyword.Ethereal)];
+	protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<StrengthPower>(), HoverTipFactory.FromKeyword(CustomEnums.Concerto), HoverTipFactory.FromKeyword(CardKeyword.Ethereal)];
 
-    public ThreshersAxe() : base(3, CardType.Attack, CardRarity.Rare, TargetType.RandomEnemy) {
-    }
+	public ThreshersAxe() : base(3, CardType.Attack, CardRarity.Rare, TargetType.RandomEnemy) {
+	}
 
-    protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
-        Creature target = Owner.RunState.Rng.CombatTargets.NextItem(Owner.Creature.CombatState.HittableEnemies);
-        GleanerVfxCmd.PlayOnCreature<Node2D>(target, "res://TheGleaner/scenes/vfx/threshers_axe_vfx.tscn");
-        await Cmd.Wait(0.2f);
-        GleanerVfxCmd.PlayOnCreature<Node2D>(target, "res://TheGleaner/scenes/vfx/threshers_axe_hit_vfx.tscn");
-        AttackCommand _ = await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
-            .FromCard(this)
-            .WithNoAttackerAnim()
-            .Targeting(target)
-            .Execute(choiceContext);
-        if (Owner.Creature.CombatState.HittableEnemies.Count == 0 && cardPlay.IsAutoPlay) {
-            await CombatManager.Instance.CheckWinCondition();
-        }
-    }
+	protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
+		Creature target = Owner.RunState.Rng.CombatTargets.NextItem(Owner.Creature.CombatState.HittableEnemies);
+		GleanerVfxCmd.PlayOnCreature<Node2D>(target, "res://TheGleaner/scenes/vfx/threshers_axe_vfx.tscn");
+		await Cmd.Wait(0.2f);
+		GleanerVfxCmd.PlayOnCreature<Node2D>(target, "res://TheGleaner/scenes/vfx/threshers_axe_hit_vfx.tscn");
+		AttackCommand _ = await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
+			.FromCard(this)
+			.WithNoAttackerAnim()
+			.Targeting(target)
+			.Execute(choiceContext);
+		if (Owner.Creature.CombatState.HittableEnemies.Count == 0 && cardPlay.IsAutoPlay) {
+			await CombatManager.Instance.CheckWinCondition();
+		}
+	}
 
-    protected override PileType GetResultPileType() {
-        PileType resultPileType = base.GetResultPileType();
-        return resultPileType != PileType.Discard ? resultPileType : PileType.Hand;
-    }
+	protected override PileType GetResultPileType() {
+		PileType resultPileType = base.GetResultPileType();
+		return resultPileType != PileType.Discard ? resultPileType : PileType.Hand;
+	}
 
-    public override Decimal ModifyDamageAdditive(
-        Creature? target,
-        Decimal amount,
-        ValueProp props,
-        Creature? dealer,
-        CardModel? cardSource) {
-        if (cardSource == this && !props.HasFlag(ValueProp.Unpowered)) {
-            int strAmount = 0;
-            if (dealer != null && dealer.Powers.Any(p => p is StrengthPower)) {
-                StrengthPower strengthPower = dealer.Powers.First(p => p is StrengthPower) as StrengthPower;
-                strAmount = strengthPower.Amount;
-            }
-            return strAmount * (DynamicVars["Amount"].BaseValue - 1M);
-        }
-        return 0M;
-    }
+	public override Decimal ModifyDamageAdditive(
+		Creature? target,
+		Decimal amount,
+		ValueProp props,
+		Creature? dealer,
+		CardModel? cardSource) {
+		if (cardSource == this && !props.HasFlag(ValueProp.Unpowered)) {
+			int strAmount = 0;
+			if (dealer != null && dealer.Powers.Any(p => p is StrengthPower)) {
+				StrengthPower strengthPower = dealer.Powers.First(p => p is StrengthPower) as StrengthPower;
+				strAmount = strengthPower.Amount;
+			}
+			return strAmount * (DynamicVars["Amount"].BaseValue - 1M);
+		}
+		return 0M;
+	}
 
-    protected override void OnUpgrade() => DynamicVars["Amount"].UpgradeValueBy(3);
+	protected override void OnUpgrade()
+	{
+		DynamicVars.Damage.UpgradeValueBy(5);
+		DynamicVars["Amount"].UpgradeValueBy(3);
+	}
 
-    public async Task OnConcerto(CombatState combatState, PlayerChoiceContext choiceContext, CardPlay cardPlay) {
-        await CardCmd.AutoPlay(choiceContext, this, null);
-        if (!Keywords.Contains(CardKeyword.Ethereal)) {
-            AddKeyword(CardKeyword.Ethereal);
-        }
-    }
+	public async Task OnConcerto(CombatState combatState, PlayerChoiceContext choiceContext, CardPlay cardPlay) {
+		await CardCmd.AutoPlay(choiceContext, this, null);
+		if (!Keywords.Contains(CardKeyword.Ethereal)) {
+			AddKeyword(CardKeyword.Ethereal);
+		}
+	}
 }

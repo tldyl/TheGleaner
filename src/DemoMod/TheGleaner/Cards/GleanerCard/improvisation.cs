@@ -47,7 +47,7 @@ public class Improvisation : CustomCardModel {
 		}
 	}
 
-	public Improvisation() : base(2, CardType.Skill, CardRarity.Uncommon, TargetType.Self) {
+	public Improvisation() : base(2, CardType.Skill, CardRarity.Rare, TargetType.Self) {
 	}
 
 	protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {

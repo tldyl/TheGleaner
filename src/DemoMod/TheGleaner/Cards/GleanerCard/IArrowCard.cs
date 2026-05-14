@@ -8,13 +8,13 @@ using MegaCrit.Sts2.Core.Models;
 namespace DemoMod.TheGleaner.Cards.GleanerCard;
 
 public interface IArrowCard {
-    public LocString getArrowName();
+	public LocString getArrowName();
 
-    public LocString getArrowDescription();
+	public LocString getArrowDescription();
 
-    public Task arrowEffect(PlayerChoiceContext choiceContext, CardPlay cardPlay, List<DamageResult> damageResults, CardModel clusterCard, AttackContext context);
+	public Task arrowEffect(PlayerChoiceContext choiceContext, CardPlay cardPlay, List<DamageResult> damageResults, CardModel clusterCard, AttackContext context);
 
-    public void onMerge(CardModel clusterCard) {
-        
-    }
+	public void onMerge(CardModel clusterCard) {
+		
+	}
 }

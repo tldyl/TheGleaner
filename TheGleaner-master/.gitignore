@@ -1,0 +1,15 @@
+.idea/
+.godot/
+*.uid
+*.pck
+*.xlsx
+*.docx
+*.sln.DotSettings.user
+*.import
+*.bak
+*.TMP
+*.tmp
+deploy.ps1
+bin/
+obj/
+*.disabled

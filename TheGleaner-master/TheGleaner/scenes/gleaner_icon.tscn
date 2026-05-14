@@ -1,0 +1,24 @@
+[gd_scene load_steps=2 format=3 uid="uid://tbqoca6huc20"]
+
+[ext_resource type="Texture2D" uid="uid://cvuau0sugnrkj" path="res://TheGleaner/images/character_icon_gleaner.png" id="1_0na5y"]
+
+[node name="GleanerIcon" type="Control"]
+layout_mode = 3
+anchor_right = 0.029000001
+anchor_bottom = 0.052
+offset_right = 0.3199997
+offset_bottom = -0.15999985
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(24, 40)
+
+[node name="TextureRect" type="TextureRect" parent="."]
+custom_minimum_size = Vector2(56, 56)
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+pivot_offset = Vector2(24, 40)
+texture = ExtResource("1_0na5y")
+expand_mode = 1
+stretch_mode = 5

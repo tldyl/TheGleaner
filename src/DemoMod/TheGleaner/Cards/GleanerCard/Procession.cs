@@ -44,7 +44,7 @@ public class Procession : CustomCardModel, IAfterTakeCardsFromScore {
 		context.AddHit(damageResults);
 	}
 	
-	protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(3);
+	protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(4);
 
 	public async Task AfterTakeCardsFromScore(CardModel card) {
 		if (Owner.Deck.Cards.Contains(this)) {

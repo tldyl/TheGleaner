@@ -1,0 +1,48 @@
+using Godot;
+using MegaCrit.Sts2.Core.Assets;
+using MegaCrit.Sts2.Core.Entities.Creatures;
+using MegaCrit.Sts2.Core.Helpers;
+using MegaCrit.Sts2.Core.Nodes.Combat;
+using MegaCrit.Sts2.Core.Nodes.Rooms;
+using MegaCrit.Sts2.Core.Saves;
+using MegaCrit.Sts2.Core.Settings;
+using MegaCrit.Sts2.Core.TestSupport;
+
+namespace DemoMod.TheGleaner.Utils;
+
+public class GleanerVfxCmd {
+    public static void PlayOnCreature(Creature target, string path, float delay = 0) {
+        if (!TestMode.IsOn && NCombatRoom.Instance != null && !target.IsDead) {
+            NCreature creatureNode = NCombatRoom.Instance.GetCreatureNode(target);
+            if (creatureNode != null) {
+                PlayVfx(creatureNode.GlobalPosition, path, delay);
+            }
+        }
+    }
+
+    public static void PlayVfx(Vector2 position, string path, float delay = 0) {
+        if (SaveManager.Instance.PrefsSave.FastMode == FastModeType.Fast) {
+            delay /= 2.0f;
+            delay = Math.Min(delay, 0.25f);
+        }
+        if (!TestMode.IsOn && NCombatRoom.Instance != null) {
+            Godot.Timer timer = new Godot.Timer
+            {
+                WaitTime = delay,
+                OneShot = true,
+                Autostart = true
+            };
+            NCombatRoom.Instance.CombatVfxContainer.AddChildSafely(timer);
+
+            void Action() {
+                Node2D node2D = PreloadManager.Cache.GetScene(path).Instantiate<Node2D>();
+                NCombatRoom.Instance.CombatVfxContainer.AddChildSafely(node2D);
+                node2D.GlobalPosition = position;
+                timer.Timeout -= Action;
+                NCombatRoom.Instance.CombatVfxContainer.RemoveChildSafely(timer);
+            }
+
+            timer.Timeout += Action;
+        }
+    }
+}

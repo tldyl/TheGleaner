@@ -24,7 +24,7 @@ public class AutonomousTamb : CustomCardModel, IConcertoCard {
 		HoverTipFactory.FromPower<StrengthPower>()
 	];
 
-	public AutonomousTamb() : base(2, CardType.Skill, CardRarity.Uncommon, TargetType.RandomEnemy) {
+	public AutonomousTamb() : base(3, CardType.Skill, CardRarity.Uncommon, TargetType.RandomEnemy) {
 		
 	}
 
