@@ -25,7 +25,7 @@ public class ReclaimingTheStray : CustomCardModel {
 
 public override bool GainsBlock => true;
 
-	public ReclaimingTheStray() : base(0, CardType.Skill, CardRarity.Uncommon, TargetType.Self) {
+	public ReclaimingTheStray() : base(0, CardType.Skill, CardRarity.Common, TargetType.Self) {
 		
 	}
 
