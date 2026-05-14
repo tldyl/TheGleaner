@@ -84,7 +84,7 @@
   "DEMOMOD-PROCESSION.title": "巡礼",
   "DEMOMOD-PROCESSION.description": "对所有敌人造成{Damage:diff()}点伤害。\n你在本回合中每从[gold]乐谱[/gold]中取出过一张牌，此牌的耗能就减少1{energyPrefix:energyIcons(1)}。",
   "DEMOMOD-VEILED_PIANO.title": "雾中的钢琴",
-  "DEMOMOD-VEILED_PIANO.description": "对所有敌人造成{Damage:diff()}点伤害。\n你每有一张[gold]协奏[/gold]牌，\n此牌就额外造成{ExtraDamage:diff()}点伤害。\n[gold]协奏[/gold]：将一张此牌的复制品放入[gold]抽牌堆[/gold],抽{Cards}张牌。",
+  "DEMOMOD-VEILED_PIANO.description": "获得{Block:diff()}点[gold]格挡[/gold]。\n获得{VigorVal:diff()}点[gold]活力[/gold]。\n[gold]协奏[/gold]：给予所有敌人{VulVal:diff()}层[gold]易伤[/gold]。",
   "DEMOMOD-BUSTER_ARROW.title": "穿裂箭镞",
   "DEMOMOD-BUSTER_ARROW.description": "造成{Damage:diff()}点伤害。\n对所有其他敌人造成等量的伤害。",
   "DEMOMOD-BUSTER_ARROW.arrowName": "穿裂",
