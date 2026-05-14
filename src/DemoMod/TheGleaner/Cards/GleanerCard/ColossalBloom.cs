@@ -20,7 +20,7 @@ public class ColossalBloom : CustomCardModel
 	public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
 
 	protected override IEnumerable<DynamicVar> CanonicalVars => [
-		new PowerVar<PoisonPower>(11),
+		new PowerVar<PoisonPower>(9),
 		new PowerVar<EtchPower>(3)
 	];
 
@@ -29,7 +29,7 @@ public class ColossalBloom : CustomCardModel
 		HoverTipFactory.FromPower<PoisonPower>()
 	];
 
-	public ColossalBloom() : base(4, CardType.Skill, CardRarity.Uncommon, TargetType.AllEnemies)
+	public ColossalBloom() : base(3, CardType.Skill, CardRarity.Uncommon, TargetType.AllEnemies)
 	{
 	}
 
