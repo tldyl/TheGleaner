@@ -97,6 +97,7 @@
   "DEMOMOD-OUROBOROS_SHOT.description": "战斗开始时，放入[gold]乐谱[/gold]。\n造成{Damage:diff()}点伤害并[gold]选择[/gold]：\n将[gold]弃牌堆[/gold]中的1张牌放入[gold]手牌[/gold]、[gold]拾录[/gold]{Amount}张牌、调换[gold]抽牌堆[/gold]与[gold]弃牌堆[/gold]。",
   "DEMOMOD-SHUFFLE.title": "重溯过去",
   "DEMOMOD-SHUFFLE.description": "将[gold]弃牌堆[/gold]中的1张牌放入[gold]手牌[/gold]。",
+  "DEMOMOD-SHUFFLE.selectionScreenPrompt": "选择{Amount}张牌放入手牌。",
   "DEMOMOD-SWAP_PILES.title": "扭转未来",
   "DEMOMOD-SWAP_PILES.description": "调换抽牌堆和弃牌堆（不洗牌）。",
   "DEMOMOD-GLEAN_CARD.title": "专注当下",

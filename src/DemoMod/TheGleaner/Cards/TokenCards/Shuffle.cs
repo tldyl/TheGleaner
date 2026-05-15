@@ -1,5 +1,6 @@
 using BaseLib.Abstracts;
 using BaseLib.Utils;
+using MegaCrit.Sts2.Core.CardSelection;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
@@ -19,7 +20,10 @@ public class Shuffle : CustomCardModel, IChoosable {
     }
 
     public async Task OnChosen(PlayerChoiceContext choiceContext, CardPlay cardPlay, params object[] extraParams) {
-        List<CardModel> cardsInDrawPile = cardPlay.Card.Owner.PlayerCombatState.DrawPile.Cards.ToList();
-        await CardPileCmd.Add(cardsInDrawPile, PileType.Discard, CardPilePosition.Bottom, cardPlay.Card);
+        CardSelectorPrefs prefs = new CardSelectorPrefs(SelectionScreenPrompt, 1);
+        CardModel card = (await CardSelectCmd.FromSimpleGrid(choiceContext, PileType.Discard.GetPile(Owner).Cards, Owner, prefs)).FirstOrDefault();
+        if (card == null)
+            return;
+        await CardPileCmd.Add(card, PileType.Hand);
     }
 }
