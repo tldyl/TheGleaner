@@ -16,7 +16,7 @@ namespace DemoMod.TheGleaner.Cards.GleanerCard;
 public class WovenEmbrace : CustomCardModel {
 	public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
 	protected override IEnumerable<DynamicVar> CanonicalVars => [
-		new PowerVar<PoisonPower>(3),
+		new PowerVar<PoisonPower>(4),
 		new BlockVar(8, ValueProp.Move)
 	];
 	public override bool GainsBlock => true;
