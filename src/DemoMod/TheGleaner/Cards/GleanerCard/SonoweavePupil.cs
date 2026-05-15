@@ -9,22 +9,25 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.ValueProps;
 
 namespace DemoMod.TheGleaner.Cards.GleanerCard;
 
 [Pool(typeof(CardPool))]
-public class MimeticAmalgam : CustomCardModel {
+public class SonoweavePupil : CustomCardModel {
 	public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
 	protected override IEnumerable<DynamicVar> CanonicalVars => [
-		new IntVar("CardAmount", 10),
-		new IntVar("PlayAmount", 3)
+		new BlockVar(7, ValueProp.Move),
+		new IntVar("CardAmount", 3),
+		new IntVar("PlayAmount", 1)
 	];
-
-	public MimeticAmalgam() : base(4, CardType.Skill, CardRarity.Rare, TargetType.Self) {
+	public override bool GainsBlock => true;
+	public SonoweavePupil() : base(2, CardType.Skill, CardRarity.Uncommon, TargetType.Self) {
 		
 	}
 	public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];    
 	protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
+		await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, cardPlay);
 		List<CardPoolModel> list1 = Owner.UnlockState.CharacterCardPools.ToList();
 		if (list1.Count > 1) {
 			list1.Remove(Owner.Character.CardPool);
