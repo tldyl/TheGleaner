@@ -14,10 +14,10 @@ public class BrandMarkPower : CustomPowerModel {
 	public override PowerType Type => PowerType.Debuff;
 	public override PowerStackType StackType => PowerStackType.Counter;
 
-	public override async Task BeforeDamageReceived(
+	public override async Task AfterDamageReceived(
 		PlayerChoiceContext choiceContext,
 		Creature target,
-		Decimal amount,
+		DamageResult result,
 		ValueProp props,
 		Creature? dealer,
 		CardModel? cardSource) {
