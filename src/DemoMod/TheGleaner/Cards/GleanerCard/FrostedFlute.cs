@@ -19,12 +19,12 @@ namespace DemoMod.TheGleaner.Cards.GleanerCard;
 public class FrostedFlute : CustomCardModel, IConcertoCard {
 	public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
 	protected override IEnumerable<DynamicVar> CanonicalVars => [
-		new DamageVar(10, ValueProp.Move),
-		new IntVar("Amount", 4)
+		new DamageVar(13, ValueProp.Move),
+		new IntVar("Amount", 3)
 	];
 	protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromKeyword(CustomEnums.Concerto), HoverTipFactory.FromPower<StrengthPower>()];
 
-	public FrostedFlute() : base(2, CardType.Attack, CardRarity.Rare, TargetType.AllEnemies) {
+	public FrostedFlute() : base(3, CardType.Attack, CardRarity.Rare, TargetType.AllEnemies) {
 		
 	}
 
@@ -44,7 +44,7 @@ public class FrostedFlute : CustomCardModel, IConcertoCard {
 		await PowerCmd.Apply<DemoTempLoseStrengthPower>(combatState.HittableEnemies, -DynamicVars["Amount"].BaseValue, Owner.Creature, this);
 	}
 	protected override void OnUpgrade() {
-		DynamicVars.Damage.UpgradeValueBy(3);
-		DynamicVars["Amount"].UpgradeValueBy(2);
+		DynamicVars.Damage.UpgradeValueBy(4);
+		DynamicVars["Amount"].UpgradeValueBy(1);
 	}
 }
