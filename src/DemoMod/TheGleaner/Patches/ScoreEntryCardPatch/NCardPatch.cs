@@ -35,13 +35,14 @@ public class NCardPatch {
                     scrollContainer.Name = "ScrollContainer";
                     scrollContainer.HorizontalScrollMode = ScrollContainer.ScrollMode.ShowNever;
                     scrollContainer.VerticalScrollMode = ScrollContainer.ScrollMode.ShowNever;
-                    scrollContainer.CustomMinimumSize = new Vector2(252.0f, 0.0f);
-                    scrollContainer.Size = new Vector2(268, 204);
-                    scrollContainer.Position = new Vector2(-128, -164);
+                    scrollContainer.CustomMinimumSize = new Vector2(240.0f, 0.0f);
+                    scrollContainer.Size = new Vector2(240, 204);
+                    scrollContainer.Position = new Vector2(-120, -164);
                     
                     HFlowContainer flowContainer = new HFlowContainer();
                     flowContainer.Name = "FlowContainer";
-                    flowContainer.CustomMinimumSize = new Vector2(268.0f, 0.0f);
+                    flowContainer.CustomMinimumSize = new Vector2(240.0f, 0.0f);
+                    flowContainer.Alignment = FlowContainer.AlignmentMode.Center;
                     
                     scrollContainer.AddChild(flowContainer);
                     __instance.AddChild(scrollContainer);
