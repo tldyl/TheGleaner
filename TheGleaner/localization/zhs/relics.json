@@ -1,6 +1,6 @@
 {
   "DEMOMOD-JERA.title": "往复的项链",
-  "DEMOMOD-JERA.description": "第一回合开始时，额外抽[blue]{Draws}[/blue]张牌。\n第二回合开始时，额外获得{Energy:energyIcons()}。",
+  "DEMOMOD-JERA.description": "第一回合开始时，额外抽[blue]{Draws}[/blue]张牌。\n每场战斗，你的回合内首次打出攻击牌、技能牌和能力牌各一张时，获得{Energy:energyIcons()}。",
   "DEMOMOD-JERA.flavor": "周往而复始，不是吗？。",
   "DEMOMOD-JERA.selectionScreenPrompt": "选择任意张牌(每回合首张以外的牌需要花费一点额外费用)。",
   "DEMOMOD-GREEN_APPLE_SCENTED_VESSEL.title": "“青苹果气味的液体容器”",
@@ -10,7 +10,7 @@
   "DEMOMOD-TRIANGLE_HAIR_CLIP.description": "战斗开始时，将你牌库顶的两张牌放入[gold]乐谱[/gold]。",
   "DEMOMOD-TRIANGLE_HAIR_CLIP.flavor": "[red]这个遗物的细节将在未来揭晓……[/red]",
   "DEMOMOD-CHRON_XI_V_GLEANER.title": "历十四的拾穗者",
-  "DEMOMOD-CHRON_XI_V_GLEANER.description": "在第一回合开始时，额外抽[blue]2[/blue]张牌。\n在第二回合开始时，额外抽[blue]1[/blue]张牌，获得{energyPrefix:energyIcons(1)}。\n在第三回合开始时，额外获得{energyPrefix:energyIcons(2)}。",
+  "DEMOMOD-CHRON_XI_V_GLEANER.description": "在第一回合开始时，额外抽[blue]{Draws}[/blue]张牌。\n每回合，你首次打出攻击牌、技能牌和能力牌各一张时，获得{Energy:energyIcons()}。",
   "DEMOMOD-CHRON_XI_V_GLEANER.flavor": "",
   "SEA_GLASS.DEMOMOD-THE_GLEANER.title": "穗纹玻璃",
   "DEMOMOD-GOLDEN_SILK_POUCH.title": "金丝缎口袋",
