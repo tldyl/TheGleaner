@@ -1,11 +1,11 @@
-[gd_scene load_steps=5 format=3 uid="uid://cc0nntvd1av7y"]
+[gd_scene load_steps=5 format=3 uid="uid://yjghhp4jyfu0"]
 
-[ext_resource type="Script" uid="uid://bjmbamwqnymb8" path="res://src/DemoMod/TheGleaner/UI/NGleanerCreatureVisuals.cs" id="1_gocbe"]
-[ext_resource type="Shader" uid="uid://d3jdsbomytpuk" path="res://TheGleaner/images/vfx/ghostGlitchShader/ghostGlitchShader.gdshader" id="2_gocbe"]
-[ext_resource type="SpineSkeletonDataResource" uid="uid://cc14xylic3ujv" path="res://TheGleaner/scenes/char/TheGleaner/Q/combat/Q.tres" id="2_u67jw"]
+[ext_resource type="Script" uid="uid://bjmbamwqnymb8" path="res://src/DemoMod/TheGleaner/UI/NGleanerCreatureVisuals.cs" id="1_6lrkv"]
+[ext_resource type="SpineSkeletonDataResource" uid="uid://bowtrbe6iie74" path="res://TheGleaner/scenes/char/TheGleaner/original/combat/z.tres" id="1_l2ini"]
+[ext_resource type="Shader" uid="uid://d3jdsbomytpuk" path="res://TheGleaner/images/vfx/ghostGlitchShader/ghostGlitchShader.gdshader" id="2_6lrkv"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_rxql5"]
-shader = ExtResource("2_gocbe")
+shader = ExtResource("2_6lrkv")
 shader_parameter/spectral_color = Color(0, 0.5, 1, 1)
 shader_parameter/base_transparency = 0.4
 shader_parameter/silver_thickness = 0.12
@@ -13,10 +13,10 @@ shader_parameter/silver_length = 0.25
 shader_parameter/silver_speed = 0.5
 
 [node name="GleanerCharacter" type="Node2D"]
-script = ExtResource("1_gocbe")
+script = ExtResource("1_6lrkv")
 
 [node name="Visuals" type="SpineSprite" parent="."]
-skeleton_data_res = ExtResource("2_u67jw")
+skeleton_data_res = ExtResource("1_l2ini")
 preview_skin = "default"
 preview_animation = "idle_loop"
 preview_frame = false
@@ -35,35 +35,35 @@ use_global_coordinates = false
 unique_name_in_owner = true
 layout_mode = 3
 anchors_preset = 0
-offset_left = -80.0
-offset_top = -256.0
-offset_right = 80.0
+offset_left = -136.0
+offset_top = -400.0
+offset_right = 120.0
 
 [node name="IntentPos" type="Marker2D" parent="."]
 unique_name_in_owner = true
-position = Vector2(0, -320)
+position = Vector2(0, -408)
 
 [node name="CenterPos" type="Marker2D" parent="."]
 unique_name_in_owner = true
-position = Vector2(0, -128)
+position = Vector2(-16, -192)
 
 [node name="SubViewportContainer" type="SubViewportContainer" parent="."]
 visible = false
 material = SubResource("ShaderMaterial_rxql5")
-offset_left = -270.0
-offset_top = -300.0
-offset_right = 710.0
-offset_bottom = 1500.0
-scale = Vector2(0.2, 0.2)
+offset_left = -350.0
+offset_top = -425.0
+offset_right = 1250.0
+offset_bottom = 2375.0
+scale = Vector2(0.16, 0.16)
 
 [node name="SubViewport" type="SubViewport" parent="SubViewportContainer"]
 transparent_bg = true
 handle_input_locally = false
-size = Vector2i(1100, 1800)
+size = Vector2i(1600, 2800)
 render_target_update_mode = 0
 
 [node name="GhostVisuals" type="SpineSprite" parent="SubViewportContainer/SubViewport"]
-skeleton_data_res = ExtResource("2_u67jw")
+skeleton_data_res = ExtResource("1_l2ini")
 preview_skin = "default"
 preview_animation = "idle_loop"
 preview_frame = false

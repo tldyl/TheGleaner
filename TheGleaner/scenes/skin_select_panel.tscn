@@ -1,0 +1,82 @@
+[gd_scene load_steps=9 format=3 uid="uid://duxxveegi22ku"]
+
+[ext_resource type="Script" uid="uid://cyyme8eqrt1kb" path="res://src/DemoMod/TheGleaner/UI/NSkinSelectPanel.cs" id="1_8agkr"]
+[ext_resource type="FontVariation" uid="uid://bg85h22rkxs6g" path="res://themes/kreon_bold_shared.tres" id="1_rooa8"]
+[ext_resource type="Texture2D" uid="uid://b4f4cm8ct3b4d" path="res://TheGleaner/images/settings_tiny_left_arrow.png" id="2_c3jg0"]
+[ext_resource type="Texture2D" uid="uid://c6tso082ih0dv" path="res://TheGleaner/images/settings_tiny_right_arrow.png" id="3_8agkr"]
+[ext_resource type="Shader" uid="uid://bcmlyf0t2m7ah" path="res://TheGleaner/scenes/hsv.gdshader" id="3_w04g4"]
+[ext_resource type="Script" uid="uid://bs2pyenwqwgie" path="res://src/DemoMod/TheGleaner/UI/NSkinArrowButton.cs" id="4_w04g4"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_vfxm8"]
+shader = ExtResource("3_w04g4")
+shader_parameter/h = 1.0
+shader_parameter/s = 1.0
+shader_parameter/v = 1.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_8ixrn"]
+shader = ExtResource("3_w04g4")
+shader_parameter/h = 1.0
+shader_parameter/s = 1.0
+shader_parameter/v = 1.0
+
+[node name="SkinSelectPanel" type="VBoxContainer"]
+offset_right = 688.0
+offset_bottom = 116.0
+alignment = 1
+script = ExtResource("1_8agkr")
+
+[node name="SkinLabel" type="Label" parent="."]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.9372549, 0.78431374, 0.31764707, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0.2509804)
+theme_override_constants/outline_size = 18
+theme_override_fonts/font = ExtResource("1_rooa8")
+theme_override_font_sizes/font_size = 34
+text = "皮肤"
+horizontal_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+custom_minimum_size = Vector2(0, 64)
+layout_mode = 2
+alignment = 1
+
+[node name="LeftArrow" type="Control" parent="HBoxContainer"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+script = ExtResource("4_w04g4")
+
+[node name="TextureRect" type="TextureRect" parent="HBoxContainer/LeftArrow"]
+material = SubResource("ShaderMaterial_vfxm8")
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 0
+offset_right = 64.0
+offset_bottom = 64.0
+texture = ExtResource("2_c3jg0")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="SkinNameLabel" type="Label" parent="HBoxContainer"]
+custom_minimum_size = Vector2(552, 64)
+layout_mode = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0.2509804)
+theme_override_constants/outline_size = 12
+theme_override_fonts/font = ExtResource("1_rooa8")
+theme_override_font_sizes/font_size = 30
+text = "原版"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="RightArrow" type="Control" parent="HBoxContainer"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+script = ExtResource("4_w04g4")
+
+[node name="TextureRect" type="TextureRect" parent="HBoxContainer/RightArrow"]
+material = SubResource("ShaderMaterial_8ixrn")
+custom_minimum_size = Vector2(64, 0)
+layout_mode = 0
+offset_right = 64.0
+offset_bottom = 64.0
+texture = ExtResource("3_8agkr")
+expand_mode = 1
+stretch_mode = 5

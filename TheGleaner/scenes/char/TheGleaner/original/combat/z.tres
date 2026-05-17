@@ -1,0 +1,8 @@
+[gd_resource type="SpineSkeletonDataResource" load_steps=3 format=3 uid="uid://bowtrbe6iie74"]
+
+[ext_resource type="SpineAtlasResource" uid="uid://cv7ysamtj06u4" path="res://TheGleaner/scenes/char/TheGleaner/original/combat/z.atlas" id="1_i5wiy"]
+[ext_resource type="SpineSkeletonFileResource" uid="uid://txrjui573u44" path="res://TheGleaner/scenes/char/TheGleaner/original/combat/z.skel" id="2_la2mj"]
+
+[resource]
+atlas_res = ExtResource("1_i5wiy")
+skeleton_file_res = ExtResource("2_la2mj")

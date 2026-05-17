@@ -5,6 +5,7 @@ using MegaCrit.Sts2.Core.Entities.Characters;
 using MegaCrit.Sts2.Core.Models;
 using DemoMod.TheGleaner.Pools;
 using DemoMod.TheGleaner.Relics;
+using DemoMod.TheGleaner.Utils;
 using MegaCrit.Sts2.Core.Animation;
 using MegaCrit.Sts2.Core.Bindings.MegaSpine;
 
@@ -19,7 +20,7 @@ public class TheGleaner : PlaceholderCharacterModel {
 	public override Color EnergyLabelOutlineColor => Color.FromHtml("838b96");
 	
 	// 人物模型tscn路径。要自定义见下。
-	public override string CustomVisualPath => "res://TheGleaner/scenes/gleaner_character.tscn";
+	public override string CustomVisualPath => SkinManager.getVisualPath();
 	// 卡牌拖尾路径。
 	// public override string CustomTrailPath => "res://scenes/vfx/card_trail_ironclad.tscn";
 	// 人物头像路径。
@@ -29,9 +30,9 @@ public class TheGleaner : PlaceholderCharacterModel {
 	// 能量表盘tscn路径。要自定义见下。
 	public override string CustomEnergyCounterPath => "res://TheGleaner/scenes/gleaner_energy_counter.tscn";
 	// 篝火休息动画。
-	public override string CustomRestSiteAnimPath => "res://TheGleaner/scenes/gleaner_character_rest_site.tscn";
+	public override string CustomRestSiteAnimPath => SkinManager.getRestSiteAnimPath();
 	// 商店人物动画。
-	public override string CustomMerchantAnimPath => "res://TheGleaner/scenes/gleaner_character_shop.tscn";
+	public override string CustomMerchantAnimPath => SkinManager.getMerchantAnimPath();
 	// 多人模式-手指。
 	public override string CustomArmPointingTexturePath => "res://TheGleaner/images/multiplayer/multiplayer_hand_gleaner_point.png";
 	// 多人模式剪刀石头布-石头。
