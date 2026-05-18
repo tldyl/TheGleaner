@@ -1,4 +1,5 @@
 using BaseLib.Utils;
+using DemoMod.TheGleaner.Enums;
 using DemoMod.TheGleaner.Pools;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
@@ -8,43 +9,26 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Rooms;
 using MegaCrit.Sts2.Core.Entities.Relics;
+using MegaCrit.Sts2.Core.HoverTips;
 
 namespace DemoMod.TheGleaner.Relics;
 
 [Pool(typeof(JeraRelicPool))]
 public class ChronXIVGleaner : JeraExclusiveRelic {
-    public override RelicRarity Rarity => RelicRarity.Starter;
+    public override RelicRarity Rarity => RelicRarity.Ancient;
 
     public override string PackedIconPath => "res://TheGleaner/images/relics/demomod-chron_xi_v_gleaner.png";
     protected override string PackedIconOutlinePath => "res://TheGleaner/images/relics/demomod-chron_xi_v_gleaner.png";
     protected override string BigIconPath => "res://TheGleaner/images/relics/demomod-chron_xi_v_gleaner.png";
 
-    private int _attacksPlayedThisTurn;
-    private int _skillsPlayedThisTurn;
-    private int _powersPlayedThisTurn;
+    private int _resonancePlayedThisTurn;
     private int _activationCountThisTurn;
 
-    private int AttacksPlayedThisTurn {
-        get => _attacksPlayedThisTurn;
+    private int ResonancePlayedThisTurn {
+        get => _resonancePlayedThisTurn;
         set {
             AssertMutable();
-            _attacksPlayedThisTurn = value;
-        }
-    }
-
-    private int SkillsPlayedThisTurn {
-        get => _skillsPlayedThisTurn;
-        set {
-            AssertMutable();
-            _skillsPlayedThisTurn = value;
-        }
-    }
-
-    private int PowersPlayedThisTurn {
-        get => _powersPlayedThisTurn;
-        set {
-            AssertMutable();
-            _powersPlayedThisTurn = value;
+            _resonancePlayedThisTurn = value;
         }
     }
 
@@ -61,6 +45,9 @@ public class ChronXIVGleaner : JeraExclusiveRelic {
         new IntVar("Draws", 1),
         new EnergyVar(2)
     ];
+    protected override IEnumerable<IHoverTip> ExtraHoverTips => [
+        HoverTipFactory.FromKeyword(CustomEnums.Resonance)
+    ];
 
     public override Task BeforeSideTurnStart(
         PlayerChoiceContext choiceContext,
@@ -68,9 +55,7 @@ public class ChronXIVGleaner : JeraExclusiveRelic {
         CombatState combatState) {
         if (side != Owner.Creature.Side)
             return Task.CompletedTask;
-        AttacksPlayedThisTurn = 0;
-        SkillsPlayedThisTurn = 0;
-        PowersPlayedThisTurn = 0;
+        ResonancePlayedThisTurn = 0;
         ActivationCountThisTurn = 0;
         return Task.CompletedTask;
     }
@@ -79,10 +64,8 @@ public class ChronXIVGleaner : JeraExclusiveRelic {
         if (cardPlay.Card.Owner != Owner || !CombatManager.Instance.IsInProgress || ActivationCountThisTurn >= 1) {
             return;
         }
-        AttacksPlayedThisTurn += cardPlay.Card.Type == CardType.Attack ? 1 : 0;
-        SkillsPlayedThisTurn += cardPlay.Card.Type == CardType.Skill ? 1 : 0;
-        PowersPlayedThisTurn += cardPlay.Card.Type == CardType.Power ? 1 : 0;
-        if (AttacksPlayedThisTurn <= 0 || SkillsPlayedThisTurn <= 0 || PowersPlayedThisTurn <= 0) {
+        ResonancePlayedThisTurn += cardPlay.Card.Keywords.Contains(CustomEnums.Resonance) ? 1 : 0;
+        if (ResonancePlayedThisTurn <= 0) {
             return;
         }
         Flash();
@@ -103,6 +86,7 @@ public class ChronXIVGleaner : JeraExclusiveRelic {
     }
 
     public override async Task AfterCombatEnd(CombatRoom room) {
-        InvokeDisplayAmountChanged();
+        ResonancePlayedThisTurn = 0;
+        ActivationCountThisTurn = 0;
     }
 }

@@ -1,5 +1,6 @@
 using BaseLib.Abstracts;
 using BaseLib.Utils;
+using DemoMod.TheGleaner.Enums;
 using DemoMod.TheGleaner.Pools;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
@@ -7,6 +8,7 @@ using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Entities.Relics;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Rooms;
@@ -19,49 +21,34 @@ public class Jera : CustomRelicModel {
     public override string PackedIconPath => "res://TheGleaner/images/relics/Jera.png";
     protected override string PackedIconOutlinePath => "res://TheGleaner/images/relics/Jera.png";
     protected override string BigIconPath => "res://TheGleaner/images/relics/Jera.png";
-    public override RelicModel? GetUpgradeReplacement() => ModelDb.Relic<ChronXIVGleaner>().ToMutable();
+    public override RelicModel GetUpgradeReplacement() => ModelDb.Relic<ChronXIVGleaner>().ToMutable();
 
-    private int _attacksPlayedThisTurn;
-    private int _skillsPlayedThisTurn;
-    private int _powersPlayedThisTurn;
-    private int _activationCountThisCombat;
+    private int _resonancePlayedThisTurn;
+    private int _activationCountThisTurn;
 
-    private int AttacksPlayedThisTurn {
-        get => _attacksPlayedThisTurn;
+    private int ResonancePlayedThisTurn {
+        get => _resonancePlayedThisTurn;
         set {
             AssertMutable();
-            _attacksPlayedThisTurn = value;
+            _resonancePlayedThisTurn = value;
         }
     }
 
-    private int SkillsPlayedThisTurn {
-        get => _skillsPlayedThisTurn;
+    private int ActivationCountThisTurn {
+        get => _activationCountThisTurn;
         set {
             AssertMutable();
-            _skillsPlayedThisTurn = value;
-        }
-    }
-
-    private int PowersPlayedThisTurn {
-        get => _powersPlayedThisTurn;
-        set {
-            AssertMutable();
-            _powersPlayedThisTurn = value;
-        }
-    }
-
-    private int ActivationCountThisCombat {
-        get => _activationCountThisCombat;
-        set {
-            AssertMutable();
-            _activationCountThisCombat = value;
-            Status = _activationCountThisCombat > 0 ? RelicStatus.Active : RelicStatus.Normal;
+            _activationCountThisTurn = value;
+            Status = _activationCountThisTurn > 0 ? RelicStatus.Active : RelicStatus.Normal;
         }
     }
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new IntVar("Draws", 1),
         new EnergyVar(1)
+    ];
+    protected override IEnumerable<IHoverTip> ExtraHoverTips => [
+        HoverTipFactory.FromKeyword(CustomEnums.Resonance)
     ];
 
     public override Task BeforeSideTurnStart(
@@ -70,25 +57,22 @@ public class Jera : CustomRelicModel {
         CombatState combatState) {
         if (side != Owner.Creature.Side)
             return Task.CompletedTask;
-        AttacksPlayedThisTurn = 0;
-        SkillsPlayedThisTurn = 0;
-        PowersPlayedThisTurn = 0;
+        ResonancePlayedThisTurn = 0;
+        ActivationCountThisTurn = 0;
         return Task.CompletedTask;
     }
     
     public override async Task AfterCardPlayed(PlayerChoiceContext context, CardPlay cardPlay) {
-        if (cardPlay.Card.Owner != Owner || !CombatManager.Instance.IsInProgress || ActivationCountThisCombat >= 1) {
+        if (cardPlay.Card.Owner != Owner || !CombatManager.Instance.IsInProgress || ActivationCountThisTurn >= 1) {
             return;
         }
-        AttacksPlayedThisTurn += cardPlay.Card.Type == CardType.Attack ? 1 : 0;
-        SkillsPlayedThisTurn += cardPlay.Card.Type == CardType.Skill ? 1 : 0;
-        PowersPlayedThisTurn += cardPlay.Card.Type == CardType.Power ? 1 : 0;
-        if (AttacksPlayedThisTurn <= 0 || SkillsPlayedThisTurn <= 0 || PowersPlayedThisTurn <= 0) {
+        ResonancePlayedThisTurn += cardPlay.Card.Keywords.Contains(CustomEnums.Resonance) ? 1 : 0;
+        if (ResonancePlayedThisTurn <= 0) {
             return;
         }
         Flash();
         await PlayerCmd.GainEnergy(DynamicVars["Energy"].BaseValue, Owner);
-        ActivationCountThisCombat++;
+        ActivationCountThisTurn++;
     }
     
     public override decimal ModifyHandDraw(Player player, decimal count) {
@@ -104,9 +88,7 @@ public class Jera : CustomRelicModel {
     }
 
     public override async Task AfterCombatEnd(CombatRoom room) {
-        AttacksPlayedThisTurn = 0;
-        SkillsPlayedThisTurn = 0;
-        PowersPlayedThisTurn = 0;
-        ActivationCountThisCombat = 0;
+        ResonancePlayedThisTurn = 0;
+        ActivationCountThisTurn = 0;
     }
 }

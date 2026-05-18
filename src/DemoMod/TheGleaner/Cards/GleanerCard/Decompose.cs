@@ -11,6 +11,8 @@ using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.ValueProps;
 using DemoMod.TheGleaner.Powers;
+using MegaCrit.Sts2.Core.Entities.Creatures;
+using MegaCrit.Sts2.Core.Models;
 
 namespace DemoMod.TheGleaner.Cards.GleanerCard;
 
@@ -20,10 +22,10 @@ public class Decompose : CustomCardModel
 	public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
 
 	protected override IEnumerable<DynamicVar> CanonicalVars => [
-		new PowerVar<PoisonPower>(4),
-		new PowerVar<EtchPower>(3),
-		new PowerVar<VulnerablePower>(2),
-		new PowerVar<WeakPower>(1)
+		new PowerVar<PoisonPower>(7),
+		new IntVar("PoisonThreshold", 10),
+		new PowerVar<EtchPower>(1),
+		new IntVar("EtchPowerPreview", 0)
 	];
 
 	protected override IEnumerable<IHoverTip> ExtraHoverTips => [
@@ -31,24 +33,42 @@ public class Decompose : CustomCardModel
 		HoverTipFactory.FromPower<PoisonPower>()
 	];
 
-	public Decompose() : base(2, CardType.Skill, CardRarity.Uncommon, TargetType.AnyEnemy)
-	{
+	public Decompose() : base(2, CardType.Skill, CardRarity.Uncommon, TargetType.AnyEnemy) {
 	}
 	
-	protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
-	{
+	protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
 		await PowerCmd.Apply<PoisonPower>(cardPlay.Target, DynamicVars["PoisonPower"].BaseValue, Owner.Creature, this);
-		await PowerCmd.Apply<EtchPower>(cardPlay.Target, DynamicVars["EtchPower"].BaseValue, Owner.Creature, this);
-		await PowerCmd.Apply<VulnerablePower>(cardPlay.Target, DynamicVars["VulnerablePower"].BaseValue, Owner.Creature, this);
-		await PowerCmd.Apply<WeakPower>(cardPlay.Target, DynamicVars["WeakPower"].BaseValue, Owner.Creature, this);
+		int amount = 0;
+		if (cardPlay.Target.HasPower<PoisonPower>()) {
+			PowerModel power = cardPlay.Target.GetPower<PoisonPower>();
+			amount += power.Amount / DynamicVars["PoisonThreshold"].IntValue;
+			amount *= DynamicVars["EtchPower"].IntValue;
+		}
+		if (amount > 0) {
+			await PowerCmd.Apply<EtchPower>(cardPlay.Target, amount, Owner.Creature, this);
+		}
 	}
 
-	protected override void OnUpgrade()
-	{
-		DynamicVars["PoisonPower"].UpgradeValueBy(1);
-		DynamicVars["EtchPower"].UpgradeValueBy(1);
-		DynamicVars["VulnerablePower"].UpgradeValueBy(1);
-		DynamicVars["WeakPower"].UpgradeValueBy(1);
+	public override Decimal ModifyDamageAdditive(
+		Creature? target,
+		Decimal amount,
+		ValueProp props,
+		Creature? dealer,
+		CardModel? cardSource) {
+		if (target != null) {
+			int powerAmount = 0;
+			if (target.HasPower<PoisonPower>()) {
+				PowerModel power = target.GetPower<PoisonPower>();
+				powerAmount += power.Amount / DynamicVars["PoisonThreshold"].IntValue;
+				powerAmount *= DynamicVars["EtchPower"].IntValue;
+			}
+			DynamicVars["EtchPowerPreview"].BaseValue = powerAmount;
+		}
+		return 0;
+	}
+	
+	protected override void OnUpgrade() {
+		DynamicVars["PoisonPower"].UpgradeValueBy(3);
 	}
 
 }

@@ -1,32 +1,33 @@
 using BaseLib.Abstracts;
-using Godot;
-using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Powers;
-using MegaCrit.Sts2.Core.Helpers;
+using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
-using MegaCrit.Sts2.Core.Nodes.Combat;
-using MegaCrit.Sts2.Core.Nodes.Rooms;
-using MegaCrit.Sts2.Core.Nodes.Vfx;
+using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Models.Powers;
+using MegaCrit.Sts2.Core.ValueProps;
 
 namespace DemoMod.TheGleaner.Powers;
 
 public class GerminationPower : CustomPowerModel {
     public override PowerType Type => PowerType.Buff;
     public override PowerStackType StackType => PowerStackType.Counter;
-    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<EtchPower>()];
+    protected override IEnumerable<IHoverTip> ExtraHoverTips => [
+        HoverTipFactory.FromPower<EtchPower>(),
+        HoverTipFactory.FromPower<PoisonPower>()
+    ];
 
-    public override async Task AfterSideTurnStart(CombatSide side, CombatState combatState) {
-        if (side != Owner.Side)
-            return;
-        Flash();
-        await Cmd.CustomScaledWait(0.2f, 0.4f);
-        foreach (Creature hittableEnemy in CombatState.HittableEnemies) {
-            NCreature creatureNode = NCombatRoom.Instance?.GetCreatureNode(hittableEnemy);
-            if (creatureNode != null)
-                NCombatRoom.Instance.CombatVfxContainer.AddChildSafely(NGaseousImpactVfx.Create(creatureNode.VfxSpawnPosition, new Color("5c0026")));
+    public override async Task AfterDamageReceived(
+        PlayerChoiceContext choiceContext,
+        Creature target,
+        DamageResult result,
+        ValueProp props,
+        Creature? dealer,
+        CardModel? cardSource) {
+        if (dealer == Owner && !props.HasFlag(ValueProp.Unpowered) && target != null && target.HasPower<PoisonPower>() && target.HasPower<EtchPower>()) {
+            Flash();
+            await PowerCmd.Apply<PoisonPower>(target, Amount, Owner, null);
         }
-        await PowerCmd.Apply<EtchPower>(CombatState.HittableEnemies, Amount, Owner, null);
     }
 }
