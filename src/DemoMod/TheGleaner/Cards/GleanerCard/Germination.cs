@@ -30,5 +30,5 @@ public class Germination : CustomCardModel {
 		await PowerCmd.Apply<GerminationPower>(Owner.Creature, DynamicVars["GerminationPower"].BaseValue, Owner.Creature, this);
 	}
 	
-	protected override void OnUpgrade() => DynamicVars["NoxiousFumesPower"].UpgradeValueBy(1);
+	protected override void OnUpgrade() => DynamicVars["GerminationPower"].UpgradeValueBy(1);
 }
