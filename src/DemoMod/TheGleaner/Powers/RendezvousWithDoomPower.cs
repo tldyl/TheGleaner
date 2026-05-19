@@ -67,7 +67,6 @@ public class RendezvousWithDoomPower : CustomPowerModel {
 		if (after <= 0 && activated) {
 			activated = false;
 			TaskHelper.RunSafely(PlayerCmd.GainEnergy(Owner.Player.PlayerCombatState.MaxEnergy, Owner.Player));
-			TaskHelper.RunSafely(PowerCmd.Apply<StrengthPower>(Owner, 1, Owner, null));
 		}
 	}
 }
