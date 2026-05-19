@@ -17,7 +17,7 @@ public class Hearken : CustomCardModel {
 	public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
 	protected override IEnumerable<DynamicVar> CanonicalVars => [
 		new DynamicVar("StrengthLoss", 7),
-		new DynamicVar("StrengthLoss2", 2)
+		new DynamicVar("StrengthLoss2", 3)
 	];
 	protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<StrengthPower>()];
 

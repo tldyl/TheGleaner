@@ -27,7 +27,7 @@ public class CrashingDown : CustomCardModel
 	public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
 
 	protected override IEnumerable<DynamicVar> CanonicalVars => [
-		new DamageVar(36, ValueProp.Move),
+		new DamageVar(40, ValueProp.Move),
 		new IntVar("powerVal", 1)
 	];
 
@@ -56,7 +56,7 @@ public class CrashingDown : CustomCardModel
 	}
 
 	protected override void OnUpgrade(){
-		DynamicVars.Damage.UpgradeValueBy(8);
+		DynamicVars.Damage.UpgradeValueBy(10);
 		DynamicVars["powerVal"].UpgradeValueBy(1);
 	} 
 }

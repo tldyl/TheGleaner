@@ -17,8 +17,8 @@ namespace DemoMod.TheGleaner.Cards.GleanerCard;
 public class SonoweavePupil : CustomCardModel {
 	public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
 	protected override IEnumerable<DynamicVar> CanonicalVars => [
-		new BlockVar(7, ValueProp.Move),
-		new IntVar("CardAmount", 3),
+		new BlockVar(5, ValueProp.Move),
+		new IntVar("CardAmount", 4),
 		new IntVar("PlayAmount", 1)
 	];
 	public override bool GainsBlock => true;

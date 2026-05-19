@@ -20,7 +20,7 @@ public class MimeticAmalgam : CustomCardModel {
 		new IntVar("PlayAmount", 3)
 	];
 
-	public MimeticAmalgam() : base(4, CardType.Skill, CardRarity.Rare, TargetType.Self) {
+	public MimeticAmalgam() : base(5, CardType.Skill, CardRarity.Rare, TargetType.Self) {
 		
 	}
 	public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];    

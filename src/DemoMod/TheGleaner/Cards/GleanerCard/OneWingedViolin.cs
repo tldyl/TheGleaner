@@ -22,7 +22,7 @@ namespace DemoMod.TheGleaner.Cards.GleanerCard;
 [Pool(typeof(CardPool))]
 public class OneWingedViolin : CustomCardModel {
 	protected override IEnumerable<DynamicVar> CanonicalVars => [
-		new DamageVar(6, ValueProp.Move),
+		new DamageVar(5, ValueProp.Move),
 		new IntVar("Amount", 1)
 	];
 	public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";

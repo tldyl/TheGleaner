@@ -18,7 +18,7 @@ public class Damping : CustomCardModel {
 	public override bool GainsBlock => true;
 	protected override IEnumerable<DynamicVar> CanonicalVars => [
 		new DynamicVar("StrengthLoss", 2),
-		new BlockVar(7, ValueProp.Move)
+		new BlockVar(6, ValueProp.Move)
 	];
 	protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<StrengthPower>()];
 
