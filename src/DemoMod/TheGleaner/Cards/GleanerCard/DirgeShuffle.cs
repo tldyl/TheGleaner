@@ -55,7 +55,7 @@ public class DirgeShuffle : CustomCardModel {
 		if (card != this) {
 			return (pileType, position);
 		}
-		return (PileType.Draw, CardPilePosition.Top);
+		return (IsDupe ? PileType.None : PileType.Draw, CardPilePosition.Top);
 	}
 	protected override void OnUpgrade()
 	{
