@@ -19,7 +19,7 @@ namespace DemoMod.TheGleaner.Cards.GleanerCard;
 public class SightReaping : CustomCardModel {
 	public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
 	protected override IEnumerable<DynamicVar> CanonicalVars => [
-		new DamageVar(14, ValueProp.Move)
+		new DamageVar(21, ValueProp.Move)
 	];
 	public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
 	protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.Static(StaticHoverTip.Fatal)];

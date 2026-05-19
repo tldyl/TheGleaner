@@ -20,24 +20,21 @@ namespace DemoMod.TheGleaner.Cards.GleanerCard;
 [Pool(typeof(CardPool))]
 public class WindEvokingBayan : CustomCardModel {
 	protected override IEnumerable<DynamicVar> CanonicalVars => [
-		new BlockVar(4, ValueProp.Move),
-		new IntVar("Amount", 1)
+		new BlockVar(5, ValueProp.Move)
 	];
 	public override bool GainsBlock => true;
 	public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
 	
-	public WindEvokingBayan() : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.Self) {
+	public WindEvokingBayan() : base(1, CardType.Skill, CardRarity.Common, TargetType.Self) {
 	}
 	
 	public override IEnumerable<CardKeyword> CanonicalKeywords => [CustomEnums.Resonance];
 	
 	protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
 		await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, cardPlay);
-		await PowerCmd.Apply<DemoTempStrengthPower>(Owner.Creature, DynamicVars["Amount"].BaseValue, Owner.Creature, this);
 	}
 	
 	protected override void OnUpgrade() {
-		DynamicVars.Block.UpgradeValueBy(2);
-		DynamicVars["Amount"].UpgradeValueBy(1);
+		DynamicVars.Block.UpgradeValueBy(3);
 	}
 }

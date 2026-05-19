@@ -16,12 +16,12 @@ namespace DemoMod.TheGleaner.Cards.GleanerCard;
 public class SentinelShaft : CustomCardModel {
 	public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
 	protected override IEnumerable<DynamicVar> CanonicalVars => [
-		new BlockVar(9, ValueProp.Move)
+		new BlockVar(8, ValueProp.Move)
 	];
 
 	public override bool GainsBlock => true;
 
-	public SentinelShaft() : base(2, CardType.Skill, CardRarity.Common, TargetType.Self) {
+	public SentinelShaft() : base(1, CardType.Skill, CardRarity.Common, TargetType.Self) {
 		
 	}
 
@@ -31,7 +31,7 @@ public class SentinelShaft : CustomCardModel {
 		IEnumerable<CardModel> cards = from c in list1.SelectMany(c => c.GetUnlockedCards(Owner.UnlockState, Owner.RunState.CardMultiplayerConstraint))
 			where c is IArrowCard
 			select c;
-		List<CardModel> list2 = CardFactory.GetDistinctForCombat(Owner, cards, 2, Owner.RunState.Rng.CombatCardGeneration).ToList();
+		List<CardModel> list2 = CardFactory.GetDistinctForCombat(Owner, cards, 1, Owner.RunState.Rng.CombatCardGeneration).ToList();
 		if (IsUpgraded) {
 			foreach (CardModel card2 in list2) {
 				CardCmd.Upgrade(card2);

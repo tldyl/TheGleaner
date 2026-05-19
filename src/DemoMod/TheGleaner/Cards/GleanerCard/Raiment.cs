@@ -24,7 +24,7 @@ public class Raiment : CustomCardModel {
 	];
 	public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
 
-	public Raiment() : base(7, CardType.Skill, CardRarity.Rare, TargetType.Self) {
+	public Raiment() : base(5, CardType.Skill, CardRarity.Rare, TargetType.Self) {
 		
 	}
 

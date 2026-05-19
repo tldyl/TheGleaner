@@ -18,14 +18,14 @@ public class VeeringStrike : CustomCardModel {
 
 	protected override IEnumerable<DynamicVar> CanonicalVars =>
 	[
-		new DamageVar(6, ValueProp.Move),
+		new DamageVar(7, ValueProp.Move),
 		new RepeatVar(2)
 	];
 	protected override IEnumerable<IHoverTip> ExtraHoverTips => [
 		HoverTipFactory.FromKeyword(CustomEnums.Score)
 	];
 
-	public VeeringStrike() : base(2, CardType.Attack, CardRarity.Common, TargetType.RandomEnemy) {
+	public VeeringStrike() : base(2, CardType.Attack, CardRarity.Uncommon, TargetType.RandomEnemy) {
 	}
 
 	protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
