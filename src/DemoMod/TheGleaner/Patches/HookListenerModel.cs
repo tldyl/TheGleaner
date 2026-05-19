@@ -62,7 +62,7 @@ public class HookListenerModel() : CustomSingletonModel(true, true) {
             cardsToReduceCost.AddRange(player.PlayerCombatState.Hand.Cards.Where(cardModel => cardModel != card && cardModel.Type != card.Type && cardModel.EnergyCost.GetResolved() > 1 && !cardModel.EnergyCost.CostsX));
             cardsToReduceCost.AddRange(player.PlayerCombatState.PlayPile.Cards.Where(cardModel => cardModel != card && cardModel.Type != card.Type && cardModel.EnergyCost.GetResolved() > 1 && !cardModel.EnergyCost.CostsX));
             foreach (CardModel model in cardsToReduceCost) {
-                model.EnergyCost.SetUntilPlayed(Math.Max(model.EnergyCost.GetResolved() - 1, 1));
+                model.EnergyCost.SetUntilEnterDiscardPile(Math.Max(model.EnergyCost.GetResolved() - 1, 1));
                 if (!model.Keywords.Contains(CustomEnums.Resonance)) {
                     model.AddKeyword(CustomEnums.Resonance);
                 }
@@ -81,6 +81,12 @@ public class HookListenerModel() : CustomSingletonModel(true, true) {
         }
     }
 
+    public override async Task AfterCardChangedPiles(CardModel card, PileType oldPileType, AbstractModel? source) {
+        if (card.Pile?.Type == PileType.Discard) {
+            card.EnergyCost.AfterCardEnterDiscardPileCleanup();
+        }
+    }
+    
     public override async Task AfterCombatVictory(CombatRoom room) {
         RandomDissonanceCard.initPool();
         foreach (Player player in RunManager.Instance.DebugOnlyGetState().Players) {
