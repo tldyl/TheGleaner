@@ -29,7 +29,7 @@ public class BlazingHorn : CustomCardModel, IConcertoCard
 		HoverTipFactory.FromKeyword(CustomEnums.Concerto)
 	];
 
-	public BlazingHorn() : base(3, CardType.Skill, CardRarity.Uncommon, TargetType.Self)
+	public BlazingHorn() : base(2, CardType.Skill, CardRarity.Uncommon, TargetType.Self)
 	{
 	}
 
@@ -47,6 +47,6 @@ public class BlazingHorn : CustomCardModel, IConcertoCard
 
 	protected override void OnUpgrade()
 	{
-		DynamicVars.Cards.UpgradeValueBy(1);
+		EnergyCost.UpgradeBy(1);
 	}
 }

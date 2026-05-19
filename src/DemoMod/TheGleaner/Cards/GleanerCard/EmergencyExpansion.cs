@@ -21,7 +21,7 @@ namespace DemoMod.TheGleaner.Cards.GleanerCard;
 public class EmergencyExpansion : CustomCardModel {
 	public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
 
-	protected override IEnumerable<DynamicVar> CanonicalVars => [new BlockVar(9, ValueProp.Move)];
+	protected override IEnumerable<DynamicVar> CanonicalVars => [new BlockVar(8, ValueProp.Move)];
 
 	public override bool GainsBlock => true;
 

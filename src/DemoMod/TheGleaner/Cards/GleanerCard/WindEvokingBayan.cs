@@ -20,8 +20,8 @@ namespace DemoMod.TheGleaner.Cards.GleanerCard;
 [Pool(typeof(CardPool))]
 public class WindEvokingBayan : CustomCardModel {
 	protected override IEnumerable<DynamicVar> CanonicalVars => [
-		new BlockVar(6, ValueProp.Move),
-		new IntVar("Amount", 2)
+		new BlockVar(4, ValueProp.Move),
+		new IntVar("Amount", 1)
 	];
 	public override bool GainsBlock => true;
 	public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";

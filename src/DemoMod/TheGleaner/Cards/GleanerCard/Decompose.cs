@@ -22,7 +22,7 @@ public class Decompose : CustomCardModel
 	public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
 
 	protected override IEnumerable<DynamicVar> CanonicalVars => [
-		new PowerVar<PoisonPower>(7),
+		new PowerVar<PoisonPower>(6),
 		new IntVar("PoisonThreshold", 10),
 		new PowerVar<EtchPower>(1),
 		new IntVar("EtchPowerPreview", 0)

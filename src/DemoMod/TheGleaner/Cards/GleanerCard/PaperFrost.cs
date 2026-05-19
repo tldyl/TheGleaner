@@ -20,7 +20,7 @@ public class PaperFrost : CustomCardModel {
 	public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
 
 	protected override IEnumerable<DynamicVar> CanonicalVars => [
-		new IntVar("Amount", 4)
+		new IntVar("Amount", 3)
 	];
 
 	protected override IEnumerable<IHoverTip> ExtraHoverTips => [

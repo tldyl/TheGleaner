@@ -23,10 +23,6 @@ public class Rubato : CustomCardModel {
 		new IntVar("VulAmount", 1)
 	];
 
-	public override IEnumerable<CardKeyword> CanonicalKeywords => [
-		CardKeyword.Exhaust
-	];
-
 	protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromKeyword(CustomEnums.Score)];
 
 	public Rubato() : base(0, CardType.Skill, CardRarity.Uncommon, TargetType.Self) {
@@ -51,5 +47,8 @@ public class Rubato : CustomCardModel {
 
 		CardCmd.Preview(this);
 		await ScorePileCmd.AddCards(Owner.PlayerCombatState, Owner, this);
+	}
+		protected override void OnUpgrade() {
+		AddKeyword(CardKeyword.Exhaust);
 	}
 }
