@@ -141,7 +141,7 @@
   "DEMOMOD-BURNING_MELODY.title": "焚烧旋律",
   "DEMOMOD-BURNING_MELODY.description": "[gold]消耗[/gold][gold]乐谱[/gold]中的一张牌，获得等同于其耗能的{EnergyCard:energyIcons()}。\n如果是[gold]状态[/gold]或[gold]诅咒[/gold]牌，则改为获得{Energy:energyIcons()}。",
   "DEMOMOD-STORE_AND_RELEASE.title": "存与取",
-  "DEMOMOD-STORE_AND_RELEASE.description": "战斗开始时，放入[gold]乐谱[/gold]。\n对所有敌人造成{Damage:diff()}点伤害。\n在[gold]乐谱[/gold]中时，你所[gold]格挡[/gold]掉的伤害会使此牌的伤害提升。{InCombat:\n(已增加{BlockedDamage}点伤害)|}",
+  "DEMOMOD-STORE_AND_RELEASE.description": "战斗开始时，放入[gold]乐谱[/gold]。\n造成{Damage:diff()}点伤害。\n在[gold]乐谱[/gold]中时，你所[gold]格挡[/gold]掉的伤害会使此牌的伤害提升。{InCombat:\n(已增加{BlockedDamage}点伤害)|}",
   "DEMOMOD-STOP.title": "突触剥离",
   "DEMOMOD-STOP.description": "给予所有敌人[gold]缓慢[/gold]。",
   "DEMOMOD-MIMETIC_AMALGAM.title": "纺声构装",

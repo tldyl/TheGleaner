@@ -30,16 +30,16 @@ public class StoreAndRelease : CustomCardModel {
 
 	private int blockedDamage;
 	
-	public StoreAndRelease() : base(3, CardType.Attack, CardRarity.Rare, TargetType.AllEnemies) {
+	public StoreAndRelease() : base(3, CardType.Attack, CardRarity.Rare, TargetType.AnyEnemy) {
 		
 	}
 
 	protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
-		AttackContext context = await AttackCommand.CreateContextAsync(Owner.Creature.CombatState, this);
-		await using (context) {
-			IEnumerable<DamageResult> damageResults = await CreatureCmd.Damage(choiceContext, Owner.Creature.CombatState.HittableEnemies, DynamicVars.Damage, Owner.Creature, this);
-			context.AddHit(damageResults);
-		}
+		AttackCommand _ = await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
+			.FromCard(this)
+			.Targeting(cardPlay.Target)
+			.WithNoAttackerAnim()
+			.Execute(choiceContext);
 	}
 
 	public override async Task BeforeCombatStart() {

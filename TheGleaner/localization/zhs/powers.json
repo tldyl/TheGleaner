@@ -110,8 +110,8 @@
   "DEMOMOD-WOVEN_EMBRACE_POWER.description": "你在当前回合每受到一次攻击，都会给予攻击者[gold]中毒[/gold]。",
   "DEMOMOD-WOVEN_EMBRACE_POWER.smartDescription": "你在这回合每受到一次攻击，都会给予攻击者[blue]{Amount}[/blue]层[gold]中毒[/gold]。",
   "DEMOMOD-GERMINATION_POWER.title": "萌发",
-  "DEMOMOD-GERMINATION_POWER.description": "在你的回合开始时，给予所有敌人[blue]1[/blue]层[gold]分解[/gold]。",
-  "DEMOMOD-GERMINATION_POWER.smartDescription": "在你的回合开始时，给予所有敌人[blue]{Amount}[/blue]层[gold]分解[/gold]。",
+  "DEMOMOD-GERMINATION_POWER.description": "[gold]分解[/gold]的效果触发时，额外给予[blue]3[/blue]层[gold]中毒[/gold]。",
+  "DEMOMOD-GERMINATION_POWER.smartDescription": "[gold]分解[/gold]的效果触发时，额外给予[blue]{Amount}[/blue]层[gold]中毒[/gold]。",
   "DEMOMOD-ROAMING_THE_WEAVE_POWER.title": "魔网漫行",
   "DEMOMOD-ROAMING_THE_WEAVE_POWER.description": "每当在回合内获得能量时，额外获得[blue]1[/blue]点能量。",
   "DEMOMOD-ROAMING_THE_WEAVE_POWER.smartDescription": "每当在回合内获得能量时，额外获得[blue]{Amount}[/blue]点能量。"
