@@ -11,24 +11,27 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.HoverTips;
+using MegaCrit.Sts2.Core.Localization.DynamicVars;
+using MegaCrit.Sts2.Core.Models.Powers;
 
 namespace DemoMod.TheGleaner.Cards.GleanerCard;
 
 [Pool(typeof(CardPool))]
 public class Sforzando : CustomCardModel {
 	public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
-	public override IEnumerable<CardKeyword> CanonicalKeywords => [
-		CardKeyword.Exhaust
-	];
+	protected override IEnumerable<DynamicVar> CanonicalVars => [new IntVar("Amount", 2)];
 	protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.Static(StaticHoverTip.Block), HoverTipFactory.FromKeyword(CustomEnums.Score)];
 
-	public Sforzando() : base(1, CardType.Skill, CardRarity.Rare, TargetType.Self) {
+	public Sforzando() : base(1, CardType.Power, CardRarity.Rare, TargetType.Self) {
 		
 	}
 
 	protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
+		await PowerCmd.Apply<StrengthPower>(Owner.Creature, DynamicVars["Amount"].BaseValue, Owner.Creature, this);
 		await PowerCmd.Apply<SforzandoPower>(Owner.Creature, 1, Owner.Creature, this);
 	}
 	
-	protected override void OnUpgrade() => EnergyCost.UpgradeBy(-1);
+	protected override void OnUpgrade() => DynamicVars["Amount"].UpgradeValueBy(1);
 }

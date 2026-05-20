@@ -22,8 +22,7 @@ namespace DemoMod.TheGleaner.Cards.GleanerCard;
 [Pool(typeof(CardPool))]
 public class OneWingedViolin : CustomCardModel {
 	protected override IEnumerable<DynamicVar> CanonicalVars => [
-		new DamageVar(5, ValueProp.Move),
-		new IntVar("Amount", 1)
+		new DamageVar(6, ValueProp.Move)
 	];
 	public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
 	
@@ -48,11 +47,9 @@ public class OneWingedViolin : CustomCardModel {
 			.Targeting(cardPlay.Target)
 			.WithNoAttackerAnim()
 			.Execute(choiceContext);
-		await PowerCmd.Apply<DemoTempDexterityPower>(Owner.Creature, DynamicVars["Amount"].BaseValue, Owner.Creature, this);
 	}
 	
 	protected override void OnUpgrade() {
-		DynamicVars.Damage.UpgradeValueBy(2);
-		DynamicVars["Amount"].UpgradeValueBy(1);
+		DynamicVars.Damage.UpgradeValueBy(3);
 	}
 }

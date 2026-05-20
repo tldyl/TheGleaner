@@ -28,7 +28,7 @@ public class EarthedBell : CustomCardModel, IConcertoCard {
 	public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
 	protected override IEnumerable<DynamicVar> CanonicalVars => [
 		new DamageVar(0, ValueProp.Move),
-		new BlockVar(5, ValueProp.Move)
+		new BlockVar(4, ValueProp.Move)
 	];
 	protected override IEnumerable<IHoverTip> ExtraHoverTips => [
 		HoverTipFactory.FromKeyword(CustomEnums.Concerto)
@@ -67,7 +67,7 @@ public class EarthedBell : CustomCardModel, IConcertoCard {
 	}
 
 	protected override void OnUpgrade() {
-		DynamicVars.Block.UpgradeValueBy(3);
+		DynamicVars.Block.UpgradeValueBy(2);
 	}
 
 	public async Task OnConcerto(CombatState combatState, PlayerChoiceContext choiceContext, CardPlay cardPlay) {

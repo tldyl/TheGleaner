@@ -27,15 +27,8 @@ public class Raiment : CustomCardModel {
 	public Raiment() : base(7, CardType.Skill, CardRarity.Rare, TargetType.Self) {
 		
 	}
-
-	public override async Task BeforeCombatStart() {
-		if (!IsInCombat || CombatState == null || !IsUpgraded || Owner.Deck.Cards.Contains(this)) {
-			return;
-		}
-
-		CardCmd.Preview(this);
-		await ScorePileCmd.AddCards(Owner.PlayerCombatState, Owner, this);
-	}
+	
+	protected override void OnUpgrade() => EnergyCost.UpgradeBy(-2);
 	
 	protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
 		foreach (CardModel allCard in Owner.PlayerCombatState.AllCards.Where(c => c.Type == CardType.Attack)) {

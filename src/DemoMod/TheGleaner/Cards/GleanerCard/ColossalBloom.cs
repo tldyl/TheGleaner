@@ -20,7 +20,7 @@ public class ColossalBloom : CustomCardModel
 	public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
 
 	protected override IEnumerable<DynamicVar> CanonicalVars => [
-		new PowerVar<PoisonPower>(10),
+		new PowerVar<PoisonPower>(12),
 		new PowerVar<EtchPower>(3)
 	];
 

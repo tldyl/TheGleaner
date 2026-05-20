@@ -51,5 +51,5 @@ public class PrismaticRainfall : CustomCardModel {
 		opticalFlareVfx.End();
 	}
 	
-		protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(4);
+		protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(7);
 }

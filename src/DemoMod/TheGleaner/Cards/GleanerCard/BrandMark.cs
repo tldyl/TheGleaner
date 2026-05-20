@@ -18,7 +18,7 @@ public class BrandMark : CustomCardModel {
 	
 	protected override IEnumerable<DynamicVar> CanonicalVars => [
 		new DamageVar(3, ValueProp.Move),
-		new IntVar("Times", 4),
+		new IntVar("Times", 6),
 		new IntVar("BlockGained", 3)
 	];
 
@@ -37,7 +37,7 @@ public class BrandMark : CustomCardModel {
 	}
 		protected override void OnUpgrade()
 	{
-		DynamicVars["Times"].UpgradeValueBy(2);
+		DynamicVars["Times"].UpgradeValueBy(3);
 	}
 
 }
