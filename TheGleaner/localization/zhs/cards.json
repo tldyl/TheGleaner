@@ -261,5 +261,7 @@
   "DEMOMOD-DIRGE_SHUFFLE.title": "安息瞩目",
   "DEMOMOD-DIRGE_SHUFFLE.description": "给予{PoisonPower:diff()}层[gold]中毒[/gold]。\n给予{EtchPower}层[gold]分解[/gold]。\n造成{Damage:diff()}点伤害。\n将此牌置于[gold]抽牌堆[/gold]顶部。",
   "DEMOMOD-ROAMING_THE_WEAVE.title": "魔网漫行",
-  "DEMOMOD-ROAMING_THE_WEAVE.description": "每当在回合内获得{Energy:energyIcons()}时，额外获得{Energy:energyIcons()}。"
+  "DEMOMOD-ROAMING_THE_WEAVE.description": "每当在回合内获得{Energy:energyIcons()}时，额外获得{Energy:energyIcons()}。",
+  "DEMOMOD-CHECKMATE.title": "将军！",
+  "DEMOMOD-CHECKMATE.description": "移除王的[gold]保护国王！[/gold]。\n[gold]消耗[/gold]。"
 }

@@ -9,6 +9,7 @@ using MegaCrit.Sts2.Core.Helpers;
 using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.MonsterMoves.Intents;
 using MegaCrit.Sts2.Core.MonsterMoves.MonsterMoveStateMachine;
+using MegaCrit.Sts2.Core.Saves.Runs;
 
 namespace DemoMod.TheGleaner.Monsters;
 
@@ -24,6 +25,9 @@ public class Pawn : CustomMonsterModel {
     private const int PromotionStrength = 20;
     private const string TurretOperatorAttackSfx = "event:/sfx/enemy/enemy_attacks/turret_operator/turret_operator_attack";
 
+    [SavedProperty(SerializationCondition.SaveIfNotTypeDefault)]
+    public bool StartsWithMinionPower { get; set; }
+
     public override int MinInitialHp => InitialHp;
     public override int MaxInitialHp => InitialHp;
 
@@ -38,6 +42,9 @@ public class Pawn : CustomMonsterModel {
     public override async Task AfterAddedToRoom() {
         await base.AfterAddedToRoom();
         await PowerCmd.Apply<PromotionPower>(Creature, PromotionActions, Creature, null);
+        if (StartsWithMinionPower) {
+            await PowerCmd.Apply<MinionPower>(Creature, 1m, Creature, null);
+        }
     }
 
     protected override MonsterMoveStateMachine GenerateMoveStateMachine() {

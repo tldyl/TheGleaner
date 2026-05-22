@@ -16,5 +16,11 @@
   "DEMOMOD-SUN.moves.PROMINENCE_MOVE.title": "日珥",
   "DEMOMOD-SUN.moves.SOLAR_FOCUS_MOVE.title": "聚焦",
   "DEMOMOD-SUN.moves.SUNSTORM_MOVE.title": "太阳风暴",
-  "DEMOMOD-SUN.moves.LINGERING_HEAT_MOVE.title": "余热"
+  "DEMOMOD-SUN.moves.LINGERING_HEAT_MOVE.title": "余热",
+  "DEMOMOD-KING.name": "王",
+  "DEMOMOD-KING.moves.DECLARATION_OF_WAR_MOVE.title": "战书",
+  "DEMOMOD-KING.moves.ROYAL_OPPRESSION_MOVE.title": "皇家威压",
+  "DEMOMOD-KING.moves.ROYAL_DECREE_MOVE.title": "皇家赦令",
+  "DEMOMOD-KING.moves.ROYAL_RALLY_MOVE.title": "皇家集结",
+  "DEMOMOD-KING.moves.COUNTERATTACK_MOVE.title": "反扑"
 }
