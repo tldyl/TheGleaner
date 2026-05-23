@@ -1,0 +1,8 @@
+[gd_resource type="SpineSkeletonDataResource" load_steps=3 format=3 uid="uid://byssw78a5rkjb"]
+
+[ext_resource type="SpineAtlasResource" uid="uid://b35shj2jf1nxx" path="res://TheGleaner/scenes/monsters/sun/lianshe_spine.atlas" id="1_b6p4w"]
+[ext_resource type="SpineSkeletonFileResource" uid="uid://3dybawjaudho" path="res://TheGleaner/scenes/monsters/sun/lianshe_spine.skel" id="2_i8tl8"]
+
+[resource]
+atlas_res = ExtResource("1_b6p4w")
+skeleton_file_res = ExtResource("2_i8tl8")

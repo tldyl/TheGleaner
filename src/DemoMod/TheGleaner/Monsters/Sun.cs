@@ -1,6 +1,8 @@
 using BaseLib.Abstracts;
 using DemoMod.TheGleaner.Powers;
+using MegaCrit.Sts2.Core.Animation;
 using MegaCrit.Sts2.Core.Audio;
+using MegaCrit.Sts2.Core.Bindings.MegaSpine;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
@@ -41,7 +43,7 @@ public class Sun : CustomMonsterModel {
 
     public override string CustomAttackSfx => PhrogParasiteAttackSfx;
 
-    public override string CustomVisualPath => SceneHelper.GetScenePath("creature_visuals/phrog_parasite");
+    public override string CustomVisualPath => "res://TheGleaner/scenes/monsters/sun/sun.tscn";
 
     public override async Task AfterAddedToRoom() {
         await base.AfterAddedToRoom();
@@ -150,5 +152,19 @@ public class Sun : CustomMonsterModel {
             count,
             addedByPlayer: false,
             CardPilePosition.Random);
+    }
+    
+    public override CreatureAnimator GenerateAnimator(MegaSprite controller) {
+        AnimState initialState = new AnimState("idle_loop", true);
+        AnimState state2 = new AnimState("attack");
+        AnimState state3 = new AnimState("hurt");
+        AnimState state4 = new AnimState("die");
+        state2.NextState = initialState;
+        state3.NextState = initialState;
+        CreatureAnimator animator = new CreatureAnimator(initialState, controller);
+        animator.AddAnyState("Dead", state4);
+        animator.AddAnyState("Hit", initialState);
+        animator.AddAnyState("Attack", initialState);
+        return animator;
     }
 }

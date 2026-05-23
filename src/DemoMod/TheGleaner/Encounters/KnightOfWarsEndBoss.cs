@@ -23,7 +23,7 @@ public class KnightOfWarsEndBoss : CustomEncounterModel {
     public override bool IsValidForAct(ActModel act) => act is Glory;
     
     public override float GetCameraScaling() {
-        return 0.95f;
+        return 0.75f;
     }
 
     public override Vector2 GetCameraOffset() {

@@ -1,0 +1,48 @@
+[gd_scene load_steps=3 format=3 uid="uid://bwffetsty6usw"]
+
+[ext_resource type="PackedScene" uid="uid://dcom6kep6530v" path="res://TheGleaner/scenes/monsters/knight_of_wars_end/model.tscn" id="1_2yg75"]
+[ext_resource type="Script" uid="uid://bjmbamwqnymb8" path="res://src/DemoMod/TheGleaner/UI/NGleanerCreatureVisuals.cs" id="1_r8svc"]
+
+[node name="KnightOfWarsEnd" type="Node2D"]
+script = ExtResource("1_r8svc")
+
+[node name="Visuals" type="Node2D" parent="."]
+unique_name_in_owner = true
+scale = Vector2(0.8, 0.8)
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="Visuals"]
+offset_left = -750.0
+offset_top = -1200.0
+offset_right = 750.0
+offset_bottom = 300.0
+pivot_offset = Vector2(750, 750)
+
+[node name="SubViewport" type="SubViewport" parent="Visuals/SubViewportContainer"]
+transparent_bg = true
+handle_input_locally = false
+size = Vector2i(1500, 1500)
+render_target_update_mode = 4
+
+[node name="Camera3D" type="Camera3D" parent="Visuals/SubViewportContainer/SubViewport"]
+
+[node name="Node3D" type="Node3D" parent="Visuals/SubViewportContainer/SubViewport"]
+transform = Transform3D(-0.035, 0, -5.284853e-09, 0, 0.035, 0, 5.284853e-09, 0, -0.035, 0.15986514, -0.46215487, -1.2702899)
+
+[node name="knight_of_wars_end" parent="Visuals/SubViewportContainer/SubViewport/Node3D" instance=ExtResource("1_2yg75")]
+transform = Transform3D(-2.1855703e-07, 0, 5, 0, 5, 0, -5, 0, -2.1855703e-07, 5.000001, 2.5, -4.6191864)
+
+[node name="Bounds" type="Control" parent="."]
+unique_name_in_owner = true
+layout_mode = 3
+anchors_preset = 0
+offset_left = -424.0
+offset_top = -832.0
+offset_right = 488.0
+
+[node name="IntentPos" type="Marker2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(0, -752)
+
+[node name="CenterPos" type="Marker2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(0, -256)

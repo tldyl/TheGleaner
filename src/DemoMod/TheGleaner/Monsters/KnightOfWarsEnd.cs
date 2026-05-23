@@ -20,7 +20,7 @@ public class KnightOfWarsEnd : CustomMonsterModel {
     public override int MaxInitialHp => 270;
     public override bool HasDeathSfx => false;
     public override DamageSfxType TakeDamageSfxType => DamageSfxType.Magic;
-    public override string CustomVisualPath => SceneHelper.GetScenePath("creature_visuals/living_shield");
+    public override string CustomVisualPath => "res://TheGleaner/scenes/monsters/knight_of_wars_end/knight_of_wars_end.tscn";
     private int DeathFlameCycleDamage => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 11, 10);
     private int BuffedDeathFlameCycleDamage => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 16, 15);
     private int ClawDamage => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 22, 20);
