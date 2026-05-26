@@ -1,4 +1,5 @@
 using DemoMod.TheGleaner.Hooks;
+using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models;
@@ -10,9 +11,20 @@ public class LightOfLife : AfflictionModel, IAfterTakeCardsFromScore {
     private List<CardModel> siblingCards = [];
 
     public override async Task AfterCardPlayed(PlayerChoiceContext context, CardPlay cardPlay) {
-        RefreshSibling();
+        if (cardPlay.Card == Card) {
+            foreach (CardModel card in siblingCards) {
+                CardCmd.ClearAffliction(card);
+                await CardCmd.Afflict<LightOfLife>(card, Amount);
+            }
+        } else {
+            RefreshSibling();
+        }
     }
 
+    public override void AfterApplied() {
+        RefreshSibling();
+    }
+    
     public override async Task AfterCardDrawn(PlayerChoiceContext choiceContext, CardModel card, bool fromHandDraw) {
         RefreshSibling();
     }
