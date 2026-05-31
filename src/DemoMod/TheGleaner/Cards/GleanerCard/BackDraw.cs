@@ -27,7 +27,7 @@ public class BackDraw : CustomCardModel {
 	protected override IEnumerable<DynamicVar> CanonicalVars => [new DamageVar(4, ValueProp.Move)];
 	protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromKeyword(CustomEnums.Score)];
 
-	public BackDraw() : base(2, CardType.Attack, CardRarity.Uncommon, TargetType.AllEnemies) {
+	public BackDraw() : base(3, CardType.Attack, CardRarity.Uncommon, TargetType.AllEnemies) {
 	}
 
 	protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {

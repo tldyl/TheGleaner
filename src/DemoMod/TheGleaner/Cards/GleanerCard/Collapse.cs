@@ -27,11 +27,11 @@ public class Collapse : CustomCardModel
 	];
 
 	protected override IEnumerable<DynamicVar> CanonicalVars => [
-		new DamageVar(6, ValueProp.Move),
+		new DamageVar(5, ValueProp.Move),
 		new IntVar("DissonanceAmount", 1)
 	];
 
-	public Collapse() : base(2, CardType.Attack, CardRarity.Uncommon, TargetType.RandomEnemy)
+	public Collapse() : base(2, CardType.Attack, CardRarity.Common, TargetType.RandomEnemy)
 	{
 	}
 

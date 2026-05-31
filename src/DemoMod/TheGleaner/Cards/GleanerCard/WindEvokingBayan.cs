@@ -20,12 +20,12 @@ namespace DemoMod.TheGleaner.Cards.GleanerCard;
 [Pool(typeof(CardPool))]
 public class WindEvokingBayan : CustomCardModel {
 	protected override IEnumerable<DynamicVar> CanonicalVars => [
-		new BlockVar(5, ValueProp.Move)
+		new BlockVar(4, ValueProp.Move)
 	];
 	public override bool GainsBlock => true;
 	public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
 	
-	public WindEvokingBayan() : base(1, CardType.Skill, CardRarity.Common, TargetType.Self) {
+	public WindEvokingBayan() : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.Self) {
 	}
 	
 	public override IEnumerable<CardKeyword> CanonicalKeywords => [CustomEnums.Resonance];

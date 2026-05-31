@@ -22,7 +22,7 @@ public class Glissando : CustomCardModel {
 
 	protected override IEnumerable<DynamicVar> CanonicalVars => [
 		new IntVar("Amount", 1),
-		new DamageVar(7, ValueProp.Move),
+		new DamageVar(8, ValueProp.Move),
 		new PowerVar<VulnerablePower>(1)
 	];
 
@@ -48,12 +48,6 @@ public class Glissando : CustomCardModel {
 		int count = damageResults.Count(result => result.WasTargetKilled);
 
 		if (count == damageResults.Count() - 1) {
-			await PowerCmd.Apply<WeakPower>(
-				CombatState.HittableEnemies,
-				DynamicVars["Amount"].BaseValue,
-				Owner.Creature,
-				this
-			);
 
 			await PowerCmd.Apply<VulnerablePower>(
 				CombatState.HittableEnemies,
@@ -66,5 +60,6 @@ public class Glissando : CustomCardModel {
 
 	protected override void OnUpgrade() {
 		DynamicVars.Damage.UpgradeValueBy(4);
+		DynamicVars["Amount"].UpgradeValueBy(1);
 	}
 }

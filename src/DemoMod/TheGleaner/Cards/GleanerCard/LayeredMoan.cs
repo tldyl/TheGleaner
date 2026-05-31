@@ -19,13 +19,18 @@ namespace DemoMod.TheGleaner.Cards.GleanerCard;
 public class LayeredMoan : CustomCardModel {
 	public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
 	protected override IEnumerable<DynamicVar> CanonicalVars => [
-		new DamageVar(5, ValueProp.Move)
+		new DamageVar(6, ValueProp.Move),
+		new CardsVar(1)
 	];
 	protected override IEnumerable<IHoverTip> ExtraHoverTips => [
-		HoverTipFactory.FromPower<PoisonPower>()
+		HoverTipFactory.FromPower<PoisonPower>(),
+		HoverTipFactory.FromKeyword(CustomEnums.Dissonance),
+		HoverTipFactory.FromCard<DirgeOfFarewell>(),
+		HoverTipFactory.FromCard<ShriekOfDread>(),
+		HoverTipFactory.FromCard<HowlOfWrath>()
 	];
 
-	public LayeredMoan() : base(2, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy) {
+	public LayeredMoan() : base(2, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy) {
 		
 	}
 
@@ -37,7 +42,26 @@ public class LayeredMoan : CustomCardModel {
 		if (cardPlay.Target != null) {
 			await PowerCmd.Apply<PoisonPower>(cardPlay.Target, _.Results.FirstOrDefault().TotalDamage, Owner.Creature, this);
 		}
-		
+		List<CardModel> cards = RandomDissonanceCard.getRandomDissonanceCards(
+			DynamicVars.Cards.IntValue,
+			Owner.RunState.Rng.CombatCardGeneration
+		);
+
+		SoundManager.Instance.PlaySound(SoundKeys.HEART_BEAT);
+		foreach (CardModel card in cards) {
+			PileType targetPile =
+				Owner.RunState.Rng.CombatCardGeneration.NextInt(2) == 0
+					? PileType.Draw
+					: PileType.Discard;
+
+			CardCmd.PreviewCardPileAdd(
+				await CardPileCmd.AddGeneratedCardToCombat(
+					CombatState.CreateCard(card, Owner),
+					targetPile,
+					true
+				)
+			);
+		}
 	}
 	
 	protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(2);

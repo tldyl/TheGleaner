@@ -28,7 +28,9 @@ public class EmergencyExpansion : CustomCardModel {
 	protected override IEnumerable<IHoverTip> ExtraHoverTips => [
 		HoverTipFactory.FromKeyword(CustomEnums.Score)
 	];
-
+	public override IEnumerable<CardKeyword> CanonicalKeywords => [
+		CardKeyword.Exhaust
+	];
 	public override async Task BeforeCombatStart() {
 		if (!IsInCombat || CombatState == null || Owner.Deck.Cards.Contains(this)) {
 			return;
@@ -49,8 +51,5 @@ public class EmergencyExpansion : CustomCardModel {
 			CardCmd.Preview(cpy);
 		}
 		await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, cardPlay);
-	}
-		protected override void OnUpgrade() {
-		AddKeyword(CardKeyword.Exhaust);
 	}
 }

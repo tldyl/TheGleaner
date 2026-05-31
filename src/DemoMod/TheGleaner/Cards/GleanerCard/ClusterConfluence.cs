@@ -26,9 +26,11 @@ public class ClusterConfluence : CustomCardModel {
 	protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromCard<StrikeGleaner>(), HoverTipFactory.FromCard<ClusterStrike>(), HoverTipFactory.FromKeyword(CustomEnums.Score)];
 	protected override bool HasEnergyCostX => true;
 
-	public ClusterConfluence() : base(0, CardType.Skill, CardRarity.Rare, TargetType.Self) {
+	public ClusterConfluence() : base(0, CardType.Skill, CardRarity.Uncommon, TargetType.Self) {
 		
 	}
+	
+		public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
 
 	protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
 		for (int _ = 0; _ < ResolveEnergyXValue() + CurrentUpgradeLevel; _++) {
