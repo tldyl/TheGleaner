@@ -83,11 +83,9 @@ public class ArbiterOfLifeAndDeathPower : CustomPowerModel {
         CardModel card = cardPlay.Card;
         AfflictionModel affliction = card.Affliction;
         if (affliction is FlameOfDeath && Owner.HasPower<FlamePolarPower>()) {
-            await CreatureCmd.Damage(context, card.Owner.Creature, new DamageVar(2, ValueProp.Move | ValueProp.Unpowered | ValueProp.Unblockable), card);
-            await PowerCmd.Apply<DemoTempStrengthPower>(card.Owner.Creature, -1, card.Owner.Creature, card);
+            await CreatureCmd.Damage(context, card.Owner.Creature, new DamageVar(3, ValueProp.Move | ValueProp.Unpowered | ValueProp.Unblockable), card);
         } else if (affliction is LightOfLife && Owner.HasPower<LightPolarPower>()) {
-            await CreatureCmd.Heal(Owner, 5);
-            await PowerCmd.Apply<DemoTempStrengthPower>(Owner, 1, card.Owner.Creature, card);
+            await CreatureCmd.Heal(Owner, 7);
         }
     }
     

@@ -6,4 +6,6 @@ namespace DemoMod.TheGleaner.Config;
 public class GleanerModConfig : SimpleModConfig {
     [ConfigHideInUI]
     public static Skins Skin { get; set; } = Skins.Original;
+    
+    public static bool AlwaysHovercourt { get; set; } = false;
 }

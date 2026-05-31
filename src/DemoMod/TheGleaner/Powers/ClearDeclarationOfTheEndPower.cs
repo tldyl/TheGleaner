@@ -6,6 +6,8 @@ using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Nodes.Combat;
+using MegaCrit.Sts2.Core.Nodes.Rooms;
 
 namespace DemoMod.TheGleaner.Powers;
 
@@ -31,6 +33,10 @@ public class ClearDeclarationOfTheEndPower : CustomPowerModel {
                         DeclarationOfTheEndPower power = creature.GetPower<DeclarationOfTheEndPower>();
                         power.DynamicVars["DisplayAmount"].BaseValue = 0;
                         power.RefreshCounter();
+                        creature.Monster.RollMove(creature.CombatState.GetOpponentsOf(creature));
+                        NCreature creatureNode = NCombatRoom.Instance?.GetCreatureNode(creature);
+                        if (creatureNode == null) continue;
+                        await creatureNode.RefreshIntents();
                     }
                 }
                 DynamicVars["DisplayAmount"].BaseValue = 0;

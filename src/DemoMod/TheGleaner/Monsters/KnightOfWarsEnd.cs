@@ -16,15 +16,15 @@ using MegaCrit.Sts2.Core.MonsterMoves.MonsterMoveStateMachine;
 namespace DemoMod.TheGleaner.Monsters;
 
 public class KnightOfWarsEnd : CustomMonsterModel {
-    public override int MinInitialHp => 270;
-    public override int MaxInitialHp => 270;
+    public override int MinInitialHp => 200;
+    public override int MaxInitialHp => 200;
     public override bool HasDeathSfx => false;
     public override DamageSfxType TakeDamageSfxType => DamageSfxType.Magic;
     public override string CustomVisualPath => "res://TheGleaner/scenes/monsters/knight_of_wars_end/knight_of_wars_end.tscn";
-    private int DeathFlameCycleDamage => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 11, 10);
-    private int BuffedDeathFlameCycleDamage => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 16, 15);
-    private int ClawDamage => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 22, 20);
-    private int BuffedClawDamage => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 32, 30);
+    private int DeathFlameCycleDamage => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 6, 5);
+    private int BuffedDeathFlameCycleDamage => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 6, 5);
+    private int ClawDamage => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 20, 19);
+    private int BuffedClawDamage => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 20, 19);
     private MoveState _deadState;
     private MoveState DeadState {
         get => _deadState;
@@ -50,7 +50,7 @@ public class KnightOfWarsEnd : CustomMonsterModel {
         }
     }
     public override bool ShouldDisappearFromDoom => Respawns >= 1;
-    private int MultiClawTotalCount => 2 + ExtraMultiClawCount;
+    private int MultiClawTotalCount => (Respawns > 0 ? 4 : 3) + ExtraMultiClawCount;
 
     private string lastMoveId;
     
@@ -70,7 +70,7 @@ public class KnightOfWarsEnd : CustomMonsterModel {
         };
         MoveState initialState = new MoveState("ARBITER_OF_LIFE_AND_DEATH_MOVE", ArbiterOfLifeAndDeathMove, new SummonIntent());
         MoveState deathFlameCycle = new MoveState("DEATH_FLAME_CYCLE_MOVE", DeathFlameCycleMove, new MultiAttackIntent(DeathFlameCycleDamage, () => MultiClawTotalCount));
-        MoveState clawState = new MoveState("CLAW_MOVE", ClawMove, new SingleAttackIntent(ClawDamage), new DebuffIntent());
+        MoveState clawState = new MoveState("CLAW_MOVE", ClawMove, new SingleAttackIntent(ClawDamage), new BuffIntent());
         MoveState buffedDeathFlameCycle = new MoveState("BUFFED_DEATH_FLAME_CYCLE_MOVE", BuffedDeathFlameCycleMove, new MultiAttackIntent(BuffedDeathFlameCycleDamage, () => MultiClawTotalCount));
         MoveState buffedClawState = new MoveState("BUFFED_CLAW_MOVE", BuffedClawMove, new SingleAttackIntent(BuffedClawDamage), new BuffIntent());
         MoveState declarationOfTheEndState = new MoveState("DECLARATION_OF_THE_END_MOVE", DeclarationOfTheEndMove, new MultiAttackIntent(DeathFlameCycleDamage, 7));
@@ -97,7 +97,7 @@ public class KnightOfWarsEnd : CustomMonsterModel {
     }
 
     private async Task ArbiterOfLifeAndDeathMove(IReadOnlyList<Creature> targets) {
-        await CreatureCmd.SetMaxAndCurrentHp(Creature, 270);
+        await CreatureCmd.SetMaxAndCurrentHp(Creature, 200);
         foreach (PowerModel power in Creature.Powers.ToList())
             await PowerCmd.Remove(power);
         Creature.ShowsInfiniteHp = false;
@@ -119,7 +119,7 @@ public class KnightOfWarsEnd : CustomMonsterModel {
             .FromMonster(this)
             .WithNoAttackerAnim()
             .Execute(null);
-        await PowerCmd.Apply<VulnerablePower>(targets, 1, Creature, null);
+        await PowerCmd.Apply<StrengthPower>(Creature, 1, Creature, null);
     }
 
     private async Task BuffedDeathFlameCycleMove(IReadOnlyList<Creature> targets) {
@@ -138,7 +138,7 @@ public class KnightOfWarsEnd : CustomMonsterModel {
             .FromMonster(this)
             .WithNoAttackerAnim()
             .Execute(null);
-        await PowerCmd.Apply<StrengthPower>(Creature, 2, Creature, null);
+        await PowerCmd.Apply<StrengthPower>(Creature, 1, Creature, null);
         lastMoveId = "BUFFED_CLAW_MOVE";
     }
     
@@ -147,12 +147,12 @@ public class KnightOfWarsEnd : CustomMonsterModel {
         Creature.GetPower<ArbiterOfLifeAndDeathPower>()?.DoRevive();
         
         ExtraMultiClawCount = 0;
-        await Revive(300);
+        await Revive(340);
         await PowerCmd.Remove<ArbiterOfLifeAndDeathPower>(Creature);
         List<CardModel> _allCards = (List<CardModel>) AccessTools.Field(typeof(CombatState), "_allCards").GetValue(Creature.CombatState);
         foreach (CardModel card in _allCards) {
             if (card.Affliction is LightOfLife or FlameOfDeath) {
-                card.Affliction.Amount = 3;
+                card.Affliction.Amount = 2;
             }
         }
         await PowerCmd.Apply<DeclarationOfTheEndPower>(Creature, 1, Creature, null);
@@ -174,5 +174,7 @@ public class KnightOfWarsEnd : CustomMonsterModel {
             .OnlyPlayAnimOnce()
             .WithNoAttackerAnim()
             .Execute(null);
+        Creature.GetPower<DeclarationOfTheEndPower>().DynamicVars["DisplayAmount"].BaseValue = 0;
+        Creature.GetPower<DeclarationOfTheEndPower>().RefreshCounter();
     }
 }

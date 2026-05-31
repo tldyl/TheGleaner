@@ -1,8 +1,8 @@
 using BaseLib.Abstracts;
+using DemoMod.TheGleaner.Acts;
 using DemoMod.TheGleaner.Monsters;
 using Godot;
 using MegaCrit.Sts2.Core.Models;
-using MegaCrit.Sts2.Core.Models.Acts;
 using MegaCrit.Sts2.Core.Rooms;
 
 namespace DemoMod.TheGleaner.Encounters;
@@ -17,7 +17,7 @@ public class CrowsAndSleepyScarecrowEncounter : CustomEncounterModel {
     ];
 
     public override bool IsValidForAct(ActModel act) {
-        return act is Glory;
+        return act is Hovercourt;
     }
 
     protected override IReadOnlyList<(MonsterModel, string?)> GenerateMonsters() {

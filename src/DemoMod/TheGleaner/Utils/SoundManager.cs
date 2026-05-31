@@ -32,7 +32,7 @@ public partial class SoundManager : Node {
     }
 
     // 播放音效（从池中获取可用播放器）
-    public void PlaySound(string audioPath, float volume = 0.5f, float pitch = 1.0f) {
+    public AudioStreamPlayer? PlaySound(string audioPath, float volume = 0.5f, float pitch = 1.0f) {
         AudioStreamPlayer availablePlayer = soundPool.Find(p => !p.Playing);
 
         if (availablePlayer != null) {
@@ -43,8 +43,10 @@ public partial class SoundManager : Node {
                 availablePlayer.VolumeLinear = volume * SaveManager.Instance.SettingsSave.VolumeSfx;
                 availablePlayer.PitchScale = pitch;
                 availablePlayer.Play();
+                return availablePlayer;
             }
         }
+        return null;
     }
     
     public int PlaySoundLoop(string audioPath, float volume = 0.5f, float pitch = 1.0f) {

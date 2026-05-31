@@ -264,5 +264,13 @@
   "DEMOMOD-SONOWEAVE_PUPIL.title": "纺声眸光",
   "DEMOMOD-SONOWEAVE_PUPIL.description": "获得{Block:diff()}点[gold]格挡[/gold]。\n从{CardAmount}张{IfUpgraded:show:升级过的|}其他角色的[gold]能力[/gold]牌中选择{PlayAmount}张并打出。",
   "DEMOMOD-ROAMING_THE_WEAVE.title": "魔网漫行",
-  "DEMOMOD-ROAMING_THE_WEAVE.description": "每当在回合内获得{Energy:energyIcons()}时，额外获得{Energy:energyIcons()}。"
+  "DEMOMOD-ROAMING_THE_WEAVE.description": "每当在回合内获得{Energy:energyIcons()}时，额外获得{Energy:energyIcons()}。",
+  "DEMOMOD-ARBITER_OF_LIFE.title": "生之光掌握",
+  "DEMOMOD-ARBITER_OF_LIFE.description": "在本回合为[gold]生之光[/gold]侵蚀的卡牌附加一个额外正面效果。",
+  "DEMOMOD-ARBITER_OF_STRENGTH.title": "力量掌握",
+  "DEMOMOD-ARBITER_OF_STRENGTH.description": "打出带有[gold]生之光[/gold]侵蚀的卡牌时，在本回合获得2点[gold]力量[/gold]。",
+  "DEMOMOD-ARBITER_OF_FOCUS.title": "集中掌握",
+  "DEMOMOD-ARBITER_OF_FOCUS.description": "打出带有[gold]生之光[/gold]侵蚀的卡牌时，在本回合获得1点[gold]集中[/gold]。",
+  "DEMOMOD-ARBITER_OF_HEAL.title": "生命掌握",
+  "DEMOMOD-ARBITER_OF_HEAL.description": "打出带有[gold]生之光[/gold]侵蚀的卡牌时，回复4点生命。"
 }
