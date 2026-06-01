@@ -1,7 +1,10 @@
 using BaseLib.Abstracts;
+using BaseLib.Utils;
 using MegaCrit.Sts2.Core.Helpers;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Events;
+using MegaCrit.Sts2.Core.Random;
+using MegaCrit.Sts2.Core.Rooms;
 
 namespace DemoMod.TheGleaner.Acts;
 
@@ -28,6 +31,10 @@ public class Hovercourt : CustomActModel {
         
     }
 
+    protected override BackgroundAssets CustomGenerateBackgroundAssets(Rng rng) {
+        return new CustomBackgroundAssets("res://TheGleaner/scenes/backgrounds/hovercourt/layers", "res://TheGleaner/scenes/backgrounds/hovercourt/hovercourt_background.tscn", rng);
+    }
+    
     public override IEnumerable<EncounterModel> GenerateAllEncounters() => [
         
     ];

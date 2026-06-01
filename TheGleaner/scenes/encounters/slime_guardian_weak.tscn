@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://dtiom2vu7wljf"]
+
+[node name="SlimeGuardianWeak" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Slot0" type="Marker2D" parent="."]
+position = Vector2(1575, 739)
+
+[node name="Slot1" type="Marker2D" parent="."]
+position = Vector2(1332, 718)
+
+[node name="Slot2" type="Marker2D" parent="."]
+position = Vector2(1155, 744)
+
+[node name="Slot3" type="Marker2D" parent="."]
+position = Vector2(980, 723)

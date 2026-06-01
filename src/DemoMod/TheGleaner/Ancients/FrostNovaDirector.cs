@@ -19,7 +19,7 @@ public class FrostNovaDirector : CustomAncientModel
     public override bool IsValidForAct(ActModel act)
     {
         string entry = act?.Id?.Entry ?? "";
-        return entry.Equals("HIVE", StringComparison.OrdinalIgnoreCase);
+        return entry.Equals("HIVE", StringComparison.OrdinalIgnoreCase) || entry.Equals("HOVERCOURT", StringComparison.OrdinalIgnoreCase);
     }
 
     public override string CustomScenePath =>

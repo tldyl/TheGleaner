@@ -11,7 +11,7 @@ using MegaCrit.Sts2.Core.MonsterMoves.Intents;
 using MegaCrit.Sts2.Core.MonsterMoves.MonsterMoveStateMachine;
 using MegaCrit.Sts2.Core.ValueProps;
 
-namespace TheGleaner.DemoMod.TheGleaner.Monsters;
+namespace DemoMod.TheGleaner.Monsters;
 
 public class TrighostGreen : CustomMonsterModel {
     public override int MinInitialHp => 38;

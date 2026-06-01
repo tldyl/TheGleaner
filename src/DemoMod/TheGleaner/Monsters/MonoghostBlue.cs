@@ -8,7 +8,7 @@ using MegaCrit.Sts2.Core.Models.Cards;
 using MegaCrit.Sts2.Core.MonsterMoves.Intents;
 using MegaCrit.Sts2.Core.MonsterMoves.MonsterMoveStateMachine;
 
-namespace TheGleaner.DemoMod.TheGleaner.Monsters;
+namespace DemoMod.TheGleaner.Monsters;
 
 public class MonoghostBlue : CustomMonsterModel {
     public override int MinInitialHp => 25;

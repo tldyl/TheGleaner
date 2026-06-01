@@ -90,6 +90,7 @@
   <ItemGroup>
     <Folder Include="src\DemoMod\TheGleaner\Potions\" />
     <Folder Include="TheGleaner\images\cards\" />
+    <Folder Include="TheGleaner\scenes\backgrounds\hovercourt\layers\" />
   </ItemGroup>
 
   <Target Name="CopyToModsFolderOnBuild" AfterTargets="AfterBuild">

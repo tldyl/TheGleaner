@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=3 uid="uid://csmn2kl61telv"]
+
+[ext_resource type="Texture2D" uid="uid://d2jdgtn4mf24h" path="res://images/backgrounds/hovercourt/bg_00.png" id="1_8sh7i"]
+
+[node name="HovercourtBg00A" type="TextureRect"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1.35, 1.35)
+pivot_offset = Vector2(960, 540)
+texture = ExtResource("1_8sh7i")

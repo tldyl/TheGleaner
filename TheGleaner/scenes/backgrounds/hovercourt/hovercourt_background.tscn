@@ -1,0 +1,55 @@
+[gd_scene load_steps=3 format=3 uid="uid://7w3oijvwb85u"]
+
+[ext_resource type="Script" uid="uid://deyuhijj76ddm" path="res://src/DemoMod/TheGleaner/Nodes/Rooms/NGleanerCombatBackground.cs" id="1_kidv0"]
+[ext_resource type="Script" uid="uid://dljfi7xwyjurw" path="res://src/DemoMod/TheGleaner/Nodes/Rooms/NGleanerBgLayerDebug.cs" id="2_fl0q4"]
+
+[node name="HovercourtBackground" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_kidv0")
+
+[node name="Layer_00" type="Control" parent="."]
+unique_name_in_owner = true
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("2_fl0q4")
+
+[node name="Layer_01" type="Control" parent="."]
+unique_name_in_owner = true
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("2_fl0q4")
+
+[node name="Layer_02" type="Control" parent="."]
+unique_name_in_owner = true
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("2_fl0q4")
+
+[node name="Layer_03" type="Control" parent="."]
+unique_name_in_owner = true
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("2_fl0q4")
+
+[node name="Layer_04" type="Control" parent="."]
+unique_name_in_owner = true
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("2_fl0q4")
+
+[node name="Foreground" type="Control" parent="."]
+unique_name_in_owner = true
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("2_fl0q4")

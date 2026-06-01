@@ -8,7 +8,7 @@ using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.MonsterMoves.Intents;
 using MegaCrit.Sts2.Core.MonsterMoves.MonsterMoveStateMachine;
 
-namespace TheGleaner.DemoMod.TheGleaner.Monsters;
+namespace DemoMod.TheGleaner.Monsters;
 
 public class Dimlight : CustomMonsterModel {
     public override int MinInitialHp => 20;
