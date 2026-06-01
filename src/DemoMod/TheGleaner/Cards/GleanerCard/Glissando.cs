@@ -55,11 +55,18 @@ public class Glissando : CustomCardModel {
 				Owner.Creature,
 				this
 			);
+			if (IsUpgraded) {
+			await PowerCmd.Apply<WeakPower>(
+			CombatState.HittableEnemies,
+			DynamicVars["Amount"].BaseValue,
+			Owner.Creature,
+			this
+		);
+		}
 		}
 	}
 
 	protected override void OnUpgrade() {
-		DynamicVars.Damage.UpgradeValueBy(4);
-		DynamicVars["Amount"].UpgradeValueBy(1);
+		DynamicVars.Damage.UpgradeValueBy(3);
 	}
 }

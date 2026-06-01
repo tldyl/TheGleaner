@@ -18,7 +18,7 @@ public class SoundboardThump : CustomCardModel {
 
 	protected override IEnumerable<DynamicVar> CanonicalVars => [
 		new IntVar("Amount", 1),
-		new DamageVar(7, ValueProp.Move)
+		new DamageVar(8, ValueProp.Move)
 	];
 
 	protected override IEnumerable<IHoverTip> ExtraHoverTips => [
