@@ -22,6 +22,9 @@ public class PaperFrost : CustomCardModel {
 	protected override IEnumerable<DynamicVar> CanonicalVars => [
 		new IntVar("Amount", 3)
 	];
+	public override IEnumerable<CardKeyword> CanonicalKeywords => [
+		CardKeyword.Exhaust
+	];
 
 	protected override IEnumerable<IHoverTip> ExtraHoverTips => [
 		HoverTipFactory.FromPower<StrengthPower>(),
@@ -53,8 +56,5 @@ public class PaperFrost : CustomCardModel {
 			Owner.Creature,
 			this
 		);
-	}
-		protected override void OnUpgrade() {
-		AddKeyword(CardKeyword.Exhaust);
 	}
 }

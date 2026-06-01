@@ -15,7 +15,9 @@ namespace DemoMod.TheGleaner.Cards.GleanerCard;
 public class Germination : CustomCardModel {
 	public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
 	protected override IEnumerable<DynamicVar> CanonicalVars => [
-		new PowerVar<GerminationPower>(3)
+		new PowerVar<GerminationPower>(3),
+		new PowerVar<EtchPower>(1)
+		
 	];
 	protected override IEnumerable<IHoverTip> ExtraHoverTips => [
 		HoverTipFactory.FromPower<PoisonPower>(),
@@ -28,6 +30,7 @@ public class Germination : CustomCardModel {
 
 	protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
 		await PowerCmd.Apply<GerminationPower>(Owner.Creature, DynamicVars["GerminationPower"].BaseValue, Owner.Creature, this);
+		await PowerCmd.Apply<EtchPower>(Owner.Creature.CombatState.HittableEnemies, DynamicVars["EtchPower"].BaseValue, Owner.Creature, this);
 	}
 	
 	protected override void OnUpgrade() => DynamicVars["GerminationPower"].UpgradeValueBy(1);

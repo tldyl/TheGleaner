@@ -27,11 +27,11 @@ public class CrashingDown : CustomCardModel
 	public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
 
 	protected override IEnumerable<DynamicVar> CanonicalVars => [
-		new DamageVar(40, ValueProp.Move),
+		new DamageVar(54, ValueProp.Move),
 		new IntVar("powerVal", 1)
 	];
 
-	public CrashingDown() : base(4, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy) {
+	public CrashingDown() : base(5, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy) {
 	}
 
 	protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
@@ -56,7 +56,7 @@ public class CrashingDown : CustomCardModel
 	}
 
 	protected override void OnUpgrade(){
-		DynamicVars.Damage.UpgradeValueBy(10);
+		DynamicVars.Damage.UpgradeValueBy(12);
 		DynamicVars["powerVal"].UpgradeValueBy(1);
 	} 
 }

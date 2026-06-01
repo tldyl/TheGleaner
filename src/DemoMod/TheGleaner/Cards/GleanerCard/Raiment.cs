@@ -24,11 +24,20 @@ public class Raiment : CustomCardModel {
 	];
 	public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
 
-	public Raiment() : base(7, CardType.Skill, CardRarity.Rare, TargetType.Self) {
+	public Raiment() : base(6, CardType.Skill, CardRarity.Rare, TargetType.Self) {
 		
 	}
 	
-	protected override void OnUpgrade() => EnergyCost.UpgradeBy(-2);
+		public override async Task BeforeCombatStart() {
+		if (!IsInCombat || CombatState == null || Owner.Deck.Cards.Contains(this)) {
+			return;
+		}
+		
+		CardCmd.Preview(this);
+		await ScorePileCmd.AddCards(Owner.PlayerCombatState, Owner, this);
+	}
+	
+	protected override void OnUpgrade() => EnergyCost.UpgradeBy(-1);
 	
 	protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
 		foreach (CardModel allCard in Owner.PlayerCombatState.AllCards.Where(c => c.Type == CardType.Attack)) {

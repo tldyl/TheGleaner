@@ -26,18 +26,25 @@ public class RefiningThePhrasing : CustomCardModel {
 	public RefiningThePhrasing() : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.Self) {
 	}
 
-	protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
-		if (CurrentUpgradeLevel > 0) {
-			CardModel cpy = CreateClone();
-			cpy.DowngradeInternal();
-			await ScorePileCmd.AddCards(Owner.PlayerCombatState, Owner, cpy);
-			CardCmd.Preview(cpy);
+	public override IEnumerable<CardKeyword> CanonicalKeywords => [
+		CardKeyword.Exhaust
+	];
+
+	public override async Task BeforeCombatStart() {
+		if (!IsInCombat || CombatState == null || Owner.Deck.Cards.Contains(this)) {
+			return;
 		}
+		
+		CardCmd.Preview(this);
+		await ScorePileCmd.AddCards(Owner.PlayerCombatState, Owner, this);
+	}
+
+	protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
 		await CardPileCmd.Draw(choiceContext, DynamicVars.Cards.BaseValue, Owner, false);
 		await ScorePileCmd.Glean(Owner, choiceContext, DynamicVars["Amount"].BaseValue, this);
 	}
 
 	protected override void OnUpgrade() {
-		AddKeyword(CardKeyword.Exhaust);
+		DynamicVars["Amount"].UpgradeValueBy(1);
 	}
 }

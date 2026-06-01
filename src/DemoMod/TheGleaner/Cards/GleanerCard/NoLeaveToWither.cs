@@ -32,10 +32,6 @@ public class NoLeaveToWither : CustomCardModel
 		HoverTipFactory.FromCard<HowlOfWrath>()
 	];
 
-	public override IEnumerable<CardKeyword> CanonicalKeywords => [
-		CardKeyword.Exhaust
-	];
-
 	public NoLeaveToWither() : base(1, CardType.Skill, CardRarity.Rare, TargetType.Self)
 	{
 	}

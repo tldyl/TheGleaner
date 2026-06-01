@@ -20,7 +20,7 @@ namespace DemoMod.TheGleaner.Cards.GleanerCard;
 public class Windmill : CustomCardModel {
 	public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
 	protected override IEnumerable<DynamicVar> CanonicalVars => [
-		new DamageVar(6, ValueProp.Move),
+		new DamageVar(5, ValueProp.Move),
 		new RepeatVar(4),
 		new IntVar("Debuff", 1)
 	];
@@ -63,6 +63,6 @@ public class Windmill : CustomCardModel {
 	}
 
 	protected override void OnUpgrade() {
-		DynamicVars.Damage.UpgradeValueBy(3);
+		DynamicVars.Damage.UpgradeValueBy(2);
 	}
 }

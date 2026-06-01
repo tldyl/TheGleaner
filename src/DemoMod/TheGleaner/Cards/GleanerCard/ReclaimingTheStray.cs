@@ -58,7 +58,6 @@ public override IEnumerable<CardKeyword> CanonicalKeywords => [
 	}
 
 	protected override void OnUpgrade() {
-		DynamicVars.Block.UpgradeValueBy(1);
-		RemoveKeyword(CardKeyword.Exhaust);
+		DynamicVars.Block.UpgradeValueBy(3);
 	}
 }

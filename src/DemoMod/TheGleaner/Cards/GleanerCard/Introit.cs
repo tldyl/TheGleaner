@@ -22,9 +22,9 @@ namespace DemoMod.TheGleaner.Cards.GleanerCard;
 public class Introit : CustomCardModel {
 	public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
 	protected override IEnumerable<DynamicVar> CanonicalVars => [
-		new DamageVar(10, ValueProp.Move),
+		new DamageVar(9, ValueProp.Move),
 		new RepeatVar(1),
-		new IntVar("Amount", 2)
+		new IntVar("Amount", 1)
 	];
 
 	public Introit() : base(2, CardType.Attack, CardRarity.Common, TargetType.AllEnemies) {
@@ -48,5 +48,6 @@ public class Introit : CustomCardModel {
 
 	protected override void OnUpgrade() {
 		DynamicVars.Damage.UpgradeValueBy(2);
+		DynamicVars["Amount"].UpgradeValueBy(1);
 	}
 }

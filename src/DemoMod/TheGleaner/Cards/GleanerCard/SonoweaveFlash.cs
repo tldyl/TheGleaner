@@ -19,8 +19,8 @@ public class SonoweaveFlash : CustomCardModel {
 	public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
 	
 	protected override IEnumerable<DynamicVar> CanonicalVars => [
-		new CardsVar(1),
-		new DamageVar(7, ValueProp.Move)
+		new CardsVar(2),
+		new DamageVar(11, ValueProp.Move)
 	];
 	
 	protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromKeyword(CustomEnums.Score)];
@@ -58,5 +58,5 @@ public class SonoweaveFlash : CustomCardModel {
 		}
 	}
 	
-	protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(2);
+	protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(3);
 }
