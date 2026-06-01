@@ -1,5 +1,6 @@
 using DemoMod.TheGleaner.Acts;
 using DemoMod.TheGleaner.Config;
+using HarmonyLib;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Random;
 using MegaCrit.Sts2.Core.Unlocks;
@@ -7,6 +8,7 @@ using MegaCrit.Sts2.Core.Unlocks;
 namespace TheGleaner.DemoMod.TheGleaner.Patches;
 
 public class ActModelPatch {
+    [HarmonyPatch(typeof(ActModel), "GetRandomList")]
     public static class PatchGetRandomList {
         public static void Postfix(Rng rng, UnlockState unlockState, bool isMultiplayer, ref IEnumerable<ActModel> __result) {
             List<ActModel> list = __result.ToList();
