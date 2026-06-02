@@ -49,9 +49,11 @@ public class Whispers : CustomCardModel {
 			DynamicVars.Cards.IntValue
 		);
 
+		List<CardModel> cards = drawPile.Cards.ToList();
+		cards.Sort((x, y) => x.Title.CompareTo(y.Title));
 		IEnumerable<CardModel> selectedCards = await CardSelectCmd.FromSimpleGrid(
 			choiceContext,
-			drawPile.Cards,
+			cards,
 			Owner,
 			prefs
 		);
