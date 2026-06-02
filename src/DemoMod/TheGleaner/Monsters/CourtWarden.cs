@@ -35,7 +35,7 @@ public class CourtWarden : CustomMonsterModel {
     }
     
     private async Task SummonMove(IReadOnlyList<Creature> targets) {
-        await CreatureCmd.Add<SummonedTransient>(CombatState, "transient");
+        await CreatureCmd.Add<SummonedTransient>(CombatState);
     }
 
     private async Task BuffMove(IReadOnlyList<Creature> targets) {
