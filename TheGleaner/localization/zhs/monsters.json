@@ -72,5 +72,18 @@
   "DEMOMOD-SNAKE_PLANT_MATRIARCH.name": "蛇花主母",
   "DEMOMOD-SNAKE_PLANT_MATRIARCH.moves.BITE_MOVE.title": "噬咬",
   "DEMOMOD-SNAKE_PLANT_MATRIARCH.moves.WEAK_SPORE_MOVE.title": "虚弱孢子",
-  "DEMOMOD-SNAKE_PLANT_MATRIARCH.moves.BITE_AGAIN_MOVE.title": "噬咬"
+  "DEMOMOD-SNAKE_PLANT_MATRIARCH.moves.BITE_AGAIN_MOVE.title": "噬咬",
+  "DEMOMOD-SIREN_CULTIST.name": "塞壬邪教徒",
+  "DEMOMOD-SIREN_CULTIST.moves.BUFF_MOVE.title": "开腔",
+  "DEMOMOD-SIREN_CULTIST.moves.ATTACK_MOVE.title": "攻击",
+  "DEMOMOD-SCRUTINY_DOOR.name": "细看之门",
+  "DEMOMOD-SCRUTINY_DOOR.moves.STATUS_MOVE.title": "干扰",
+  "DEMOMOD-SCRUTINY_DOOR.moves.PUNCH_MOVE.title": "突然一拳",
+  "DEMOMOD-HUNGER_DOOR.name": "饥饿之门",
+  "DEMOMOD-HUNGER_DOOR.moves.STATUS_MOVE.title": "多重爪击",
+  "DEMOMOD-HUNGER_DOOR.moves.PUNCH_MOVE.title": "噬咬",
+  "DEMOMOD-GRASP_DOOR.name": "紧握之门",
+  "DEMOMOD-GRASP_DOOR.moves.STATUS_MOVE.title": "盾击",
+  "DEMOMOD-GRASP_DOOR.moves.PUNCH_MOVE.title": "连击",
+  "DEMOMOD-GRASP_DOOR.moves.DEFEND_MOVE.title": "防护"
 }

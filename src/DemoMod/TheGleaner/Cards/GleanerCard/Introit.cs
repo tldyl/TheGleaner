@@ -27,6 +27,10 @@ public class Introit : CustomCardModel {
 		new IntVar("Amount", 1)
 	];
 
+	protected override IEnumerable<IHoverTip> ExtraHoverTips => [
+		HoverTipFactory.FromKeyword(CustomEnums.Glean)
+	];
+
 	public Introit() : base(2, CardType.Attack, CardRarity.Common, TargetType.AllEnemies) {
 		
 	}

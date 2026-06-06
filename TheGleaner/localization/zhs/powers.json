@@ -141,5 +141,11 @@
   "DEMOMOD-SHIFTING_POWER.smartDescription": "每当[gold]{OwnerName}[/gold]受到伤害，它将在回合结束前失去相应点数的[gold]力量[/gold]。",
   "DEMOMOD-MALLEABLE_POWER.title": "柔韧",
   "DEMOMOD-MALLEABLE_POWER.description": "受到[gold]攻击[/gold]时，获得[blue]3[/blue]点[gold]格挡[/gold]。\n每触发一次，获得的[gold]格挡[/gold]值都会增加[blue]1[/blue]。\n在你的回合开始时重置。",
-  "DEMOMOD-MALLEABLE_POWER.smartDescription": "受到[gold]攻击[/gold]时，获得[blue]{DisplayAmount}[/blue]点[gold]格挡[/gold]。\n每触发一次，获得的[gold]格挡[/gold]值都会增加[blue]1[/blue]。\n在你的回合开始时重新变为[blue]{Amount}[/blue]点。"
+  "DEMOMOD-MALLEABLE_POWER.smartDescription": "受到[gold]攻击[/gold]时，获得[blue]{DisplayAmount}[/blue]点[gold]格挡[/gold]。\n每触发一次，获得的[gold]格挡[/gold]值都会增加[blue]1[/blue]。\n在你的回合开始时重新变为[blue]{Amount}[/blue]点。",
+  "DEMOMOD-TALKATIVE_POWER.title": "开腔欲望",
+  "DEMOMOD-TALKATIVE_POWER.description": "你的回合开始时，将一张[gold]开腔欲望[/gold]加入你的手牌。\n这个效果持续直到[gold]塞壬邪教徒[/gold]死亡。",
+  "DEMOMOD-TALKATIVE_POWER.smartDescription": "你的回合开始时，将[blue]{Amount}[/blue]张[gold]开腔欲望[/gold]加入你的手牌。\n这个效果持续直到[gold]塞壬邪教徒[/gold]死亡。",
+  "DEMOMOD-MAKER_APPEAR_POWER.title": "制造者显现",
+  "DEMOMOD-MAKER_APPEAR_POWER.description": "获得这个效果时，获得[blue]1[/blue]点[gold]力量[/gold]。\n受到的一切伤害翻倍，每个意图将额外执行一次。\n每打出[blue]3[/blue]张牌或击杀当前敌人，这个效果将转移至下一名敌人。",
+  "DEMOMOD-MAKER_APPEAR_POWER.smartDescription": "获得这个效果时，获得[blue]1[/blue]点[gold]力量[/gold]。\n受到的一切伤害翻倍，每个意图将额外执行一次。\n每打出[blue]3[/blue]张牌或击杀当前敌人，这个效果将转移至下一名敌人。\n(已打出[blue]{DisplayAmount}[/blue]张牌)"
 }

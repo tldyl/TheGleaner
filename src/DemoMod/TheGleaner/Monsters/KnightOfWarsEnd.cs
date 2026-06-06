@@ -174,7 +174,9 @@ public class KnightOfWarsEnd : CustomMonsterModel {
             .OnlyPlayAnimOnce()
             .WithNoAttackerAnim()
             .Execute(null);
-        Creature.GetPower<DeclarationOfTheEndPower>().DynamicVars["DisplayAmount"].BaseValue = 0;
-        Creature.GetPower<DeclarationOfTheEndPower>().RefreshCounter();
+        if (Creature.IsAlive) {
+            Creature.GetPower<DeclarationOfTheEndPower>().DynamicVars["DisplayAmount"].BaseValue = 0;
+            Creature.GetPower<DeclarationOfTheEndPower>().RefreshCounter();
+        }
     }
 }

@@ -271,5 +271,7 @@
   "DEMOMOD-ARBITER_OF_FOCUS.title": "集中掌握",
   "DEMOMOD-ARBITER_OF_FOCUS.description": "打出带有[gold]生之光[/gold]侵蚀的卡牌时，在本回合获得1点[gold]集中[/gold]。",
   "DEMOMOD-ARBITER_OF_HEAL.title": "生命掌握",
-  "DEMOMOD-ARBITER_OF_HEAL.description": "打出带有[gold]生之光[/gold]侵蚀的卡牌时，回复4点生命。"
+  "DEMOMOD-ARBITER_OF_HEAL.description": "打出带有[gold]生之光[/gold]侵蚀的卡牌时，回复4点生命。",
+  "DEMOMOD-TALKATIVE.title": "开腔欲望",
+  "DEMOMOD-TALKATIVE.description": "获得{WeakPower}层[gold]虚弱[/gold]。\n这张牌在你的手牌中时，你每打出一张其他牌，[gold]塞壬邪教徒[/gold]就获得{StrengthPower}点[gold]力量[/gold]。"
 }
