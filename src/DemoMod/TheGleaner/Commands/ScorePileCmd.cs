@@ -124,6 +124,19 @@ public static class ScorePileCmd {
 	public static async Task RefreshScorePileStatus(Player player) {
 		ScorePile pile = GetOrCreateScorePile(player.PlayerCombatState);
 		int capacity = GetCapacity(player);
+		int strikeAndArrowCount = pile.Cards.Count(c => c is IArrowCard || c.Tags.Contains(CardTag.Strike));
+		if (strikeAndArrowCount >= 2 && pile.Cards.Any(c => c is IArrowCard)) {
+			List<CardModel> toRemove = pile.Cards
+				.Where(c => c.Tags.Contains(CardTag.Strike) || c is IArrowCard)
+				.ToList();
+			await CardPileCmd.RemoveFromCombat(toRemove, true);
+			ClusterStrike clusterStrike = player.Creature.CombatState.CreateCard<ClusterStrike>(player);
+			clusterStrike.setCards(toRemove);
+			Log.Info($"clusterStrike netId: {NetCombatCardDb.Instance.IdCardForTesting(clusterStrike)}");
+			pile.AddInternal(clusterStrike, 0);
+			CardCmd.Preview(clusterStrike);
+			await Hook.AfterCardChangedPiles(player.RunState, player.Creature.CombatState, clusterStrike, PileType.None, null);
+		}
 		while (pile.Cards.Count > capacity) {
 			CardModel bottomCard = pile.Cards.Last();
 			pile.RemoveInternal(bottomCard);

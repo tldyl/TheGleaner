@@ -27,7 +27,11 @@ public class SwiftArrow : CustomCardModel, IArrowCard {
 		new IntVar("Amount", 2),
 		new DamageVar(4, ValueProp.Move)
 	];
-	protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<StrengthPower>(), HoverTipFactory.Static(StaticHoverTip.Block)];
+	protected override IEnumerable<IHoverTip> ExtraHoverTips => [
+		HoverTipFactory.FromPower<StrengthPower>(),
+		HoverTipFactory.Static(StaticHoverTip.Block),
+		HoverTipFactory.FromKeyword(CustomEnums.ArrowKeyword)
+	];
 	protected override HashSet<CardTag> CanonicalTags => [CustomEnums.Arrow];
 
 	public SwiftArrow() : base(0, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy) {

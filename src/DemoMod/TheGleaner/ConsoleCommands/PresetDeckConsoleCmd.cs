@@ -52,7 +52,7 @@ public class PresetDeckConsoleCmd : AbstractConsoleCmd {
 			ModelDb.Card<StrikeGleaner>(),
 			ModelDb.Card<DefendGleaner>(),
 			
-			ModelDb.Card<ClusterStringWeave>(),
+			ModelDb.Card<StrikeGleaner>(),
 			ModelDb.Card<StrikeGleaner>(),
 			ModelDb.Card<StrikeGleaner>(),
 			ModelDb.Card<StrikeGleaner>(),

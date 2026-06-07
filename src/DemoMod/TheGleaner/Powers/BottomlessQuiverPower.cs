@@ -71,8 +71,8 @@ public class BottomlessQuiverPower : CustomPowerModel {
         PileType oldPileType,
         AbstractModel? source) {
         if (triggeredThisTurn && card.Pile is ScorePile) {
-            await ScorePileCmd.RefreshScorePileStatus(Owner.Player);
             triggeredThisTurn = false;
+            await ScorePileCmd.RefreshScorePileStatus(Owner.Player);
         }
     }
     

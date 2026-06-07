@@ -10,6 +10,7 @@ using MegaCrit.Sts2.Core.Commands.Builders;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
@@ -24,6 +25,9 @@ public class BusterArrow : CustomCardModel, IArrowCard {
 		new DamageVar(16, ValueProp.Move)
 	];
 	protected override HashSet<CardTag> CanonicalTags => [CustomEnums.Arrow];
+	protected override IEnumerable<IHoverTip> ExtraHoverTips => [
+		HoverTipFactory.FromKeyword(CustomEnums.ArrowKeyword)
+	];
 
 	public BusterArrow() : base(3, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy) {
 		

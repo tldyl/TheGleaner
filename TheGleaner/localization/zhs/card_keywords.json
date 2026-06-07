@@ -10,6 +10,7 @@
   "DEMOMOD-PHRASE.title": "乐句",
   "DEMOMOD-PHRASE.description": "由[gold]噪声[/gold]转化而来的正面卡牌。",
   "DEMOMOD-SCORE.title": "乐谱",
-  "DEMOMOD-SCORE.description": "每回合一次，你可以从[gold]乐谱[/gold]中取出任意张牌。"
-  
+  "DEMOMOD-SCORE.description": "每回合一次，你可以从[gold]乐谱[/gold]中取出任意张牌。",
+  "DEMOMOD-ARROWKEYWORD.title": "箭镞",
+  "DEMOMOD-ARROWKEYWORD.description": "进入[gold]乐谱[/gold]后，如果[gold]乐谱[/gold]中有其他[gold]箭镞[/gold]或打击牌，它们会自动合并为一张[gold]集束箭镞[/gold]。\n每合并一张，[gold]集束箭镞[/gold]的攻击段数就会增加[blue]1[/blue]。"
 }

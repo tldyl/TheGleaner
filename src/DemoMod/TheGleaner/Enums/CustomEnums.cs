@@ -28,6 +28,9 @@ public class CustomEnums {
     [CustomEnum, KeywordProperties(AutoKeywordPosition.Before)]
     public static CardKeyword Phrase;
 
+    [CustomEnum, KeywordProperties(AutoKeywordPosition.Before)]
+    public static CardKeyword ArrowKeyword;
+
     [CustomEnum]
     public static LocalCostModifierExpiration WhenEnterDiscardPile;
 }

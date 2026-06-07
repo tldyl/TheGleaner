@@ -1,5 +1,6 @@
 using BaseLib.Abstracts;
 using BaseLib.Utils;
+using DemoMod.TheGleaner.Enums;
 using DemoMod.TheGleaner.Nodes.Vfx;
 using DemoMod.TheGleaner.Utils;
 using Godot;
@@ -18,18 +19,18 @@ using MegaCrit.Sts2.Core.ValueProps;
 namespace DemoMod.TheGleaner.Cards.GleanerCard;
 
 [Pool(typeof(TokenCardPool))]
-public class ClusterStrike : CustomCardModel, IAppendDescriptionCard {
+public class ClusterStrike : CustomCardModel, IAppendDescriptionCard, IArrowCard {
 	public override string PortraitPath => GetPortraitPath();
 
-	protected override HashSet<CardTag> CanonicalTags => [CardTag.Strike];
+	protected override HashSet<CardTag> CanonicalTags => [CustomEnums.Arrow];
 
 	protected override IEnumerable<IHoverTip> ExtraHoverTips {
 		get {
-			return cards.Where(card => card is IArrowCard).Select(card =>
+			return [..cards.Where(card => card is IArrowCard and not ClusterStrike).Select(card =>
 			{
 				IArrowCard arrowCard = (IArrowCard)card;
 				return (IHoverTip)new HoverTip(arrowCard.getArrowName(), arrowCard.getArrowDescription());
-			});
+			}), HoverTipFactory.FromKeyword(CustomEnums.ArrowKeyword)];
 		}
 	}
 
@@ -78,7 +79,7 @@ public class ClusterStrike : CustomCardModel, IAppendDescriptionCard {
 				this.cards.Add(card);
 			}
 
-			if (card is IArrowCard arrowCard) {
+			if (card is IArrowCard arrowCard and not ClusterStrike) {
 				arrowCard.onMerge(this);
 			}
 
@@ -170,7 +171,7 @@ public class ClusterStrike : CustomCardModel, IAppendDescriptionCard {
 	public string AppendDescription() {
 		List<string> descriptions = [];
 		descriptions.AddRange(cards
-			.Where(card => card is IArrowCard)
+			.Where(card => card is IArrowCard and not ClusterStrike)
 			.Select(card => "[gold]" + ((IArrowCard)card).getArrowName().GetFormattedText() + "[/gold]" + new LocString("cards", "DEMOMOD-CLUSTER_STRIKE.period").GetFormattedText() + "\n"));
 
 		return string.Join("", descriptions);
@@ -181,5 +182,17 @@ public class ClusterStrike : CustomCardModel, IAppendDescriptionCard {
 		List<CardModel> _cards = [];
 		_cards.AddRange(cards);
 		cards = _cards;
+	}
+
+	public LocString getArrowName() {
+		throw new NotImplementedException();
+	}
+
+	public LocString getArrowDescription() {
+		throw new NotImplementedException();
+	}
+
+	public async Task arrowEffect(PlayerChoiceContext choiceContext, CardPlay cardPlay, List<DamageResult> damageResults, CardModel clusterCard, AttackContext context) {
+		
 	}
 }
