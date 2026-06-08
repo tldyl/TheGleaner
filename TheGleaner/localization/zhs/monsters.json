@@ -85,5 +85,12 @@
   "DEMOMOD-GRASP_DOOR.name": "紧握之门",
   "DEMOMOD-GRASP_DOOR.moves.STATUS_MOVE.title": "盾击",
   "DEMOMOD-GRASP_DOOR.moves.PUNCH_MOVE.title": "连击",
-  "DEMOMOD-GRASP_DOOR.moves.DEFEND_MOVE.title": "防护"
+  "DEMOMOD-GRASP_DOOR.moves.DEFEND_MOVE.title": "防护",
+  "DEMOMOD-ZAPFLI.name": "电光蝇",
+  "DEMOMOD-ZAPFLI.moves.LIGHT_BLUNT_MOVE.title": "轻击",
+  "DEMOMOD-ZAPFLI.moves.ESCAPE_MOVE.title": "逃离",
+  "DEMOMOD-ZAPFLI_SORCERESS.name": "电光蝇术士",
+  "DEMOMOD-ZAPFLI_SORCERESS.moves.LIGHT_BLUNT_MOVE.title": "轻击",
+  "DEMOMOD-ZAPFLI_SORCERESS.moves.HEAVY_BLUNT_MOVE.title": "重击",
+  "DEMOMOD-ZAPFLI_SORCERESS.moves.HEAVY_BLUNT_BUFF_MOVE.title": "强化"
 }
