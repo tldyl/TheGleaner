@@ -61,9 +61,9 @@ public class ZapfliSorceress : CustomMonsterModel {
     }
 
     private async Task SummonZapfli(int amount) {
-        string slotName = CombatState.Encounter.Slots.LastOrDefault(s => CombatState.Enemies.All(c => c.SlotName != s), string.Empty);
         for (int _ = 0; _ < amount; _++) {
-            await PowerCmd.Apply<SorceressBoundPower>(await CreatureCmd.Add<Zapfli>(CombatState, slotName), 1m, Creature, null);
+            string slotName = CombatState.Encounter.Slots.LastOrDefault(s => CombatState.Enemies.All(c => c.SlotName != s), string.Empty);
+            await CreatureCmd.Add<Zapfli>(CombatState, slotName);
         }
     }
     
