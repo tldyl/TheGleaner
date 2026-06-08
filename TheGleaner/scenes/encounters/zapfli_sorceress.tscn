@@ -1,0 +1,25 @@
+[gd_scene format=3 uid="uid://bos7mts603k8y"]
+
+[node name="ZapfliSorceress" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1920.0
+offset_bottom = 1080.0
+
+[node name="Slot0" type="Marker2D" parent="."]
+position = Vector2(1349, 718)
+
+[node name="Slot1" type="Marker2D" parent="."]
+position = Vector2(989, 581)
+
+[node name="Slot2" type="Marker2D" parent="."]
+position = Vector2(1732, 576)
+
+[node name="Slot3" type="Marker2D" parent="."]
+position = Vector2(1136, 386)
+
+[node name="Slot4" type="Marker2D" parent="."]
+position = Vector2(1571, 398)
+
+[node name="Slot5" type="Marker2D" parent="."]
+position = Vector2(1361, 284)
