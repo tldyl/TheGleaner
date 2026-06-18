@@ -195,4 +195,9 @@ public class ClusterStrike : CustomCardModel, IAppendDescriptionCard, IArrowCard
 	public async Task arrowEffect(PlayerChoiceContext choiceContext, CardPlay cardPlay, List<DamageResult> damageResults, CardModel clusterCard, AttackContext context) {
 		
 	}
+
+	public void onMerge(CardModel clusterCard) {
+		clusterCard.DynamicVars["Amount"].UpgradeValueBy(DynamicVars["Amount"].BaseValue);
+		BaseReplayCount += clusterCard.BaseReplayCount;
+	}
 }
