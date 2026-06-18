@@ -156,5 +156,8 @@
   "DEMOMOD-CHARGE_POWER.smartDescription": "当被给予[gold]电荷[/gold]时，如果目标身上已有[gold]电荷[/gold]，则改为受到[blue]10[/blue]点伤害。\n[gold]电荷[/gold]每回合减少一层。",
   "DEMOMOD-SORCERESS_BOUND_POWER.title": "术士的束缚",
   "DEMOMOD-SORCERESS_BOUND_POWER.description": "当[gold]电光蝇术士[/gold]死亡时，[gold]电光蝇[/gold]会获得自由。",
-  "DEMOMOD-SORCERESS_BOUND_POWER.smartDescription": "当[gold]{ApplierName}[/gold]死亡时，[gold]{OwnerName}[/gold]会获得自由。"
+  "DEMOMOD-SORCERESS_BOUND_POWER.smartDescription": "当[gold]{ApplierName}[/gold]死亡时，[gold]{OwnerName}[/gold]会获得自由。",
+  "DEMOMOD-FORESHADOWING_POWER.title": "伏笔",
+  "DEMOMOD-FORESHADOWING_POWER.description": "下[blue]X[/blue]个回合开始时，获得{Energy:energyIcons()}。",
+  "DEMOMOD-FORESHADOWING_POWER.smartDescription": "下[blue]{Amount}[/blue]个回合开始时，获得{Energy:energyIcons()}。"
 }
