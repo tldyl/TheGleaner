@@ -50,7 +50,7 @@ public static class ScorePileCmd {
 			combatStartDeckCount = snapshotDeckCount;
 		}
 
-		return 7;
+		return 3 + combatStartDeckCount / 5;
 	}
 
 	public static void InitializeCapacityFromCurrentDeck(Player player) {
