@@ -3,8 +3,10 @@ using BaseLib.Utils;
 using DemoMod.TheGleaner.Commands;
 using DemoMod.TheGleaner.Enums;
 using DemoMod.TheGleaner.Pools;
+using DemoMod.TheGleaner.Powers;
 using DemoMod.TheGleaner.Utils;
 using Godot;
+using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.CardSelection;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Commands.Builders;
@@ -13,40 +15,37 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
-using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.Models;
-using MegaCrit.Sts2.Core.Nodes;
+using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.ValueProps;
-using DemoMod.TheGleaner.Powers;
 
 namespace DemoMod.TheGleaner.Cards.GleanerCard;
 
 [Pool(typeof(CardPool))]
-public class SmutExtract : CustomCardModel {
+public class ScytheKick : CustomCardModel
+{
 	public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
+
 	protected override IEnumerable<DynamicVar> CanonicalVars => [
-		new PowerVar<PoisonPower>(4),
-		new DamageVar(4, ValueProp.Move)
-	];
-	protected override IEnumerable<IHoverTip> ExtraHoverTips => [
-		HoverTipFactory.FromPower<PoisonPower>(),
+		new DamageVar(18, ValueProp.Move),
+		new BlockVar(12, ValueProp.Move)
 	];
 
-	public SmutExtract() : base(1, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy) {
-		
+	public ScytheKick() : base(3, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy) {
 	}
-
-	protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
-		await PowerCmd.Apply<PoisonPower>(cardPlay.Target, DynamicVars["PoisonPower"].BaseValue, Owner.Creature, this);
-			AttackCommand _ = await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
+	public override bool GainsBlock => true;
+	protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
+	{
+		await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, cardPlay);
+		AttackCommand _ = await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
 			.FromCard(this)
+			.WithNoAttackerAnim()
 			.Targeting(cardPlay.Target)
 			.Execute(choiceContext);
 	}
-	
-		protected override void OnUpgrade()
-	{
-		DynamicVars["PoisonPower"].UpgradeValueBy(1);
-		DynamicVars.Damage.UpgradeValueBy(1);
-	}
+
+	protected override void OnUpgrade(){
+		DynamicVars.Block.UpgradeValueBy(2);
+		DynamicVars.Damage.UpgradeValueBy(3);
+	} 
 }

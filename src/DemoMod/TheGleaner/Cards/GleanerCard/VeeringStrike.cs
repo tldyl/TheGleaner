@@ -19,7 +19,7 @@ public class VeeringStrike : CustomCardModel {
 	protected override IEnumerable<DynamicVar> CanonicalVars =>
 	[
 		new DamageVar(4, ValueProp.Move),
-		new RepeatVar(4)
+		new RepeatVar(3)
 	];
 	protected override IEnumerable<IHoverTip> ExtraHoverTips => [
 		HoverTipFactory.FromKeyword(CustomEnums.Score)

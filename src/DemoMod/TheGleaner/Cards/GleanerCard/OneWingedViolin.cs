@@ -26,7 +26,7 @@ public class OneWingedViolin : CustomCardModel {
 	];
 	public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
 	
-	public OneWingedViolin() : base(1, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy) {
+	public OneWingedViolin() : base(2, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy) {
 	}
 	
 	public override IEnumerable<CardKeyword> CanonicalKeywords => [CustomEnums.Resonance];

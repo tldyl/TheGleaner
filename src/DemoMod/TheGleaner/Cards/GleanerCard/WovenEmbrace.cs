@@ -17,14 +17,14 @@ public class WovenEmbrace : CustomCardModel {
 	public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
 	protected override IEnumerable<DynamicVar> CanonicalVars => [
 		new PowerVar<PoisonPower>(3),
-		new BlockVar(7, ValueProp.Move)
+		new BlockVar(8, ValueProp.Move)
 	];
 	public override bool GainsBlock => true;
 	protected override IEnumerable<IHoverTip> ExtraHoverTips => [
 		HoverTipFactory.FromPower<PoisonPower>()
 	];
 
-	public WovenEmbrace() : base(2, CardType.Skill, CardRarity.Common, TargetType.Self) {
+	public WovenEmbrace() : base(2, CardType.Skill, CardRarity.Uncommon, TargetType.Self) {
 		
 	}
 

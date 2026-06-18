@@ -17,7 +17,7 @@ public class ForgingAtDawn : CustomCardModel {
 
 	protected override IEnumerable<DynamicVar> CanonicalVars =>
 	[
-		new IntVar("StrVal", 2),
+		new IntVar("StrVal", 3),
 		new IntVar("DexVal", 1),
 	];
 

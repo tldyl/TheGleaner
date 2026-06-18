@@ -23,19 +23,14 @@ public class RefiningThePhrasing : CustomCardModel {
 	protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromKeyword(CustomEnums.Glean)];
 
 	
-	public RefiningThePhrasing() : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.Self) {
+	public RefiningThePhrasing() : base(1, CardType.Skill, CardRarity.Common, TargetType.Self) {
 	}
 
-	public override IEnumerable<CardKeyword> CanonicalKeywords => [
-		CardKeyword.Exhaust
-	];
-
-	public override async Task BeforeCombatStart() {
-		if (!IsInCombat || CombatState == null || Owner.Deck.Cards.Contains(this)) {
+		public override async Task BeforeCombatStart() {
+		if (!IsInCombat || CombatState == null || !IsUpgraded || Owner.Deck.Cards.Contains(this)) {
 			return;
 		}
-		
-		CardCmd.Preview(this);
+
 		await ScorePileCmd.AddCards(Owner.PlayerCombatState, Owner, this);
 	}
 
@@ -44,7 +39,4 @@ public class RefiningThePhrasing : CustomCardModel {
 		await ScorePileCmd.Glean(Owner, choiceContext, DynamicVars["Amount"].BaseValue, this);
 	}
 
-	protected override void OnUpgrade() {
-		DynamicVars["Amount"].UpgradeValueBy(1);
-	}
 }

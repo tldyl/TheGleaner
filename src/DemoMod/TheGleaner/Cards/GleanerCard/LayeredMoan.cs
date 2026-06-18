@@ -19,7 +19,7 @@ namespace DemoMod.TheGleaner.Cards.GleanerCard;
 public class LayeredMoan : CustomCardModel {
 	public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
 	protected override IEnumerable<DynamicVar> CanonicalVars => [
-		new DamageVar(6, ValueProp.Move),
+		new DamageVar(5, ValueProp.Move),
 		new CardsVar(1)
 	];
 	protected override IEnumerable<IHoverTip> ExtraHoverTips => [

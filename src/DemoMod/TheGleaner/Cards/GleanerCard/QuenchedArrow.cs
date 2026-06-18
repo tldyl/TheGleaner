@@ -24,14 +24,14 @@ public class QuenchedArrow : CustomCardModel, IArrowCard {
 	protected override IEnumerable<DynamicVar> CanonicalVars => [
 		new IntVar("Amount", 0),
 		new IntVar("Grow", 50),
-		new DamageVar(12, ValueProp.Move)
+		new DamageVar(14, ValueProp.Move)
 	];
 	protected override HashSet<CardTag> CanonicalTags => [CustomEnums.Arrow];
 	protected override IEnumerable<IHoverTip> ExtraHoverTips => [
 		HoverTipFactory.FromKeyword(CustomEnums.ArrowKeyword)
 	];
 
-	public QuenchedArrow() : base(2, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy) {
+	public QuenchedArrow() : base(2, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy) {
 	}
 
 	protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
@@ -79,7 +79,7 @@ public class QuenchedArrow : CustomCardModel, IArrowCard {
 		card.DynamicVars["Amount"].UpgradeValueBy(card.DynamicVars["Grow"].BaseValue);
 	}
 	
-	protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(2);
+	protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(4);
 	
 	public LocString getArrowName() {
 		return new LocString("cards", "DEMOMOD-QUENCHED_ARROW.arrowName");

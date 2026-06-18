@@ -19,7 +19,7 @@ public class SonoweaveFlash : CustomCardModel {
 	public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
 	
 	protected override IEnumerable<DynamicVar> CanonicalVars => [
-		new CardsVar(2),
+		new CardsVar(1),
 		new DamageVar(11, ValueProp.Move)
 	];
 	
@@ -43,7 +43,7 @@ public class SonoweaveFlash : CustomCardModel {
 		}
 	}
 
-	public SonoweaveFlash() : base(1, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy) {
+	public SonoweaveFlash() : base(2, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy) {
 		
 	}
 

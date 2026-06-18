@@ -1,50 +1,36 @@
 using BaseLib.Abstracts;
 using BaseLib.Utils;
-using DemoMod.TheGleaner.Enums;
 using DemoMod.TheGleaner.Pools;
-using DemoMod.TheGleaner.Utils;
-using MegaCrit.Sts2.Core.Combat;
+using DemoMod.TheGleaner.Powers;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
-using MegaCrit.Sts2.Core.ValueProps;
-using DemoMod.TheGleaner.Powers;
 using MegaCrit.Sts2.Core.Models.Powers;
+using MegaCrit.Sts2.Core.ValueProps;
 
 namespace DemoMod.TheGleaner.Cards.GleanerCard;
+
 [Pool(typeof(CardPool))]
 public class Sonotoxin : CustomCardModel {
 	public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
-
-	protected override IEnumerable<DynamicVar> CanonicalVars =>
-	[
-		new PowerVar<PoisonPower>(4)
+	protected override IEnumerable<DynamicVar> CanonicalVars => [
+		new DynamicVar("StrengthLoss", 5),
+		new PowerVar<PoisonPower>(5)
 	];
-	protected override IEnumerable<IHoverTip> ExtraHoverTips => [
-		HoverTipFactory.FromKeyword(CustomEnums.Score)
-	];
+	protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<StrengthPower>()];
 
-	public Sonotoxin() : base(2, CardType.Skill, CardRarity.Common, TargetType.AllEnemies) {
+	public Sonotoxin() : base(2, CardType.Skill, CardRarity.Common, TargetType.AnyEnemy) {
 	}
 
 	protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
-		 await PowerCmd.Apply<PoisonPower>(Owner.Creature.CombatState.HittableEnemies, DynamicVars["PoisonPower"].BaseValue, Owner.Creature, this);
-	}
-
-	public override async Task BeforeTurnEnd(PlayerChoiceContext choiceContext, CombatSide side) {
-		CardPile? pile = Pile;
-
-		if (pile != null && pile.Type != CustomEnums.ScorePile || side != Owner.Creature.Side || pile == null) {
-			return;
-		}
-
-		await CardCmd.AutoPlay(choiceContext, this, null);
-		GleanerVfxCmd.CheckScoreIsEmpty(Owner.PlayerCombatState);
+		await PowerCmd.Apply<DampingPower>(cardPlay.Target, DynamicVars["StrengthLoss"].BaseValue, Owner.Creature, this);
+		await PowerCmd.Apply<PoisonPower>(cardPlay.Target, DynamicVars["PoisonPower"].BaseValue, Owner.Creature, this);
 	}
 
 	protected override void OnUpgrade() {
-		DynamicVars["PoisonPower"].UpgradeValueBy(2);
+		DynamicVars["StrengthLoss"].UpgradeValueBy(1);
+		DynamicVars["PoisonPower"].UpgradeValueBy(1);
 	}
 }

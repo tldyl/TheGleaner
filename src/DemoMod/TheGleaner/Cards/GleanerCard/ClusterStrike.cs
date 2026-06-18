@@ -44,7 +44,7 @@ public class ClusterStrike : CustomCardModel, IAppendDescriptionCard, IArrowCard
 
 	public List<CardModel> cards = [];
 
-	public ClusterStrike() : base(2, CardType.Attack, CardRarity.Token, TargetType.AnyEnemy) {
+	public ClusterStrike() : base(1, CardType.Attack, CardRarity.Token, TargetType.AnyEnemy) {
 	}
 
 	private string GetPortraitPath() {
@@ -194,10 +194,5 @@ public class ClusterStrike : CustomCardModel, IAppendDescriptionCard, IArrowCard
 
 	public async Task arrowEffect(PlayerChoiceContext choiceContext, CardPlay cardPlay, List<DamageResult> damageResults, CardModel clusterCard, AttackContext context) {
 		
-	}
-
-	public void onMerge(CardModel clusterCard) {
-		clusterCard.DynamicVars["Amount"].UpgradeValueBy(DynamicVars["Amount"].BaseValue);
-		BaseReplayCount += clusterCard.BaseReplayCount;
 	}
 }

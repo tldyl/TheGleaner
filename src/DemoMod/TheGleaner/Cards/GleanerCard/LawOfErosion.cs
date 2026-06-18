@@ -28,7 +28,7 @@ public class LawOfErosion : CustomCardModel {
 		HoverTipFactory.FromPower<IntangiblePower>(),
 		HoverTipFactory.FromPower<VulnerablePower>()
 	];
-	public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
+
 	public override bool GainsBlock => true;
 
 	public LawOfErosion() : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.AnyEnemy) {

@@ -41,7 +41,7 @@ public class Collapse : CustomCardModel
 			.FromCard(this)
 			.TargetingRandomOpponents(Owner.Creature.CombatState)
 			.WithHitFx("vfx/vfx_heavy_blunt", tmpSfx: "heavy_attack.mp3")
-			.WithHitCount(Owner.Creature.CombatState.HittableEnemies.Count * 2 + 1)
+			.WithHitCount(Owner.Creature.CombatState.HittableEnemies.Count * 2)
 			.Execute(choiceContext);
 
 		List<CardModel> cards = RandomDissonanceCard.getRandomDissonanceCards(

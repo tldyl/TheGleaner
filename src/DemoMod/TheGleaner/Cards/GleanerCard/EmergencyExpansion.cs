@@ -21,16 +21,14 @@ namespace DemoMod.TheGleaner.Cards.GleanerCard;
 public class EmergencyExpansion : CustomCardModel {
 	public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
 
-	protected override IEnumerable<DynamicVar> CanonicalVars => [new BlockVar(8, ValueProp.Move)];
+	protected override IEnumerable<DynamicVar> CanonicalVars => [new BlockVar(7, ValueProp.Move)];
 
 	public override bool GainsBlock => true;
 
 	protected override IEnumerable<IHoverTip> ExtraHoverTips => [
 		HoverTipFactory.FromKeyword(CustomEnums.Score)
 	];
-	public override IEnumerable<CardKeyword> CanonicalKeywords => [
-		CardKeyword.Exhaust
-	];
+	
 	public override async Task BeforeCombatStart() {
 		if (!IsInCombat || CombatState == null || Owner.Deck.Cards.Contains(this)) {
 			return;
@@ -51,5 +49,8 @@ public class EmergencyExpansion : CustomCardModel {
 			CardCmd.Preview(cpy);
 		}
 		await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, cardPlay);
+	}
+			protected override void OnUpgrade() {
+		AddKeyword(CardKeyword.Exhaust);
 	}
 }

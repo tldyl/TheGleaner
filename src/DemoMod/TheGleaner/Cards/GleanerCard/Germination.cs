@@ -15,7 +15,7 @@ namespace DemoMod.TheGleaner.Cards.GleanerCard;
 public class Germination : CustomCardModel {
 	public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
 	protected override IEnumerable<DynamicVar> CanonicalVars => [
-		new PowerVar<GerminationPower>(3),
+		new PowerVar<GerminationPower>(2),
 		new PowerVar<EtchPower>(1)
 		
 	];

@@ -35,7 +35,7 @@ public class EarthedBell : CustomCardModel, IConcertoCard {
 	];
 	public override bool GainsBlock => true;
 
-	public EarthedBell() : base(3, CardType.Attack, CardRarity.Uncommon, TargetType.AllEnemies) {
+	public EarthedBell() : base(3, CardType.Attack, CardRarity.Rare, TargetType.AllEnemies) {
 		
 	}
 

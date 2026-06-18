@@ -21,13 +21,12 @@ public class Glissando : CustomCardModel {
 	public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
 
 	protected override IEnumerable<DynamicVar> CanonicalVars => [
-		new IntVar("Amount", 1),
+		new IntVar("Amount", 2),
 		new DamageVar(8, ValueProp.Move),
-		new PowerVar<VulnerablePower>(1)
+		new PowerVar<VulnerablePower>(2)
 	];
 
 	protected override IEnumerable<IHoverTip> ExtraHoverTips => [
-		HoverTipFactory.FromPower<WeakPower>(),
 		HoverTipFactory.FromPower<VulnerablePower>()
 	];
 
@@ -55,18 +54,10 @@ public class Glissando : CustomCardModel {
 				Owner.Creature,
 				this
 			);
-			if (IsUpgraded) {
-			await PowerCmd.Apply<WeakPower>(
-			CombatState.HittableEnemies,
-			DynamicVars["Amount"].BaseValue,
-			Owner.Creature,
-			this
-		);
-		}
 		}
 	}
 
 	protected override void OnUpgrade() {
-		DynamicVars.Damage.UpgradeValueBy(3);
+		DynamicVars.Damage.UpgradeValueBy(4);
 	}
 }

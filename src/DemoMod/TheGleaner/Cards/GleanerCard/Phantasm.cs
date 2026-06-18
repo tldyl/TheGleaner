@@ -32,11 +32,11 @@ public class Phantasm : CustomCardModel, IAfterTakeCardsFromScore {
 	];
 
 	protected override IEnumerable<DynamicVar> CanonicalVars => [
-		new BlockVar(10, ValueProp.Move),
+		new BlockVar(13, ValueProp.Move),
 		new EnergyVar(1)
 	];
 
-	public Phantasm() : base(3, CardType.Skill, CardRarity.Uncommon, TargetType.Self, true, true) {
+	public Phantasm() : base(4, CardType.Skill, CardRarity.Uncommon, TargetType.Self, true, true) {
 	}
 
 	protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {

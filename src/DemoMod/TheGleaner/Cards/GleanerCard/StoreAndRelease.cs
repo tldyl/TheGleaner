@@ -24,7 +24,7 @@ public class StoreAndRelease : CustomCardModel {
 	];
 
 	protected override IEnumerable<DynamicVar> CanonicalVars => [
-		new DamageVar(4, ValueProp.Move),
+		new DamageVar(0, ValueProp.Move),
 		new IntVar("BlockedDamage", 0)
 	];
 

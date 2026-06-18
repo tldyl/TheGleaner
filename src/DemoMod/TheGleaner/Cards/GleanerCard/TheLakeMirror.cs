@@ -26,7 +26,7 @@ public class TheLakeMirror : CustomCardModel {
 		HoverTipFactory.FromKeyword(CustomEnums.Resonance)
 	];
 
-	public TheLakeMirror() : base(1, CardType.Power, CardRarity.Uncommon, TargetType.Self) {
+	public TheLakeMirror() : base(1, CardType.Power, CardRarity.Rare, TargetType.Self) {
 	}
 
 	protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {

@@ -18,7 +18,7 @@ public class NightingaleAtTheAbyss : CustomCardModel {
 
 	protected override IEnumerable<DynamicVar> CanonicalVars =>
 	[
-		new IntVar("VulVal", 2),
+		new IntVar("VulVal", 3),
 		new IntVar("WeakVal", 1),
 	];
 	

@@ -36,6 +36,10 @@ public class Stop : CustomCardModel {
 			NGrayGradientVfxPostProcessor.Instance.TriggerExpand(uv, 0.5f);
 		}
 	}
+			public override async Task BeforeCombatStart() {
+		if (!IsInCombat || CombatState == null || !IsUpgraded || Owner.Deck.Cards.Contains(this)) {
+			return;
+		}}
 	
-	protected override void OnUpgrade() => EnergyCost.UpgradeBy(-1);
+
 }
