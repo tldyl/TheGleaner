@@ -69,7 +69,7 @@
       <Private>false</Private>
     </Reference>
     <Reference Include="BaseLib">
-      <HintPath>$(Sts2Path)/mods/BaseLib/BaseLib.dll</HintPath>
+      <HintPath>$(Sts2Path)/../../workshop/content/2868840/3737335127/BaseLib/BaseLib.dll</HintPath>
       <Private>false</Private>
     </Reference>
     <Reference Include="SmartFormat">
