@@ -30,7 +30,7 @@ public class WovenEmbrace : CustomCardModel {
 
 	protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
 		await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, cardPlay);
-		await PowerCmd.Apply<WovenEmbracePower>(Owner.Creature, DynamicVars["PoisonPower"].BaseValue, Owner.Creature, this);
+		await PowerCmd.Apply<WovenEmbracePower>(choiceContext, Owner.Creature, DynamicVars["PoisonPower"].BaseValue, Owner.Creature, this);
 	}
 
 	protected override void OnUpgrade() {

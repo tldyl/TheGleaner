@@ -38,6 +38,7 @@ public class JeraForm : CustomCardModel
 	protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
 	{
 		await PowerCmd.Apply<JeraFormPower>(
+			choiceContext,
 			Owner.Creature,
 			DynamicVars["ScoreAmount"].BaseValue,
 			Owner.Creature,

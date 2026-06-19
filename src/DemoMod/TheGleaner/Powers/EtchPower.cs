@@ -1,4 +1,5 @@
 using BaseLib.Abstracts;
+using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Powers;
@@ -29,7 +30,7 @@ public class EtchPower : CustomPowerModel {
 		if (target == Owner && !props.HasFlag(ValueProp.Unpowered) && dealer != null && Owner.HasPower<PoisonPower>()) {
 			Flash();
 			PoisonPower poisonPower = Owner.GetPower<PoisonPower>();
-			await poisonPower.AfterSideTurnStart(Owner.Side, Owner.CombatState);
+			await poisonPower.AfterSideTurnStart(Owner.Side, Owner.CombatState.GetTeammatesOf(Owner), Owner.CombatState);
 			await PowerCmd.Decrement(this);
 		}
 	}

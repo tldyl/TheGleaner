@@ -62,7 +62,7 @@ public class PresetDeckConsoleCmd : AbstractConsoleCmd {
 		foreach (CardModel card in presetDeck) {
 			CardModel mutableCard = card.ToMutable();
 			player.Creature.CombatState.AddCard(mutableCard, player);
-			await CardPileCmd.AddGeneratedCardToCombat(mutableCard, PileType.Draw, true);
+			await CardPileCmd.AddGeneratedCardToCombat(mutableCard, PileType.Draw, player);
 		}
 
 		await CardPileCmd.Draw(new BlockingPlayerChoiceContext(), 6, player);

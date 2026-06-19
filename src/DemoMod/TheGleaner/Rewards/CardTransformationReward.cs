@@ -13,7 +13,7 @@ public class CardTransformationReward(Player player) : Reward(player) {
     public override LocString Description => new LocString("cards", "DEMOMOD-SIGHT_REAPING.rewardDescription");
     public override bool IsPopulated => true;
     
-    public override Task Populate() => Task.CompletedTask;
+    public override void Populate() {}
 
     protected override async Task<bool> OnSelect() {
         await RunManager.Instance.RewardSynchronizer.DoLocalCardTransform(1);

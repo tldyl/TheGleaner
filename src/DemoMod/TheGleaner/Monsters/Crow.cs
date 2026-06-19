@@ -4,6 +4,7 @@ using MegaCrit.Sts2.Core.Audio;
 using MegaCrit.Sts2.Core.Bindings.MegaSpine;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Creatures;
+using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Helpers;
 using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.MonsterMoves;
@@ -61,7 +62,7 @@ public class Crow : CustomMonsterModel {
 
     public override async Task AfterAddedToRoom() {
         await base.AfterAddedToRoom();
-        await PowerCmd.Apply<SoarPower>(Creature, 1m, Creature, null);
+        await PowerCmd.Apply<SoarPower>(new ThrowingPlayerChoiceContext(), Creature, 1m, Creature, null);
         await StartHover(playTakeOffSfx: false, waitForAnim: false);
     }
 
@@ -130,7 +131,7 @@ public class Crow : CustomMonsterModel {
         _ = targets;
         SfxCmd.Play(TakeOffSfx);
         await CreatureCmd.TriggerAnim(Creature, "Attack", 0.3f);
-        await PowerCmd.Apply<StrengthPower>(Creature, CawStrength, Creature, null);
+        await PowerCmd.Apply<StrengthPower>(new ThrowingPlayerChoiceContext(), Creature, CawStrength, Creature, null);
     }
 
     private async Task SwoopMove(IReadOnlyList<Creature> targets) {
@@ -156,7 +157,7 @@ public class Crow : CustomMonsterModel {
     private async Task FlyMove(IReadOnlyList<Creature> targets) {
         _ = targets;
         await StartHover(playTakeOffSfx: true, waitForAnim: true);
-        await PowerCmd.Apply<SoarPower>(Creature, 1m, Creature, null);
+        await PowerCmd.Apply<SoarPower>(new ThrowingPlayerChoiceContext(), Creature, 1m, Creature, null);
     }
 
     private async Task StunnedByScarecrowMove(IReadOnlyList<Creature> targets) {

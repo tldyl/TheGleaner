@@ -70,7 +70,7 @@ public class EarthedBell : CustomCardModel, IConcertoCard {
 		DynamicVars.Block.UpgradeValueBy(2);
 	}
 
-	public async Task OnConcerto(CombatState combatState, PlayerChoiceContext choiceContext, CardPlay cardPlay) {
+	public async Task OnConcerto(ICombatState combatState, PlayerChoiceContext choiceContext, CardPlay cardPlay) {
 		SoundManager.Instance.PlaySound(SoundKeys.GetSoundResourcePath("BELL_" + new Random().Next(1, 4) + "_CONCERTO"), 1.0f);
 		await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, cardPlay);
 	}

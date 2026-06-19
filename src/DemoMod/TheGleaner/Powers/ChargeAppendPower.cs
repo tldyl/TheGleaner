@@ -35,7 +35,7 @@ public class ChargeAppendPower : CustomPowerModel {
             if (lastAttacker.HasPower<ChargePower>()) {
                 await CreatureCmd.Damage(choiceContext, lastAttacker, new DamageVar(10, ValueProp.Unpowered), lastAttacker);
             } else {
-                await PowerCmd.Apply<ChargePower>(lastAttacker, Amount, Owner, null);
+                await PowerCmd.Apply<ChargePower>(choiceContext, lastAttacker, Amount, Owner, null);
             }
         }
     }

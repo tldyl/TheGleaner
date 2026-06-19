@@ -1,6 +1,7 @@
 using BaseLib.Abstracts;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
+using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.Entities.Powers;
@@ -12,13 +13,13 @@ public class NocturnePower : CustomPowerModel {
 	public override PowerType Type => PowerType.Buff;
 	public override PowerStackType StackType => PowerStackType.Counter;
 
-	public override async Task AfterTurnEnd(PlayerChoiceContext choiceContext, CombatSide side) {
+	public override async Task AfterSideTurnEnd(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> _) {
 		if (side == Owner.Side || Owner.Block < 5) {
 			return;
 		}
 
 		Flash();
 
-		await PowerCmd.Apply<StrengthPower>(Owner, Amount, Owner, null);
+		await PowerCmd.Apply<StrengthPower>(choiceContext, Owner, Amount, Owner, null);
 	}
 }

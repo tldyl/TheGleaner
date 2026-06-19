@@ -5,6 +5,7 @@ using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Events;
 using MegaCrit.Sts2.Core.Random;
 using MegaCrit.Sts2.Core.Rooms;
+using MegaCrit.Sts2.Core.Unlocks;
 
 namespace DemoMod.TheGleaner.Acts;
 
@@ -38,4 +39,9 @@ public class Hovercourt : CustomActModel {
     public override IEnumerable<EncounterModel> GenerateAllEncounters() => [
         
     ];
+
+    public override bool IsUnlocked(UnlockState unlockState) => true;
+
+    public override int Index => 1;
+    public override bool IsDefault => true;
 }

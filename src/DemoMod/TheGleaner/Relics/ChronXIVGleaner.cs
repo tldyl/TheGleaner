@@ -4,6 +4,7 @@ using DemoMod.TheGleaner.Pools;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
@@ -52,7 +53,8 @@ public class ChronXIVGleaner : JeraExclusiveRelic {
     public override Task BeforeSideTurnStart(
         PlayerChoiceContext choiceContext,
         CombatSide side,
-        CombatState combatState) {
+        IReadOnlyList<Creature> participants,
+        ICombatState combatState) {
         if (side != Owner.Creature.Side)
             return Task.CompletedTask;
         ResonancePlayedThisTurn = 0;

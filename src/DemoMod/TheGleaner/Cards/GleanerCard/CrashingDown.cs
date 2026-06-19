@@ -42,12 +42,14 @@ public class CrashingDown : CustomCardModel
 			.Targeting(cardPlay.Target)
 			.Execute(choiceContext);
 		await PowerCmd.Apply<WeakPower>(
+			choiceContext,
 			Owner.Creature.CombatState.HittableEnemies,
 			DynamicVars["powerVal"].BaseValue,
 			Owner.Creature,
 			this
 		);
 		await PowerCmd.Apply<VulnerablePower>(
+			choiceContext,
 			Owner.Creature.CombatState.HittableEnemies,
 			DynamicVars["powerVal"].BaseValue,
 			Owner.Creature,

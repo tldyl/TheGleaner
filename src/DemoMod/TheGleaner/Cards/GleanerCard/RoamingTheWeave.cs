@@ -19,7 +19,7 @@ public class RoamingTheWeave : CustomCardModel {
 	}
 
 	protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
-		await PowerCmd.Apply<RoamingTheWeavePower>(Owner.Creature, DynamicVars.Energy.BaseValue, Owner.Creature, this);
+		await PowerCmd.Apply<RoamingTheWeavePower>(choiceContext, Owner.Creature, DynamicVars.Energy.BaseValue, Owner.Creature, this);
 	}
 
 	protected override void OnUpgrade() => EnergyCost.UpgradeBy(-1);

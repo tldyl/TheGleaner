@@ -3,6 +3,7 @@ using DemoMod.TheGleaner.Powers;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Ascension;
 using MegaCrit.Sts2.Core.Entities.Creatures;
+using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Helpers;
 using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.MonsterMoves.Intents;
@@ -33,8 +34,8 @@ public class SnakePlantMatriarch : CustomMonsterModel {
     }
 
     public override async Task AfterAddedToRoom() {
-        await PowerCmd.Apply<MalleablePower>(Creature, 3, Creature, null);
-        await PowerCmd.Apply<HardToKillPower>(Creature, 15, Creature, null);
+        await PowerCmd.Apply<MalleablePower>(new ThrowingPlayerChoiceContext(), Creature, 3, Creature, null);
+        await PowerCmd.Apply<HardToKillPower>(new ThrowingPlayerChoiceContext(), Creature, 15, Creature, null);
     }
 
     private async Task BiteMove(IReadOnlyList<Creature> targets) {
@@ -48,7 +49,7 @@ public class SnakePlantMatriarch : CustomMonsterModel {
     }
     
     private async Task WeakSporeMove(IReadOnlyList<Creature> targets) {
-        await PowerCmd.Apply<WeakPower>(targets, 99, Creature, null);
-        await PowerCmd.Apply<FrailPower>(targets, 99, Creature, null);
+        await PowerCmd.Apply<WeakPower>(new ThrowingPlayerChoiceContext(), targets, 99, Creature, null);
+        await PowerCmd.Apply<FrailPower>(new ThrowingPlayerChoiceContext(), targets, 99, Creature, null);
     }
 }

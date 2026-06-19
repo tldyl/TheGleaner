@@ -23,7 +23,7 @@ public class MelodyAttuned : CustomCardModel {
 	}
 
 	protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
-		await PowerCmd.Apply<MelodyAttunedPower>(Owner.Creature, 1, Owner.Creature, this);
+		await PowerCmd.Apply<MelodyAttunedPower>(choiceContext, Owner.Creature, 1, Owner.Creature, this);
 	}
 
 	protected override void OnUpgrade() => EnergyCost.UpgradeBy(-1);

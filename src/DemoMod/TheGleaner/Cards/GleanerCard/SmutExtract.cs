@@ -37,7 +37,7 @@ public class SmutExtract : CustomCardModel {
 	}
 
 	protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
-		await PowerCmd.Apply<PoisonPower>(cardPlay.Target, DynamicVars["PoisonPower"].BaseValue, Owner.Creature, this);
+		await PowerCmd.Apply<PoisonPower>(choiceContext, cardPlay.Target, DynamicVars["PoisonPower"].BaseValue, Owner.Creature, this);
 			AttackCommand _ = await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
 			.FromCard(this)
 			.Targeting(cardPlay.Target)

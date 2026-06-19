@@ -5,6 +5,7 @@ using MegaCrit.Sts2.Core.Bindings.MegaSpine;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Ascension;
 using MegaCrit.Sts2.Core.Entities.Creatures;
+using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Helpers;
 using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.MonsterMoves.Intents;
@@ -53,8 +54,8 @@ public class Inkcrow : CustomMonsterModel {
     }
 
     public override async Task AfterAddedToRoom() {
-        await PowerCmd.Apply<SlipperyPower>(Creature, SlipperyAmount, Creature, null);
-        await PowerCmd.Apply<InkwingPower>(Creature, 1, Creature, null);
+        await PowerCmd.Apply<SlipperyPower>(new ThrowingPlayerChoiceContext(), Creature, SlipperyAmount, Creature, null);
+        await PowerCmd.Apply<InkwingPower>(new ThrowingPlayerChoiceContext(), Creature, 1, Creature, null);
         await CreatureCmd.TriggerAnim(Creature, "TakeOff", 0.0f);
     }
     
@@ -68,7 +69,7 @@ public class Inkcrow : CustomMonsterModel {
     }
 
     private async Task GrowMove(IReadOnlyList<Creature> targets) {
-        await PowerCmd.Apply<StrengthPower>(Creature, 1, Creature, null);
+        await PowerCmd.Apply<StrengthPower>(new ThrowingPlayerChoiceContext(), Creature, 1, Creature, null);
     }
 
     private async Task BashMove(IReadOnlyList<Creature> targets) {
@@ -88,8 +89,8 @@ public class Inkcrow : CustomMonsterModel {
     }
 
     private async Task RegainSlipperyMove(IReadOnlyList<Creature> targets) {
-        await PowerCmd.Apply<SlipperyPower>(Creature, SlipperyAmount, Creature, null);
-        await PowerCmd.Apply<InkwingPower>(Creature, 1, Creature, null);
+        await PowerCmd.Apply<SlipperyPower>(new ThrowingPlayerChoiceContext(), Creature, SlipperyAmount, Creature, null);
+        await PowerCmd.Apply<InkwingPower>(new ThrowingPlayerChoiceContext(), Creature, 1, Creature, null);
         await CreatureCmd.TriggerAnim(Creature, "TakeOff", 0.0f);
     }
     

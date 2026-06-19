@@ -60,6 +60,6 @@ public class Instrumentation : CustomCardModel {
 		if (chosenCard == null) {
 			return;
 		}
-		await CardPileCmd.AddGeneratedCardToCombat(chosenCard, PileType.Hand, true);
+		await CardPileCmd.AddGeneratedCardToCombat(chosenCard, PileType.Hand, Owner);
 	}
 }

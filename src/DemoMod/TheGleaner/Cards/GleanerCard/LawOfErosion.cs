@@ -44,7 +44,7 @@ public class LawOfErosion : CustomCardModel {
 		if (cardPlay.Target.HasPower<IntangiblePower>()) {
 			await PowerCmd.Remove<IntangiblePower>(cardPlay.Target);
 		}
-		await PowerCmd.Apply<VulnerablePower>(cardPlay.Target, DynamicVars["VulnerablePower"].BaseValue, Owner.Creature, this);
+		await PowerCmd.Apply<VulnerablePower>(choiceContext, cardPlay.Target, DynamicVars["VulnerablePower"].BaseValue, Owner.Creature, this);
 	}
 
 	public override Decimal ModifyBlockAdditive(Creature target,

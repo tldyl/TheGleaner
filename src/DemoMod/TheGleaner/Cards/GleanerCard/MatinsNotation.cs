@@ -20,7 +20,7 @@ public class MatinsNotation : CustomCardModel {
 	}
 
 	protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
-		await PowerCmd.Apply<MatinsNotationPower>(Owner.Creature, 1, Owner.Creature, this);
+		await PowerCmd.Apply<MatinsNotationPower>(choiceContext, Owner.Creature, 1, Owner.Creature, this);
 	}
 
 	protected override void OnUpgrade() {

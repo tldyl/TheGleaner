@@ -7,7 +7,7 @@ namespace DemoMod.TheGleaner.Patches;
 public class HookPatch {
     [HarmonyPatch(typeof(Hook), "AfterCardEnteredCombat")]
     public static class PatchAfterCardEnteredCombat {
-        public static void Prefix(ref CombatState combatState, CardModel card) {
+        public static void Prefix(ref ICombatState combatState, CardModel card) {
             if (combatState == null) {
                 combatState = card.Owner.Creature.CombatState;
             }

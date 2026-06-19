@@ -41,7 +41,7 @@ public class HowlOfWrath : CustomCardModel, IDissonanceCard {
 		bool causedByEthereal) {
 		if (card == this) {
 			foreach (Creature creature in Owner.Creature.CombatState.Creatures) {
-				await PowerCmd.Apply<StrengthPower>(creature, DynamicVars["StrVal"].BaseValue, Owner.Creature, this);
+				await PowerCmd.Apply<StrengthPower>(choiceContext, creature, DynamicVars["StrVal"].BaseValue, Owner.Creature, this);
 			}
 		}
 	}

@@ -48,6 +48,7 @@ public class PaperFrost : CustomCardModel {
 			CardCmd.Preview(cpy);
 		}
 		await PowerCmd.Apply<DemoTempLoseStrengthPower>(
+			choiceContext,
 			Owner.Creature.CombatState.HittableEnemies,
 			-DynamicVars["Amount"].BaseValue,
 			Owner.Creature,

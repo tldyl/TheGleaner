@@ -4,7 +4,6 @@ using DemoMod.TheGleaner.Enums;
 using DemoMod.TheGleaner.Pools;
 using DemoMod.TheGleaner.Utils;
 using Godot;
-using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Commands.Builders;
 using MegaCrit.Sts2.Core.Entities.Cards;
@@ -47,7 +46,7 @@ public class Cacophony : CustomCardModel
 		Vector2 windowSize = NRun.Instance.CombatRoom.Ui.GetViewport().GetVisibleRect().Size;
 		GleanerVfxCmd.PlayVfx<Node2D>(new Vector2(windowSize.X * 0.65f, windowSize.Y * 0.5f), "res://TheGleaner/scenes/vfx/aoe_attack.tscn", 0.5f);
 		await CreatureCmd.TriggerAnim(Owner.Creature, "AoEAttack", 0.5f);
-		await using AttackContext context = await AttackCommand.CreateContextAsync(Owner.Creature.CombatState, this);
+		await using AttackContext context = await AttackCommand.CreateContextAsync(Owner.Creature.CombatState, choiceContext, this);
 		IEnumerable<DamageResult> damageResults = await CreatureCmd.Damage(
 			choiceContext,
 			CombatState.HittableEnemies,
@@ -58,12 +57,14 @@ public class Cacophony : CustomCardModel
 		context.AddHit(damageResults);
 
 		await PowerCmd.Apply<WeakPower>(
+			choiceContext,
 			CombatState.HittableEnemies,
 			DynamicVars["WeakPower"].BaseValue,
 			Owner.Creature,
 			this
 		);
 		await PowerCmd.Apply<VulnerablePower>(
+			choiceContext,
 			CombatState.HittableEnemies,
 			DynamicVars["VulnerablePower"].BaseValue,
 			Owner.Creature,
@@ -86,7 +87,7 @@ public class Cacophony : CustomCardModel
 			IReadOnlyList<CardPileAddResult> results = await CardPileCmd.AddGeneratedCardsToCombat(
 				[CombatState.CreateCard(card, Owner)],
 				targetPile,
-				true,
+				Owner,
 				CardPilePosition.Random
 			);
 

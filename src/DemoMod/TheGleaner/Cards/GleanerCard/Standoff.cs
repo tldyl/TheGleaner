@@ -32,7 +32,7 @@ public class Standoff : CustomCardModel {
 		foreach (Creature creature in allEnemies) {
 			GleanerVfxCmd.PlayOnCreature<Node2D>(creature, "res://TheGleaner/scenes/vfx/arrow_hit_vfx.tscn");
 		}
-		await using AttackContext context = await AttackCommand.CreateContextAsync(Owner.Creature.CombatState, this);
+		await using AttackContext context = await AttackCommand.CreateContextAsync(Owner.Creature.CombatState, choiceContext, this);
 		IEnumerable<DamageResult> damageResults = await CreatureCmd.Damage(choiceContext, allEnemies, DynamicVars.Damage, Owner.Creature, this);
 		context.AddHit(damageResults);
 	}

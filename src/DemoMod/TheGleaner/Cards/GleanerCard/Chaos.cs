@@ -29,12 +29,12 @@ public class Chaos : CustomCardModel {
 	}
 
 	protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
-		await PowerCmd.Apply<WeakPower>(cardPlay.Target, ResolveEnergyXValue() + CurrentUpgradeLevel, Owner.Creature, this);
-		await PowerCmd.Apply<VulnerablePower>(cardPlay.Target, ResolveEnergyXValue() + CurrentUpgradeLevel, Owner.Creature, this);
+		await PowerCmd.Apply<WeakPower>(choiceContext, cardPlay.Target, ResolveEnergyXValue() + CurrentUpgradeLevel, Owner.Creature, this);
+		await PowerCmd.Apply<VulnerablePower>(choiceContext, cardPlay.Target, ResolveEnergyXValue() + CurrentUpgradeLevel, Owner.Creature, this);
 		for (int _ = 0; _ < ResolveEnergyXValue() + CurrentUpgradeLevel; _++) {
 			PowerModel powerModel = Owner.Creature.CombatState.RunState.Rng.CombatTargets.NextBool() ? ModelDb.Power<StrengthPower>() : ModelDb.Power<DexterityPower>();
 			powerModel = powerModel.ToMutable();
-			await PowerCmd.Apply(powerModel, Owner.Creature, 1, Owner.Creature, this);
+			await PowerCmd.Apply(choiceContext, powerModel, Owner.Creature, 1, Owner.Creature, this);
 		}
 	}
 }

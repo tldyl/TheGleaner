@@ -43,7 +43,7 @@ public class SearingScaldsPower : CustomPowerModel {
             target,
             PileType.Discard,
             1,
-            addedByPlayer: false,
+            Owner.Player,
             CardPilePosition.Random);
     }
 }

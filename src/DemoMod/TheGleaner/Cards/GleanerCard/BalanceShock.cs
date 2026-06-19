@@ -36,7 +36,7 @@ public class BalanceShock : CustomCardModel {
             .Execute(choiceContext);
         if (cardPlay.Target.HasPower<VulnerablePower>()) {
             int amount = cardPlay.Target.GetPower<VulnerablePower>().Amount;
-            await PowerCmd.Apply<WeakPower>(cardPlay.Target, amount, Owner.Creature, this);
+            await PowerCmd.Apply<WeakPower>(choiceContext, cardPlay.Target, amount, Owner.Creature, this);
         }
     }
 

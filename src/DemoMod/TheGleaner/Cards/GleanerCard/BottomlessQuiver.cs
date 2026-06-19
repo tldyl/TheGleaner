@@ -36,6 +36,7 @@ public class BottomlessQuiver : CustomCardModel
 	protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
 	{
 		await PowerCmd.Apply<BottomlessQuiverPower>(
+			choiceContext,
 			Owner.Creature,
 			DynamicVars["BottomlessQuiverPower"].BaseValue,
 			Owner.Creature,

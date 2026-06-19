@@ -2,6 +2,7 @@ using DemoMod.TheGleaner.Encounters;
 using DemoMod.TheGleaner.Powers;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Creatures;
+using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Helpers;
 using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.MonsterMoves.Intents;
@@ -27,7 +28,7 @@ public class IvoryBishop : Bishop {
 
     public override async Task AfterAddedToRoom() {
         await base.AfterAddedToRoom();
-        await PowerCmd.Apply<WhiteSquareDomainPower>(Creature, DomainAmount, Creature, null);
+        await PowerCmd.Apply<WhiteSquareDomainPower>(new ThrowingPlayerChoiceContext(), Creature, DomainAmount, Creature, null);
     }
 
     protected override MonsterMoveStateMachine GenerateMoveStateMachine() {
@@ -72,7 +73,7 @@ public class IvoryBishop : Bishop {
             .WithHitFx("vfx/vfx_slime_impact")
             .Execute(null);
 
-        await PowerCmd.Apply<VulnerablePower>(LivingPlayerTargets(targets), ConvictionVulnerable, Creature, null);
+        await PowerCmd.Apply<VulnerablePower>(new ThrowingPlayerChoiceContext(), LivingPlayerTargets(targets), ConvictionVulnerable, Creature, null);
     }
 
     private async Task SanctuaryMove(IReadOnlyList<Creature> targets) {

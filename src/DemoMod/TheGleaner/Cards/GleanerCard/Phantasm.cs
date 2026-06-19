@@ -15,6 +15,7 @@ using DemoMod.TheGleaner.CardPiles;
 using DemoMod.TheGleaner.Hooks;
 using Godot;
 using MegaCrit.Sts2.Core.Bindings.MegaSpine;
+using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Nodes.Combat;
 using MegaCrit.Sts2.Core.Nodes.Rooms;
@@ -43,7 +44,7 @@ public class Phantasm : CustomCardModel, IAfterTakeCardsFromScore {
 			await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, cardPlay);
 	}
 
-	public override async Task BeforeTurnEnd(PlayerChoiceContext choiceContext, CombatSide side) {
+	public override async Task BeforeSideTurnEnd(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants) {
 		if (side != CombatSide.Player) {
 			return;
 		}

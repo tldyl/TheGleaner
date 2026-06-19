@@ -24,6 +24,6 @@ public class ShiftingPower : CustomPowerModel {
             return;
         }
         Flash();
-        await PowerCmd.Apply<DarkShacklesPower>(Owner, result.UnblockedDamage, Owner, null);
+        await PowerCmd.Apply<DarkShacklesPower>(choiceContext, Owner, result.UnblockedDamage, Owner, null);
     }
 }

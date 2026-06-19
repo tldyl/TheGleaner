@@ -29,8 +29,8 @@ public class Sforzando : CustomCardModel {
 	}
 
 	protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
-		await PowerCmd.Apply<StrengthPower>(Owner.Creature, DynamicVars["Amount"].BaseValue, Owner.Creature, this);
-		await PowerCmd.Apply<SforzandoPower>(Owner.Creature, 1, Owner.Creature, this);
+		await PowerCmd.Apply<StrengthPower>(choiceContext, Owner.Creature, DynamicVars["Amount"].BaseValue, Owner.Creature, this);
+		await PowerCmd.Apply<SforzandoPower>(choiceContext, Owner.Creature, 1, Owner.Creature, this);
 	}
 	
 	protected override void OnUpgrade() => DynamicVars["Amount"].UpgradeValueBy(1);

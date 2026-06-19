@@ -22,7 +22,7 @@ public class LightOfLifePower : CustomPowerModel {
         HoverTipFactory.FromCard<ArbiterOfLife>()
     ];
 
-    public override async Task AfterSideTurnStart(CombatSide side, CombatState combatState) {
+    public override async Task AfterSideTurnStart(CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState) {
         if (side == Owner.Side) {
             foreach (CardModel card in Owner.Player.PlayerCombatState.AllCards) {
                 if (card.Affliction is LightOfLife) {
@@ -32,7 +32,7 @@ public class LightOfLifePower : CustomPowerModel {
             await CardPileCmd.AddGeneratedCardsToCombat(
                 [CombatState.CreateCard(ModelDb.Card<ArbiterOfLife>(), Owner.Player)],
                 PileType.Hand,
-                true,
+                Owner.Player,
                 CardPilePosition.Top
             );
         }
@@ -46,10 +46,10 @@ public class LightOfLifePower : CustomPowerModel {
                 if (creature.HasPower<DeclarationOfTheEndPower>()) {
                     switch (affliction.Amount) {
                         case 3:
-                            await PowerCmd.Apply<DemoTempStrengthPower>(Owner, 2, Owner, null);
+                            await PowerCmd.Apply<DemoTempStrengthPower>(context, Owner, 2, Owner, null);
                             break;
                         case 4:
-                            await PowerCmd.Apply<HotfixPower>(Owner, 1, Owner, null);
+                            await PowerCmd.Apply<HotfixPower>(context, Owner, 1, Owner, null);
                             break;
                         case 5:
                             await CreatureCmd.Heal(Owner, 4);

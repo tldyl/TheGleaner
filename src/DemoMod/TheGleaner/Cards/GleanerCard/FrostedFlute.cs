@@ -35,13 +35,13 @@ public class FrostedFlute : CustomCardModel, IConcertoCard {
 			.WithHitFx("vfx/vfx_attack_slash")
 			.TargetingAllOpponents(Owner.Creature.CombatState)
 			.Execute(choiceContext);
-		await PowerCmd.Apply<PreventStrengthIncreasePower>(Owner.Creature.CombatState.HittableEnemies, 2, Owner.Creature, this);
+		await PowerCmd.Apply<PreventStrengthIncreasePower>(choiceContext, Owner.Creature.CombatState.HittableEnemies, 2, Owner.Creature, this);
 	}
 
 	
-	public async Task OnConcerto(CombatState combatState, PlayerChoiceContext choiceContext, CardPlay cardPlay) {
+	public async Task OnConcerto(ICombatState combatState, PlayerChoiceContext choiceContext, CardPlay cardPlay) {
 		SoundManager.Instance.PlaySound(SoundKeys.GetSoundResourcePath("FLUTE_" + new Random().Next(1, 5)), 1.0f);
-		await PowerCmd.Apply<DemoTempLoseStrengthPower>(combatState.HittableEnemies, -DynamicVars["Amount"].BaseValue, Owner.Creature, this);
+		await PowerCmd.Apply<DemoTempLoseStrengthPower>(choiceContext, combatState.HittableEnemies, -DynamicVars["Amount"].BaseValue, Owner.Creature, this);
 	}
 	protected override void OnUpgrade() {
 		DynamicVars.Damage.UpgradeValueBy(3);

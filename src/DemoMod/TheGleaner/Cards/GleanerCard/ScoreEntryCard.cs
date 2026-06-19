@@ -38,8 +38,8 @@ public class ScoreEntryCard : CustomCardModel {
         RunManager.Instance.ActionQueueSynchronizer.RequestEnqueue(new TakeCardsFromScoreAction(Owner));
     }
 
-    protected override PileType GetResultPileType() {
-        PileType resultPileType = base.GetResultPileType();
+    protected override PileType GetResultPileTypeForCardPlay() {
+        PileType resultPileType = base.GetResultPileTypeForCardPlay();
         return resultPileType != PileType.Discard ? resultPileType : decidePile();
     }
 

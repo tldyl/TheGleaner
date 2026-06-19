@@ -27,7 +27,7 @@ public class GerminationPower : CustomPowerModel {
         CardModel? cardSource) {
         if (dealer == Owner && !props.HasFlag(ValueProp.Unpowered) && target != null && target.HasPower<PoisonPower>() && target.HasPower<EtchPower>()) {
             Flash();
-            await PowerCmd.Apply<PoisonPower>(target, Amount, Owner, null);
+            await PowerCmd.Apply<PoisonPower>(choiceContext, target, Amount, Owner, null);
         }
     }
 }

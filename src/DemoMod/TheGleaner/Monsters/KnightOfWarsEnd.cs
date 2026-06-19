@@ -7,6 +7,7 @@ using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Ascension;
 using MegaCrit.Sts2.Core.Entities.Creatures;
+using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Helpers;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Powers;
@@ -60,7 +61,7 @@ public class KnightOfWarsEnd : CustomMonsterModel {
     
     public override async Task AfterAddedToRoom() {
         await CreatureCmd.SetMaxAndCurrentHp(Creature, 999999999M);
-        Creature.ShowsInfiniteHp = true;
+        Creature.HpDisplay = HpDisplay.InfiniteWithoutNumbers;
     }
     
     protected override MonsterMoveStateMachine GenerateMoveStateMachine() {
@@ -100,8 +101,8 @@ public class KnightOfWarsEnd : CustomMonsterModel {
         await CreatureCmd.SetMaxAndCurrentHp(Creature, 200);
         foreach (PowerModel power in Creature.Powers.ToList())
             await PowerCmd.Remove(power);
-        Creature.ShowsInfiniteHp = false;
-        await PowerCmd.Apply<ArbiterOfLifeAndDeathPower>(Creature, 1, Creature, null);
+        Creature.HpDisplay = HpDisplay.Normal;
+        await PowerCmd.Apply<ArbiterOfLifeAndDeathPower>(new ThrowingPlayerChoiceContext(), Creature, 1, Creature, null);
     }
 
     private async Task DeathFlameCycleMove(IReadOnlyList<Creature> targets) {
@@ -119,7 +120,7 @@ public class KnightOfWarsEnd : CustomMonsterModel {
             .FromMonster(this)
             .WithNoAttackerAnim()
             .Execute(null);
-        await PowerCmd.Apply<StrengthPower>(Creature, 1, Creature, null);
+        await PowerCmd.Apply<StrengthPower>(new ThrowingPlayerChoiceContext(), Creature, 1, Creature, null);
     }
 
     private async Task BuffedDeathFlameCycleMove(IReadOnlyList<Creature> targets) {
@@ -138,7 +139,7 @@ public class KnightOfWarsEnd : CustomMonsterModel {
             .FromMonster(this)
             .WithNoAttackerAnim()
             .Execute(null);
-        await PowerCmd.Apply<StrengthPower>(Creature, 1, Creature, null);
+        await PowerCmd.Apply<StrengthPower>(new ThrowingPlayerChoiceContext(), Creature, 1, Creature, null);
         lastMoveId = "BUFFED_CLAW_MOVE";
     }
     
@@ -155,9 +156,9 @@ public class KnightOfWarsEnd : CustomMonsterModel {
                 card.Affliction.Amount = 2;
             }
         }
-        await PowerCmd.Apply<DeclarationOfTheEndPower>(Creature, 1, Creature, null);
-        await PowerCmd.Apply<ClearDeclarationOfTheEndPower>(targets, 1, Creature, null);
-        await PowerCmd.Apply<LightOfLifePower>(targets, 1, Creature, null);
+        await PowerCmd.Apply<DeclarationOfTheEndPower>(new ThrowingPlayerChoiceContext(), Creature, 1, Creature, null);
+        await PowerCmd.Apply<ClearDeclarationOfTheEndPower>(new ThrowingPlayerChoiceContext(), targets, 1, Creature, null);
+        await PowerCmd.Apply<LightOfLifePower>(new ThrowingPlayerChoiceContext(), targets, 1, Creature, null);
     }
 
     private async Task Revive(int baseRespawnHp) {

@@ -27,7 +27,7 @@ public class Stop : CustomCardModel {
 	}
 
 	protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
-		await PowerCmd.Apply<SlowPower>(Owner.Creature.CombatState.HittableEnemies, 1, Owner.Creature, this);
+		await PowerCmd.Apply<SlowPower>(choiceContext, Owner.Creature.CombatState.HittableEnemies, 1, Owner.Creature, this);
 		NGrayGradientVfxPostProcessor.Instance.ToggleBlackAndWhite(true, intensityOffset: 0.35f);
 		NCreature nCreature = NCombatRoom.Instance.GetCreatureNode(Owner.Creature);
 		if (nCreature != null) {

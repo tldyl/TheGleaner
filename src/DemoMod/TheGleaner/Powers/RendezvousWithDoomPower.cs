@@ -18,7 +18,7 @@ public class RendezvousWithDoomPower : CustomPowerModel {
 	public override PowerStackType StackType => PowerStackType.Counter;
 	private bool activated = true;
 
-	public override async Task BeforeTurnEnd(PlayerChoiceContext choiceContext, CombatSide side) {
+	public override async Task BeforeSideTurnEnd(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> _) {
 		if (side != Owner.Side) {
 			return;
 		}

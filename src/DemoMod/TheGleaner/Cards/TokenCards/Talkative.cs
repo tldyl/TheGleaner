@@ -36,14 +36,14 @@ public class Talkative : CustomCardModel {
     }
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
-        await PowerCmd.Apply<WeakPower>(Owner.Creature, DynamicVars["WeakPower"].BaseValue, Owner.Creature, this);
+        await PowerCmd.Apply<WeakPower>(choiceContext, Owner.Creature, DynamicVars["WeakPower"].BaseValue, Owner.Creature, this);
     }
 
     public override async Task AfterCardPlayed(PlayerChoiceContext context, CardPlay cardPlay) {
         if (Owner.PlayerCombatState.Hand.Cards.Contains(this) && cardPlay.Card.Owner == Owner && cardPlay.Card != this) {
             foreach (Creature creature in Owner.Creature.CombatState.HittableEnemies) {
                 if (creature is {IsMonster: true, Monster: SirenCultist}) {
-                    await PowerCmd.Apply<StrengthPower>(creature, DynamicVars["StrengthPower"].BaseValue, Owner.Creature, this);
+                    await PowerCmd.Apply<StrengthPower>(context, creature, DynamicVars["StrengthPower"].BaseValue, Owner.Creature, this);
                 }
             }
         }

@@ -28,8 +28,8 @@ public class ForgingAtDawn : CustomCardModel {
 	}
 
 	protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
-		await PowerCmd.Apply<StrengthPower>(Owner.Creature, DynamicVars["StrVal"].BaseValue, Owner.Creature, this);
-		await PowerCmd.Apply<DexterityPower>(Owner.Creature, DynamicVars["DexVal"].BaseValue, Owner.Creature, this);
+		await PowerCmd.Apply<StrengthPower>(choiceContext, Owner.Creature, DynamicVars["StrVal"].BaseValue, Owner.Creature, this);
+		await PowerCmd.Apply<DexterityPower>(choiceContext, Owner.Creature, DynamicVars["DexVal"].BaseValue, Owner.Creature, this);
 	}
 
 	protected override void OnUpgrade() {

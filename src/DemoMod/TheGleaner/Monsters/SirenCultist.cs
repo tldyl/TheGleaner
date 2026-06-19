@@ -3,6 +3,7 @@ using DemoMod.TheGleaner.Powers;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Ascension;
 using MegaCrit.Sts2.Core.Entities.Creatures;
+using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Helpers;
 using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Models.Powers;
@@ -45,8 +46,8 @@ public class SirenCultist : CustomMonsterModel {
         await CreatureCmd.TriggerAnim(Creature, "Cast", 0.5f);
         TalkCmd.Play(new LocString("monsters", "CALCIFIED_CULTIST.moves.INCANTATION.banter"), Creature, VfxColor.Purple, VfxDuration.Standard);
         await Cmd.CustomScaledWait(0.25f, 0.5f);
-        await PowerCmd.Apply<RitualPower>(Creature, 2, Creature, null);
-        await PowerCmd.Apply<TalkativePower>(targets, 1, Creature, null);
+        await PowerCmd.Apply<RitualPower>(new ThrowingPlayerChoiceContext(), Creature, 2, Creature, null);
+        await PowerCmd.Apply<TalkativePower>(new ThrowingPlayerChoiceContext(), targets, 1, Creature, null);
     }
     
     private async Task AttackMove(IReadOnlyList<Creature> targets) {

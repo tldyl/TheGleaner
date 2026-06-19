@@ -3,6 +3,7 @@ using DemoMod.TheGleaner.Powers;
 using MegaCrit.Sts2.Core.Audio;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Creatures;
+using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Helpers;
 using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.MonsterMoves.Intents;
@@ -31,8 +32,8 @@ public class Castle : CustomMonsterModel {
 
     public override async Task AfterAddedToRoom() {
         await base.AfterAddedToRoom();
-        await PowerCmd.Apply<MinionPower>(Creature, 1m, Creature, null);
-        await PowerCmd.Apply<CastlePower>(Creature, CastleBlock, Creature, null);
+        await PowerCmd.Apply<MinionPower>(new ThrowingPlayerChoiceContext(), Creature, 1m, Creature, null);
+        await PowerCmd.Apply<CastlePower>(new ThrowingPlayerChoiceContext(), Creature, CastleBlock, Creature, null);
     }
 
     protected override MonsterMoveStateMachine GenerateMoveStateMachine() {

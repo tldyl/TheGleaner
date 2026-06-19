@@ -12,9 +12,7 @@ using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.Entities.Powers;
 
 namespace DemoMod.TheGleaner.Powers;
-
-public class DemoTempDexterityPower : CustomPowerModel
-{
+public class DemoTempDexterityPower : CustomPowerModel {
     private bool _shouldIgnoreNextInstance;
     public override string CustomPackedIconPath => $"res://TheGleaner/images/powers/{Id.Entry.ToLowerInvariant()}.png";
     public override string CustomBigIconPath => $"res://TheGleaner/images/powers/{Id.Entry.ToLowerInvariant()}.png";
@@ -36,8 +34,7 @@ public class DemoTempDexterityPower : CustomPowerModel
         HoverTipFactory.FromPower<DexterityPower>()
     ];
 
-    public void IgnoreNextInstance()
-    {
+    public void IgnoreNextInstance() {
         _shouldIgnoreNextInstance = true;
     }
 
@@ -45,51 +42,40 @@ public class DemoTempDexterityPower : CustomPowerModel
         Creature target,
         decimal amount,
         Creature applier,
-        CardModel cardSource)
-    {
-        if (_shouldIgnoreNextInstance)
-        {
+        CardModel cardSource) {
+        if (_shouldIgnoreNextInstance) {
             _shouldIgnoreNextInstance = false;
-        }
-        else
-        {
-            await PowerCmd.Apply<DexterityPower>(target, amount, applier, cardSource, true);
+        } else {
+            await PowerCmd.Apply<DexterityPower>(new ThrowingPlayerChoiceContext(), target, amount, applier, cardSource, true);
         }
     }
 
     public override async Task AfterPowerAmountChanged(
+        PlayerChoiceContext choiceContext,
         PowerModel power,
-        decimal amount,
-        Creature applier,
-        CardModel cardSource)
-    {
-        if (amount == Amount)
-        {
+        Decimal amount,
+        Creature? applier,
+        CardModel? cardSource) {
+        if (amount == Amount) {
             return;
         }
 
-        if (power != this)
-        {
+        if (power != this) {
             return;
         }
 
-        if (_shouldIgnoreNextInstance)
-        {
+        if (_shouldIgnoreNextInstance) {
             _shouldIgnoreNextInstance = false;
-        }
-        else
-        {
-            await PowerCmd.Apply<DexterityPower>(Owner, amount, applier, cardSource, true);
+        } else {
+            await PowerCmd.Apply<DexterityPower>(choiceContext, Owner, amount, applier, cardSource, true);
         }
     }
 
-    public override async Task AfterTurnEnd(PlayerChoiceContext choiceContext, CombatSide side)
-    {
-        if (side == Owner.Side)
-        {
+    public override async Task AfterSideTurnEnd(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> _) {
+        if (side == Owner.Side) {
             Flash();
             await PowerCmd.Remove(this);
-            await PowerCmd.Apply<DexterityPower>(Owner, -Amount, Owner, null, false);
+            await PowerCmd.Apply<DexterityPower>(choiceContext, Owner, -Amount, Owner, null, false);
         }
     }
 }

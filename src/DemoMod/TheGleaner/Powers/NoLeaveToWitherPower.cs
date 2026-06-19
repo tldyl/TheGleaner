@@ -2,6 +2,7 @@ using BaseLib.Abstracts;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Powers;
+using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.ValueProps;
@@ -30,7 +31,7 @@ public class NoLeaveToWitherPower : CustomPowerModel {
 
     public override async Task AfterModifyingHpLostAfterOsty() {
         if (target == Owner && damageAmount > 0) {
-            await PowerCmd.Apply<DoomPower>(Owner, damageAmount, Owner, null);
+            await PowerCmd.Apply<DoomPower>(new ThrowingPlayerChoiceContext(), Owner, damageAmount, Owner, null);
         }
     }
 

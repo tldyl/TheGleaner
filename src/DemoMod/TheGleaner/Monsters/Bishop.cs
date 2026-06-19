@@ -6,6 +6,7 @@ using MegaCrit.Sts2.Core.Audio;
 using MegaCrit.Sts2.Core.Bindings.MegaSpine;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Creatures;
+using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models.Powers;
 
 namespace DemoMod.TheGleaner.Encounters;
@@ -24,8 +25,8 @@ public abstract class Bishop : CustomMonsterModel {
 
     public override async Task AfterAddedToRoom() {
         await base.AfterAddedToRoom();
-        await PowerCmd.Apply<PlatingPower>(Creature, InitialPlating, Creature, null);
-        await PowerCmd.Apply<FanaticPower>(Creature, 1m, Creature, null);
+        await PowerCmd.Apply<PlatingPower>(new ThrowingPlayerChoiceContext(), Creature, InitialPlating, Creature, null);
+        await PowerCmd.Apply<FanaticPower>(new ThrowingPlayerChoiceContext(), Creature, 1m, Creature, null);
     }
 
     protected static IReadOnlyList<Creature> LivingPlayerTargets(IReadOnlyList<Creature> targets) {
@@ -34,7 +35,7 @@ public abstract class Bishop : CustomMonsterModel {
 
     protected async Task ApplyPlatingToBishops(int amount) {
         foreach (Creature creature in CombatState.Creatures.Where(IsLivingBishop)) {
-            await PowerCmd.Apply<PlatingPower>(creature, amount, Creature, null);
+            await PowerCmd.Apply<PlatingPower>(new ThrowingPlayerChoiceContext(), creature, amount, Creature, null);
         }
     }
 

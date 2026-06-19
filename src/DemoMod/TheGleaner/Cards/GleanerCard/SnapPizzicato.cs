@@ -30,10 +30,10 @@ public class SnapPizzicato : CustomCardModel {
 	}
 
 	protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
-		await using AttackContext context = await AttackCommand.CreateContextAsync(Owner.Creature.CombatState, this);
+		await using AttackContext context = await AttackCommand.CreateContextAsync(Owner.Creature.CombatState, choiceContext, this);
 		await CreatureCmd.TriggerAnim(Owner.Creature, "Attack", 0.5f);
 		context.AddHit(await CreatureCmd.Damage(choiceContext, cardPlay.Target, (DamageVar) DynamicVars["Damage1"], this));
-		await PowerCmd.Apply<VulnerablePower>(cardPlay.Target, DynamicVars["VulnerablePower"].BaseValue, Owner.Creature, this);
+		await PowerCmd.Apply<VulnerablePower>(choiceContext, cardPlay.Target, DynamicVars["VulnerablePower"].BaseValue, Owner.Creature, this);
 		context.AddHit(await CreatureCmd.Damage(choiceContext, cardPlay.Target, (DamageVar) DynamicVars["Damage2"], this));
 	}
 

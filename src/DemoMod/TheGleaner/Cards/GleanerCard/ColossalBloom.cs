@@ -35,8 +35,8 @@ public class ColossalBloom : CustomCardModel
 
 	protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
 	{
-		await PowerCmd.Apply<PoisonPower>(Owner.Creature.CombatState.HittableEnemies, DynamicVars["PoisonPower"].BaseValue, Owner.Creature, this);
-		await PowerCmd.Apply<EtchPower>(Owner.Creature.CombatState.HittableEnemies, DynamicVars["EtchPower"].BaseValue, Owner.Creature, this);
+		await PowerCmd.Apply<PoisonPower>(choiceContext, Owner.Creature.CombatState.HittableEnemies, DynamicVars["PoisonPower"].BaseValue, Owner.Creature, this);
+		await PowerCmd.Apply<EtchPower>(choiceContext, Owner.Creature.CombatState.HittableEnemies, DynamicVars["EtchPower"].BaseValue, Owner.Creature, this);
 	}
 
 	protected override void OnUpgrade()

@@ -10,19 +10,16 @@ using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Models;
 
 namespace DemoMod.TheGleaner.RestSiteOptions;
-
-public sealed class StargazeRestSiteOption : RestSiteOption
-{
+public sealed class StargazeRestSiteOption : RestSiteOption {
     private const int CardsToTransform = 2;
 
     public override string OptionId => "DEMOMOD_STARGAZE";
+    private bool _isEnabled = true;
+    public override bool IsEnabled => _isEnabled;
 
-    public override LocString Description
-    {
-        get
-        {
-            if (IsEnabled)
-            {
+    public override LocString Description {
+        get {
+            if (IsEnabled) {
                 LocString locString = new LocString("rest_site_ui", "OPTION_" + OptionId + ".description");
                 locString.Add("Cards", CardsToTransform);
                 return locString;
@@ -33,13 +30,11 @@ public sealed class StargazeRestSiteOption : RestSiteOption
     }
 
     public StargazeRestSiteOption(Player owner)
-        : base(owner)
-    {
-        IsEnabled = GetTransformCandidateCount(owner) >= CardsToTransform;
+        : base(owner) {
+        _isEnabled = GetTransformCandidateCount(owner) >= CardsToTransform;
     }
 
-    public override async Task<bool> OnSelect()
-    {
+    public override async Task<bool> OnSelect() {
         CardSelectorPrefs prefs = new CardSelectorPrefs(
             CardSelectorPrefs.TransformSelectionPrompt,
             CardsToTransform
@@ -53,16 +48,14 @@ public sealed class StargazeRestSiteOption : RestSiteOption
         if (!selectedCards.Any())
             return false;
 
-        foreach (CardModel card in selectedCards)
-        {
+        foreach (CardModel card in selectedCards) {
             await CardCmd.TransformToRandom(card, Owner.RunState.Rng.Niche);
         }
 
         return true;
     }
 
-    private static int GetTransformCandidateCount(Player player)
-    {
+    private static int GetTransformCandidateCount(Player player) {
         return PileType.Deck.GetPile(player).Cards.Count(c => c.IsRemovable);
     }
 }

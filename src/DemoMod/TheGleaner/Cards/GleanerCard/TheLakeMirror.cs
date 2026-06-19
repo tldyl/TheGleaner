@@ -31,6 +31,7 @@ public class TheLakeMirror : CustomCardModel {
 
 	protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
 		await PowerCmd.Apply<TheLakeMirrorPower>(
+			choiceContext,
 			Owner.Creature,
 			DynamicVars["Amount"].BaseValue,
 			Owner.Creature,

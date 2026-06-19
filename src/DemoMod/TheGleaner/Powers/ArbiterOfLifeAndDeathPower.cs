@@ -55,7 +55,7 @@ public class ArbiterOfLifeAndDeathPower : CustomPowerModel {
         await CardCmd.Afflict(affliction, card, affliction is FlameOfDeath ? 1 - Owner.CombatState.RoundNumber % 2 : Owner.CombatState.RoundNumber % 2);
     }
 
-    public override async Task AfterSideTurnStart(CombatSide side, CombatState combatState) {
+    public override async Task AfterSideTurnStart(CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState) {
         if (side != Owner.Side) {
             foreach (Creature creature in combatState.Allies) {
                 if (creature.IsPlayer) {
@@ -71,10 +71,10 @@ public class ArbiterOfLifeAndDeathPower : CustomPowerModel {
             }
             if (combatState.RoundNumber % 2 == 0) {
                 await PowerCmd.Remove<LightPolarPower>(Owner);
-                await PowerCmd.Apply<FlamePolarPower>(Owner, 1, Owner, null);
+                await PowerCmd.Apply<FlamePolarPower>(new ThrowingPlayerChoiceContext(), Owner, 1, Owner, null);
             } else {
                 await PowerCmd.Remove<FlamePolarPower>(Owner);
-                await PowerCmd.Apply<LightPolarPower>(Owner, 1, Owner, null);
+                await PowerCmd.Apply<LightPolarPower>(new ThrowingPlayerChoiceContext(), Owner, 1, Owner, null);
             }
         }
     }

@@ -39,6 +39,7 @@ public class NoLeaveToWither : CustomCardModel
 	protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
 	{
 		await PowerCmd.Apply<NoLeaveToWitherPower>(
+			choiceContext,
 			Owner.Creature,
 			1,
 			Owner.Creature,
@@ -61,7 +62,7 @@ public class NoLeaveToWither : CustomCardModel
 			IReadOnlyList<CardPileAddResult> results = await CardPileCmd.AddGeneratedCardsToCombat(
 				[CombatState.CreateCard(card, Owner)],
 				targetPile,
-				true,
+				Owner,
 				CardPilePosition.Random
 			);
 

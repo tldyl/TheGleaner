@@ -1,6 +1,7 @@
 using BaseLib.Abstracts;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Creatures;
+using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.MonsterMoves;
 using MegaCrit.Sts2.Core.MonsterMoves.Intents;
@@ -41,7 +42,7 @@ public class GraspDoor : CustomMonsterModel {
             .WithHitFx("vfx/vfx_attack_slash")
             .Execute(null);
         foreach (Creature creature in Creature.CombatState.HittableEnemies) {
-            await PowerCmd.Apply<PlatingPower>(creature, 5, Creature, null);
+            await PowerCmd.Apply<PlatingPower>(new ThrowingPlayerChoiceContext(), creature, 5, Creature, null);
         }
     }
     
@@ -55,7 +56,7 @@ public class GraspDoor : CustomMonsterModel {
 
     private async Task DefendMove(IReadOnlyList<Creature> targets) {
         foreach (Creature creature in Creature.CombatState.HittableEnemies) {
-            await PowerCmd.Apply<PlatingPower>(creature, 10, Creature, null);
+            await PowerCmd.Apply<PlatingPower>(new ThrowingPlayerChoiceContext(), creature, 10, Creature, null);
         }
     }
 }

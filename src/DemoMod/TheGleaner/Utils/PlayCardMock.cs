@@ -20,7 +20,7 @@ using MegaCrit.Sts2.Core.Settings;
 namespace DemoMod.TheGleaner.Utils;
 public class PlayCardMock {
     public static async Task MockPlayCard(CardModel cardModel, Creature target, PlayerChoiceContext choiceContext, ResourceInfo resources) {
-        CombatState combatState = cardModel.CombatState ?? cardModel.Owner.Creature.CombatState;
+        ICombatState combatState = cardModel.CombatState ?? cardModel.Owner.Creature.CombatState;
         choiceContext.PushModel(cardModel);
         await CombatManager.Instance.WaitForUnpause();
         AccessTools.PropertySetter(typeof(CardModel), "CurrentTarget").Invoke(cardModel, [target]);

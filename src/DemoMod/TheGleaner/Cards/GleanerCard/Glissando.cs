@@ -42,13 +42,17 @@ public class Glissando : CustomCardModel {
 			.TargetingAllOpponents(Owner.Creature.CombatState)
 			.WithNoAttackerAnim()
 			.Execute(choiceContext);
-		IEnumerable<DamageResult> damageResults = attackCommand.Results;
+		List<DamageResult> damageResults = [];
+		foreach (List<DamageResult> results in attackCommand.Results) {
+			damageResults.AddRange(results);
+		}
 
 		int count = damageResults.Count(result => result.WasTargetKilled);
 
 		if (count == damageResults.Count() - 1) {
 
 			await PowerCmd.Apply<VulnerablePower>(
+				choiceContext,
 				CombatState.HittableEnemies,
 				DynamicVars.Vulnerable.BaseValue,
 				Owner.Creature,

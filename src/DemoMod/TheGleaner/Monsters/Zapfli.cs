@@ -3,6 +3,7 @@ using DemoMod.TheGleaner.Powers;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Ascension;
 using MegaCrit.Sts2.Core.Entities.Creatures;
+using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Helpers;
 using MegaCrit.Sts2.Core.MonsterMoves.Intents;
 using MegaCrit.Sts2.Core.MonsterMoves.MonsterMoveStateMachine;
@@ -26,8 +27,8 @@ public class Zapfli : CustomMonsterModel {
     }
 
     public override async Task AfterAddedToRoom() {
-        await PowerCmd.Apply<ChargeAppendPower>(Creature, 1, Creature, null);
-        await PowerCmd.Apply<SorceressBoundPower>(Creature, 1m, Creature.CombatState.GetTeammatesOf(Creature).Any(c => c.Monster is ZapfliSorceress) ? Creature.CombatState.GetTeammatesOf(Creature).First(c => c.Monster is ZapfliSorceress) : Creature, null);
+        await PowerCmd.Apply<ChargeAppendPower>(new ThrowingPlayerChoiceContext(), Creature, 1, Creature, null);
+        await PowerCmd.Apply<SorceressBoundPower>(new ThrowingPlayerChoiceContext(), Creature, 1m, Creature.CombatState.GetTeammatesOf(Creature).Any(c => c.Monster is ZapfliSorceress) ? Creature.CombatState.GetTeammatesOf(Creature).First(c => c.Monster is ZapfliSorceress) : Creature, null);
     }
     
     private async Task LightBluntMove(IReadOnlyList<Creature> targets) {

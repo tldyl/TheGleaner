@@ -8,5 +8,5 @@ namespace DemoMod.TheGleaner.Cards.GleanerCard;
 /// 协奏牌请实现此接口
 /// </summary>
 public interface IConcertoCard {
-    public Task OnConcerto(CombatState combatState, PlayerChoiceContext choiceContext, CardPlay cardPlay);
+    public Task OnConcerto(ICombatState combatState, PlayerChoiceContext choiceContext, CardPlay cardPlay);
 }

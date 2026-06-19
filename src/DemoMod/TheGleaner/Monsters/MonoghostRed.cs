@@ -48,6 +48,6 @@ public class MonoghostRed : CustomMonsterModel {
             .WithAttackerFx(null, CustomAttackSfx)
             .WithHitFx("vfx/vfx_slime_impact")
             .Execute(null);
-        await CardPileCmd.AddToCombatAndPreview<Burn>(targets, PileType.Hand, 1, false);
+        await CardPileCmd.AddToCombatAndPreview<Burn>(targets, PileType.Hand, 1, null);
     }
 }

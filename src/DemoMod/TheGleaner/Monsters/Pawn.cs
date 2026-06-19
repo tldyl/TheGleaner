@@ -5,6 +5,7 @@ using MegaCrit.Sts2.Core.Audio;
 using MegaCrit.Sts2.Core.Bindings.MegaSpine;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Creatures;
+using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Helpers;
 using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.MonsterMoves.Intents;
@@ -37,7 +38,7 @@ public class Pawn : CustomMonsterModel {
 
     public override async Task AfterAddedToRoom() {
         await base.AfterAddedToRoom();
-        await PowerCmd.Apply<PromotionPower>(Creature, PromotionActions, Creature, null);
+        await PowerCmd.Apply<PromotionPower>(new ThrowingPlayerChoiceContext(), Creature, PromotionActions, Creature, null);
     }
 
     protected override MonsterMoveStateMachine GenerateMoveStateMachine() {
@@ -70,7 +71,7 @@ public class Pawn : CustomMonsterModel {
             .Execute(null);
 
         IReadOnlyList<Creature> playerTargets = targets.Where(static target => target.IsAlive && target.IsPlayer).ToList();
-        await PowerCmd.Apply<WeakPower>(playerTargets, DeterrenceWeak, Creature, null);
+        await PowerCmd.Apply<WeakPower>(new ThrowingPlayerChoiceContext(), playerTargets, DeterrenceWeak, Creature, null);
         await AdvancePromotion();
     }
 
@@ -82,12 +83,12 @@ public class Pawn : CustomMonsterModel {
 
         promotion.TriggerFlash();
         if (promotion.Amount > 1) {
-            await PowerCmd.ModifyAmount(promotion, -1m, Creature, null);
+            await PowerCmd.ModifyAmount(new ThrowingPlayerChoiceContext(), promotion, -1m, Creature, null);
             return;
         }
 
         await PowerCmd.Remove(promotion);
-        await PowerCmd.Apply<StrengthPower>(Creature, PromotionStrength, Creature, null);
+        await PowerCmd.Apply<StrengthPower>(new ThrowingPlayerChoiceContext(), Creature, PromotionStrength, Creature, null);
     }
 
     public override CreatureAnimator SetupCustomAnimationStates(MegaSprite controller) {

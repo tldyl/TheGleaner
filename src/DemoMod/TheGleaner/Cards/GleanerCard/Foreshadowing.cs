@@ -33,6 +33,6 @@ public class Foreshadowing : CustomCardModel {
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
         await ScorePileCmd.Glean(Owner, choiceContext, ResolveEnergyXValue() + CurrentUpgradeLevel, this);
-        await PowerCmd.Apply<ForeshadowingPower>(Owner.Creature, ResolveEnergyXValue() + CurrentUpgradeLevel, Owner.Creature, this);
+        await PowerCmd.Apply<ForeshadowingPower>(choiceContext, Owner.Creature, ResolveEnergyXValue() + CurrentUpgradeLevel, Owner.Creature, this);
     }
 }

@@ -40,7 +40,8 @@ public class HookListenerModel() : CustomSingletonModel(true, true) {
     public override async Task BeforeSideTurnStart(
         PlayerChoiceContext choiceContext,
         CombatSide side,
-        CombatState combatState) {
+        IReadOnlyList<Creature> participants,
+        ICombatState combatState) {
         if (side == CombatSide.Player) {
             ScorePile scorePile = ScorePileCmd.GetOrCreateScorePile(LocalContext.GetMe(combatState.Players).PlayerCombatState);
             scorePile.freeTakeCount = 1;
@@ -111,7 +112,7 @@ public class HookListenerModel() : CustomSingletonModel(true, true) {
         NGrayGradientVfxPostProcessor.Instance.ToggleBlackAndWhite(false);
     }
 
-    public override async Task AfterTurnEnd(PlayerChoiceContext choiceContext, CombatSide side) {
+    public override async Task AfterSideTurnEnd(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants) {
         Player player = LocalContext.GetMe(RunManager.Instance.DebugOnlyGetState().Players); //只检查自己，发现需要往手牌中增加乐谱牌时再用action通知队友
         ScorePile scorePile = ScorePileCmd.GetOrCreateScorePile(player.PlayerCombatState);
         if (scorePile.Cards.Count > 0 && !NRun.Instance.CombatRoom.Ui.Hand.ActiveHolders.Any(holder => holder.CardModel is ScoreEntryCard)) {

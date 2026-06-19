@@ -29,8 +29,8 @@ public class Rubato : CustomCardModel {
 	}
 
 	protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
-		await PowerCmd.Apply<VulnerablePower>(Owner.Creature, DynamicVars["VulAmount"].BaseValue, Owner.Creature, this);
-		await PowerCmd.Apply<WeakPower>(Owner.Creature, DynamicVars["VulAmount"].BaseValue, Owner.Creature, this);
+		await PowerCmd.Apply<VulnerablePower>(choiceContext, Owner.Creature, DynamicVars["VulAmount"].BaseValue, Owner.Creature, this);
+		await PowerCmd.Apply<WeakPower>(choiceContext, Owner.Creature, DynamicVars["VulAmount"].BaseValue, Owner.Creature, this);
 		await PlayerCmd.GainEnergy(DynamicVars.Energy.BaseValue, Owner);
 		if (CurrentUpgradeLevel > 0) {
 			CardModel cpy = CreateClone();

@@ -29,8 +29,8 @@ public class Germination : CustomCardModel {
 	}
 
 	protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
-		await PowerCmd.Apply<GerminationPower>(Owner.Creature, DynamicVars["GerminationPower"].BaseValue, Owner.Creature, this);
-		await PowerCmd.Apply<EtchPower>(Owner.Creature.CombatState.HittableEnemies, DynamicVars["EtchPower"].BaseValue, Owner.Creature, this);
+		await PowerCmd.Apply<GerminationPower>(choiceContext, Owner.Creature, DynamicVars["GerminationPower"].BaseValue, Owner.Creature, this);
+		await PowerCmd.Apply<EtchPower>(choiceContext, Owner.Creature.CombatState.HittableEnemies, DynamicVars["EtchPower"].BaseValue, Owner.Creature, this);
 	}
 	
 	protected override void OnUpgrade() => DynamicVars["GerminationPower"].UpgradeValueBy(1);

@@ -3,6 +3,7 @@ using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Ascension;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
+using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Helpers;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Cards;
@@ -42,7 +43,7 @@ public class TrighostGreen : CustomMonsterModel {
     }
 
     private async Task InflameMove(IReadOnlyList<Creature> targets) {
-        await PowerCmd.Apply<StrengthPower>(Creature, 3, Creature, null);
+        await PowerCmd.Apply<StrengthPower>(new ThrowingPlayerChoiceContext(), Creature, 3, Creature, null);
         await CreatureCmd.GainBlock(Creature, 10, ValueProp.Move, null);
     }
     
@@ -54,7 +55,7 @@ public class TrighostGreen : CustomMonsterModel {
             .WithHitFx("vfx/vfx_slime_impact")
             .WithHitCount(2)
             .Execute(null);
-        await CardPileCmd.AddToCombatAndPreview<Burn>(targets, PileType.Hand, 1, false);
+        await CardPileCmd.AddToCombatAndPreview<Burn>(targets, PileType.Hand, 1, null);
         foreach (Creature target in targets) {
             if (target.IsPlayer) {
                 foreach (CardModel card in target.Player.PlayerCombatState.AllCards.Where(c => c is Burn)) {
@@ -81,6 +82,6 @@ public class TrighostGreen : CustomMonsterModel {
             .WithAttackerFx(null, CustomAttackSfx)
             .WithHitFx("vfx/vfx_slime_impact")
             .Execute(null);
-        await CardPileCmd.AddToCombatAndPreview<Burn>(targets, PileType.Hand, 1, false);
+        await CardPileCmd.AddToCombatAndPreview<Burn>(targets, PileType.Hand, 1, null);
     }
 }

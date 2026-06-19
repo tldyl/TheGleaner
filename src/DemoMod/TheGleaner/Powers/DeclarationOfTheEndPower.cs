@@ -1,5 +1,6 @@
 using BaseLib.Abstracts;
 using MegaCrit.Sts2.Core.Combat;
+using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
@@ -17,7 +18,7 @@ public class DeclarationOfTheEndPower : CustomPowerModel {
 
     public override int DisplayAmount => DynamicVars["DisplayAmount"].IntValue;
 
-    public override async Task AfterTurnEnd(PlayerChoiceContext choiceContext, CombatSide side) {
+    public override async Task AfterSideTurnEnd(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> _) {
         if (side == Owner.Side) {
             Flash();
             DynamicVars["DisplayAmount"].BaseValue++;

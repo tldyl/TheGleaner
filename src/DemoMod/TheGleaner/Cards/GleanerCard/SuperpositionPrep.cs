@@ -19,7 +19,7 @@ public class SuperpositionPrep : CustomCardModel {
 	];
 
 	protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
-		await PowerCmd.Apply<SuperpositionPrepPower>(Owner.Creature, 1, Owner.Creature, this, false);
+		await PowerCmd.Apply<SuperpositionPrepPower>(choiceContext, Owner.Creature, 1, Owner.Creature, this, false);
 	}
 
 		protected override void OnUpgrade() {

@@ -28,7 +28,7 @@ public class RoundAndRound : CustomCardModel {
 			await CreatureCmd.Stun(creature);
 		}
 		if (CurrentUpgradeLevel > 0) {
-			await PowerCmd.Apply<EnergyNextTurnPower>(Owner.Creature, Owner.PlayerCombatState.MaxEnergy, Owner.Creature, this);
+			await PowerCmd.Apply<EnergyNextTurnPower>(choiceContext, Owner.Creature, Owner.PlayerCombatState.MaxEnergy, Owner.Creature, this);
 		}
 	}
 }

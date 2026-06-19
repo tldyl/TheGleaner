@@ -62,7 +62,7 @@ public class EchoingArrow : CustomCardModel, IArrowCard {
 				return;
 			}
 		}
-		CardCmd.PreviewCardPileAdd(await CardPileCmd.AddGeneratedCardToCombat(card.CreateClone(), PileType.Discard, true), 2.2f);
+		CardCmd.PreviewCardPileAdd(await CardPileCmd.AddGeneratedCardToCombat(card.CreateClone(), PileType.Discard, Owner), 2.2f);
 	}
 	
 	protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(3);

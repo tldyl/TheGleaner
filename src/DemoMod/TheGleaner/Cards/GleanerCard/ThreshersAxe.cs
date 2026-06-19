@@ -47,8 +47,8 @@ public class ThreshersAxe : CustomCardModel, IConcertoCard {
 		}
 	}
 
-	protected override PileType GetResultPileType() {
-		PileType resultPileType = base.GetResultPileType();
+	protected override PileType GetResultPileTypeForCardPlay() {
+		PileType resultPileType = base.GetResultPileTypeForCardPlay();
 		return resultPileType != PileType.Discard ? resultPileType : PileType.Hand;
 	}
 
@@ -75,7 +75,7 @@ public class ThreshersAxe : CustomCardModel, IConcertoCard {
 		DynamicVars["Amount"].UpgradeValueBy(3);
 	}
 
-	public async Task OnConcerto(CombatState combatState, PlayerChoiceContext choiceContext, CardPlay cardPlay) {
+	public async Task OnConcerto(ICombatState combatState, PlayerChoiceContext choiceContext, CardPlay cardPlay) {
 		await CardCmd.AutoPlay(choiceContext, this, null);
 		if (!Keywords.Contains(CardKeyword.Ethereal)) {
 			AddKeyword(CardKeyword.Ethereal);

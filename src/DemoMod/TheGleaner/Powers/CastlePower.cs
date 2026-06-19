@@ -13,7 +13,9 @@ public class CastlePower : CustomPowerModel {
     public override PowerType Type => PowerType.Buff;
     public override PowerStackType StackType => PowerStackType.Counter;
 
-    public override async Task AfterSideTurnStart(CombatSide side, CombatState combatState) {
+    public override async Task AfterSideTurnStart(CombatSide side,
+        IReadOnlyList<Creature> participants,
+        ICombatState combatState) {
         if (side == Owner.Side) {
             return;
         }

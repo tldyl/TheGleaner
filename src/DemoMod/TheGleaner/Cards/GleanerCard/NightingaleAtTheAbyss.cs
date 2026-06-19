@@ -30,8 +30,8 @@ public class NightingaleAtTheAbyss : CustomCardModel {
 	
 	protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
 		foreach (Creature creature in Owner.Creature.CombatState.Enemies) {
-			await PowerCmd.Apply<VulnerablePower>(creature, DynamicVars["VulVal"].BaseValue, Owner.Creature, this);
-			await PowerCmd.Apply<WeakPower>(creature, DynamicVars["WeakVal"].BaseValue, Owner.Creature, this);
+			await PowerCmd.Apply<VulnerablePower>(choiceContext, creature, DynamicVars["VulVal"].BaseValue, Owner.Creature, this);
+			await PowerCmd.Apply<WeakPower>(choiceContext, creature, DynamicVars["WeakVal"].BaseValue, Owner.Creature, this);
 		}
 	}
 	

@@ -26,7 +26,7 @@ public class WhiteSquareDomainPower : CustomPowerModel {
         }
 
         Flash();
-        await PowerCmd.Apply<StrengthPower>(Owner, Amount, Owner, null);
-        await PowerCmd.Apply<StrengthDecayPower>(Owner, Amount, Owner, null);
+        await PowerCmd.Apply<StrengthPower>(context, Owner, Amount, Owner, null);
+        await PowerCmd.Apply<StrengthDecayPower>(context, Owner, Amount, Owner, null);
     }
 }

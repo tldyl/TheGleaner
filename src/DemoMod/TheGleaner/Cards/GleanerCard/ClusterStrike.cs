@@ -114,7 +114,7 @@ public class ClusterStrike : CustomCardModel, IAppendDescriptionCard, IArrowCard
 	}
 
 	protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
-		await using AttackContext context = await AttackCommand.CreateContextAsync(Owner.Creature.CombatState, this);
+		await using AttackContext context = await AttackCommand.CreateContextAsync(Owner.Creature.CombatState, choiceContext, this);
 
 		List<string> sfxGroup = HitSfxGroup.nextGroup("harp", DynamicVars["HitCount"].IntValue);
 

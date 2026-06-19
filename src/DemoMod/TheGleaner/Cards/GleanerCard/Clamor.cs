@@ -57,7 +57,7 @@ public class Clamor : CustomCardModel
 			IReadOnlyList<CardPileAddResult> results = await CardPileCmd.AddGeneratedCardsToCombat(
 				[CombatState.CreateCard(card, Owner)],
 				targetPile,
-				true,
+				Owner,
 				CardPilePosition.Random
 			);
 

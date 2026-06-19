@@ -27,7 +27,7 @@ public class StringAndPillar : CustomCardModel {
 			CardModel cpy = CreateClone();
 			CardCmd.Downgrade(cpy);
 			AccessTools.Field(typeof(CardModel), "_energyCost").SetValue(cpy, new CardEnergyCost(cpy, 4, false));
-			await CardPileCmd.AddGeneratedCardToCombat(cpy, PileType.Hand, true);
+			await CardPileCmd.AddGeneratedCardToCombat(cpy, PileType.Hand, Owner);
 		}
 	}
 

@@ -6,6 +6,7 @@ using DemoMod.TheGleaner.Utils;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Commands.Builders;
 using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
@@ -40,7 +41,11 @@ public class LayeredMoan : CustomCardModel {
 			.Targeting(cardPlay.Target)
 			.Execute(choiceContext);
 		if (cardPlay.Target != null) {
-			await PowerCmd.Apply<PoisonPower>(cardPlay.Target, _.Results.FirstOrDefault().TotalDamage, Owner.Creature, this);
+			List<DamageResult> damageResults = [];
+			foreach (List<DamageResult> results in _.Results) {
+				damageResults.AddRange(results);
+			}
+			await PowerCmd.Apply<PoisonPower>(choiceContext, cardPlay.Target, damageResults.FirstOrDefault().TotalDamage, Owner.Creature, this);
 		}
 		List<CardModel> cards = RandomDissonanceCard.getRandomDissonanceCards(
 			DynamicVars.Cards.IntValue,
@@ -58,7 +63,7 @@ public class LayeredMoan : CustomCardModel {
 				await CardPileCmd.AddGeneratedCardToCombat(
 					CombatState.CreateCard(card, Owner),
 					targetPile,
-					true
+					Owner
 				)
 			);
 		}

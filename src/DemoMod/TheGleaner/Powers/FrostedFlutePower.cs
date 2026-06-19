@@ -14,8 +14,8 @@ public class FrostedFlutePower : CustomTemporaryPowerModel {
     public override string CustomBigIconPath => $"res://TheGleaner/images/powers/{Id.Entry.ToLowerInvariant()}.png";
     public override PowerType Type => PowerType.Debuff;
     
-    protected override Func<PlayerChoiceContext, Creature, decimal, Creature?, CardModel?, bool, Task> ApplyPowerFunc { get; } = async (_, target, amount, applier, cardSource, flag) => {
-        await PowerCmd.Apply<StrengthPower>(target, -amount, applier, cardSource, flag);
+    protected override Func<PlayerChoiceContext, Creature, decimal, Creature?, CardModel?, bool, Task> ApplyPowerFunc { get; } = async (choiceContext, target, amount, applier, cardSource, flag) => {
+        await PowerCmd.Apply<StrengthPower>(choiceContext, target, -amount, applier, cardSource, flag);
     };
 
     public override PowerModel InternallyAppliedPower => ModelDb.Power<StrengthPower>();

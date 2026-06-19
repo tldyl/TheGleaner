@@ -45,8 +45,7 @@ public class StartledDreamPower : CustomPowerModel {
         await PowerCmd.Remove(this);
     }
 
-    public override async Task AfterTurnEnd(PlayerChoiceContext choiceContext, CombatSide side) {
-        _ = choiceContext;
+    public override async Task AfterSideTurnEnd(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> _) {
         if (side != Owner.Side || Owner.Monster is not SleepyScarecrow scarecrow) {
             return;
         }

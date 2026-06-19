@@ -1,6 +1,7 @@
 using BaseLib.Abstracts;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Creatures;
+using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Helpers;
 using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.MonsterMoves.Intents;
@@ -41,7 +42,7 @@ public class CourtWarden : CustomMonsterModel {
     private async Task BuffMove(IReadOnlyList<Creature> targets) {
         foreach (Creature creature in CombatState.GetTeammatesOf(Creature)) {
             if (creature.Monster is SummonedTransient) {
-                await PowerCmd.Apply<StrengthPower>(creature, 7, Creature, null);
+                await PowerCmd.Apply<StrengthPower>(new ThrowingPlayerChoiceContext(), creature, 7, Creature, null);
             }
         }
     }

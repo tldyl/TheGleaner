@@ -171,8 +171,8 @@ public class SleepyScarecrow : CustomMonsterModel {
     private async Task Sleep() {
         IsAwake = false;
         await CreatureCmd.TriggerAnim(Creature, "Sleep", 0f);
-        await PowerCmd.Apply<PlatingPower>(Creature, InitialPlating, Creature, null);
-        await PowerCmd.Apply<StartledDreamPower>(Creature, SleepTurns, Creature, null);
+        await PowerCmd.Apply<PlatingPower>(new ThrowingPlayerChoiceContext(), Creature, InitialPlating, Creature, null);
+        await PowerCmd.Apply<StartledDreamPower>(new ThrowingPlayerChoiceContext(), Creature, SleepTurns, Creature, null);
         Marker2D? sleepVfxPos = NCombatRoom.Instance?.GetCreatureNode(Creature)?.GetSpecialNode<Marker2D>("%SleepVfxPos");
         if (sleepVfxPos == null) {
             return;
@@ -196,7 +196,7 @@ public class SleepyScarecrow : CustomMonsterModel {
             .WithHitFx("vfx/vfx_attack_slash")
             .Execute(null);
 
-        await PowerCmd.Apply<WeakPower>(LivingPlayerTargets(targets), CurseWeak, Creature, null);
+        await PowerCmd.Apply<WeakPower>(new ThrowingPlayerChoiceContext(), LivingPlayerTargets(targets), CurseWeak, Creature, null);
     }
 
     private async Task SpinningMove(IReadOnlyList<Creature> targets) {
@@ -215,7 +215,7 @@ public class SleepyScarecrow : CustomMonsterModel {
         _ = targets;
         SfxCmd.Play(CastMoveSfx);
         await CreatureCmd.TriggerAnim(Creature, "Cast", 0.6f);
-        await PowerCmd.Apply<StrengthPower>(Creature, NightmareStrength, Creature, null);
+        await PowerCmd.Apply<StrengthPower>(new ThrowingPlayerChoiceContext(), Creature, NightmareStrength, Creature, null);
     }
 
     private void StopSleepingVfx() {

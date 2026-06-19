@@ -27,7 +27,7 @@ public class MakerAppearPower : CustomPowerModel {
     public override int DisplayAmount => DynamicVars["DisplayAmount"].IntValue;
 
     public override async Task AfterApplied(Creature? applier, CardModel? cardSource) {
-        await PowerCmd.Apply<StrengthPower>(Owner, 1, Owner, null);
+        await PowerCmd.Apply<StrengthPower>(new ThrowingPlayerChoiceContext(), Owner, 1, Owner, null);
         switch (Owner.Monster) {
             case ScrutinyDoor:
                 NCombatRoom.Instance.GetCreatureNode(Owner).Visuals.GetNode<Sprite2D>("%Visuals").Texture = PreloadManager.Cache.GetTexture2D("res://TheGleaner/images/monsters/door_maker_placeholder_2.png");
@@ -67,7 +67,7 @@ public class MakerAppearPower : CustomPowerModel {
                 await PowerCmd.Remove(this);
                 PowerModel cpy = (PowerModel) MutableClone();
                 //AccessTools.Field(typeof(PowerModel), "_owner").SetValue(cpy, null);
-                await PowerCmd.Apply(cpy, Owner.CombatState.HittableEnemies[index], 1, Owner, null);
+                await PowerCmd.Apply(context, cpy, Owner.CombatState.HittableEnemies[index], 1, Owner, null);
             }
         }
         InvokeDisplayAmountChanged();
@@ -82,7 +82,7 @@ public class MakerAppearPower : CustomPowerModel {
                 await PowerCmd.Remove(this);
                 PowerModel cpy = (PowerModel) MutableClone();
                 //AccessTools.Field(typeof(PowerModel), "_owner").SetValue(cpy, null);
-                await PowerCmd.Apply(cpy, Owner.CombatState.HittableEnemies[index], 1, Owner, null);
+                await PowerCmd.Apply(choiceContext, cpy, Owner.CombatState.HittableEnemies[index], 1, Owner, null);
             }
         }
     }

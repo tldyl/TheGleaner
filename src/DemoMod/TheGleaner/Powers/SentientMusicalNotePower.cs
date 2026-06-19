@@ -16,7 +16,7 @@ public class SentientMusicalNotePower : CustomPowerModel {
     public override PowerType Type => PowerType.Buff;
     public override PowerStackType StackType => PowerStackType.Counter;
     public override int DisplayAmount => DynamicVars["CardsLeft"].IntValue;
-    public override bool IsInstanced => true;
+    public override PowerInstanceType InstanceType => PowerInstanceType.Instanced;
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new DynamicVar("CardsLeft", 3M)
@@ -40,7 +40,7 @@ public class SentientMusicalNotePower : CustomPowerModel {
         }
     }
 
-    public override async Task AfterTurnEnd(PlayerChoiceContext choiceContext, CombatSide side) {
+    public override async Task AfterSideTurnEnd(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> _) {
         if (side != Owner.Side) {
             return;
         }
@@ -60,7 +60,7 @@ public class SentientMusicalNotePower : CustomPowerModel {
             IReadOnlyList<CardPileAddResult> results = await CardPileCmd.AddGeneratedCardsToCombat(
                 [CombatState.CreateCard(card, Owner.Player)],
                 targetPile,
-                true,
+                Owner.Player,
                 CardPilePosition.Random
             );
 

@@ -3,6 +3,7 @@ using DemoMod.TheGleaner.Powers;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
+using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Helpers;
 using MegaCrit.Sts2.Core.Models.Cards;
 using MegaCrit.Sts2.Core.Models.Powers;
@@ -31,7 +32,7 @@ public class EbonyBishop : Bishop {
 
     public override async Task AfterAddedToRoom() {
         await base.AfterAddedToRoom();
-        await PowerCmd.Apply<BlackSquareDomainPower>(Creature, DomainAmount, Creature, null);
+        await PowerCmd.Apply<BlackSquareDomainPower>(new ThrowingPlayerChoiceContext(), Creature, DomainAmount, Creature, null);
     }
 
     protected override MonsterMoveStateMachine GenerateMoveStateMachine() {
@@ -69,7 +70,7 @@ public class EbonyBishop : Bishop {
             LivingPlayerTargets(targets),
             PileType.Draw,
             PinDownDazed,
-            addedByPlayer: false,
+            null,
             CardPilePosition.Random);
     }
 
@@ -81,7 +82,7 @@ public class EbonyBishop : Bishop {
             .WithHitFx("vfx/vfx_slime_impact")
             .Execute(null);
 
-        await PowerCmd.Apply<WeakPower>(LivingPlayerTargets(targets), ProfanationWeak, Creature, null);
+        await PowerCmd.Apply<WeakPower>(new ThrowingPlayerChoiceContext(), LivingPlayerTargets(targets), ProfanationWeak, Creature, null);
     }
 
     private async Task DarkCrossMove(IReadOnlyList<Creature> targets) {

@@ -209,7 +209,7 @@ public static class ScorePileCmd {
 					Node node = NCombatRoom.Instance.CombatVfxContainer;
 					node.AddChild(nCard);
 					nCard.UpdateVisuals(PileType.Hand, CardPreviewMode.Normal);
-					NCardFlyVfx child = NCardFlyVfx.Create(nCard, PileType.Play.GetTargetPosition(nCard), false, nCard.Model.Owner.Character.TrailPath);
+					NCardFlyVfx child = NCardFlyVfx.Create(nCard, PileType.Play, false, nCard.Model.Owner.Character.TrailPath);
 					node.AddChildSafely((Node) child);
 					if (cardModel is not IDissonanceCard) {
 						CardCmd.Preview(cardModel);

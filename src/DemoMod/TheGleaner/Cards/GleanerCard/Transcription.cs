@@ -37,7 +37,7 @@ public class Transcription : CustomCardModel {
 
 		for (int i = 0; i < DynamicVars["Amount"].IntValue; i++) {
 			CardModel copy = selectedCard.CreateClone();
-			await CardPileCmd.AddGeneratedCardToCombat(copy, PileType.Hand, true);
+			await CardPileCmd.AddGeneratedCardToCombat(copy, PileType.Hand, Owner);
 		}
 	}
 

@@ -1,6 +1,7 @@
 using BaseLib.Abstracts;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Creatures;
+using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Helpers;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Cards;
@@ -22,7 +23,7 @@ public class Dimlight : CustomMonsterModel {
     public override bool ShouldDisappearFromDoom => false;
 
     public override async Task AfterAddedToRoom() {
-        await PowerCmd.Apply<IllusionPower>(Creature, 1M, Creature, null);
+        await PowerCmd.Apply<IllusionPower>(new ThrowingPlayerChoiceContext(), Creature, 1M, Creature, null);
     }
 
     protected override MonsterMoveStateMachine GenerateMoveStateMachine() {

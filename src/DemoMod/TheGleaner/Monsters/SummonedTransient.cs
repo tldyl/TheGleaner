@@ -3,6 +3,7 @@ using DemoMod.TheGleaner.Powers;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Ascension;
 using MegaCrit.Sts2.Core.Entities.Creatures;
+using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Helpers;
 using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.MonsterMoves.Intents;
@@ -27,8 +28,8 @@ public class SummonedTransient : CustomMonsterModel {
     }
 
     public override async Task AfterAddedToRoom() {
-        await PowerCmd.Apply<MinionPower>(Creature, 1, Creature, null);
-        await PowerCmd.Apply<ShiftingPower>(Creature, 1, Creature, null);
+        await PowerCmd.Apply<MinionPower>(new ThrowingPlayerChoiceContext(), Creature, 1, Creature, null);
+        await PowerCmd.Apply<ShiftingPower>(new ThrowingPlayerChoiceContext(), Creature, 1, Creature, null);
     }
     
     private async Task AttackMove(IReadOnlyList<Creature> targets) {

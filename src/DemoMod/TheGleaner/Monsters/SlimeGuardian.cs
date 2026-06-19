@@ -61,7 +61,7 @@ public class SlimeGuardian : CustomMonsterModel {
     }
 
     public override async Task AfterAddedToRoom() {
-        await PowerCmd.Apply<BarricadePower>(Creature, 1, Creature, null);
+        await PowerCmd.Apply<BarricadePower>(new ThrowingPlayerChoiceContext(), Creature, 1, Creature, null);
     }
 
     public override async Task AfterPlayerTurnStart(PlayerChoiceContext choiceContext, Player player) {
@@ -73,9 +73,9 @@ public class SlimeGuardian : CustomMonsterModel {
     private async Task SummonRandomSlime() {
         string slotName = CombatState.Encounter.Slots.LastOrDefault(s => CombatState.Enemies.All(c => c.SlotName != s), string.Empty);
         if (Rng.NextBool()) {
-            await PowerCmd.Apply<MinionPower>(await CreatureCmd.Add<TwigSlimeS>(CombatState, slotName), 1m, Creature, null);
+            await PowerCmd.Apply<MinionPower>(new ThrowingPlayerChoiceContext(), await CreatureCmd.Add<TwigSlimeS>(CombatState, slotName), 1m, Creature, null);
         } else {
-            await PowerCmd.Apply<MinionPower>(await CreatureCmd.Add<LeafSlimeS>(CombatState, slotName), 1m, Creature, null);
+            await PowerCmd.Apply<MinionPower>(new ThrowingPlayerChoiceContext(), await CreatureCmd.Add<LeafSlimeS>(CombatState, slotName), 1m, Creature, null);
         }
     }
     
@@ -83,7 +83,7 @@ public class SlimeGuardian : CustomMonsterModel {
         await CreatureCmd.TriggerAnim(Creature, "Cast", 0.5f);
         SfxCmd.Play(AttackSfx);
         VfxCmd.PlayOnCreatureCenters(targets, "vfx/vfx_slime_impact");
-        await CardPileCmd.AddToCombatAndPreview<Slimed>(targets, PileType.Discard, 2, false);
+        await CardPileCmd.AddToCombatAndPreview<Slimed>(targets, PileType.Discard, 2, null);
     }
     
     private async Task DefendMove(IReadOnlyList<Creature> targets) {
@@ -92,7 +92,7 @@ public class SlimeGuardian : CustomMonsterModel {
     }
     
     private async Task FrailMove(IReadOnlyList<Creature> targets) {
-        await PowerCmd.Apply<FrailPower>(targets, 3, Creature, null);
+        await PowerCmd.Apply<FrailPower>(new ThrowingPlayerChoiceContext(), targets, 3, Creature, null);
         await SummonRandomSlime();
     }
     

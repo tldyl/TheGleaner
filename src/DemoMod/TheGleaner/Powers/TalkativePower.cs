@@ -20,12 +20,12 @@ public class TalkativePower : CustomPowerModel {
         HoverTipFactory.FromCard<Talkative>()
     ];
     
-    public override async Task AfterSideTurnStart(CombatSide side, CombatState combatState) {
+    public override async Task AfterSideTurnStart(CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState) {
         if (side == Owner.Side) {
             await CardPileCmd.AddGeneratedCardsToCombat(
                 [CombatState.CreateCard(ModelDb.Card<Talkative>(), Owner.Player)],
                 PileType.Hand,
-                true,
+                Owner.Player,
                 CardPilePosition.Top
             );
         }

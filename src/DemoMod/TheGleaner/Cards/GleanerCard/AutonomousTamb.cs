@@ -44,8 +44,8 @@ public class AutonomousTamb : CustomCardModel, IConcertoCard {
 		return card1;
 	}
 
-	public async Task OnConcerto(CombatState combatState, PlayerChoiceContext choiceContext, CardPlay cardPlay) {
-		await PowerCmd.Apply<DemoTempStrengthPower>(Owner.Creature, DynamicVars.Strength.BaseValue, Owner.Creature, this);
+	public async Task OnConcerto(ICombatState combatState, PlayerChoiceContext choiceContext, CardPlay cardPlay) {
+		await PowerCmd.Apply<DemoTempStrengthPower>(choiceContext, Owner.Creature, DynamicVars.Strength.BaseValue, Owner.Creature, this);
 	}
 	
 	protected override void OnUpgrade() {

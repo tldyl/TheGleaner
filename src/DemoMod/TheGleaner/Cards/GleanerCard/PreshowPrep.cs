@@ -39,6 +39,7 @@ public class PreshowPrep : CustomCardModel {
 		await ScorePileCmd.Glean(Owner, choiceContext, DynamicVars["GleanAmount"].BaseValue, this);
 
 		await PowerCmd.Apply<EnergyNextTurnPower>(
+			choiceContext,
 			Owner.Creature,
 			DynamicVars["EnergyAmount"].BaseValue,
 			Owner.Creature,

@@ -24,7 +24,7 @@ public class MalleablePower : CustomPowerModel {
         InvokeDisplayAmountChanged();
     }
     
-    public override async Task AfterTurnEnd(PlayerChoiceContext choiceContext, CombatSide side) {
+    public override async Task AfterSideTurnEnd(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> _) {
         if (side != Owner.Side) {
             DynamicVars["DisplayAmount"].BaseValue = Amount;
             InvokeDisplayAmountChanged();

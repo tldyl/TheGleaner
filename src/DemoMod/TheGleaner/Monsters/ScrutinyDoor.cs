@@ -3,6 +3,7 @@ using DemoMod.TheGleaner.Powers;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
+using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models.Cards;
 using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.MonsterMoves;
@@ -35,7 +36,7 @@ public class ScrutinyDoor : CustomMonsterModel {
     }
 
     public override async Task AfterAddedToRoom() {
-        await PowerCmd.Apply<MakerAppearPower>(Creature, 1, Creature, null);
+        await PowerCmd.Apply<MakerAppearPower>(new ThrowingPlayerChoiceContext(), Creature, 1, Creature, null);
     }
     
     private async Task StatusMove(IReadOnlyList<Creature> targets) {
@@ -43,7 +44,7 @@ public class ScrutinyDoor : CustomMonsterModel {
             .FromMonster(this).WithAttackerAnim("Attack", 0.2f)
             .WithHitFx("vfx/vfx_attack_slash")
             .Execute(null);
-        await CardPileCmd.AddToCombatAndPreview<Dazed>(targets, PileType.Draw, 2, false, CardPilePosition.Random);
+        await CardPileCmd.AddToCombatAndPreview<Dazed>(targets, PileType.Draw, 2, null, CardPilePosition.Random);
     }
     
     private async Task PunchMove(IReadOnlyList<Creature> targets) {
@@ -51,6 +52,6 @@ public class ScrutinyDoor : CustomMonsterModel {
             .FromMonster(this).WithAttackerAnim("Attack", 0.2f)
             .WithHitFx("vfx/vfx_attack_slash")
             .Execute(null);
-        await PowerCmd.Apply<WeakPower>(targets, 2, Creature, null);
+        await PowerCmd.Apply<WeakPower>(new ThrowingPlayerChoiceContext(), targets, 2, Creature, null);
     }
 }

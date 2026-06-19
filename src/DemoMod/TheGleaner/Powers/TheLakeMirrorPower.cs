@@ -21,12 +21,14 @@ public class TheLakeMirrorPower : CustomPowerModel {
         if (cardPlay.Card.Keywords.Contains(CustomEnums.Resonance)) {
             Flash();
             await PowerCmd.Apply<DemoTempStrengthPower>(
+                context,
                 Owner,
                 Amount,
                 Owner,
                 null
             );
             await PowerCmd.Apply<DemoTempDexterityPower>(
+                context,
                 Owner,
                 Amount,
                 Owner,

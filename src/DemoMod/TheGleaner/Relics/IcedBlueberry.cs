@@ -17,10 +17,8 @@ using MegaCrit.Sts2.Core.Rooms;
 using MegaCrit.Sts2.Core.ValueProps;
 
 namespace DemoMod.TheGleaner.Relics;
-
 [Pool(typeof(JeraRelicPool))]
-public sealed class IcedBlueberry : CustomRelicModel
-{
+public sealed class IcedBlueberry : CustomRelicModel {
     public override string PackedIconPath => $"res://TheGleaner/images/relics/{Id.Entry.ToLowerInvariant()}.png";
     protected override string PackedIconOutlinePath => $"res://TheGleaner/images/relics/{Id.Entry.ToLowerInvariant()}.png";
     protected override string BigIconPath => $"res://TheGleaner/images/relics/{Id.Entry.ToLowerInvariant()}.png";
@@ -28,8 +26,7 @@ public sealed class IcedBlueberry : CustomRelicModel
 
     private int _cooldown;
 
-    public IcedBlueberry()
-    {
+    public IcedBlueberry() {
     }
 
     public override RelicRarity Rarity => RelicRarity.Ancient;
@@ -47,10 +44,8 @@ public sealed class IcedBlueberry : CustomRelicModel
 
     public override bool ShowCounter => DisplayAmount > 0;
 
-    public override int DisplayAmount
-    {
-        get
-        {
+    public override int DisplayAmount {
+        get {
             if (!CombatManager.Instance.IsInProgress)
                 return -1;
 
@@ -64,19 +59,16 @@ public sealed class IcedBlueberry : CustomRelicModel
         }
     }
 
-    private int Cooldown
-    {
+    private int Cooldown {
         get => _cooldown;
-        set
-        {
+        set {
             AssertMutable();
             _cooldown = value;
             InvokeDisplayAmountChanged();
         }
     }
 
-    public override decimal ModifyMaxEnergy(Player player, decimal amount)
-    {
+    public override decimal ModifyMaxEnergy(Player player, decimal amount) {
         if (Owner == null)
             return amount;
 
@@ -89,15 +81,13 @@ public sealed class IcedBlueberry : CustomRelicModel
         return amount + DynamicVars.Energy.IntValue;
     }
 
-    public override Task AfterObtained()
-    {
+    public override Task AfterObtained() {
         Cooldown = 0;
         Status = RelicStatus.Active;
         return Task.CompletedTask;
     }
 
-    public override Task BeforeCombatStart()
-    {
+    public override Task BeforeCombatStart() {
         Cooldown = 0;
         Status = RelicStatus.Active;
         return Task.CompletedTask;
@@ -109,8 +99,7 @@ public sealed class IcedBlueberry : CustomRelicModel
         DamageResult result,
         ValueProp props,
         Creature? dealer,
-        CardModel? cardSource)
-    {
+        CardModel? cardSource) {
         if (Owner == null)
             return Task.CompletedTask;
 
@@ -131,20 +120,17 @@ public sealed class IcedBlueberry : CustomRelicModel
         return Task.CompletedTask;
     }
 
-    public override async Task AfterSideTurnStart(CombatSide side, CombatState combatState)
-    {
+    public override async Task AfterSideTurnStart(CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState) {
         if (Owner == null)
             return;
 
         if (side != Owner.Creature.Side)
             return;
 
-        if (Cooldown > 0)
-        {
+        if (Cooldown > 0) {
             Cooldown--;
 
-            if (Cooldown <= 0)
-            {
+            if (Cooldown <= 0) {
                 Status = RelicStatus.Active;
                 InvokeDisplayAmountChanged();
                 Flash();
@@ -156,8 +142,7 @@ public sealed class IcedBlueberry : CustomRelicModel
         }
     }
 
-    public override Task AfterCombatEnd(CombatRoom room)
-    {
+    public override Task AfterCombatEnd(CombatRoom room) {
         Status = RelicStatus.Normal;
         Cooldown = 0;
         InvokeDisplayAmountChanged();

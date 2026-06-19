@@ -33,7 +33,7 @@ public class BrandMark : CustomCardModel {
 			.FromCard(this)
 			.Targeting(cardPlay.Target)
 			.Execute(choiceContext);
-		await PowerCmd.Apply<BrandMarkPower>(cardPlay.Target, DynamicVars["Times"].BaseValue, Owner.Creature, this);
+		await PowerCmd.Apply<BrandMarkPower>(choiceContext, cardPlay.Target, DynamicVars["Times"].BaseValue, Owner.Creature, this);
 	}
 		protected override void OnUpgrade()
 	{

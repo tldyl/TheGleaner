@@ -101,7 +101,7 @@ public class JeraFormPower : CustomPowerModel {
                 await CardPileCmd.AddGeneratedCardToCombat(
                     CombatState.CreateCard(card, player),
                     targetPile,
-                    true
+                    Owner.Player
                 )
             );
         }

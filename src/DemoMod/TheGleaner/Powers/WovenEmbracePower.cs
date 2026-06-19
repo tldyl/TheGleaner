@@ -27,10 +27,10 @@ public class WovenEmbracePower : CustomPowerModel {
         CardModel? __) {
         if (target != Owner || dealer == null || !props.IsPoweredAttack())
             return;
-        await PowerCmd.Apply<PoisonPower>(dealer, Amount, Owner, null);
+        await PowerCmd.Apply<PoisonPower>(choiceContext, dealer, Amount, Owner, null);
     }
     
-    public override async Task AfterTurnEnd(PlayerChoiceContext choiceContext, CombatSide side) {
+    public override async Task AfterSideTurnEnd(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> _) {
         if (Owner.Side == side)
             return;
         await PowerCmd.Remove(this);

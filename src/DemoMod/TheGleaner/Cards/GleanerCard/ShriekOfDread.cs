@@ -40,7 +40,7 @@ public class ShriekOfDread : CustomCardModel, IDissonanceCard {
 		bool causedByEthereal) {
 		if (card == this) {
 			foreach (Creature creature in Owner.Creature.CombatState.Creatures) {
-				await PowerCmd.Apply<VulnerablePower>(creature, DynamicVars["VulVal"].BaseValue, Owner.Creature, this);
+				await PowerCmd.Apply<VulnerablePower>(choiceContext, creature, DynamicVars["VulVal"].BaseValue, Owner.Creature, this);
 			}
 		}
 	}

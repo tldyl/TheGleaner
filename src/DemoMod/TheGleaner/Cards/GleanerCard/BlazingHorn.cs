@@ -39,7 +39,7 @@ public class BlazingHorn : CustomCardModel, IConcertoCard
 		await CardPileCmd.Draw(choiceContext, DynamicVars.Cards.BaseValue, Owner, false);
 	}
 
-	public async Task OnConcerto(CombatState combatState, PlayerChoiceContext choiceContext, CardPlay cardPlay)
+	public async Task OnConcerto(ICombatState combatState, PlayerChoiceContext choiceContext, CardPlay cardPlay)
 	{
 		SoundManager.Instance.PlaySound(SoundKeys.GetSoundResourcePath("HORN_" + new Random().Next(1, 5)), 1.0f);
 		await PlayerCmd.GainEnergy(DynamicVars["Energy2"].BaseValue, Owner);
