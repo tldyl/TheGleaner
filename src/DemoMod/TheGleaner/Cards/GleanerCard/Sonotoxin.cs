@@ -19,7 +19,7 @@ public class Sonotoxin : CustomCardModel {
 		new DynamicVar("StrengthLoss", 5),
 		new PowerVar<PoisonPower>(5)
 	];
-	protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<StrengthPower>()];
+	protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<StrengthPower>(), HoverTipFactory.FromPower<PoisonPower>()];
 
 	public Sonotoxin() : base(2, CardType.Skill, CardRarity.Common, TargetType.AnyEnemy) {
 	}

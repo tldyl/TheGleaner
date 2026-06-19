@@ -176,7 +176,7 @@
   "DEMOMOD-SCYTHE_KICK.title": "月环",
   "DEMOMOD-SCYTHE_KICK.description": "获得{Block:diff()}点[gold]格挡[/gold]。\n造成{Damage:diff()}点伤害。",
   "DEMOMOD-SONOTOXIN.title": "声蛊",
-  "DEMOMOD-SONOTOXIN.description": "目标本回合失去{StrengthLoss:diff()}点[gold]力量[/gold]。\n给予{PoisonPower:diff()}层中毒。",
+  "DEMOMOD-SONOTOXIN.description": "目标本回合失去{StrengthLoss:diff()}点[gold]力量[/gold]。\n给予{PoisonPower:diff()}层[gold]中毒[/gold]。",
   "DEMOMOD-WEAVEMEMORY_BLADE.title": "织忆刀",
   "DEMOMOD-WEAVEMEMORY_BLADE.description": "造成{Damage:diff()}点伤害。\n将[gold]弃牌堆[/gold]中的一张[gold]共鸣[/gold]牌放入[gold]手牌[/gold]。",
   "DEMOMOD-DAMPING.title": "止音",
