@@ -35,7 +35,7 @@
   "DEMOMOD-NOCTURNE.title": "夜曲",
   "DEMOMOD-NOCTURNE.description": "每回合敌人的攻击结束后，如果你仍有至少5点[gold]格挡[/gold]，\n则获得{StrAmount:diff()}点[gold]力量[/gold]。\n本回合获得{DexAmount:diff()}点[gold]敏捷[/gold]。",
   "DEMOMOD-WIND_EVOKING_BAYAN.title": "唤风的巴扬",
-  "DEMOMOD-WIND_EVOKING_BAYAN.description": "获得{Block:diff()}点[gold]格挡[/gold]。\n获得{VigorVal:diff()}点[gold]活力[/gold]。\n[gold]协奏[/gold]：给予所有敌人{VulVal:diff()}层[gold]易伤[/gold]。",
+  "DEMOMOD-WIND_EVOKING_BAYAN.description": "获得{Block:diff()}点[gold]格挡[/gold]。",
   "DEMOMOD-ONE_WINGED_VIOLIN.title": "片翼的提琴",
   "DEMOMOD-ONE_WINGED_VIOLIN.description": "造成{Damage:diff()}点伤害。",
   "DEMOMOD-CLUSTER_STRING_WEAVE.title": "集束弦织",

@@ -1,4 +1,5 @@
 using Godot;
+using MegaCrit.Sts2.Core.Logging;
 using MegaCrit.Sts2.Core.Saves;
 
 namespace DemoMod.TheGleaner.Utils;
@@ -19,6 +20,10 @@ public partial class SoundManager : Node {
         } else {
             QueueFree(); // 如果已存在，则销毁新实例
         }
+    }
+
+    public override void _ExitTree() {
+        Log.Info("Exiting Sound Manager");
     }
 
     // 初始化音效池

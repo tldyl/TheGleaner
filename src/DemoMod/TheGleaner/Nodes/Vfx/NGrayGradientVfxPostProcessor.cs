@@ -1,4 +1,5 @@
 using Godot;
+using MegaCrit.Sts2.Core.Logging;
 using MegaCrit.Sts2.Core.Nodes;
 
 namespace DemoMod.TheGleaner.Nodes.Vfx;
@@ -39,6 +40,10 @@ public partial class NGrayGradientVfxPostProcessor : CanvasLayer {
                 _isExpanding = false;
             }
         }
+    }
+
+    public override void _ExitTree() {
+        Log.Info("Exiting NGrayGradientVfxPostProcessor");
     }
 
     public void ToggleBlackAndWhite(bool enabled, float transitionDuration = 1.0f, float intensityOffset = 0.0f) {

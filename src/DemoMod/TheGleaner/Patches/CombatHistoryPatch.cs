@@ -1,6 +1,7 @@
 using HarmonyLib;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Combat.History;
+using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Models;
 
 namespace DemoMod.TheGleaner.Patches;
@@ -8,7 +9,7 @@ namespace DemoMod.TheGleaner.Patches;
 public class CombatHistoryPatch {
     [HarmonyPatch(typeof(CombatHistory), "CardGenerated")]
     public static class PatchCardGenerated {
-        public static void Prefix(CombatHistory __instance, ref ICombatState combatState, CardModel card, bool generatedByPlayer) {
+        public static void Prefix(CombatHistory __instance, ref ICombatState combatState, CardModel card, Player? creator) {
             if (combatState == null) {
                 combatState = card.Owner.Creature.CombatState;
             }

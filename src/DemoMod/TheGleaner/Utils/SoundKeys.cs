@@ -23,7 +23,7 @@ public class SoundKeys {
 
     public static void Initialize() {
         foreach (FieldInfo field in typeof(SoundKeys).GetFields(BindingFlags.Static | BindingFlags.Public)) {
-            soundKeyMap.Add(field.Name, field.GetValue(null).ToString());
+            soundKeyMap.TryAdd(field.Name, field.GetValue(null).ToString());
         }
     }
 
