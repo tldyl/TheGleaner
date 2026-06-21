@@ -13,24 +13,24 @@ namespace DemoMod.TheGleaner.Cards.GleanerCard;
 
 [Pool(typeof(CardPool))]
 public class BuildUp : CustomCardModel {
-    //public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
-    protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new BlockVar(7, ValueProp.Move),
-        new PowerVar<StrengthPower>(3)
-    ];
-    public override bool GainsBlock => true;
+	//public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
+	protected override IEnumerable<DynamicVar> CanonicalVars => [
+		new BlockVar(7, ValueProp.Move),
+		new PowerVar<StrengthPower>(3)
+	];
+	public override bool GainsBlock => true;
 
-    public BuildUp() : base(1, CardType.Skill, CardRarity.Common, TargetType.Self) {
-        
-    }
+	public BuildUp() : base(2, CardType.Skill, CardRarity.Common, TargetType.Self) {
+		
+	}
 
-    protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
-        await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, cardPlay);
-        await PowerCmd.Apply<DemoTempStrengthPower>(choiceContext, Owner.Creature, DynamicVars.Strength.BaseValue, Owner.Creature, this);
-    }
+	protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
+		await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, cardPlay);
+		await PowerCmd.Apply<DemoTempStrengthPower>(Owner.Creature, DynamicVars.Strength.BaseValue, Owner.Creature, this);
+	}
 
-    protected override void OnUpgrade() {
-        DynamicVars.Block.UpgradeValueBy(1);
-        DynamicVars["StrengthPower"].UpgradeValueBy(1);
-    }
+	protected override void OnUpgrade() {
+		DynamicVars.Block.UpgradeValueBy(1);
+		DynamicVars["StrengthPower"].UpgradeValueBy(1);
+	}
 }
