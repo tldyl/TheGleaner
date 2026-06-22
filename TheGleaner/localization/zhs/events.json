@@ -1,0 +1,13 @@
+{
+  "DEMOMOD-TEST_COMBAT_EVENT.title": "测试战斗事件",
+  "DEMOMOD-TEST_COMBAT_EVENT.pages.INITIAL.description": "这是一个测试战斗事件，用来测试战斗后重新返回事件的逻辑。",
+  "DEMOMOD-TEST_COMBAT_EVENT.pages.INITIAL.options.LEAVE.title": "离开",
+  "DEMOMOD-TEST_COMBAT_EVENT.pages.INITIAL.options.LEAVE.description": "离开当前房间。",
+  "DEMOMOD-TEST_COMBAT_EVENT.pages.INITIAL.options.FIGHT.title": "战斗",
+  "DEMOMOD-TEST_COMBAT_EVENT.pages.INITIAL.options.FIGHT.description": "进入战斗。",
+  "DEMOMOD-TEST_COMBAT_EVENT.pages.LEAVE.description": "不是这次。",
+  "DEMOMOD-TEST_COMBAT_EVENT.pages.FIGHT.description": "战斗前文本。",
+  "DEMOMOD-TEST_COMBAT_EVENT.pages.FIGHT.options.FIGHT.title": "战斗",
+  "DEMOMOD-TEST_COMBAT_EVENT.pages.FIGHT.options.FIGHT.description": "进入战斗。",
+  "DEMOMOD-TEST_COMBAT_EVENT.pages.RESUME.description": "战斗结束，如果看到这行文本，说明测试通过。"
+}

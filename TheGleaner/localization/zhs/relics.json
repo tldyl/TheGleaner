@@ -24,5 +24,7 @@
   "DEMOMOD-TELESCOPE.title": "望星镜",
   "DEMOMOD-TELESCOPE.description": "你可以在休息处进行[gold]观星[/gold]。\n[gold]观星[/gold]：变化2张牌。",
   "DEMOMOD-BRITTLE_STAR.title": "脆脆星",
-  "DEMOMOD-BRITTLE_STAR.description": "在战斗奖励中，如果你在本场战斗未受到伤害，则额外获得一个遗物。"
+  "DEMOMOD-BRITTLE_STAR.description": "在战斗奖励中，如果你在本场战斗未受到伤害，则额外获得一个遗物。",
+  "DEMOMOD-HOVERCOURT_KEY.title": "悬庭钥匙",
+  "DEMOMOD-HOVERCOURT_KEY.description": "拾起时，将下一幕替换为[gold]悬庭[/gold]。"
 }
