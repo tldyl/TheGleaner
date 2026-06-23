@@ -159,8 +159,8 @@ public static class ScorePileCmd {
 				NCombatRoom.Instance.Ui.AddChildSafely(nCard);
 				nCard.Position = PileType.Hand.GetTargetPosition(nCard);
 				NHandCardHolder holder = NRun.Instance.CombatRoom.Ui.Hand.Add(nCard, 0);
-				holder.Hitbox.Size = new Vector2(770, 620);
-				holder.Hitbox.Position = new Vector2(-350, -311);
+				holder.Hitbox.Size = new Vector2(400, 480);
+				holder.Hitbox.Position = new Vector2(-235, -261);
 			}
 			Log.Info($"Create Score entry card for player {player.NetId}.");
 			NetCombatCardDb.Instance.IdCardForTesting(scoreEntryCard);
