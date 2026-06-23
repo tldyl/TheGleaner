@@ -38,11 +38,13 @@ public class NCardPatch {
                     scrollContainer.CustomMinimumSize = new Vector2(240.0f, 0.0f);
                     scrollContainer.Size = new Vector2(240, 204);
                     scrollContainer.Position = new Vector2(-120, -164);
+                    scrollContainer.MouseFilter = Control.MouseFilterEnum.Ignore;
                     
                     HFlowContainer flowContainer = new HFlowContainer();
                     flowContainer.Name = "FlowContainer";
                     flowContainer.CustomMinimumSize = new Vector2(240.0f, 0.0f);
                     flowContainer.Alignment = FlowContainer.AlignmentMode.Center;
+                    flowContainer.MouseFilter = Control.MouseFilterEnum.Ignore;
                     
                     scrollContainer.AddChild(flowContainer);
                     __instance.AddChild(scrollContainer);
@@ -58,6 +60,7 @@ public class NCardPatch {
                     cardIcon.ExpandMode = TextureRect.ExpandModeEnum.IgnoreSize;
                     cardIcon.StretchMode = TextureRect.StretchModeEnum.KeepAspectCentered;
                     cardIcon.CustomMinimumSize = new Vector2(50.0f, 78.0f);
+                    cardIcon.MouseFilter = Control.MouseFilterEnum.Ignore;
                     flowContainer2.AddChild(cardIcon);
                 }
                 for (int _ = 0; _ < ScorePileCmd.GetCapacity(__instance.Model.Owner) - scorePile.Cards.Count; _++) {
@@ -66,6 +69,7 @@ public class NCardPatch {
                     cardIcon.ExpandMode = TextureRect.ExpandModeEnum.IgnoreSize;
                     cardIcon.StretchMode = TextureRect.StretchModeEnum.KeepAspectCentered;
                     cardIcon.CustomMinimumSize = new Vector2(50.0f, 78.0f);
+                    cardIcon.MouseFilter = Control.MouseFilterEnum.Ignore;
                     flowContainer2.AddChild(cardIcon);
                 }
                 return false;

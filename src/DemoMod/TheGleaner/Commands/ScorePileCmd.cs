@@ -156,11 +156,18 @@ public static class ScorePileCmd {
 			scoreEntryCard.Owner = player;
 			if (LocalContext.IsMe(player) && !NRun.Instance.CombatRoom.Ui.Hand.ActiveHolders.Any(holder => holder.CardModel is ScoreEntryCard)) {
 				NCard nCard = NCard.Create(scoreEntryCard);
+				Vector2 globalPosition = nCard.GlobalPosition;
 				NCombatRoom.Instance.Ui.AddChildSafely(nCard);
+				nCard.GlobalPosition = globalPosition;
+				nCard.UpdateVisuals(PileType.Hand, CardPreviewMode.Normal);
 				nCard.Position = PileType.Hand.GetTargetPosition(nCard);
-				NHandCardHolder holder = NRun.Instance.CombatRoom.Ui.Hand.Add(nCard, 0);
-				holder.Hitbox.Size = new Vector2(400, 480);
-				holder.Hitbox.Position = new Vector2(-235, -261);
+				NHandCardHolder holder = NCombatRoom.Instance.Ui.Hand.Add(nCard, 0);
+				holder.Hitbox.Size = new Vector2(300, 422);
+				holder.Hitbox.Position = new Vector2(-150, -211);
+				// ColorRect colorRect = new ColorRect();
+				// colorRect.Color = Colors.Red;
+				// colorRect.Size = new Vector2(300, 422);
+				// holder.Hitbox.AddChildSafely(colorRect);
 			}
 			Log.Info($"Create Score entry card for player {player.NetId}.");
 			NetCombatCardDb.Instance.IdCardForTesting(scoreEntryCard);

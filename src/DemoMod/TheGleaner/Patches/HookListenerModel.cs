@@ -122,8 +122,8 @@ public class HookListenerModel() : CustomSingletonModel(true, true) {
             NCombatRoom.Instance.Ui.AddChildSafely(nCard);
             nCard.Position = PileType.Hand.GetTargetPosition(nCard);
             NHandCardHolder holder = NRun.Instance.CombatRoom.Ui.Hand.Add(nCard, 0);
-            holder.Hitbox.Size = new Vector2(770, 620);
-            holder.Hitbox.Position = new Vector2(-350, -311);
+            holder.Hitbox.Size = new Vector2(300, 422);
+            holder.Hitbox.Position = new Vector2(-150, -211);
             //如果发现自己需要新增一张乐谱，写个action通知其他队友往联机卡牌数据库中增加一张乐谱
             //如果不需要新增乐谱，则不发送这个action
             RunManager.Instance.ActionQueueSynchronizer.RequestEnqueue(new EndTurnAddScoreCardAction(player, scoreEntryCard));
