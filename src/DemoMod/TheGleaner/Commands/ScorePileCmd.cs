@@ -164,10 +164,6 @@ public static class ScorePileCmd {
 				NHandCardHolder holder = NCombatRoom.Instance.Ui.Hand.Add(nCard, 0);
 				holder.Hitbox.Size = new Vector2(300, 422);
 				holder.Hitbox.Position = new Vector2(-150, -211);
-				// ColorRect colorRect = new ColorRect();
-				// colorRect.Color = Colors.Red;
-				// colorRect.Size = new Vector2(300, 422);
-				// holder.Hitbox.AddChildSafely(colorRect);
 			}
 			Log.Info($"Create Score entry card for player {player.NetId}.");
 			NetCombatCardDb.Instance.IdCardForTesting(scoreEntryCard);

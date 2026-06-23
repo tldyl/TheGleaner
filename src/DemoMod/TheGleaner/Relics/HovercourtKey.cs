@@ -18,7 +18,9 @@ public class HovercourtKey : CustomRelicModel {
         int _currentActIndex = (int) AccessTools.Field(typeof(RunState), "_currentActIndex").GetValue(Owner.RunState);
         _currentActIndex++;
         AccessTools.Field(typeof(RunState), "_currentActIndex").SetValue(Owner.RunState, _currentActIndex);
-        ((RunState)Owner.RunState).SetActDebug(ModelDb.Act<Hovercourt>().ToMutable());
+        ActModel act = ModelDb.Act<Hovercourt>().ToMutable();
+        act.GenerateRooms(Owner.RunState.Rng.UpFront, Owner.RunState.UnlockState, Owner.RunState.Players.Count > 1);
+        ((RunState)Owner.RunState).SetActDebug(act);
         _currentActIndex--;
         AccessTools.Field(typeof(RunState), "_currentActIndex").SetValue(Owner.RunState, _currentActIndex);
     }
