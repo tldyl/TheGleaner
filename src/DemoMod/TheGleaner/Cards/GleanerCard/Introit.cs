@@ -24,7 +24,7 @@ public class Introit : CustomCardModel {
 	protected override IEnumerable<DynamicVar> CanonicalVars => [
 		new DamageVar(9, ValueProp.Move),
 		new RepeatVar(1),
-		new IntVar("Amount", 1)
+		new IntVar("Amount", 2)
 	];
 
 	protected override IEnumerable<IHoverTip> ExtraHoverTips => [
@@ -38,7 +38,7 @@ public class Introit : CustomCardModel {
 	protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
 		Vector2 windowSize = NRun.Instance.CombatRoom.Ui.GetViewport().GetVisibleRect().Size;
 		await CreatureCmd.TriggerAnim(Owner.Creature, "AoEAttack", 0.5f);
-		await using AttackContext context = await AttackCommand.CreateContextAsync(Owner.Creature.CombatState, choiceContext, this);
+		await using AttackContext context = await AttackCommand.CreateContextAsync(Owner.Creature.CombatState, this);
 		for (int _ = 0; _ < DynamicVars.Repeat.IntValue; _++) {
 			GleanerVfxCmd.PlayVfx<Node2D>(new Vector2(windowSize.X * 0.65f, windowSize.Y * 0.5f), "res://TheGleaner/scenes/vfx/aoe_attack.tscn");
 			IEnumerable<DamageResult> damageResults =
@@ -51,7 +51,6 @@ public class Introit : CustomCardModel {
 	}
 
 	protected override void OnUpgrade() {
-		DynamicVars.Damage.UpgradeValueBy(2);
-		DynamicVars["Amount"].UpgradeValueBy(1);
+		DynamicVars.Damage.UpgradeValueBy(4);
 	}
 }
