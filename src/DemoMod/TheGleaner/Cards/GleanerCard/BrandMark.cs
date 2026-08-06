@@ -30,7 +30,7 @@ public class BrandMark : CustomCardModel {
 
 	protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
 		AttackCommand _ = await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
-			.FromCard(this)
+			.FromCard(this, cardPlay)
 			.Targeting(cardPlay.Target)
 			.Execute(choiceContext);
 		await PowerCmd.Apply<BrandMarkPower>(choiceContext, cardPlay.Target, DynamicVars["Times"].BaseValue, Owner.Creature, this);

@@ -38,7 +38,7 @@ public class ScytheKick : CustomCardModel
 	{
 		await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, cardPlay);
 		AttackCommand _ = await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
-			.FromCard(this)
+			.FromCard(this, cardPlay)
 			.WithNoAttackerAnim()
 			.Targeting(cardPlay.Target)
 			.Execute(choiceContext);

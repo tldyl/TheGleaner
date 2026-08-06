@@ -31,7 +31,7 @@ public class FrostedFlute : CustomCardModel, IConcertoCard {
 	protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
 		SoundManager.Instance.PlaySound(SoundKeys.GetSoundResourcePath("FLUTE_" + new Random().Next(1, 5)), 1.0f);
 		await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
-			.FromCard(this)
+			.FromCard(this, cardPlay)
 			.WithHitFx("vfx/vfx_attack_slash")
 			.TargetingAllOpponents(Owner.Creature.CombatState)
 			.Execute(choiceContext);

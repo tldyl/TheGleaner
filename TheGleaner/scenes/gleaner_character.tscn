@@ -15,6 +15,14 @@ shader_parameter/silver_speed = 0.5
 [node name="GleanerCharacter" type="Node2D"]
 script = ExtResource("1_gocbe")
 
+[node name="FormVfx" type="Control" parent="."]
+unique_name_in_owner = true
+layout_mode = 3
+anchors_preset = 0
+offset_left = -64.0
+offset_top = -232.0
+offset_right = 64.0
+
 [node name="Visuals" type="SpineSprite" parent="."]
 skeleton_data_res = ExtResource("2_u67jw")
 preview_skin = "default"

@@ -41,24 +41,19 @@ public class DirgeShuffle : CustomCardModel {
 		await PowerCmd.Apply<PoisonPower>(choiceContext, cardPlay.Target, DynamicVars.Poison.BaseValue, Owner.Creature, this);
 		await PowerCmd.Apply<EtchPower>(choiceContext, cardPlay.Target, DynamicVars["EtchPower"].BaseValue, Owner.Creature, this);
 		AttackCommand _ = await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
-		.FromCard(this)            
+		.FromCard(this, cardPlay)            
 		.Targeting(cardPlay.Target) 
 		.Execute(choiceContext);    
 	}
 
-	public override (PileType, CardPilePosition) ModifyCardPlayResultPileTypeAndPosition(
+	public override CardLocation ModifyCardPlayResultLocation(
 		CardModel card,
 		bool isAutoPlay,
 		ResourceInfo resources,
-		PileType pileType,
-		CardPilePosition position) {
-		if (card != this) {
-			return (pileType, position);
-		}
-		return (IsDupe ? PileType.None : PileType.Draw, CardPilePosition.Top);
+		CardLocation cardLocation) {
+		return card != this ? cardLocation : new CardLocation(Owner, IsDupe ? PileType.None : PileType.Draw, CardPilePosition.Top);
 	}
-	protected override void OnUpgrade()
-	{
+	protected override void OnUpgrade() {
 		DynamicVars["PoisonPower"].UpgradeValueBy(1);
 	}
 }

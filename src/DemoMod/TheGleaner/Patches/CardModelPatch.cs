@@ -34,6 +34,7 @@ public class CardModelPatch {
             if (__instance is ScoreEntryCard) {
                 CardPlay cardPlay = new CardPlay {
                     Card = __instance,
+                    Player = __instance.Owner,
                     Target = target,
                     ResultPile = PileType.Hand,
                     Resources = new ResourceInfo {

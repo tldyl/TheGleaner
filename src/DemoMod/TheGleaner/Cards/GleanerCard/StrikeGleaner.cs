@@ -33,7 +33,7 @@ public class StrikeGleaner : CustomCardModel {
 			await Cmd.Wait(0.3f);
 		}
 		await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
-			.FromCard(this)
+			.FromCard(this, cardPlay)
 			.Targeting(cardPlay.Target)
 			.WithNoAttackerAnim()
 			.Execute(choiceContext);

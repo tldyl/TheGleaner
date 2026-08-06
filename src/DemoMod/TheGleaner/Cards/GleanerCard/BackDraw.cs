@@ -47,7 +47,7 @@ public class BackDraw : CustomCardModel {
 		
 		await CreatureCmd.TriggerAnim(Owner.Creature, "Attack", 0.5f);
 		AttackCommand _ = await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
-			.FromCard(this)
+			.FromCard(this, cardPlay)
 			.TargetingAllOpponents(Owner.Creature.CombatState)
 			.WithHitCount(selectedCards.Count)
 			.WithNoAttackerAnim()

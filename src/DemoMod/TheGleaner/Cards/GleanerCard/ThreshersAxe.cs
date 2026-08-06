@@ -38,7 +38,7 @@ public class ThreshersAxe : CustomCardModel, IConcertoCard {
 		await Cmd.Wait(0.2f);
 		GleanerVfxCmd.PlayOnCreature<Node2D>(target, "res://TheGleaner/scenes/vfx/threshers_axe_hit_vfx.tscn");
 		AttackCommand _ = await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
-			.FromCard(this)
+			.FromCard(this, cardPlay)
 			.WithNoAttackerAnim()
 			.Targeting(target)
 			.Execute(choiceContext);
@@ -47,9 +47,9 @@ public class ThreshersAxe : CustomCardModel, IConcertoCard {
 		}
 	}
 
-	protected override PileType GetResultPileTypeForCardPlay() {
-		PileType resultPileType = base.GetResultPileTypeForCardPlay();
-		return resultPileType != PileType.Discard ? resultPileType : PileType.Hand;
+	protected override CardLocation GetResultLocationForCardPlay() {
+		CardLocation resultPileType = base.GetResultLocationForCardPlay();
+		return resultPileType.pileType != PileType.Discard ? resultPileType : new CardLocation(Owner, PileType.Hand, resultPileType.position);
 	}
 
 	public override Decimal ModifyDamageAdditive(
@@ -57,7 +57,8 @@ public class ThreshersAxe : CustomCardModel, IConcertoCard {
 		Decimal amount,
 		ValueProp props,
 		Creature? dealer,
-		CardModel? cardSource) {
+		CardModel? cardSource,
+		CardPlay cardPlay) {
 		if (cardSource == this && !props.HasFlag(ValueProp.Unpowered)) {
 			int strAmount = 0;
 			if (dealer != null && dealer.Powers.Any(p => p is StrengthPower)) {

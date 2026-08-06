@@ -36,7 +36,7 @@ public class StoreAndRelease : CustomCardModel {
 
 	protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
 		AttackCommand _ = await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
-			.FromCard(this)
+			.FromCard(this, cardPlay)
 			.Targeting(cardPlay.Target)
 			.WithNoAttackerAnim()
 			.Execute(choiceContext);
@@ -73,7 +73,8 @@ public class StoreAndRelease : CustomCardModel {
 		Decimal amount,
 		ValueProp props,
 		Creature? dealer,
-		CardModel? cardSource) {
+		CardModel? cardSource,
+		CardPlay cardPlay) {
 		if (cardSource == this && !props.HasFlag(ValueProp.Unpowered)) {
 			return blockedDamage;
 		}

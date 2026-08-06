@@ -42,7 +42,7 @@ public class MakerAppearPower : CustomPowerModel {
     }
 
     public override async Task AfterRemoved(Creature oldOwner) {
-        if (Owner.Monster is ScrutinyDoor or HungerDoor or GraspDoor) {
+        if (Owner.Monster is ScrutinyDoor or HungerDoor or GraspDoor && NCombatRoom.Instance.GetCreatureNode(Owner) != null) {
             NCombatRoom.Instance.GetCreatureNode(Owner).Visuals.GetNode<Sprite2D>("%Visuals").Texture = PreloadManager.Cache.GetTexture2D("res://TheGleaner/images/monsters/door_maker_placeholder_1.png");
         }
     }
@@ -52,7 +52,8 @@ public class MakerAppearPower : CustomPowerModel {
         Decimal amount,
         ValueProp props,
         Creature? dealer,
-        CardModel? cardSource) {
+        CardModel? cardSource,
+        CardPlay cardPlay) {
         return target != Owner ? 1 : 2;
     }
 

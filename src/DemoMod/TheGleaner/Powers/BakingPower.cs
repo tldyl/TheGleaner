@@ -34,7 +34,8 @@ public class BakingPower : CustomPowerModel {
         decimal amount,
         ValueProp props,
         Creature? dealer,
-        CardModel? cardSource) {
+        CardModel? cardSource,
+        CardPlay cardPlay) {
         _ = target;
         _ = amount;
         _ = props;

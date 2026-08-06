@@ -38,7 +38,7 @@ public class Glissando : CustomCardModel {
 		GleanerVfxCmd.PlayVfx<Node2D>(new Vector2(windowSize.X * 0.65f, windowSize.Y * 0.5f), "res://TheGleaner/scenes/vfx/aoe_attack.tscn", 0.5f);
 		await CreatureCmd.TriggerAnim(Owner.Creature, "AoEAttack", 0.5f);
 		AttackCommand attackCommand = await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
-			.FromCard(this)
+			.FromCard(this, cardPlay)
 			.TargetingAllOpponents(Owner.Creature.CombatState)
 			.WithNoAttackerAnim()
 			.Execute(choiceContext);

@@ -29,16 +29,17 @@ public class PlayCardMock {
         NCard cardNode = NCard.FindOnTable(cardModel, PileType.Play);
         await Cmd.CustomScaledWait(0.25f, 0.35f);
         IEnumerable<AbstractModel> modifiers = [];
-        PileType originalPileType = (PileType)AccessTools.Method(typeof(CardModel), "GetResultPileType", []).Invoke(cardModel, []);
-        (PileType pileType, CardPilePosition position) =
-            Hook.ModifyCardPlayResultPileTypeAndPosition(combatState, cardModel, true, resources, originalPileType, CardPilePosition.Bottom, out modifiers);
+        CardLocation resultLocation = (CardLocation) AccessTools.Method(typeof(CardModel), "GetResultLocationForCardPlay", []).Invoke(cardModel, []);
+        resultLocation =
+            Hook.ModifyCardPlayResultLocation(combatState, cardModel, true, resources, resultLocation, out modifiers);
         foreach (AbstractModel abstractModel in modifiers)
-            await abstractModel.AfterModifyingCardPlayResultPileOrPosition(cardModel, pileType, position);
+            await abstractModel.AfterModifyingCardPlayResultLocation(cardModel, resultLocation);
         int playCount = cardModel.GetEnchantedReplayCount() + 1;
         List<AbstractModel> modifyingModels;
         playCount = Hook.ModifyCardPlayCount(combatState, cardModel, playCount, target, out modifyingModels);
         await Hook.AfterModifyingCardPlayCount(combatState, cardModel, modifyingModels);
         ulong playStartTime = Time.GetTicksMsec();
+        CombatId? effectCombatId = CombatManager.Instance.BeginCardOrPotionEffect(cardModel.Owner);
         for (int i = 0; i < playCount; i++) {
             if (cardModel.Type == CardType.Power) {
                 await (Task)AccessTools.Method(typeof(CardModel), "PlayPowerCardFlyVfx", []).Invoke(cardModel, []);
@@ -51,8 +52,9 @@ public class PlayCardMock {
             CardPlay cardPlay = new CardPlay
             {
                 Card = cardModel,
+                Player = cardModel.Owner,
                 Target = target,
-                ResultPile = pileType,
+                ResultPile = resultLocation.pileType,
                 Resources = resources,
                 IsAutoPlay = true,
                 PlayIndex = i,
@@ -80,8 +82,8 @@ public class PlayCardMock {
             }
         }
         float num = (Time.GetTicksMsec() - playStartTime) / 1000f;
+        await CombatManager.Instance.EndCardOrPotionEffect(effectCombatId, cardModel.Owner);
         await Cmd.CustomScaledWait(0.15f - num, 0.3f - num);
-
         if (cardModel.Keywords.Contains(CardKeyword.Exhaust) || cardModel.Type == CardType.Power) {
             await CardPileCmd.RemoveFromCombat(cardModel);
         } else {
@@ -89,13 +91,13 @@ public class PlayCardMock {
                 cardModel.RemoveFromCurrentPile();
                 await ScorePileCmd.AddCards(cardModel.Owner.PlayerCombatState, cardModel.Owner, cardModel);
             } else {
-                await CardPileCmd.Add(cardModel, pileType, position, skipVisuals: false);
+                await CardPileCmd.Add(cardModel, resultLocation.pileType, resultLocation.position, skipVisuals: false);
             }
         }
 
-        await CombatManager.Instance.CheckForEmptyHand(choiceContext, cardModel.Owner);
+        await CombatManager.Instance.CheckForEmptyHand(effectCombatId, choiceContext, cardModel.Owner);
         Tween tween = NCombatRoom.Instance.CreateTween().SetParallel();
-        tween.Chain().TweenCallback(Callable.From((Action)(() => NCombatRoom.Instance.Ui.AddChildSafely((Node)NExhaustVfx.Create(cardNode)))));
+        //tween.Chain().TweenCallback(Callable.From((Action)(() => NCombatRoom.Instance.Ui.AddChildSafely((Node)NExhaustVfx.Create(cardNode)))));
         tween.Parallel().TweenProperty(cardNode, (NodePath)"modulate", StsColors.exhaustGray, SaveManager.Instance.PrefsSave.FastMode == FastModeType.Fast ? 0.2 : 0.3);
         tween.Chain().TweenCallback(Callable.From(cardNode.QueueFreeSafely));
         Action played = AccessTools.Field(typeof(CardModel), "Played").GetValue(cardModel) as Action;

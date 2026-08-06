@@ -48,7 +48,7 @@ public class EarthedBell : CustomCardModel, IConcertoCard {
 			GleanerVfxCmd.PlayOnCreature<Node2D>(target, "res://TheGleaner/scenes/vfx/prismatic_strike_hit_vfx.tscn");
 		}
 		AttackCommand _ = await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
-			.FromCard(this)
+			.FromCard(this, cardPlay)
 			.TargetingAllOpponents(Owner.Creature.CombatState)
 			.WithNoAttackerAnim()
 			.Execute(choiceContext);
@@ -59,7 +59,8 @@ public class EarthedBell : CustomCardModel, IConcertoCard {
 		Decimal amount,
 		ValueProp props,
 		Creature? dealer,
-		CardModel? cardSource) {
+		CardModel? cardSource,
+		CardPlay? cardPlay) {
 		if (cardSource == this && !props.HasFlag(ValueProp.Unpowered)) {
 			return Owner.Creature.Block;
 		}

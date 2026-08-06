@@ -114,7 +114,7 @@ public class ClusterStrike : CustomCardModel, IAppendDescriptionCard, IArrowCard
 	}
 
 	protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
-		await using AttackContext context = await AttackCommand.CreateContextAsync(Owner.Creature.CombatState, choiceContext, this);
+		await using AttackContext context = await AttackCommand.CreateContextAsync(Owner.Creature.CombatState, choiceContext, cardPlay);
 
 		List<string> sfxGroup = HitSfxGroup.nextGroup("harp", DynamicVars["HitCount"].IntValue);
 
@@ -123,7 +123,7 @@ public class ClusterStrike : CustomCardModel, IAppendDescriptionCard, IArrowCard
 		for (int i = 0; i < DynamicVars["HitCount"].IntValue; i++) {
 			GleanerVfxCmd.PlayOnCreature<Node2D>(cardPlay.Target, $"res://TheGleaner/scenes/vfx/cluster_strike_vfx/arrow_{GD.RandRange(1, 3)}.tscn");
 			await Cmd.Wait(0.0333f);
-			IEnumerable<DamageResult> damageResults = await CreatureCmd.Damage(choiceContext, cardPlay.Target, DynamicVars.Damage, this);
+			IEnumerable<DamageResult> damageResults = await CreatureCmd.Damage(choiceContext, cardPlay.Target, DynamicVars.Damage, Owner.Creature);
 			context.AddHit(damageResults);
 			SfxCmd.Play(sfxGroup[0]);
 			sfxGroup.RemoveAt(0);
@@ -143,10 +143,11 @@ public class ClusterStrike : CustomCardModel, IAppendDescriptionCard, IArrowCard
 
 	public override decimal ModifyDamageAdditive(
 		Creature? target,
-		decimal amount,
+		Decimal amount,
 		ValueProp props,
 		Creature? dealer,
-		CardModel? cardSource) {
+		CardModel? cardSource,
+		CardPlay? cardPlay) {
 		if (cardSource == this && !props.HasFlag(ValueProp.Unpowered)) {
 			decimal baseDamage = DynamicVars.Damage.BaseValue;
 			return baseDamage * DynamicVars["Amount"].BaseValue / 100M;

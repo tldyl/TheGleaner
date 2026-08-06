@@ -80,6 +80,7 @@ public class HookListenerModel() : CustomSingletonModel(true, true) {
                 }
             }
         }
+        GleanerVfxCmd.CheckScoreIsEmpty(cardPlay.Player.PlayerCombatState);
     }
 
     public override async Task AfterCardChangedPiles(CardModel card, PileType oldPileType, AbstractModel? source) {

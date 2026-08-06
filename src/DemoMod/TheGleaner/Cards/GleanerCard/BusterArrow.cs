@@ -44,8 +44,8 @@ public class BusterArrow : CustomCardModel, IArrowCard {
 			GleanerVfxCmd.PlayOnCreature<Node2D>(cardPlay.Target, "res://TheGleaner/scenes/vfx/prismatic_strike_hit_vfx.tscn", 0.3f);
 			await Cmd.Wait(0.3f);
 		}
-		await using AttackContext context = await AttackCommand.CreateContextAsync(Owner.Creature.CombatState, choiceContext, this);
-		IEnumerable<DamageResult> damageResults = await CreatureCmd.Damage(choiceContext, cardPlay.Target, DynamicVars.Damage, this);
+		await using AttackContext context = await AttackCommand.CreateContextAsync(Owner.Creature.CombatState, choiceContext, cardPlay);
+		IEnumerable<DamageResult> damageResults = await CreatureCmd.Damage(choiceContext, cardPlay.Target, DynamicVars.Damage, Owner.Creature);
 		context.AddHit(damageResults);
 		await arrowEffect(choiceContext, cardPlay, damageResults.ToList(), this, context);
 	}
@@ -65,7 +65,7 @@ public class BusterArrow : CustomCardModel, IArrowCard {
 		List<Creature> list2 = Owner.Creature.CombatState.GetTeammatesOf(damageResult.Receiver).Except<Creature>([cardPlay.Target]).Where((Func<Creature, bool>) (e => e.IsHittable)).ToList();
 		if (list2.Count != 0) {
 			IEnumerable<DamageResult> damageResultList = await CreatureCmd.Damage(choiceContext, list2, damageResult.TotalDamage + damageResult.OverkillDamage, ValueProp.Unpowered | ValueProp.Move,
-				Owner.Creature, clusterCard);
+				Owner.Creature, clusterCard, cardPlay);
 			context.AddHit(damageResultList);
 			damageResults.AddRange(damageResultList);
 		}

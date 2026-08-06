@@ -72,6 +72,7 @@ public class NCardPatch {
                     cardIcon.MouseFilter = Control.MouseFilterEnum.Ignore;
                     flowContainer2.AddChild(cardIcon);
                 }
+                ScoreEntryCardFramePatch.ApplyScoreEntryCardStyle(__instance);
                 return false;
             }
             if (__instance.Model.Pile is {IsCombatPile: true}) {

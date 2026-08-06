@@ -35,9 +35,9 @@ public class PrismaticRainfall : CustomCardModel {
 		NOpticalFlareVfx opticalFlareVfx = PreloadManager.Cache.GetScene("res://TheGleaner/scenes/vfx/optical_flare_vfx.tscn").Instantiate<NOpticalFlareVfx>();
 		GleanerVfxCmd.PlayVfx(new Vector2(-960, -540), opticalFlareVfx);
 		await CreatureCmd.TriggerAnim(Owner.Creature, "AoEAttack", 0.5f);
-		AttackContext context = await AttackCommand.CreateContextAsync(Owner.Creature.CombatState, choiceContext, this);
+		AttackContext context = await AttackCommand.CreateContextAsync(Owner.Creature.CombatState, choiceContext, cardPlay);
 		await using (context) {
-			IEnumerable<DamageResult> damageResults = await CreatureCmd.Damage(choiceContext, Owner.Creature.CombatState.HittableEnemies, DynamicVars.Damage, Owner.Creature, this);
+			IEnumerable<DamageResult> damageResults = await CreatureCmd.Damage(choiceContext, Owner.Creature.CombatState.HittableEnemies, DynamicVars.Damage, Owner.Creature);
 			context.AddHit(damageResults);
 		}
 		List<CardModel> list = [];

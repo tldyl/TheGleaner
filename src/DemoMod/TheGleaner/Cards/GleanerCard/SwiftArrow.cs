@@ -50,7 +50,7 @@ public class SwiftArrow : CustomCardModel, IArrowCard {
 			await Cmd.Wait(0.3f);
 		}
 		AttackCommand attackCommand = await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
-			.FromCard(this)
+			.FromCard(this, cardPlay)
 			.Targeting(cardPlay.Target)
 			.WithNoAttackerAnim()
 			.Execute(choiceContext);

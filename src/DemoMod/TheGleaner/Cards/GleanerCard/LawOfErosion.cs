@@ -37,7 +37,7 @@ public class LawOfErosion : CustomCardModel {
 
 	protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
 		await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, cardPlay);
-		await CreatureCmd.LoseBlock(cardPlay.Target, cardPlay.Target.Block);
+		await CreatureCmd.LoseBlock(choiceContext, cardPlay.Target, cardPlay.Target.Block, Owner.Creature);
 		if (cardPlay.Target.HasPower<SlipperyPower>()) {
 			await PowerCmd.Remove<SlipperyPower>(cardPlay.Target);
 		}

@@ -15,7 +15,7 @@ public class AttackCommandPatch {
             Type parentClass = typeof(AttackCommand);
             Type[] stateMachineTypes = parentClass.GetNestedTypes(BindingFlags.NonPublic | BindingFlags.Public);
             foreach (Type type in stateMachineTypes) {
-                if (type.Name.Contains(nameof(AttackCommand.Execute)) && type.Name.Contains("d__86")) {
+                if (type.Name.Contains(nameof(AttackCommand.Execute)) && type.Name.Contains("d__90")) {
                     return type;
                 }
             }

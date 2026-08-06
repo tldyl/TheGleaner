@@ -96,13 +96,13 @@ public static class ScoreEntryCardFramePatch {
         return hiddenCount;
     }
 
-    private static void ApplyScoreEntryCardStyle(NCard cardNode) {
-        TextureRect frameNode = FindTextureRectByName(cardNode, "%Frame", "Frame");
-        Texture2D scoreFrame = GetScoreFrame();
-        if (frameNode != null) {
-            frameNode.Texture = scoreFrame;
-            frameNode.Material = null;
-        }
+    public static void ApplyScoreEntryCardStyle(NCard cardNode) {
+        // TextureRect frameNode = FindTextureRectByName(cardNode, "%Frame", "Frame");
+        // Texture2D scoreFrame = GetScoreFrame();
+        // if (frameNode != null) {
+        //     frameNode.Texture = scoreFrame;
+        //     frameNode.Material = null;
+        // }
         ClearTextureRect(cardNode, "%EnergyIcon", "EnergyIcon");
         ClearTextureRect(cardNode, "%CardBanner", "%Banner", "CardBanner", "Banner");
         ClearTextureRect(cardNode, "%CardPortraitBorder", "%PortraitBorder", "%PortraitFrame", "CardPortraitBorder", "PortraitBorder", "PortraitFrame");

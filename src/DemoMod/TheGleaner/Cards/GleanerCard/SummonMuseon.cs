@@ -43,7 +43,7 @@ public class SummonMuseon : CustomCardModel {
 			GleanerVfxCmd.PlayOnCreature<Node2D>(cardPlay.Target, "res://TheGleaner/scenes/vfx/arrow_hit_vfx.tscn");
 		}
 		AttackCommand _ = await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
-			.FromCard(this)
+			.FromCard(this, cardPlay)
 			.WithNoAttackerAnim()
 			.Targeting(cardPlay.Target)
 			.Execute(choiceContext);

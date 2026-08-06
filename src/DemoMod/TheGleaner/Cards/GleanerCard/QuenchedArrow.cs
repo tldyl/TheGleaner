@@ -46,7 +46,7 @@ public class QuenchedArrow : CustomCardModel, IArrowCard {
 			await Cmd.Wait(0.3f);
 		}
 		AttackCommand _ = await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
-			.FromCard(this)
+			.FromCard(this, cardPlay)
 			.WithNoAttackerAnim()
 			.Targeting(cardPlay.Target)
 			.Execute(choiceContext);
@@ -57,7 +57,8 @@ public class QuenchedArrow : CustomCardModel, IArrowCard {
 		Decimal amount,
 		ValueProp props,
 		Creature? dealer,
-		CardModel? cardSource) {
+		CardModel? cardSource,
+		CardPlay cardPlay) {
 		if (cardSource == this && !props.HasFlag(ValueProp.Unpowered)) {
 			decimal baseDamage = DynamicVars.Damage.BaseValue;
 			return baseDamage * DynamicVars["Amount"].BaseValue / 100M;

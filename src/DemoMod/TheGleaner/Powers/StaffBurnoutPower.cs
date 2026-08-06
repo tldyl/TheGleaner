@@ -29,6 +29,7 @@ public class StaffBurnoutPower : CustomPowerModel {
                 ScorePileCmd.GetCapacity(Owner.Player) * Amount,
                 ValueProp.Unpowered,
                 Owner,
+                null,
                 null
             );
         }

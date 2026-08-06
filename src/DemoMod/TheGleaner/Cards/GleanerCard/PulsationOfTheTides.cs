@@ -31,14 +31,12 @@ public class PulsationOfTheTides : CustomCardModel {
 
 	protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
 		await CreatureCmd.TriggerAnim(Owner.Creature, "Attack", 0.5f);
-		await using AttackContext context = await AttackCommand.CreateContextAsync(Owner.Creature.CombatState, choiceContext, this);
-		IEnumerable<DamageResult> damageResults = await CreatureCmd.Damage(choiceContext, CombatState.HittableEnemies, DynamicVars.Damage, Owner.Creature,
-			this);
+		await using AttackContext context = await AttackCommand.CreateContextAsync(Owner.Creature.CombatState, choiceContext, cardPlay);
+		IEnumerable<DamageResult> damageResults = await CreatureCmd.Damage(choiceContext, CombatState.HittableEnemies, DynamicVars.Damage, Owner.Creature);
 		context.AddHit(damageResults);
 		int count = damageResults.Count(result => result.WasTargetKilled);
 		if (count == damageResults.Count() - 1) {
-			IEnumerable<DamageResult> _ = await CreatureCmd.Damage(choiceContext, CombatState.HittableEnemies, DynamicVars.Damage, Owner.Creature,
-				this);
+			IEnumerable<DamageResult> _ = await CreatureCmd.Damage(choiceContext, CombatState.HittableEnemies, DynamicVars.Damage, Owner.Creature);
 			context.AddHit(_);
 		}
 	}

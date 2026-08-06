@@ -45,7 +45,7 @@ public class EchoingArrow : CustomCardModel, IArrowCard {
 			await Cmd.Wait(0.3f);
 		}
 		AttackCommand attackCommand = await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
-			.FromCard(this)
+			.FromCard(this, cardPlay)
 			.WithNoAttackerAnim()
 			.Targeting(cardPlay.Target)
 			.Execute(choiceContext);

@@ -38,11 +38,11 @@ public class Introit : CustomCardModel {
 	protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
 		Vector2 windowSize = NRun.Instance.CombatRoom.Ui.GetViewport().GetVisibleRect().Size;
 		await CreatureCmd.TriggerAnim(Owner.Creature, "AoEAttack", 0.5f);
-		await using AttackContext context = await AttackCommand.CreateContextAsync(Owner.Creature.CombatState, choiceContext, this);
+		await using AttackContext context = await AttackCommand.CreateContextAsync(Owner.Creature.CombatState, choiceContext, cardPlay);
 		for (int _ = 0; _ < DynamicVars.Repeat.IntValue; _++) {
 			GleanerVfxCmd.PlayVfx<Node2D>(new Vector2(windowSize.X * 0.65f, windowSize.Y * 0.5f), "res://TheGleaner/scenes/vfx/aoe_attack.tscn");
 			IEnumerable<DamageResult> damageResults =
-				await CreatureCmd.Damage(choiceContext, Owner.Creature.CombatState.HittableEnemies, DynamicVars.Damage, Owner.Creature, this);
+				await CreatureCmd.Damage(choiceContext, Owner.Creature.CombatState.HittableEnemies, DynamicVars.Damage, Owner.Creature);
 			context.AddHit(damageResults);
 
 	 

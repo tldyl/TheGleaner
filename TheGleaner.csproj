@@ -94,6 +94,41 @@
     <Folder Include="TheGleaner\scenes\backgrounds\hovercourt\layers\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Include="images\backgrounds\hovercourt\bg_00.png" />
+    <Content Include="images\backgrounds\hovercourt\bg_00.png.import" />
+    <Content Include="images\packed\sprite_fonts\energy_colorless_b.png" />
+    <Content Include="images\packed\sprite_fonts\energy_colorless_b.png.import" />
+    <Content Include="images\packed\sprite_fonts\energy_colorless_r.png" />
+    <Content Include="images\packed\sprite_fonts\energy_colorless_r.png.import" />
+    <Content Include="images\packed\sprite_fonts\energy_colorless_y.png" />
+    <Content Include="images\packed\sprite_fonts\energy_colorless_y.png.import" />
+    <Content Include="images\packed\sprite_fonts\gleaner_energy_icon.png" />
+    <Content Include="images\packed\sprite_fonts\gleaner_energy_icon.png.import" />
+    <Content Include="images\packed\sprite_fonts\Score.png" />
+    <Content Include="images\packed\sprite_fonts\Score.png.import" />
+    <Content Include="images\relics\yummy_cookie_gleaner.png" />
+    <Content Include="images\relics\yummy_cookie_gleaner.png.import" />
+    <Content Include="images\ui\combat\combat_reticle.png" />
+    <Content Include="images\ui\combat\combat_reticle.png.import" />
+    <Content Include="images\ui\rest_site\option_demomod_stargaze.png" />
+    <Content Include="images\ui\rest_site\option_demomod_stargaze.png.import" />
+    <Content Include="images\ui\run_history\demomod-frost_nova_director.png" />
+    <Content Include="images\ui\run_history\demomod-frost_nova_director.png.import" />
+    <Content Include="images\ui\run_history\demomod-frost_nova_director_outline.png" />
+    <Content Include="images\ui\run_history\demomod-frost_nova_director_outline.png.import" />
+    <Content Include="images\ui\run_history\demomod-knight_of_wars_end_boss.png" />
+    <Content Include="images\ui\run_history\demomod-knight_of_wars_end_boss.png.import" />
+    <Content Include="images\ui\run_history\demomod-knight_of_wars_end_boss_outline.png" />
+    <Content Include="images\ui\run_history\demomod-knight_of_wars_end_boss_outline.png.import" />
+    <Content Include="images\ui\run_history\demomod-portals_boss.png" />
+    <Content Include="images\ui\run_history\demomod-portals_boss.png.import" />
+    <Content Include="images\ui\run_history\demomod-portals_boss_outline.png" />
+    <Content Include="images\ui\run_history\demomod-portals_boss_outline.png.import" />
+    <Content Include="images\ui\top_panel\character_icon_demomod-the_gleaner_outline.png" />
+    <Content Include="images\ui\top_panel\character_icon_demomod-the_gleaner_outline.png.import" />
+  </ItemGroup>
+
   <Target Name="CopyToModsFolderOnBuild" AfterTargets="AfterBuild">
     <Message Text="Copying .dll and manifest to mods folder." Importance="high" />
     <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(Sts2Path)/mods/$(MSBuildProjectName)/" />

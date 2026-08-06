@@ -38,14 +38,14 @@ public class ScoreEntryCard : CustomCardModel {
         RunManager.Instance.ActionQueueSynchronizer.RequestEnqueue(new TakeCardsFromScoreAction(Owner));
     }
 
-    protected override PileType GetResultPileTypeForCardPlay() {
-        PileType resultPileType = base.GetResultPileTypeForCardPlay();
-        return resultPileType != PileType.Discard ? resultPileType : decidePile();
+    protected override CardLocation GetResultLocationForCardPlay() {
+        CardLocation resultLocation = base.GetResultLocationForCardPlay();
+        return resultLocation.pileType != PileType.Discard ? resultLocation : decidePile();
     }
 
-    private PileType decidePile() {
+    private CardLocation decidePile() {
         ScorePile scorePile = (ScorePile)CustomPiles.GetCustomPile(Owner.PlayerCombatState, CustomEnums.ScorePile);
-        return scorePile.Cards.Count == 0 ? PileType.None : PileType.Hand;
+        return new CardLocation(Owner, scorePile.Cards.Count == 0 ? PileType.None : PileType.Hand, CardPilePosition.Bottom);
     }
 
     public override async Task AfterCardDiscarded(PlayerChoiceContext choiceContext, CardModel card) {

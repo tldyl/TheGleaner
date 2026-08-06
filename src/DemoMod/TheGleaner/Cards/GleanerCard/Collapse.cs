@@ -38,7 +38,7 @@ public class Collapse : CustomCardModel
 	protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
 	{
 		AttackCommand _ = await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
-			.FromCard(this)
+			.FromCard(this, cardPlay)
 			.TargetingRandomOpponents(Owner.Creature.CombatState)
 			.WithHitFx("vfx/vfx_heavy_blunt", tmpSfx: "heavy_attack.mp3")
 			.WithHitCount(Owner.Creature.CombatState.HittableEnemies.Count * 2)

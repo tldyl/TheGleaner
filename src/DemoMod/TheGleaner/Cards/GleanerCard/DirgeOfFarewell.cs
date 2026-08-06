@@ -38,8 +38,7 @@ public class DirgeOfFarewell : CustomCardModel, IDissonanceCard {
 		bool causedByEthereal) {
 		await CreatureCmd.TriggerAnim(Owner.Creature, "Attack", 0.5f);
 		if (card == this) {
-			IEnumerable<DamageResult> _ = await CreatureCmd.Damage(choiceContext, CombatState.Creatures, DynamicVars.Damage, Owner.Creature,
-				this);
+			IEnumerable<DamageResult> _ = await CreatureCmd.Damage(choiceContext, CombatState.Creatures, DynamicVars.Damage, Owner.Creature);
 		}
 	}
 

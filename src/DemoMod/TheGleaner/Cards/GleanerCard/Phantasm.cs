@@ -63,7 +63,7 @@ public class Phantasm : CustomCardModel, IAfterTakeCardsFromScore {
 			if (creatureNode != null) {
 				Node2D spineNode = creatureNode.Visuals.GetNode<Node2D>("%GhostVisuals");
 				MegaSprite sprite = new MegaSprite(spineNode);
-				MegaTrackEntry track = sprite.GetAnimationState().SetAnimation("idle_loop");
+				sprite.GetAnimationState().SetAnimation("idle_loop");
 				creatureNode.Visuals.GetNode<SubViewportContainer>("SubViewportContainer").Visible = true;
 			}
 		}
@@ -85,7 +85,7 @@ public class Phantasm : CustomCardModel, IAfterTakeCardsFromScore {
 			if (creatureNode != null) {
 				Node2D spineNode = creatureNode.Visuals.GetNode<Node2D>("%GhostVisuals");
 				MegaSprite sprite = new MegaSprite(spineNode);
-				MegaTrackEntry track = sprite.GetAnimationState().SetAnimation("idle_loop");
+				sprite.GetAnimationState().SetAnimation("idle_loop");
 				creatureNode.Visuals.GetNode<SubViewportContainer>("SubViewportContainer").Visible = true;
 			}
 		}

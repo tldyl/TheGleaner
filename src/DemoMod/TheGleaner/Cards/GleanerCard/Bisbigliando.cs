@@ -43,7 +43,7 @@ public class Bisbigliando : CustomCardModel {
 		await CreatureCmd.TriggerAnim(Owner.Creature, "Attack", 0.5f);
 		GleanerVfxCmd.PlayOnCreature<Node2D>(cardPlay.Target, "res://TheGleaner/scenes/vfx/arrow_hit_vfx.tscn");
 		await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
-			.FromCard(this)
+			.FromCard(this, cardPlay)
 			.WithNoAttackerAnim()
 			.Targeting(cardPlay.Target)
 			.Execute(choiceContext);

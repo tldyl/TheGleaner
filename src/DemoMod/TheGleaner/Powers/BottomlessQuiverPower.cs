@@ -22,41 +22,39 @@ public class BottomlessQuiverPower : CustomPowerModel {
     private int triggersUsedThisTurn;
     private bool triggeredThisTurn;
 
-    public override (PileType, CardPilePosition) ModifyCardPlayResultPileTypeAndPosition(
+    public override CardLocation ModifyCardPlayResultLocation(
         CardModel card,
         bool isAutoPlay,
         ResourceInfo resources,
-        PileType pileType,
-        CardPilePosition position) {
+        CardLocation cardLocation) {
         if (!Owner.IsPlayer) {
-            return (pileType, position);
+            return cardLocation;
         }
 
         if (!card.Tags.Contains(CustomEnums.Arrow)) {
-            return (pileType, position);
+            return cardLocation;
         }
         triggersUsedThisTurn++;
 
         if (triggersUsedThisTurn > Amount) {
-            return (pileType, position);
+            return cardLocation;
         }
         triggeredThisTurn = true;
 
         Player player = Owner.Player;
         if (player == null) {
-            return (pileType, position);
+            return cardLocation;
         }
         
         if (card.Owner.Creature != Owner) {
-            return (pileType, position);
+            return cardLocation;
         }
-        return pileType != PileType.Discard ? (pileType, position) : (CustomEnums.ScorePile, CardPilePosition.Bottom);
+        return cardLocation.pileType != PileType.Discard ? cardLocation : new CardLocation(Owner.Player, CustomEnums.ScorePile, CardPilePosition.Bottom);
     }
     
-    public override async Task AfterModifyingCardPlayResultPileOrPosition(
+    public override async Task AfterModifyingCardPlayResultLocation(
         CardModel card,
-        PileType pileType,
-        CardPilePosition position) {
+        CardLocation cardLocation) {
         if (card.Owner.Creature != Owner) {
             return;
         }
