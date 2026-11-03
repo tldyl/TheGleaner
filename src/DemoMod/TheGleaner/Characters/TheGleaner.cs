@@ -8,6 +8,7 @@ using DemoMod.TheGleaner.Relics;
 using DemoMod.TheGleaner.Utils;
 using MegaCrit.Sts2.Core.Animation;
 using MegaCrit.Sts2.Core.Bindings.MegaSpine;
+using MegaCrit.Sts2.Core.Entities.Creatures;
 
 namespace DemoMod.TheGleaner.Characters;
 
@@ -91,7 +92,7 @@ public class TheGleaner : PlaceholderCharacterModel {
         "vfx/vfx_rock_shatter"
 	];
 	
-	public override CreatureAnimator GenerateAnimator(MegaSprite controller) {
+	public override CreatureAnimator GenerateAnimator(MegaSprite controller, Creature creature) {
 		AnimState animState = new AnimState("idle_loop", true);
 		AnimState state1 = new AnimState("nitan"); //cast
 		AnimState state2 = new AnimState("shuaidan"); //attack

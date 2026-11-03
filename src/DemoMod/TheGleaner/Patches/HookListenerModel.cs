@@ -83,6 +83,18 @@ public class HookListenerModel() : CustomSingletonModel(true, true) {
         GleanerVfxCmd.CheckScoreIsEmpty(cardPlay.Player.PlayerCombatState);
     }
 
+    /// <summary>
+    /// 抽到箭镞牌时，抽一张牌
+    /// </summary>
+    public override async Task AfterCardDrawn(
+        PlayerChoiceContext choiceContext,
+        CardModel card,
+        bool fromHandDraw) {
+        if (card.Tags.Contains(CustomEnums.Arrow)) {
+            await CardPileCmd.Draw(choiceContext, 1, card.Owner);
+        }
+    }
+    
     public override async Task AfterCardChangedPiles(CardModel card, PileType oldPileType, AbstractModel? source) {
         if (card.Pile?.Type == PileType.Discard) {
             card.EnergyCost.AfterCardEnterDiscardPileCleanup();

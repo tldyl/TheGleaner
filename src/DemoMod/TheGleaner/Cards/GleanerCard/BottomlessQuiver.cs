@@ -17,7 +17,9 @@ public class BottomlessQuiver : CustomCardModel
 	public override string PortraitPath => $"res://TheGleaner/images/cards/{Id.Entry.ToLowerInvariant()}.png";
 
 	protected override IEnumerable<IHoverTip> ExtraHoverTips => [
-		HoverTipFactory.Static(StaticHoverTip.Energy), HoverTipFactory.FromKeyword(CustomEnums.Score)
+		HoverTipFactory.Static(StaticHoverTip.Energy),
+		HoverTipFactory.FromKeyword(CustomEnums.Score),
+		HoverTipFactory.FromKeyword(CustomEnums.ArrowKeyword)
 	];
 
 	protected override IEnumerable<DynamicVar> CanonicalVars => [

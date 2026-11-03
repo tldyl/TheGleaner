@@ -15,3 +15,4 @@ obj/
 *.disabled
 TheGleanerMod.cs
 export_all_gleaner_cards.py
+.reasonix/
