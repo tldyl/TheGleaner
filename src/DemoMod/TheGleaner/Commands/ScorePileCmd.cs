@@ -187,6 +187,9 @@ public static class ScorePileCmd {
 	}
 	
 	public static async Task<List<CardModel>> Glean(Player player, PlayerChoiceContext choiceContext, decimal baseValue, CardModel cardSource) {
+		if (baseValue <= 0) {
+			return [];
+		}
 		CardSelectorPrefs prefs = new CardSelectorPrefs(new LocString("cards", "DEMOMOD-WINDS_MUSE.selectionScreenPromptDrawPileOnly"), 0, (int) baseValue);
 		prefs.Prompt.Add(new IntVar("DrawAmount", baseValue));
 		prefs.Prompt.Add(new IntVar("HandAmount", 0));

@@ -12,8 +12,6 @@ public class ChargePower : CustomPowerModel {
     public override PowerStackType StackType => PowerStackType.Counter;
     
     public override async Task AfterSideTurnEnd(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> _) {
-        if (side != CombatSide.Enemy)
-            return;
         await PowerCmd.TickDownDuration(this);
     }
 }

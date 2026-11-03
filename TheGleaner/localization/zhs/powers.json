@@ -159,5 +159,8 @@
   "DEMOMOD-SORCERESS_BOUND_POWER.smartDescription": "当[gold]{ApplierName}[/gold]死亡时，[gold]{OwnerName}[/gold]会获得自由。",
   "DEMOMOD-FORESHADOWING_POWER.title": "伏笔",
   "DEMOMOD-FORESHADOWING_POWER.description": "下[blue]X[/blue]个回合开始时，获得{Energy:energyIcons()}。",
-  "DEMOMOD-FORESHADOWING_POWER.smartDescription": "下[blue]{Amount}[/blue]个回合开始时，获得{Energy:energyIcons()}。"
+  "DEMOMOD-FORESHADOWING_POWER.smartDescription": "下[blue]{Amount}[/blue]个回合开始时，获得{Energy:energyIcons()}。",
+  "DEMOMOD-STARTLED_DREAM_POWER.title": "惊梦",
+  "DEMOMOD-STARTLED_DREAM_POWER.description": "当受到未被[gold]格挡[/gold]的伤害时或经过[blue]3[/blue]回合后将被惊醒：移除自身的[gold]覆甲[/gold]、移除所有[gold]乌鸦[/gold]的[gold]翱翔[/gold]并[gold]击晕[/gold]它们。",
+  "DEMOMOD-STARTLED_DREAM_POWER.smartDescription": "当受到未被[gold]格挡[/gold]的伤害时或经过[blue]{Amount}[/blue]回合后将被惊醒：移除自身的[gold]覆甲[/gold]、移除所有[gold]乌鸦[/gold]的[gold]翱翔[/gold]并[gold]击晕[/gold]它们。"
 }

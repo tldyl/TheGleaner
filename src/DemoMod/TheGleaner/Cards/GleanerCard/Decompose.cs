@@ -27,8 +27,10 @@ public class Decompose : CustomCardModel
 	];
 
 	protected override IEnumerable<IHoverTip> ExtraHoverTips => [
+		HoverTipFactory.FromPower<PoisonPower>(),
+		HoverTipFactory.FromPower<VulnerablePower>(),
 		HoverTipFactory.FromPower<EtchPower>(),
-		HoverTipFactory.FromPower<PoisonPower>()
+		HoverTipFactory.FromPower<WeakPower>()
 	];
 
 	public Decompose() : base(2, CardType.Skill, CardRarity.Uncommon, TargetType.AnyEnemy)
